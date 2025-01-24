@@ -1,0 +1,530 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+.dataTables_wrapper .dataTables_filter{
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+
+.dataTables_filter input {
+  color: black;
+  background-color: white;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+<script>
+	/* jQuery(function($){
+	 $(document).ajaxSend(function() {
+	 $("#overlay").fadeIn(300);　
+	 });
+	
+	 $('.btn').click(function(){
+	 $.ajax({
+	 type: 'GET',
+	 success: function(data){
+	 console.log(data);
+	 }
+	 }).done(function() {
+	 setTimeout(function(){
+	 $("#overlay").fadeOut(300);
+	 },500);
+	 });
+	 });	
+	 }); */
+</script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	var tranMonitorType = /*[[${tranMonitorType}]]*/0;
+
+	$(function() {
+		$("#disableDate").datepicker(
+				{
+					maxDate : 0,
+					changeMonth : true,
+					changeYear : true,
+					dateFormat : "dd-MM-yy",
+					onSelect : function(selected) {
+						var dt = $(this).datepicker('getDate');
+						dt.setDate(dt.getDate());
+
+						$("#loader1").modal("toggle");
+
+						//alert( $("#disableDate").val());
+						
+						if (tranMonitorType == "MC") {
+							location.href = "TransMonitorMC?tranDate="
+									+ $("#disableDate").val();
+						} else if (tranMonitorType == "RTP") {
+							location.href = "TransMonitorRTP?tranDate="
+									+ $("#disableDate").val();
+						} else if (tranMonitorType == "RTP-OUT") {
+							location.href = "RTPOUTING?tranDate="
+									+ $("#disableDate").val();
+						} else if (tranMonitorType == "INC") {
+							location.href = "TransMonitorINC?tranDate="
+									+ $("#disableDate").val();
+						} else if (tranMonitorType == "BULK") {
+							location.href = "TransMonitorBulk?tranDate="
+									+ $("#disableDate").val();
+						}
+
+					}
+				});
+	})
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage": { "sSearch": "",
+				 "sSearchPlaceholder": "Search Here"}, 
+			"searching" : true,
+			"scrollX" : true,
+			"pageLength" : 100,
+			"lengthChange" : false,
+
+		});
+	});
+
+	function pdfdownload(a) {
+		var filetype = a.getAttribute("data-filetype")
+		var TRAN_REASON = $("#tran_reason").text();
+		var TRAN_STATUS = $("#tran_status").text();
+		var TRAN_DATE = $("#disableDate").val();
+		location.href = 'downloadJasper?' + '&filetype=' + filetype
+				+ '&TRAN_DATE=' + TRAN_DATE + '&TRAN_REASON=' + TRAN_REASON
+				+ '&TRAN_STATUS=' + TRAN_STATUS + '&type=' + tranMonitorType;
+	}
+
+	function exceldownload(a) {
+		var filetype = a.getAttribute("data-filetype")
+		var TRAN_DATE = $("#disableDate").val();
+		location.href = 'downloadJasper?' + '&filetype=' + filetype
+				+ '&TRAN_DATE=' + TRAN_DATE + '&type=' + tranMonitorType;
+	}
+
+	/*<![CDATA[*/
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">RTP-Incoming Transaction Monitor</h6>
+				</div>
+
+				<div class="float-right">
+
+					<div class="row formline">
+						<div style="top: -6px; margin-right: 14px;" class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">
+								Download <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a class="underline" id="pdf"
+									onclick="pdfdownload(this);" th:attr="data-filetype='pdf'"
+									style="cursor: pointer;">PDF</a></li>
+								<label></label>
+								<li><a class="underline" id="xcel" style="cursor: pointer;"
+									onclick="exceldownload(this);" th:attr="data-filetype='excel'">EXCEL</a></li>
+
+
+
+
+							</ul>
+						</div>
+						<label style="color: white; padding-right: 20px;">Tran
+							Date </label>
+						<div>
+							<input type="hidden" readonly id="current_date" value=""
+								class="form-control form-control-sm" autocomplete="off" required />
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+
+								<tr>
+									<th>Tran Date</th>
+									<th>IPS Ref ID</th>
+									<th>CBS Audit Number</th>
+									<th>Message Type</th>
+									<th>Account</th>
+									<th>Account Name</th>
+									<th>IPSX Account</th>
+									<th>IPSX Account Name</th>
+									<th>Bank Name</th>
+									<th>Currency</th>
+									<th>Amount</th>
+									<th>Reason</th>
+									<th>Status</th>
+									<th>Created By</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: small;"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+									
+										<th:block th:switch="${tranMonitoring.tranStatusSeq}">
+										<td th:case="'FAILURE'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorIPS/1/'+${tranMonitoring.sequence_unique_id}}"
+											th:text="${tranMonitoring.sequence_unique_id}"></a></td>
+										<td th:case="'SUCCESS'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorIPS/3/'+${tranMonitoring.sequence_unique_id}}"
+											th:text="${tranMonitoring.sequence_unique_id}"></a></td>
+										<td th:case="'REVERSE_FAILURE'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorIPS/0/'+${tranMonitoring.sequence_unique_id}}"
+											th:text="${tranMonitoring.sequence_unique_id}"></a></td>
+										<td th:case="'IN_PROGRESS'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorIPS/2/'+${tranMonitoring.sequence_unique_id}}"
+											th:text="${tranMonitoring.sequence_unique_id}"></a></td>
+										<td th:case="*" th:text="${tranMonitoring.sequence_unique_id}"></td>
+									</th:block>
+
+									<th:block th:switch="${tranMonitoring.tranStatusSeq}">
+										<td th:case="'FAILURE'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorCBS/1/'+${tranMonitoring.tran_audit_number}}"
+											th:text="${tranMonitoring.tran_audit_number}"></a></td>
+										<td th:case="'SUCCESS'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorCBS/3/'+${tranMonitoring.tran_audit_number}}"
+											th:text="${tranMonitoring.tran_audit_number}"></a></td>
+										<td th:case="'REVERSE_FAILURE'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorCBS/0/'+${tranMonitoring.tran_audit_number}}"
+											th:text="${tranMonitoring.tran_audit_number}"></a> </td>
+										<td th:case="'IN_PROGRESS'"><a
+											th:if="${tranMonitorType}!='BULK'"
+											th:href="@{'/TranMonitorCBS/2/'+${tranMonitoring.tran_audit_number}}"
+											th:text="${tranMonitoring.tran_audit_number}"></a> </td>
+										<td th:case="*" th:text="${tranMonitoring.tran_audit_number}"></td>
+									</th:block>
+									<td th:text="${tranMonitoring.msg_type}"></td>
+									<td th:text="${tranMonitoring.bob_account}"></td>
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+									<td th:text="${tranMonitoring.benBank}"></td>
+									<td th:text="${tranMonitoring.tran_currency}"></td>
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+									<td id="tran_reason" th:text="${tranMonitoring.reason}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}"
+										id="tran_status">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.entry_user}"></td>
+								</tr>
+
+							</tbody>
+
+							<tfoot style="background:white;">
+								
+								
+								<tr>
+									<th  >Total</th>
+									<th></th>
+									<th >Success</th>
+									<th></th>
+									<th>Failure</th>
+									<th></th>
+									
+								</tr>
+								
+								<tr>
+									<th >No.Of.Transaction:</th>
+									<th th:text="${#numbers.formatDecimal(totTr, 0, 'COMMA', 0, 'POINT')}">-</th>
+									<th >No.Of.Transaction:</th>
+									<th th:text="${#numbers.formatDecimal(sucTr, 0, 'COMMA', 0, 'POINT')}">-</th>
+									<th>No.Of.Transaction</th>
+									<th th:text="${#numbers.formatDecimal(failTr, 0, 'COMMA', 0, 'POINT')}">-</th>
+									
+								</tr>
+								
+								<tr>
+								
+									<th  >Amount:</th>
+									<th th:text="${#numbers.formatDecimal(totAmt, 0, 'COMMA', 2, 'POINT')}">0.00</th>
+									<th  >Amount:</th>
+									<th th:text="${#numbers.formatDecimal(sucAmt, 0, 'COMMA', 2, 'POINT')}">0.00</th>
+									<th  >Amount:</th>
+									<th th:text="${#numbers.formatDecimal(failAmt, 0, 'COMMA', 2, 'POINT')}">0.00</th>
+									
+								</tr>
+							</tfoot>
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

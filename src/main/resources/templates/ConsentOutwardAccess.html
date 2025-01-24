@@ -1,0 +1,398 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+<script>
+$(document).ready(function() {
+	$('#usertable').DataTable({
+
+		"destroy" : true,
+		"scrollY" : 400,
+		"scrollCollapse" : true,
+		"paging" : true,
+		"autoWidth" : false,
+		"ordering" : true,
+		"oLanguage": { "sSearch": "",
+			 "sSearchPlaceholder": "Search Here"}, 
+		"searching" : true,
+		"scrollX" : true,
+		"pageLength" : 100,
+		"lengthChange" : false,
+
+	});
+});
+
+	
+</script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+
+	$(function() {
+		$("#disableDate").datepicker(
+				{
+					maxDate : 0,
+					changeMonth : true,
+					changeYear : true,
+					dateFormat : "dd-MM-yy",
+					onSelect : function(selected) {
+						var dt = $(this).datepicker('getDate');
+						dt.setDate(dt.getDate());
+
+						$("#loader1").modal("toggle");
+
+						location.href = "./ConOutReg?tranDate="
+								+ $("#disableDate").val();
+
+					}
+				});
+	})
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	
+
+	 function pdfdownload(a) {
+		var filetype = a.getAttribute("data-filetype")
+		var TRAN_REASON = $("#tran_reason").text();
+		var TRAN_STATUS = $("#tran_status").text();
+		var TRAN_DATE = $("#disableDate").val();
+		var filetype = a.getAttribute("data-filetype")
+		var TRAN_DATE = $("#disableDate").val();
+		location.href = 'downloadConsentJasper?' + '&filetype=' + filetype
+				+ '&TRAN_DATE=' + TRAN_DATE ;
+		
+	}
+
+	function exceldownload(a) {
+		var filetype = a.getAttribute("data-filetype")
+		var TRAN_DATE = $("#disableDate").val();
+		location.href = 'downloadConsentJasper?' + '&filetype=' + filetype
+		+ '&TRAN_DATE=' + TRAN_DATE ;
+	} 
+
+	/*<![CDATA[*/
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Consent Account Registration</h6>
+				</div>
+
+				<div class="float-right">
+
+					<div class="row formline">
+						<div style="top: -6px; margin-right: 14px;" class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">
+								Download <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a class="underline" id="pdf"
+									onclick="pdfdownload(this);" th:attr="data-filetype='pdf'"
+									style="cursor: pointer;">PDF</a></li>
+								<label></label>
+								<li><a class="underline" id="xcel" style="cursor: pointer;"
+									onclick="exceldownload(this);" th:attr="data-filetype='excel'">EXCEL</a></li>
+
+
+
+
+							</ul>
+						</div>
+						<label style="color: white; padding-right: 20px;">Tran
+							Date </label>
+						<div>
+							<input type="hidden" readonly id="current_date" value=""
+								class="form-control form-control-sm" autocomplete="off" required />
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="display table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+
+								<tr>
+									<th rowspan="2">Request ID</th>
+									<th rowspan="2">Bank Agent</th>
+									<th rowspan="2">Bank Name</th>
+									<th rowspan="2">Scheme Code</th>
+									<th rowspan="2">Account Number</th>
+									<th rowspan="2">Doc Type</th>
+									<th rowspan="2">Doc Number</th>
+									<th rowspan="2">Phone Number</th>
+									<th colspan="4" style="text-align: center;">Permission</th>
+								</tr>
+								<tr>
+									<th rowspan="2">Read Balance</th>
+									<th rowspan="2">Debit Account</th>
+									<th rowspan="2">Read Transaction Details</th>
+									<th rowspan="2">Read Account Details</th>
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr style="font-size: small;"
+									th:each="consentInq : ${consentInqList}"
+									onclick="fnClick(this);" class="userlist">
+									<td th:text="${consentInq[0]}"></td>
+									<td th:text="${consentInq[1]}"></td>
+									<td th:text="${consentInq[2]}"></td>
+									<td th:text="${consentInq[3]}"></td>
+									<td th:text="${consentInq[4]}"></td>
+									<td th:text="${consentInq[5]}"></td>
+									<td th:text="${consentInq[6]}"></td>
+									<td th:text="${consentInq[7]}"></td>
+									<td th:text="${consentInq[8]}"></td>
+									<td th:text="${consentInq[9]}"></td>
+									<td th:text="${consentInq[10]}"></td>
+									<td th:text="${consentInq[11]}"></td>
+								</tr>
+
+							</tbody>
+
+						</table>
+
+
+					</div>
+				</div>
+			</div>
+
+
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

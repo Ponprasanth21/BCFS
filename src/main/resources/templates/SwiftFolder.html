@@ -1,0 +1,598 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<!-- <link rel="stylesheet" href="css/spur.css"> -->
+
+<style>
+.modal-backdrop.show {
+	opacity: -1.5;
+}
+
+@media screen and (min-width: 768px) {
+	#fullHeightModalRight {
+		top: 66px;
+		left: auto;
+		bottom: auto;
+		overflow: visible;
+	}
+}
+
+/* .modal-backdrop {
+	display: none;
+} */
+.modal {
+	pointer-events: none;
+}
+
+body {
+	position: relative
+}
+
+.overlay, .sideMenu {
+	position: fixed;
+	bottom: 0
+}
+
+a:hover {
+	background-color: rgb(214, 214, 214);
+}
+
+.overlay {
+	top: 0;
+	left: -100%;
+	right: 100%;
+	margin: auto;
+	background-color: White;
+	z-index: 998;
+	transition: all ease 0.2s
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	height: 50px;
+	border-color: #d4d7da;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+.overlay.open {
+	left: 0;
+	right: 0
+}
+
+.sidebarNavigation {
+	margin-bottom: 0;
+	z-index: 999;
+	justify-content: flex-start
+}
+
+.sidebarNavigation .leftNavbarToggler {
+	margin-right: 10px;
+	order: -1
+}
+
+.sideMenu {
+	left: -100%;
+	top: 52px;
+	transition: all ease 0.5s;
+	overflow: hidden;
+	width: 100%;
+	z-index: 999;
+	max-width: 80%;
+	margin-bottom: 0;
+	padding: 1rem
+}
+
+.sideMenu.open {
+	left: 0;
+	display: block;
+	overflow-y: auto
+}
+
+.sideMenu ul {
+	margin: 0;
+	padding: 0 15px
+}
+
+a:link {
+	color: blue;
+	background-color: transparent;
+	text-decoration: none;
+	font-color: Blue;
+}
+
+#x {
+	position: relative;
+	float: right;
+	background: red;
+	color: white;
+	top: -10px;
+	right: -10px;
+}
+</style>
+<style type="text/css">
+#nav-loginsec:hover+#loginsec {
+	opacity: 1;
+	visibility: visible;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+</style>
+<style>
+body {
+	background-color: lightgrey;
+	line-height: 1.8;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.pagebut {
+	margin-top: 0.5%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 19.3%;
+	margin-top: 80px;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
+
+th {
+	color: white;
+	background-color: #2e455deb;
+}
+
+table td {
+	font-size: small;
+}
+
+select {
+	width: 50px;
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+<script type="text/javascript">
+
+function home(){
+	location.href = '/BSWIFT/BSWIFTDashboard'
+}
+
+function back(){
+	window.history.back();
+}
+
+function getfiles2(){
+	
+	var trHTML = '';
+	//$('#my_tabletr').empty();
+	 var radioValue = "SwiftfolderDetails";
+	   $.ajax({
+         url : 'ws/'+radioValue, 
+         data :radioValue, 
+         type : 'POST',
+         dataType : 'html', 
+         processData : false, //prevent jQuery from automatically transforming the data into a query string
+			contentType : false,
+			cache : false,
+			timeout : 600000,
+         success : function(response) {
+      	  
+      	   let length = response.length;
+      	   
+      	   var name = response.replace("["," ");
+  		   var name1 = name.replace("]"," ");
+  		 var name3 = name1.split(",").length;
+  		 var slno=name3 + 1;
+  		 //alert(name3);
+  		// document.getElementById("myText").value = "Johnny Bravo";
+      	   for (var i = 0; i < name3; i++){
+      		  slno--;
+      		  var name4 = name1.split(",");
+          	  // alert(name4[i]); 
+          	   data = name4[i];
+          	 let finalString = data.replace(/["]+/g, '')
+
+         // 	document.getElementById("myText").value =finalString;
+          	   
+          	  var html = '<tr>';
+             html += '<td>'+'<input type="text"  name="srl_no" id="srl_no' + slno  + '" class="form-control" value="' + slno + '" readonly/>'+'</td>';
+             html += '<td>'+'<input type="text" name="file_name" id="file_name' + finalString  + '" class="form-control" value="' + finalString + '" readonly/>'+'</td>';
+             html += '<td>'+'<input type="text" name="file_name" id="file_name' +  '" class="form-control" value="' + "Swift MX Folder" + '" readonly/>'+'</td>';
+             html += '<td>'+'<input type="text" name="file_name" id="file_name'+ '" class="form-control" value="' + "MX" + '" readonly/>'+'</td>';
+             html += '<td>'+'<input type="button" style="align-content: center;height: 40px;font-size: 17px;background-color: #126b81;color: #fcfcff;"" value="Convert to MT" onclick="MXtoMT()">'+'</td>';
+             $('#my_table').prepend(html);
+				
+          	  // alert(finalString);
+            
+      	   }
+      	 
+      	 
+     
+      	// let namearr = names.replace();
+           
+         },
+         error : function(request, textStatus, errorThrown) {
+      	  
+             alert(errorThrown);
+         }
+     });
+}
+
+
+function getfiles() {
+	
+	var trHTML = '';
+	//$('#my_tabletr').empty();
+	var radioValue = "SwiftfolderDetails2";
+
+	$
+			.ajax({
+				url : 'ws/' + radioValue,
+				data : radioValue,
+				type : 'POST',
+				dataType : 'html',
+				processData : false, //prevent jQuery from automatically transforming the data into a query string
+				contentType : false,
+				cache : false,
+				timeout : 600000,
+				success : function(list) {
+					 var json_obj = $.parseJSON(list);
+					
+					var slno = 0;
+
+					$	.each(json_obj,function(KEY, data) {
+						slno++;
+										
+						trHTML += '<tr id="' + slno + '">'
+						+ '<td><input type="text" name="date_of_process" id="date_of_process"' + slno + '" class="form-control" value="' + slno + '" readonly/></td>'
+						+ '<td><input type="text" name="srl_no" id="srl_no' + slno  + '" class="form-control" value="' + data.file_name + '" readonly/></td>'
+						+ '<td style=" width: 318px;"><input type="text" name="file_name" id="file_name' + data.source  + '" class="form-control" value="' + data.source+ '" readonly/></td>'
+						+ '<td><input type="text" name="swift_msg_type" id="swift_msg_type'   + data.msg_type  + '" class="form-control" value="' + data.msg_type + '" required readonly/></td>'
+						
+						+ '<td>'
+						+ '<input type="button" style="align-content: center;height: 40px;font-size: 17px;background-color: #126b81;color: #fcfcff;"" value="Convert to MT" id=""' + slno + '"" onclick="MTtoMXtest(this)">'
+						+ '</td>';
+						+ '</tr>';
+
+									});
+				
+
+					$('#my_table').append(trHTML);
+
+					return data;
+				},
+				error : function(e) {
+					$("#loader1").hide();
+					$("#invalidfilemsg").text(e.responseText);
+					$("#invalidfile").modal("toggle");
+					
+				}
+			});
+}
+
+
+
+$(document).ready(function() {
+	 $("#my_table").delegate("tr", "click", function() {
+		   var id=$(this).attr('id');
+		   var date_of_process = 'srl_no'+id;
+		  // alert(date_of_process);
+		   var data1= $('#'+date_of_process).val();
+		  //alert(data1);  
+		  $.ajax({
+
+				type : 'post',
+				url : "./BIPSSwiftMxFileSubmit?filename="+data1,
+				success : function(list) {
+
+					$.each(list, function(KEY, data) {
+
+						//alert(data.file_name);
+
+						var datee = data.file_name;
+						var ref = data.mt_reference_no;
+						
+						$('#alert').modal('show');
+						document.getElementById('text1').value = datee;
+						document.getElementById('text2').value = ref;
+
+					});
+				}
+
+			});
+		});
+	});
+
+function MXtoMT() {
+	//var refNo = a.getAttribute("data-mand_ref_no");
+	
+	
+	
+	$
+	.ajax({
+
+		type : 'post',
+		url : "./BIPSSwiftMxFileSubmit" ,
+		success : function(list) {
+			
+
+			$
+					.each(
+							list,
+							function(KEY, data) {
+								
+								//alert(data.file_name);
+								
+								var datee=data.file_name;
+								var ref = data.mt_reference_no;
+								
+								$('#alert').modal('show');
+								document.getElementById('text1').value = datee;
+								document.getElementById('text2').value = ref;
+								
+								
+							});
+		}
+		                            
+							
+
+							});
+}
+</script>
+</head>
+<body onload="getfiles()">
+<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+<div  class="content">
+			<div class="card">
+			
+			<form action="#" th:object="${MTMessageform}" method="POST"
+				autocomplete="off" id="MTMessageform">
+
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">SWIFT MX MESSAGE List</h6>
+					</div>
+
+					<div class="btn-group nav-buttons float-right">
+					
+
+						<!-- <label style="color: white; padding-right: 20px;">Date</label>
+						<div style="padding-right: 50px;">
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div> -->
+
+
+					</div>
+				</div>
+
+					<div class="table-responsive">
+						<table class="table table-bordered  table-hover table-sm"
+							id="my_table">
+							<thead class="thead-light">
+
+								<th style="width: 10px;">Sl No</th>
+								<th style="width: 286px;">File Name</th>
+								<th style="width: 256px;">File Path</th>
+								<th style="width: 170px;">Message Type</th>
+								
+								<th style="width: 100px;">Action</th>
+
+							</thead>
+							<tbody>
+							<!-- <tr>
+							<td> 1</td>
+							<td  ><input input type="text" name="file_name" id="file_name" value="MT10320220371055834.IN"> MT10320220371055834.IN</td>
+							<td> Finacle Folder</td>
+							<td> MT</td>
+							<td><button form="MTMessageform" id="subbtn" onclick="FileSubmit(this)">Convert To MX</button></td>
+							</tr> -->
+							<!-- 	<tr>
+							<td> <input type="text" id="myText" value="Mickey"></td>
+							<td  id="data-id" value="MT10320220371055834.IN"> MT10320220371055834.IN</td>
+							<td> Finacle Folder</td>
+							<td> MT</td>
+							<td><button  onclick="FileSubmit(this)" value="MT10320220371055834.IN">Convert To MX</button></td>
+							</tr> -->
+								
+							</tbody>
+						</table>
+					</div>
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+				</form>
+			</div>
+			</div>
+			</div>
+			
+			<div class="modal fade" id="alert" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">FIRST CAPITAL BANK</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>
+						<b style="font-size: 15px; font-weight: bold;">Message
+							Successfully Converted</b>
+					</p>
+
+					<div class="row">
+						<div class="col-6 col-sm-4" style="font-weight: bold;">File
+							Name</div>
+						<div class="col-6 col-sm-4">
+							<input type="text" id="text1" style="width: 230px;">
+						</div>
+
+						<!-- Force next columns to break to new line at md breakpoint and up -->
+
+
+
+					</div>
+					<div class="row"></div>
+					<div class="row">
+						<div class="col-6 col-sm-4" style="font-weight: bold;">Reference
+							Number</div>
+						<div class="col-6 col-sm-4">
+							<input type="text" id="text2" style="width: 230px;">
+						</div>
+
+					</div>
+
+				</div>
+				<button type="button" class="btn btn-primary" data-dismiss="modal"
+					id="exe">Close</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

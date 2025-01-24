@@ -1,0 +1,122 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+	
+<head>
+
+<link href="css/bootstrap4.css" rel="Stylesheet" />
+<title>BSWIFT</title>
+
+<!--**************** Header Style starts********************* -->
+<style>
+
+.headershade {
+     padding: 6px 0% 1px;
+} 
+
+#boblogo{
+font-weight: 700;
+font-size: larger;
+}
+
+#ipsword {
+	color:#ffffff;
+	right: 15%;
+    top: 0%;
+    font-weight: 900;
+    position: absolute;
+    padding: 16px 0% 1px;
+}
+#bfirelogo {
+	right: 3%;
+    top: 1%;
+    position: absolute;
+  
+}
+
+
+html {
+	zoom: 0.8;
+} 
+.headershade{
+ background: linear-gradient(to bottom, #1b6491 10%,#4ba2cf 50%); /* W3C */  
+}
+</style>
+<!--**************** Header Style ends********************* -->
+<!--************************* header menu style starts *******************************-->
+<style>
+body
+{
+	background-image: url("images/BIPS_Logo.jpg") ;
+        background-repeat:no-repeat;
+       background-size:cover;
+
+}
+
+body {
+  margin: 0;
+}
+
+
+.menucolor{
+/* background: linear-gradient(to bottom,hsl(14, 88%, 59%) 10%,#ff8700 50%); */
+background: linear-gradient(to bottom,#ff8700 5%,hsl(14, 88%, 59%) 50%); /* W3C */   
+color:black;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: #080707;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    line-height: 0.5;
+}
+
+#frame1 {
+	width:26;
+    margin-top: 4%;
+    margin-left: 1%;
+    background: linear-gradient(to bottom, #23384b 14%,#5f84a1 68%);
+}
+
+
+* {
+  box-sizing: border-box;
+}
+</style>
+<!--************************* header menu style ends *******************************-->	
+	
+</head>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	function contentLoad(a) {
+
+		location.href = a.id;
+		
+	}
+
+	/*<![CDATA[*/
+</script>
+<body>
+
+
+	
+	<!-- header -->
+		<div class="col-sm-18 headershade">
+		<div class="col-sm-6 headershade" style="height: 84px;">
+			<!-- <img th:src=@{/images/Bornfire.png} style="width: 80px;height: 80px" id="boblogo" alt="Bornfire">  -->
+		</div>
+	<h1 class="col-sm-6 " id="ipsword">Bornfire Swift Message Conversion	</h1>	
+		<!-- <img th:src=@{/images/bornfireheaderips.png} id="bfirelogo" style="width:183px" alt="Bornfire"> -->
+	   </div>
+	   
+	   
+
+<!-- style="background-color: #50728c;" -->
+
+</body>
+	
+</html>

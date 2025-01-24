@@ -1,0 +1,1639 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+</style>
+</head>
+
+<script>
+	/* jQuery(function($){
+	 $(document).ajaxSend(function() {
+	 $("#overlay").fadeIn(300);　
+	 });
+	
+	 $('.btn').click(function(){
+	 $.ajax({
+	 type: 'GET',
+	 success: function(data){
+	 console.log(data);
+	 }
+	 }).done(function() {
+	 setTimeout(function(){
+	 $("#overlay").fadeOut(300);
+	 },500);
+	 });
+	 });	
+	 }); */
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+	function back() {
+		window.history.back();
+	}
+
+	$(document).ready(function() {
+		$('#my_table').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+	function AddModal(a) {
+		//var bankcode = a.getAttribute("data-bank_code");
+		location.href = './participatingBanks?formmode=add';
+
+	}
+
+	function editcancel(a) {
+
+		location.href = './participatingBanks';
+
+	}
+	function edit_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		location.href = './participatingBanks?formmode=edit&bankcode='
+				+ bankcode;
+
+	}
+	
+	function disable_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		location.href = './participatingBanks?formmode=disable&bankcode='
+				+ bankcode;
+
+	}
+
+	function delete_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		location.href = './participatingBanks?formmode=delete&bankcode='
+				+ bankcode;
+
+	}
+
+	function verify_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		
+		location.href = './participatingBanks?formmode=verify&bankcode='
+				+ bankcode;
+
+	}
+	
+	function cancel_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		
+		location.href = './participatingBanks?formmode=cancel&bankcode='
+				+ bankcode;
+
+	}
+	function view_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		
+		location.href = './participatingBanks?formmode=view&bankcode='
+				+ bankcode;
+
+	}
+	
+	function view_new_btn_submit(a) {
+		var bankcode = a.getAttribute("data-bank_code");
+		
+		location.href = './participatingBanks?formmode=viewnew&bankcode='
+				+ bankcode;
+
+	}
+
+	function submitaddform(a) {
+
+		if ($("#BankandBranch").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addBankandBranch?formmode=" + formmode;
+
+			$("#BankandBranch").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranch").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	function submiteditform(a) {
+
+		if ($("#BankandBranchedit").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addBankandBranch?formmode=" + formmode;
+
+			$("#BankandBranchedit").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchedit").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	
+	
+
+	function submitdeleteform(a) {
+
+		if ($("#BankandBranchdelete").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addBankandBranch?formmode=" + formmode;
+
+			$("#BankandBranchdelete").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchdelete").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	function submitdisableform(a) {
+
+		if ($("#BankandBranchdisable").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addBankandBranch?formmode=" + formmode;
+
+			$("#BankandBranchdisable").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchdisable").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	
+	function submitverifyform(a) {
+
+		if ($("#BankandBranchverify").valid()) {
+			var entry = $("#entryUserVerify").val();
+			var modify = $("#modifyUserVerify").val();
+			var verify = $("#verifyUserVerify").val();
+
+			if (modify != "") {
+				if (modify != verify) {
+					var formmode = a.getAttribute("data-formmode");
+					var url = "./addBankandBranch?formmode=" + formmode;
+
+					$("#BankandBranchverify").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$("#BankandBranchverify").ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+				} else {
+					$("#verifyboxmsg").text("Same User Cannot Verify!");
+					$('#verifybox').modal("toggle");
+
+				}
+			} else {
+				if (entry != verify) {
+					var formmode = a.getAttribute("data-formmode");
+					var url = "./addBankandBranch?formmode=" + formmode;
+
+					$("#BankandBranchverify").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$("#BankandBranchverify").ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				} else {
+					$("#verifyboxmsg").text("Same User Cannot Verify!");
+					$('#verifybox').modal("toggle");
+
+				}
+
+			}
+
+		}
+	};
+
+	$(function() {
+
+		$("#entry_time1,verify_time1,modify_time1").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		var today = dd + '-' + mm + '-' + yyyy;
+		document.getElementById('entry_time1').value = today;
+		document.getElementById('verify_time1').value = today;
+		document.getElementById('modify_time1').value = today;
+	});
+
+	$(function() {
+
+		$("#entry_time2,verify_time2,modify_time2").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		var today = dd + '-' + mm + '-' + yyyy;
+		document.getElementById('entry_time2').value = today;
+		document.getElementById('verify_time2').value = today;
+		document.getElementById('modify_time2').value = today;
+	});
+	/*]]>*/
+</script>
+<script>
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");
+		;
+	});
+</script>
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="se-pre-con"></div>
+
+	<div class="container-manager">
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+
+
+		<div th:if="${formmode}=='list'" class="content">
+
+			<div class="card-header">
+				<div class="float-left">
+
+					<h6 style="font-size: 1.2rem; color: white;">Participating Banks</h6>
+				</div>
+				<div class="btn-group nav-buttons float-right">
+
+					<button type="button" class="btn btn-sm btn-primary " id="addBtn"
+						onclick="AddModal(this)" title="Add">Add</button>
+				</div>
+
+			</div>
+
+
+			<div class="table-responsive">
+
+
+				<table
+					class="table table-striped table-bordered  table-hover table-sm"
+					id="my_table">
+					<thead class="thead-light">
+						<tr>
+							<th>Bank Code</th>
+							<th>Bank Name</th>
+							<th>Bank Agent</th>
+							<th>Bank Agent Account</th>
+							<th>Address</th>
+							<th>Status</th>
+							<th>Select</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr style="font-size: smaller;" th:each="bankList : ${bankDetail}"
+							class="userlist">
+
+							<td th:text="${bankList.bank_code}"></td>
+							<td th:text="${bankList.bank_name}"></td>
+							<td th:text="${bankList.bank_agent}"></td>
+							<td th:text="${bankList.bank_agent_account}"></td>
+							<td th:text="${bankList.address}"></td>
+
+							<!-- <th:block th:switch="${bankList.disable_flg}">
+								<td th:case="'Y'" style="color: red;">Disabled</td>
+								<td th:case="'N'" style="color: green;">Active</td>
+								<td th:case="null" style="color: green;">Active</td>
+							</th:block> -->
+							
+						<th:block th:switch="${bankList?.entity_flg}">
+							<td th:case="'Y'" style="color: green;">Verified</td>
+							<td th:case="'N'" style="color: red;">UnVerified</td>
+						</th:block>
+
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button"
+										id="dropdownMenuButton"
+										style="line-height: 0.7; width: 64px; font-size: 11px; color: #3a4550; background: #f8f9fa;"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Action</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+										style="background-color: #e3e3e4; color: #3a4550;">
+
+										<a class="dropdown-item" title="Modify"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="edit_value" onclick="edit_btn_submit(this)"
+											th:if="${bankList?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">Modify</a>
+										
+										<div class="dropdown-divider"
+										th:if="${bankList?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'"></div>
+										
+										<a class="dropdown-item" title="Inquiry"
+										th:attr="data-bank_code=${bankList?.bank_code}"
+										style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										id="view_value" onclick="view_btn_submit(this)" 
+										th:if="${bankList.entity_flg}=='Y' OR ${bankList.new_bank_flg}=='N' OR ${bankList.modify_flg}=='Y'  ">View </a>
+										
+										<a class="dropdown-item" title="Inquiry"
+										th:attr="data-bank_code=${bankList?.bank_code}"
+										style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										id="view_value" onclick="view_new_btn_submit(this)" 
+										th:if="(${bankList.entity_flg}=='N' AND ${bankList.new_bank_flg}=='Y' AND ${bankList.modify_flg}=='N') ">View </a>
+										
+										<div class="dropdown-divider" th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W'"></div>
+									
+										<a class="dropdown-item" title="Delete"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="delete_value" onclick="delete_btn_submit(this)"
+											th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W' AND ${bankList.new_bank_flg}=='N'">Delete</a>
+
+										<div class="dropdown-divider"
+										th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W' AND ${bankList.new_bank_flg}=='N' AND(${bankList.disable_flg}=='N' OR ${bankList.disable_flg}==null)"></div>
+										<a class="dropdown-item" title="Disable"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="disable_value" onclick="disable_btn_submit(this)"
+											th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W' AND ${bankList.new_bank_flg}=='N' AND(${bankList.disable_flg}=='N' OR ${bankList.disable_flg}==null)">Disable</a>
+										
+										<div class="dropdown-divider"
+										th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W' AND ${bankList.new_bank_flg}=='N' AND ${bankList.disable_flg}=='Y'"></div>
+
+										<a class="dropdown-item" title="Disable"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="enable_value" onclick="disable_btn_submit(this)"
+											th:if="${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W' AND ${bankList.new_bank_flg}=='N' AND ${bankList.disable_flg}=='Y'">Enable</a>
+
+									<div class="dropdown-divider"
+										th:if="${bankList?.entity_flg} == 'N' AND ${IPSRoleMenu.work_class}=='C' AND ${bankList.new_bank_flg}=='N'"></div>
+									<a th:attr="data-bank_code=${bankList?.bank_code}"
+										th:if="${bankList?.entity_flg} == 'N' AND ${IPSRoleMenu.work_class}=='C'" class="dropdown-item"
+										title="Verify"
+										style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick="verify_btn_submit(this)" id="MFundtransfer1">Verify
+									</a>
+									
+									<div class="dropdown-divider"
+										th:if="${bankList?.entity_flg} == 'N' AND ${IPSRoleMenu.work_class}=='C' AND (${bankList.new_bank_flg}=='N' OR ${bankList.new_bank_flg}=='Y')"></div>
+									<a th:attr="data-bank_code=${bankList?.bank_code}"
+										th:if="${bankList?.entity_flg} == 'N' AND ${IPSRoleMenu.work_class}=='C'" class="dropdown-item"
+										title="Verify"
+										style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick="cancel_btn_submit(this)" id="MFundtransfer1">Cancel
+									</a>
+										<!-- <div th:if="${bankList.entity_flg == 'N' and bankList.entry_user !=session.USERID }"
+											class="dropdown-divider"></div>
+										<a th:if="${bankList.entity_flg == 'N' and bankList.entry_user !=session.USERID}"
+											class="dropdown-item" title="Verify"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="verify_value" onclick="verify_btn_submit(this)">verify</a>
+
+
+										<div th:if="${bankList.entity_flg}=='N'"
+											class="dropdown-divider"></div>
+
+									</div>
+ -->
+									</div>
+								</div>
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+
+			<div class="card-footer text-center">
+
+				<div class="float-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+					<button type="button" class="btn btn-sm btn-primary"
+						style="display: none" id="btnSubmit1" onclick="submitform();">Submit</button>
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="home();">Back</button>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div th:if="${formmode}=='add'" class="content">
+			<div class="card">
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">Participating Banks - Add</h6>
+					</div>
+					<div class="btn-group nav-buttons float-right"></div>
+
+				</div>
+				<!-- Modal body -->
+				<div class="card-body">
+					<form action="#" th:object="${BankandBranch}" method="POST"
+						autocomplete="off" id="BankandBranch">
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_code"
+									class="form-control form-control-sm" name="bank_code"
+									autocomplete="off" required>
+							</div>
+
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Bank Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_name"
+									class="form-control form-control-sm" name="bank_name"
+									autocomplete="off" required>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Agent</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent"
+									class="form-control form-control-sm" name="bank_agent"
+									autocomplete="off" required>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Agent Account</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent_account"
+									class="form-control form-control-sm" name="bank_agent_account"
+									autocomplete="off" required>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Address</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="address"
+									class="form-control form-control-sm" name="address"
+									autocomplete="off" required>
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+			<div class="card-footer text-center">
+				<button type="button" class="btn btn-sm btn-primary"
+					form="BankandBranch" th:attr="data-formmode=addsubmit"
+					onclick="submitaddform(this);">Submit</button>
+				<button type="button" class="btn btn-sm btn-primary"
+					data-dismiss="modal" onclick="back();">Cancel</button>
+
+			</div>
+
+			<div class="content"
+				style="border: 1px solid #36404a; padding: 15px; background-color: #dbdfe2;">
+
+				<div class="row formline">
+					<label class="col-sm-1">Entry User</label>
+					<div class="col-sm-2">
+						<input type="text" id="entryUserAdd" th:value="${session.USERID}"
+							form="BankandBranch" class="form-control form-control-sm"
+							name="entry_user" autocomplete="off" readonly>
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Modify User</label>
+					<div class="col-sm-2">
+						<input type="text" id="modifyUserAdd"
+							th:value="${branchDet?.modify_user}"
+							class="form-control form-control-sm" name="modify_user"
+							autocomplete="off" readonly>
+
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Verify User</label>
+					<div class="col-sm-2">
+						<input type="text" id="verifyUserAdd"
+							class="form-control form-control-sm" name="verify_user"
+							autocomplete="off" readonly>
+
+					</div>
+				</div>
+
+				<div class="row formline">
+
+					<label class="col-sm-1">Entry Time</label>
+					<div class="col-sm-2">
+						<input type="text" id="entryTimeAdd"
+							th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+							class="form-control form-control-sm" name="entry_time"
+							autocomplete="off" readonly>
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Modify Time</label>
+					<div class="col-sm-2">
+						<input type="text"
+							th:value="${#dates.format(branchDet?.modify_time,'dd-MM-yyyy')}"
+							id="modifyTimeAdd" class="form-control form-control-sm"
+							name="modify_time" autocomplete="off" readonly>
+
+					</div>
+					<div class="col-sm-1"></div>
+					<label class="col-sm-1">Verify Time</label>
+					<div class="col-sm-2">
+						<input type="text" id="verifyTimeAdd"
+							class="form-control form-control-sm" name="verify_time"
+							autocomplete="off" readonly>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<div th:if="${formmode}=='edit'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchedit}" method="POST"
+					autocomplete="off" id="BankandBranchedit">
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;">Participating Banks - Edit</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Code</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_code"
+									th:value="${branchDet?.bank_code}"
+									class="form-control form-control-sm" name="bank_code"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Bank Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_name"
+									th:value="${branchDet?.bank_name}"
+									class="form-control form-control-sm" name="bank_name"
+									autocomplete="off" required>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Agent</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent"
+									th:value="${branchDet?.bank_agent}"
+									class="form-control form-control-sm" name="bank_agent"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Agent Account</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent_account"
+									th:value="${branchDet?.bank_agent_account}"
+									class="form-control form-control-sm" name="bank_agent_account"
+									autocomplete="off" required>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+
+							<label class="col-sm-2">Address</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="address" th:value="${branchDet?.address}"
+									class="form-control form-control-sm" name="address"
+									autocomplete="off" required>
+							</div>
+						</div>
+						<div class="row formline"></div>
+					</div>
+
+
+					<div class="card-footer  text-center">
+
+						<button type="button" class="btn btn-primary btn-sm"
+							th:attr="data-formmode=editsubmit" form="BankandBranchedit"
+							onclick="submiteditform(this);">Submit</button>
+						<button type="button" class="btn btn-primary btn-sm"
+							onclick="editcancel();">Back</button>
+
+					</div>
+					<div class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry User</label>
+
+
+							<div class="col-sm-2">
+								<input type="text" id="entry_user"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" th:value="${session.USERID}" id="crncy"
+									class="form-control form-control-sm" name="modify_user"
+									form="BankandBranchedit" autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="crncy"
+									class="form-control form-control-sm" name="verify_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									id="entry_timeAdd" class="form-control form-control-sm"
+									name="entry_time" autocomplete="off" readonly>
+
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									id="verify_time1" class="form-control form-control-sm"
+									name="modify_time" autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="verify_time"
+									class="form-control form-control-sm" name="verify_time"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+
+
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+		<div th:if="${formmode}=='delete'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchdelete}" method="POST"
+					autocomplete="off" id="BankandBranchdelete">
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;">Participating Banks - Delete</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_code"
+									th:value="${branchDet?.bank_code}"
+									class="form-control form-control-sm" name="bank_code"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Bank Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_name"
+									th:value="${branchDet?.bank_name}"
+									class="form-control form-control-sm" name="bank_name"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Agent</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent"
+									th:value="${branchDet?.bank_agent}"
+									class="form-control form-control-sm" name="bank_agent"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Agent Account</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent_account"
+									th:value="${branchDet?.bank_agent_account}"
+									class="form-control form-control-sm" name="bank_agent_account"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Address</label>
+							<div class="col-sm-3">
+								<input type="text" id="address" th:value="${branchDet?.address}"
+									class="form-control form-control-sm" name="address"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+					</div>
+					<div class="card-footer  text-center">
+						<button type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=deletesubmit" form="BankandBranchdelete"
+							onclick="submitdeleteform(this);">Delete</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							onclick="editcancel();">Back</button>
+					</div>
+
+					<div class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyUserVerify"
+									class="form-control form-control-sm" name="modify_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Del User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchdelete"
+									class="form-control form-control-sm" name="del_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyTimeVerify"
+									class="form-control form-control-sm" name="modify_time"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Del Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									id="verifyTimeVerify" class="form-control form-control-sm"
+									form="BankandBranchdelete" name="verify_time"
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='disable'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchdisable}" method="POST"
+					autocomplete="off" id="BankandBranchdisable">
+					<div class="card-header">
+						<div th:if=" ${branchDet?.disable_flg}==null OR ${branchDet?.disable_flg}=='N'" class="float-left">
+							<h6 style="color: white;">Participating Banks - Disable</h6>
+						</div>
+						
+						<div th:if="${branchDet?.disable_flg}=='Y'" class="float-left">
+							<h6 style="color: white;">Participating Banks - Enable</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_code"
+									th:value="${branchDet?.bank_code}"
+									class="form-control form-control-sm" name="bank_code"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Bank Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_name"
+									th:value="${branchDet?.bank_name}"
+									class="form-control form-control-sm" name="bank_name"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Agent</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent"
+									th:value="${branchDet?.bank_agent}"
+									class="form-control form-control-sm" name="bank_agent"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Agent Account</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent_account"
+									th:value="${branchDet?.bank_agent_account}"
+									class="form-control form-control-sm" name="bank_agent_account"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Address</label>
+							<div class="col-sm-3">
+								<input type="text" id="address" th:value="${branchDet?.address}"
+									class="form-control form-control-sm" name="address"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+					</div>
+					<div class="card-footer  text-center">
+						<button th:if=" ${branchDet?.disable_flg}==null OR ${branchDet?.disable_flg}=='N'"
+						type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=disablesubmit" form="BankandBranchdisable"
+							onclick="submitdisableform(this);">Disable</button>
+						<button th:if=" ${branchDet?.disable_flg}=='Y'"
+						type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=enablesubmit" form="BankandBranchdisable"
+							onclick="submitdisableform(this);">Enable</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							onclick="editcancel();">Back</button>
+					</div>
+
+					<div th:if=" ${branchDet?.disable_flg}==null OR ${branchDet?.disable_flg}=='N'"  class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyUserVerify"
+									class="form-control form-control-sm" name="modify_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Disable User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchdisable"
+									class="form-control form-control-sm" name="disable_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyTimeVerify"
+									class="form-control form-control-sm" name="modify_time"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Disable Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									 class="form-control form-control-sm"
+									form="BankandBranchdisable" name="disable_time"
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+					
+					<div th:if="${branchDet?.disable_flg}=='Y'"  class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Enable User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchdisable"
+									class="form-control form-control-sm" name="disable_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Disable User</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.disable_user}"
+									class="form-control form-control-sm" 
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Enable Time</label>
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									 class="form-control form-control-sm"
+									form="BankandBranchdisable" 
+									autocomplete="off" readonly>
+
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Disable Time</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.disable_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+
+		<div th:if="${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='view'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchverify}" method="POST"
+					autocomplete="off" id="BankandBranchverify">
+					<div class="card-header">
+						<div th:if="${formmode}=='verify'" class="float-left">
+							<h6 style="color: white;">Participating Banks - Verify</h6>
+						</div>
+						
+						<div th:if="${formmode}=='cancel'" class="float-left">
+							<h6 style="color: white;">Participating Banks - Cancel</h6>
+						</div>
+						
+						<div th:if="${formmode}=='view'" class="float-left">
+							<h6 style="color: white;">Participating Banks - View</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_code"
+									th:value="${branchDet?.bank_code}"
+									class="form-control form-control-sm" name="bank_code"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Bank Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bank_name"
+									th:value="${branchDet?.bank_name}"
+									class="form-control form-control-sm" name="bank_name"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Bank Agent</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent"
+									th:value="${branchDet?.bank_agent}"
+									class="form-control form-control-sm" name="bank_agent"
+									autocomplete="off" required readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Agent Account</label>
+							<div class="col-sm-3">
+								<input type="text" id="bank_agent_account"
+									th:value="${branchDet?.bank_agent_account}"
+									class="form-control form-control-sm" name="bank_agent_account"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Address</label>
+							<div class="col-sm-3">
+								<input type="text" id="address" th:value="${branchDet?.address}"
+									class="form-control form-control-sm" name="address"
+									autocomplete="off" required readonly>
+							</div>
+						</div>
+
+					</div>
+					<div class="card-footer  text-center">
+						<button type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=verifysubmit" form="BankandBranchverify"
+							onclick="submitverifyform(this);"
+							th:if="${formmode}=='verify'">Submit</button>
+							
+						<button type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=verifysubmit" form="BankandBranchverify"
+							onclick="submitCancelform(this);"
+							th:if="${formmode}=='cancel'">Submit</button>
+							
+						<button type="button" class="btn btn-sm btn-primary"
+							onclick="editcancel();">Back</button>
+					</div>
+
+					<div th:if="${formmode}!='view'" class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyUserVerify"
+									th:value="${branchDet?.modify_user}"
+									class="form-control form-control-sm" name="modify_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Verify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchverify"
+									class="form-control form-control-sm" name="verify_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#dates.format(branchDet?.modify_time,'dd-MM-yyyy HH:mm')}"
+									id="modifyTimeVerify" class="form-control form-control-sm"
+									name="modify_time" autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									id="verifyTimeVerify" class="form-control form-control-sm"
+									form="BankandBranchverify" name="verify_time"
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!------------------------Pop window - Domain  list Ends--------------------------------->
+	<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+	<div class="modal fade" id="alert"  data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="verifybox" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body" style="text-align: center;background-color: #c6ccd2">
+					<p id="verifyboxmsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="editcancel();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="modal fade" id="verifybox"  data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-title" id="exampleModalLabel"
+					style="text-align: center; color: white;">CIM FINANCE</div>
+			</div>
+			<div class="modal-body"
+				style="text-align: center; background-color: #c6ccd2">
+				<p id="verifyboxmsg"></p>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div> -->
+	</div>
+</body>
+</html>

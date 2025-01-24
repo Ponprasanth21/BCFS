@@ -1,0 +1,1998 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+	font-weight: normal;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.imageround {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border-color: red;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+/* input[type="text"] {
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+ */
+.dataTables_empty {
+	color: #be3232;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+.dataTables_filter input {
+	color: black;
+	background-color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+.autocomplete {
+	/*the container must be positioned relative:*/
+	position: relative;
+	display: inline-block;
+}
+
+.autocomplete-items {
+	position: absolute;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+	border-top: none;
+	z-index: 99;
+	/*position the autocomplete items to be the same width as the container:*/
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+
+.autocomplete-items div {
+	padding: 10px;
+	cursor: pointer;
+	background-color: #fff;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+	/*when hovering an item:*/
+	background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+	/*when navigating through the items using the arrow keys:*/
+	background-color: DodgerBlue !important;
+	color: #ffffff;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+.force-scroll {
+	overflow-y: scroll;
+	height: 54px;
+}
+
+.dataTables_scrollBody {
+	position: relative;
+	overflow: auto;
+	max-height: 439px;
+	width: 100%;
+	min-height: 146px;
+}
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} */
+</style>
+</head>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+
+		$(document).ready(function() {
+			var formode = $("#formmode1").val();
+			if (formode == "view") {
+				$('input').attr('readonly', true);
+			} else if (formode == "verify") {
+				$('input').attr('readonly', true);
+			}
+
+		});
+
+	});
+
+	function home() {
+		location.href = '/BSWIFT/BSWIFTDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function fnClick(a) {
+		var recordSrlNo = a.getAttribute("data-recordSrlNo");
+		var tranType = a.getAttribute("data-tranType");
+		var formmode = a.getAttribute("data-formmode");
+
+		location.href = 'NotificationParms?formmode=' + formmode
+				+ '&recordSrlNo=' + recordSrlNo + '&tranType=' + tranType;
+	}
+
+	function addNotificationParms(a) {
+		location.href = 'NotificationParms?formmode=add';
+	}
+
+	function list() {
+		location.href = 'NotificationParms?formmode=list';
+	}
+
+	function submitform() {
+
+		if ($("#notificationParmsProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./createNotificationParms?formmode=" + formmode;
+
+			$("#notificationParmsProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#notificationParmsProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function editsubmitform() {
+
+		if ($("#notificationParmsProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./editNotificationParms?formmode=" + formmode;
+
+			$("#notificationParmsProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#notificationParmsProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	$(function() {
+		var date = new Date();
+
+		var RECORD_DATE = date.toISOString().slice(0, 10);
+
+		document.getElementById('RECORD_DATE').value = RECORD_DATE;
+
+	});
+
+	function verifysubmitform(a) {
+		var entryuser = a.getAttribute("data-entry_user");
+		var modifyuser = a.getAttribute("data-modify_user");
+		var formmode = a.getAttribute("data-formmode");
+		var loginuser =  [[${session.USERID}]];
+
+		if (modifyuser !=null ) {
+			if (modifyuser != loginuser) {
+				console.log("first");
+				$('select option').prop('disabled', false);
+
+				if ($("#notificationParmsProfile").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = "./verifyNotificationParms?formmode=" + formmode;
+					$("#notificationParmsProfile").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#notificationParmsProfile').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+
+				$('#alert').modal("toggle");
+
+			}
+		} else if ( modifyuser == null) {
+			if (entryuser != loginuser) {
+				console.log("second");
+				$('select option').prop('disabled', false);
+
+				if ($("#notificationParmsProfile").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = "./verifyNotificationParms?formmode=" + formmode;
+					$("#notificationParmsProfile").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#notificationParmsProfile').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+				$('#alert').modal("toggle");
+
+			}
+		}
+
+	};
+
+
+	function deleteform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+
+	function submitformdelete(a) {
+
+		$("#datadelete").hide();
+		if ($("#notificationParmsProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./deleteNotification?formmode=" + formmode;
+
+			$("#notificationParmsProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#notificationParmsProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+	
+	function cancelform(a) {
+
+		$("#datacancel").modal("toggle");
+
+	}
+	
+	function submitformcancel() {
+
+		$("#datacancel").hide();
+		if ($("#notificationParmsProfile").valid()) {
+
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./cancelNotificationParms?formmode=" + formmode;
+
+			$("#notificationParmsProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#notificationParmsProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	/*]]>*/
+</script>
+
+<script>
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+	function fnClickview(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=view&userid=' + userid
+	}
+
+	function fnClickCancel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=cancel&userid=' + userid
+	}
+
+	function fnClickviewnew(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=viewnew&userid=' + userid
+	}
+	function fnClickdel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=delete&userid=' + userid
+	}
+
+	function fnClickVerify(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=verify&userid=' + userid
+	}
+
+	function finuser(a) {
+
+		var Mandate_ref_no = a.getAttribute("data-mand_ref_no")
+		$
+				.ajax({
+
+					type : 'get',
+					url : "./getBlobImage/" + Mandate_ref_no,
+					success : function(response) {
+						$('#imageshow').modal('show');
+						document.getElementById("doc_image").src = "data:image/png;base64,"
+								+ response;
+
+					}
+
+				});
+
+	}
+	////Bulk Transaction submission 
+	function submitUploadForm(a) {
+		var validate = true;
+		$('#my_table').find('tr input[type=text]').each(function() {
+			//  	alert("true");
+			if ($(this).val() == "") {
+				//	alert("false");
+				validate = false;
+			}
+		});
+
+		if (validate) {
+			//alert("validate"+validate);
+			if ($("#MandateUpload").valid()) {
+
+				var formmode = a.getAttribute("data-formmode");
+				var url = "./mandateUpload?formmode=" + formmode;
+				//    alert(url);
+				$("#MandateUpload").attr('action', url);
+
+				var options = {
+					success : showResponse
+				};
+
+				$("#MandateUpload").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					//	alert("responseText"+responseText);
+					if (responseText.tranID == "0") {
+						$("#errormsg").text(responseText.status);
+						$('#error').modal("toggle");
+					} else {
+						$("#alertmsg").text(responseText.status);
+
+						$('#alert').modal("toggle");
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+
+	};
+
+	////Upload Document
+	function fire_ajax_submit() {
+		$('#fileupload').hide();
+		//$("#loader1").modal("toggle");
+
+		var form = $('#fileUploadForm')[0];
+		var data = new FormData(form);
+		var trHTML = '';
+		$('#my_tabletr').empty();
+
+		$
+				.ajax({
+					type : "POST",
+					enctype : 'multipart/form-data',
+					url : "ws/fileUploadMandate",
+					data : data,
+					processData : false, //prevent jQuery from automatically transforming the data into a query string
+					contentType : false,
+					cache : false,
+					timeout : 600000,
+					success : function(list) {
+
+						$
+								.each(
+										list,
+										function(KEY, data) {
+											trHTML += "<tr id='trBody'>"
+													+ '<td><input type="text" name="merchant_code" id="mand_account_no1"' + data.merchant_code  + '" class="form-control" value="' + data.merchant_code + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_name" id="mand_account_name1' + data.mand_account_name  + '" class="form-control" value="' + data.mand_account_name + '" readonly/></td>'
+													+ '<td><input type="text" name="periodicity" id="periodicity1' + data.periodicity  + '" class="form-control" value="' + data.periodicity + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_type" id="mand_account_type1'   + data.mand_account_type  + '" class="form-control" value="' + data.mand_account_type + '" required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_no" id="ben_account_no'   + data.ben_account_no  + '" class="form-control" value="' + data.ben_account_no + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_name" id="ben_account_name1'   + data.ben_account_name  + '" class="form-control" value="' + data.ben_account_name + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_bank_name" id="ben_bank_name1'   + data.ben_bank_name  + '" class="form-control" value="' + data.ben_bank_name + '" required readonly/></td>'
+													+ '<td><input type="text" name="mand_cust_ref_no" id="mand_cust_ref_no1'   + data.mand_cust_ref_no  + '" class="form-control" value="' + data.mand_cust_ref_no + '" readonly/></td>'
+													+ '<td><input type="text" name="purpose" id="purpose1'   + data.purpose  + '" class="form-control" value="' + data.purpose + '"readonly/></td>'
+													+ '<td><input type="text" name="remarks" id="remarks1' + data.remarks  + '" class="form-control" value="' + data.remarks + '"readonly/></td>'
+													+ '<td><input type="text" name="mand_bank_code" id="mand_bank_code1' + data.mand_bank_code  + '" class="form-control" value="' + data.mand_bank_code + '"readonly/></td>'
+													+ '</tr>';
+
+										});
+
+						$('#my_table').append(trHTML);
+						//$("#loader1").hide();
+
+						return data;
+					},
+					error : function(e) {
+						//$("#loader1").hide();
+						$("#invalidfilemsg").text(e.responseText);
+						$("#invalidfile").modal("toggle");
+
+					}
+				});
+	}
+	/*$(function() {
+		$("#RECORD_DATE").datepicker({
+			minDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#ed_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+	$(function() {
+		$("#START_DATE").datepicker({
+			maxDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#end_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});*/
+
+	$(function() {
+		$("#START_DATE").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+		});
+
+	});
+	$(function() {
+		$("#ed_date1").datepicker({
+
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+
+		});
+
+	});
+
+	$(function() {
+		$('input[type="radio"]')
+				.click(
+						function() {
+							if ($(this).is(':checked')) {
+								if ($(this).val() == 'Variable') {
+									//alert("ok");
+									document
+											.getElementById('minVarAmountIdLabel').style.display = "block";
+									document
+											.getElementById('maxVarAmountIdLabel').style.display = "block";
+									document.getElementById('min_amountDiv').style.display = "block";
+									document.getElementById('max_amountDiv').style.display = "block";
+								} else if ($(this).val() == 'Fixed') {
+									//alert("not");
+									document
+											.getElementById('minVarAmountIdLabel').style.display = "none";
+									document
+											.getElementById('maxVarAmountIdLabel').style.display = "none";
+									document.getElementById('min_amountDiv').style.display = "none";
+									document.getElementById('max_amountDiv').style.display = "none";
+								}
+								//alert();
+							}
+						});
+	});
+
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage" : {
+				"sSearch" : "",
+				"sSearchPlaceholder" : "Search Here"
+			},
+			"searching" : true,
+			"pageLength" : 25,
+			"lengthChange" : false,
+		});
+	});
+</script>
+
+</head>
+<title>BSWIFT</title>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" style="max-height: 400px">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">Notification Parameter</h6>
+							</div>
+
+							<div class="btn-group nav-buttons float-right">
+								<button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="addNotificationParms();"
+									th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Add</button>
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<!-- <th></th> -->
+									<th>Record Srl No</th>
+									<th>Event Number</th>
+									<th>Event Description</th>
+									<th>Record Date</th>
+									<th>Status</th>
+
+
+									<th style="width: 19px;">Select</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="notificationParmsProfile : ${notificationParmsProfiles}"
+									class="userlist">
+
+									<td th:text="${notificationParmsProfile.RECORD_SRL_NO}"></td>
+									<td th:text="${notificationParmsProfile.NOTIFICATION_EVENT_NO}"></td>
+									<td
+										th:text="${notificationParmsProfile.NOTIFICATION_EVENT_DESC}"></td>
+									<td
+										th:text="${#dates.format(notificationParmsProfile.RECORD_DATE, 'dd-MM-yyyy')}"></td>
+									<th:block th:switch="${notificationParmsProfile.ENTITY_FLG}">
+										<td th:case="'Y'" style="color: green;">Verified</td>
+										<td th:case="'N'" style="color: red;">UnVerified</td>
+									</th:block>
+
+
+
+
+									<!-- 	<td 
+										class=underline onclick="finuser(this);"
+										th:attr="data-mand_ref_no=${merchantProfile.mandate_ref_no}"
+										title="click to view Image" id="openUploadModal">show</td> -->
+
+									<td>
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" title="Action"
+												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">Action</button>
+
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton"
+												style="line-height: 0.7; background-color: #e3e3e4;">
+
+												<a class="dropdown-item" title="Modify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-recordSrlNo=${notificationParmsProfile.RECORD_SRL_NO},data-tranType=${notificationParmsProfile.TRAN_CATEGORY},
+													data-formmode='edit'"
+													th:id="${notificationParmsProfile.RECORD_SRL_NO}"
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='Y'  and (${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W')">Modify</a>
+
+												<div
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='Y'  and (${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W')"
+													class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="verify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-recordSrlNo=${notificationParmsProfile.RECORD_SRL_NO},data-tranType=${notificationParmsProfile.TRAN_CATEGORY},
+													data-formmode='verify'"
+													th:id="${notificationParmsProfile.RECORD_SRL_NO}"
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C' ">Verify</a>
+
+												<div
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C'"
+													class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="View"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-recordSrlNo=${notificationParmsProfile.RECORD_SRL_NO},data-tranType=${notificationParmsProfile.TRAN_CATEGORY},
+													data-formmode='view'"
+													th:id="${notificationParmsProfile.RECORD_SRL_NO}">View</a>
+
+												<div
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='Y'  and (${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W')"
+													class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="Modify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-recordSrlNo=${notificationParmsProfile.RECORD_SRL_NO},data-tranType=${notificationParmsProfile.TRAN_CATEGORY},
+													data-formmode='delete'"
+													th:id="${notificationParmsProfile.RECORD_SRL_NO}"
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='Y'  and (${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W')">Delete</a>
+
+												<div
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C'"
+													class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="Cancel"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-recordSrlNo=${notificationParmsProfile.RECORD_SRL_NO},data-tranType=${notificationParmsProfile.TRAN_CATEGORY},
+													data-formmode='cancel'"
+													th:id="${notificationParmsProfile.RECORD_SRL_NO}"
+													th:if="${notificationParmsProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C' ">Cancel</a>
+											
+
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="history.back()">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!---------------------User List Ends--------------------------------------------------------->
+
+
+
+
+		<!---------------------User Edit form Starts-------------------------------------------------->
+
+		<div
+			th:if="${formmode}=='view' OR ${formmode}=='add' OR ${formmode}=='cancel' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='verify'  OR ${formmode}=='viewnew'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<form action="#" th:object="${notificationParmsProfile}"
+							method="post" autocomplete="off" id="notificationParmsProfile"
+							th:fragment="finuserapply">
+
+							<div class="card-header" style="background-color: #3e6369b5;">
+								<div class="float-left">
+									<h3 th:if="${formmode}=='add'" style="color: white">
+										Notification Parameter - Add</h3>
+									<h3
+										th:if="${formmode}=='edit' AND ${notificationParmsProfile?.ENTITY_FLG}!='N'"
+										style="color: white">Notification Parameter - Modify</h3>
+										<h3
+										th:if="${formmode}=='cancel' AND ${notificationParmsProfile?.ENTITY_FLG}!='Y'"
+										style="color: white">Notification Parameter - Cancel</h3>
+										<h3
+										th:if="${formmode}=='delete' AND ${notificationParmsProfile?.ENTITY_FLG}!='N'"
+										style="color: white">Notification Parameter - Delete</h3>
+										
+										   	<h3
+										th:if="${formmode}=='verify' AND ${notificationParmsProfile?.ENTITY_FLG}=='Y'"
+										style="color: white">Notification Parameter - Verify</h3>
+									<h3
+										th:if="${formmode}=='verify' AND ${notificationParmsProfile?.ENTITY_FLG}=='N'"
+										style="color: white">Notification Parameter - Verify</h3>
+									<h3
+										th:if="${formmode}=='view' AND ${notificationParmsProfile?.ENTITY_FLG}!='N'"
+										style="color: white">Notification Parameter - View</h3>
+
+									<h3
+										th:if="${formmode}=='view' AND ${notificationParmsProfile?.ENTITY_FLG}!='Y'"
+										style="color: white">Notification Parameter - View</h3>
+
+								</div>
+								<div class="btn-group nav-buttons float-right">
+
+									<button type="button" class="btn btn-xs btn-primary btns"
+										id="btnInq" onclick="list();">List</button>
+								</div>
+							</div>
+							<div class="card-body">
+
+
+								<div class="form-group">
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="FEE_SRL_NO">Record Srl No </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="RECORD_SRL_NO" name="RECORD_SRL_NO"
+												class="form-control form-control-sm"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="RECORD_SRL_NO" name="RECORD_SRL_NO"
+												th:value="${notificationParmsProfile?.RECORD_SRL_NO}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='edit' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Record Date </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="date" id="RECORD_DATE" name="RECORD_DATE"
+												max="9999-12-31" class="form-control form-control-sm"
+												autocomplete="false" maxlength="100" readonly />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${#dates.format(notificationParmsProfile.RECORD_DATE, 'yyyy-MM-dd')}"
+												name="RECORD_DATE" class="form-control form-control-sm"
+												autocomplete="false" required maxlength="100" readonly />
+										</div>
+									</div>
+									<label></label>
+
+
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Event Number </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="NOTIFICATION_EVENT_NO"
+												name="NOTIFICATION_EVENT_NO"
+												class="form-control form-control-sm"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="NOTIFICATION_EVENT_NO"
+												name="NOTIFICATION_EVENT_NO"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EVENT_NO}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Tran Category </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="TRAN_CATEGORY" name="TRAN_CATEGORY"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${notificationParmsProfile?.TRAN_CATEGORY}"
+												id="TRAN_CATEGORY" name="TRAN_CATEGORY"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete'" />
+										</div>
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Notification Limit </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="NOTIFICATION_LIMIT"
+												name="NOTIFICATION_LIMIT"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="NOTIFICATION_LIMIT"
+												name="NOTIFICATION_LIMIT"
+												th:value="${notificationParmsProfile?.NOTIFICATION_LIMIT}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Event Description </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EVENT_DESC"
+												name="NOTIFICATION_EVENT_DESC"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EVENT_DESC}"
+												id="NOTIFICATION_EVENT_DESC" name="NOTIFICATION_EVENT_DESC"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete'" />
+										</div>
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Notification User 1
+
+											</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_1"
+												name="NOTIFICATION_USER_1"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_1"
+												name="NOTIFICATION_USER_1"
+												th:value="${notificationParmsProfile?.NOTIFICATION_USER_1}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Mobile 1 </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="NOTIFICATION_MOBILE_1"
+												name="NOTIFICATION_MOBILE_1"
+												class="form-control form-control-sm"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												autocomplete="false" maxlength="100" />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="number"
+												th:value="${notificationParmsProfile?.NOTIFICATION_MOBILE_1}"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												id="NOTIFICATION_MOBILE_1" name="NOTIFICATION_MOBILE_1"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete'" />
+										</div>
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Notification User 2
+
+											</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_2"
+												name="NOTIFICATION_USER_2"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_2"
+												name="NOTIFICATION_USER_2"
+												th:value="${notificationParmsProfile?.NOTIFICATION_USER_2}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Mobile 2 </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="NOTIFICATION_MOBILE_2"
+												name="NOTIFICATION_MOBILE_2"
+												class="form-control form-control-sm"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												autocomplete="false" maxlength="100" />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="number"
+												th:value="${notificationParmsProfile?.NOTIFICATION_MOBILE_2}"
+												id="NOTIFICATION_MOBILE_2" name="NOTIFICATION_MOBILE_2"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete'" />
+										</div>
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Notification User 3
+
+											</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_3"
+												name="NOTIFICATION_USER_3"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_USER_3"
+												name="NOTIFICATION_USER_3"
+												th:value="${notificationParmsProfile?.NOTIFICATION_USER_3}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Mobile 3 </label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="NOTIFICATION_MOBILE_3"
+												name="NOTIFICATION_MOBILE_3"
+												class="form-control form-control-sm"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												autocomplete="false" maxlength="100" />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="number"
+												th:value="${notificationParmsProfile?.NOTIFICATION_MOBILE_3}"
+												id="NOTIFICATION_MOBILE_3" name="NOTIFICATION_MOBILE_3"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete'" />
+										</div>
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Email Id 1 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_1"
+												name="NOTIFICATION_EMAIL_1"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_1"
+												name="NOTIFICATION_EMAIL_1"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_1}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">SMS Flag </label>
+										</div>
+										<div th:if="${formmode}=='add' " class="col-sm-3">
+
+											<select name="NOTIFICATION_SMS_FLG" id="NOTIFICATION_SMS_FLG"
+												class="form-control form-control-sm">
+												<option value="">Select</option>
+												<option value="Y">Yes</option>
+												<option value="N">No</option>
+											</select>
+										</div>
+										<div th:if="${formmode}=='edit'" class="col-sm-3">
+
+											<select name="NOTIFICATION_SMS_FLG" id="NOTIFICATION_SMS_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_SMS_FLG}"
+												th:field="*{NOTIFICATION_SMS_FLG}"
+												class="form-control form-control-sm"
+												th:disabled="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_SMS_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_SMS_FLG}=='N'"
+													value="N">No</option>
+
+											</select>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify'  OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+											<select name="NOTIFICATION_SMS_FLG" id="NOTIFICATION_SMS_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_SMS_FLG}"
+												th:field="*{NOTIFICATION_SMS_FLG}"
+												class="form-control form-control-sm"
+												th:disabled="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_SMS_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_SMS_FLG}=='N'"
+													value="N">No</option>
+
+											</select>
+											<!-- <input type="text" name="NOTIFICATION_SMS_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_SMS_FLG}" id="NOTIFICATION_SMS_FLG"
+												value="" class="form-control form-control-sm" readonly /> -->
+
+										</div>
+									</div>
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Email Id 2 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_2"
+												name="NOTIFICATION_EMAIL_2"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_2"
+												name="NOTIFICATION_EMAIL_2"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_2}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Email Flag </label>
+										</div>
+										<div th:if="${formmode}=='add' " class="col-sm-3">
+
+											<select name="NOTIFICATION_EMAIL_FLG"
+												id="NOTIFICATION_EMAIL_FLG"
+												class="form-control form-control-sm">
+												<option value="">Select</option>
+												<option value="Y">Yes</option>
+												<option value="N">No</option>
+											</select>
+										</div>
+										<div th:if="${formmode}=='edit'" class="col-sm-3">
+
+											<select name="NOTIFICATION_EMAIL_FLG"
+												id="NOTIFICATION_EMAIL_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_FLG}"
+												th:field="*{NOTIFICATION_EMAIL_FLG}"
+												class="form-control form-control-sm"
+												th:disabled="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_EMAIL_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_EMAIL_FLG}=='N'"
+													value="N">No</option>
+
+											</select>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify'  OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+
+
+											<select name="NOTIFICATION_EMAIL_FLG"
+												id="NOTIFICATION_EMAIL_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_FLG}"
+												th:field="*{NOTIFICATION_EMAIL_FLG}"
+												class="form-control form-control-sm"
+												th:disabled="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_EMAIL_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${NOTIFICATION_SMS_FLG?.NOTIFICATION_EMAIL_FLG}=='N'"
+													value="N">No</option>
+
+											</select>
+											<!-- 	<input type="text" name="NOTIFICATION_EMAIL_FLG"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_FLG}" id="NOTIFICATION_EMAIL_FLG"
+												value="" class="form-control form-control-sm" readonly /> -->
+
+
+
+										</div>
+
+
+									</div>
+
+									<label> </label>
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Email Id 3 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_3"
+												name="NOTIFICATION_EMAIL_3"
+												class="form-control form-control-sm" autocomplete="off" />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="NOTIFICATION_EMAIL_3"
+												name="NOTIFICATION_EMAIL_3"
+												th:value="${notificationParmsProfile?.NOTIFICATION_EMAIL_3}"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Alert Flag </label>
+										</div>
+										<div th:if="${formmode}=='add' " class="col-sm-3">
+
+											<select name="ALERT_FLG" id="ALERT_FLG"
+												class="form-control form-control-sm">
+												<option value="">Select</option>
+												<option value="Y">Yes</option>
+												<option value="N">No</option>
+											</select>
+										</div>
+										<div th:if="${formmode}=='edit'" class="col-sm-3">
+
+											<select name="ALERT_FLG" id="ALERT_FLG"
+												th:value="${notificationParmsProfile?.ALERT_FLG}"
+												th:field="*{ALERT_FLG}" class="form-control form-control-sm">
+												<option
+													th:selected="${notificationParmsProfile?.ALERT_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${notificationParmsProfile?.ALERT_FLG}=='N'"
+													value="N">No</option>
+											</select>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify'  OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+
+											<select name="ALERT_FLG" id="ALERT_FLG"
+												th:value="${notificationParmsProfile?.ALERT_FLG}"
+												th:field="*{ALERT_FLG}" class="form-control form-control-sm"
+												th:disabled="${notificationParmsProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option
+													th:selected="${notificationParmsProfile?.ALERT_FLG}=='Y'"
+													value="Y">Yes</option>
+												<option
+													th:selected="${notificationParmsProfile?.ALERT_FLG}=='N'"
+													value="N">No</option>
+											</select>
+											<!-- <input type="text" name="ALERT_FLG"
+												th:value="${notificationParmsProfile?.ALERT_FLG}" id="ALERT_FLG"
+												value="" class="form-control form-control-sm" readonly /> -->
+
+
+
+										</div>
+
+
+									</div>
+
+									<label> </label>
+
+
+									<div class="card-footer text-center">
+										<button type="button" class="btn btn-xs btn-primary"
+											id="btnHome" onclick="home();">Home</button>
+
+
+										<button
+											th:if=" ${formmode}=='delete'"
+											type="button" class="btn btn-xs btn-primary"
+											th:attr="data-formmode=${formmode},data-del=${del_flg}"
+											onclick="deleteform(this);" id="btnModify">Delete</button>
+											
+											<button
+											th:if=" ${formmode}=='cancel'"
+											type="button" class="btn btn-xs btn-primary"
+											th:attr="data-formmode=${formmode},data-del=${del_flg}"
+											onclick="cancelform(this);" id="btnModify">Cancel</button>
+
+										<button th:if=" ${formmode}=='add'" type="button"
+											class="btn btn-xs btn-primary"
+											form="notificationParmsProfile" id="btnSubmit"
+											onclick="submitform();"
+											th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG}">Submit</button>
+
+										<button th:if="${formmode}=='edit' " type="button"
+											class="btn btn-xs btn-primary"
+											form="notificationParmsProfile" id="btnSubmit"
+											onclick="editsubmitform();"
+											th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG}">Submit</button>
+
+
+										<button th:if="${formmode}=='verify' " type="button"
+											class="btn btn-xs btn-primary"
+											form="notificationParmsProfile" id="btnSubmit"
+											onclick="verifysubmitform(this);"
+											th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG},data-modify_user=${notificationParmsProfile?.MODIFY_USER},data-entry_user=${notificationParmsProfile?.ENTRY_USER}">Verify</button>
+
+
+
+										<button type="button" class="btn btn-xs btn-primary"
+											id="btnBack" onclick="history.back()">Back</button>
+
+									</div>
+
+									<div class="content"
+										th:if="${formmode}=='add' OR ${formmode}=='edit' OR ${formmode}=='verify' "
+										style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+										<div class="row formline">
+											<label class="col-sm-1">Entry User</label>
+
+											<div class="col-sm-2">
+												<input type="text" id="entryUserVerify"
+													th:if="${formmode}=='add'" form="BankandBranchentry"
+													class="form-control form-control-sm" name="entry_user"
+													th:value="${session.USERID}" autocomplete="off" readonly />
+												<input type="text" id="entryUserVerify"
+													th:if="${formmode}=='edit' OR ${formmode}=='verify'"
+													th:value="${notificationParmsProfile?.ENTRY_USER}"
+													form="BankandBranchentry"
+													class="form-control form-control-sm" name="entry_user"
+													autocomplete="off" readonly />
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify User</label>
+											<div class="col-sm-2">
+
+												<input type="text" th:if="${formmode}=='add' "
+													id="modifyUserVerify" form="BankandBranchmodify"
+													class="form-control form-control-sm" name="modify_user"
+													autocomplete="off" readonly> <input type="text"
+													th:if="${formmode}=='edit'" id="modifyUserVerify"
+													th:value="${session.USERID}" form="BankandBranchmodify"
+													class="form-control form-control-sm" name="modify_user"
+													autocomplete="off" readonly /> <input type="text"
+													th:if="${formmode}=='verify'" id="modifyUserVerify"
+													form="BankandBranchmodify"
+													th:value="${notificationParmsProfile?.MODIFY_USER}"
+													class="form-control form-control-sm" name="modify_user"
+													autocomplete="off" readonly />
+
+
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Verify User</label>
+											<div class="col-sm-2">
+												<input type="text" th:if="${formmode}=='add' "
+													id="verifyUserVerify" form="BankandBranchverify"
+													class="form-control form-control-sm" name="verify_user"
+													autocomplete="off" readonly /> <input type="text"
+													th:if="${formmode}=='edit'" id="verifyUserVerify"
+													form="BankandBranchverify"
+													class="form-control form-control-sm" name="verify_user"
+													autocomplete="off" readonly /> <input type="text"
+													th:if="${formmode}=='verify'" id="verifyUserVerify"
+													th:value="${session.USERID}" form="BankandBranchverify"
+													class="form-control form-control-sm" name="verify_user"
+													autocomplete="off" readonly />
+
+
+											</div>
+										</div>
+
+										<div class="row formline">
+
+											<label class="col-sm-1">Entry Time</label>
+											<div class="col-sm-2">
+												<input type="text" id="entryTimeVerify"
+													th:if="${formmode}=='add'"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													class="form-control form-control-sm"
+													form="BankandBranchentry" autocomplete="off" readonly /> <input
+													type="text" id="entryTimeVerify"
+													th:if="${formmode}=='edit' OR ${formmode}=='verify'"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													class="form-control form-control-sm"
+													form="BankandBranchentry" autocomplete="off" readonly />
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify Time</label>
+											<div class="col-sm-2">
+												<input type="text" th:if="${formmode}=='add'"
+													id="modifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchmodify" autocomplete="off" readonly />
+												<input type="text" th:if="${formmode}=='edit'"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													id="modifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchmodify" autocomplete="off" readonly />
+												<input type="text" th:if="${formmode}=='verify'"
+													id="modifyTimeVerify" class="form-control form-control-sm"
+													th:value="${notificationParmsProfile?.MODIFY_TIME}"
+													form="BankandBranchmodify" autocomplete="off" readonly />
+
+
+											</div>
+											<div class="col-sm-1"></div>
+											<label class="col-sm-1">Verify Time</label>
+
+											<div class="col-sm-2">
+												<input type="text" th:if="${formmode}=='add' "
+													id="verifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchverify" autocomplete="off" readonly />
+												<input type="text" th:if="${formmode}=='edit'"
+													id="verifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchverify" autocomplete="off" readonly />
+												<input type="text" th:if="${formmode}=='verify'"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													id="verifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchverify" autocomplete="off" readonly />
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="modal fade" id="verifybox" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="verifyboxmsg"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--------------------------User Edit form Ends-------------------------------------------------->
+				<!-- -----------------------Pop window - fin user list starts--------------------------------->
+
+				<div class="modal fade" id="finusers">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Finacle Users</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<table class="table table-hover" id="finusertb">
+									<thead class="thead-light">
+										<tr>
+											<th>Branch code</th>
+											<th>Employee Id</th>
+											<th>User Id</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="userProfile : ${FinUserProfiles}"
+											th:id="${userProfile.userid}" class="userlist"
+											th:onclick="finuser(this)">
+											<td th:text="${userProfile.finSolTb.sol_id}">123</td>
+											<td th:text="${userProfile.finGenEmpTb.emp_id}">123</td>
+											<td th:text="${userProfile.userid}">456</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - fin user list Ends--------------------------------->
+				<!-- ---------------------Pop window - Domain list starts--------------------------------->
+
+				<div class="modal fade" id="getDomain">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Domain Id</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<ul class="list-group">
+									<li class="list-group-item" th:each="domainlist : ${domains}">
+										<input type="checkbox" name="dom" th:value="${domainlist}" />
+										<label th:text="${domainlist}"></label>
+
+									</li>
+								</ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitdata();">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - Domain  list Ends--------------------------------->
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+				<div class="modal fade" id="alert" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="alertmsg" style="font-size: 16px;"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="datadelete" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; color: #f15362; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to delete?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformdelete(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="datacancel" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to Cancel?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformcancel(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alert1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg1" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addCredit" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Please fill the required fields</p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="fileupload" data-keyboard="false"
+		data-backdrop="static">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<h1>Upload only xlsx, xls or csv files</h1>
+					<br /> <br />
+					<form action="#" th:object="${fileUploadForm}" method="POST"
+						autocomplete="off" id="fileUploadForm"
+						enctype="multipart/form-data">
+						<div></div>
+						<input id="file" type="file" name="file" accept=".xls,.xlsx,.csv" /><br />
+						<br /> <input type="hidden" id="mandateServices"
+							name="mandateServices" value="mandateServices">
+						<button type="button" th:attr="data-formmode=submitupload"
+							class="btn btn-xs btn-primary" onclick="fire_ajax_submit();"
+							form="fileUploadForm" id="btn_Upload_Submit">Submit</button>
+
+						<button type="button" class="btn btn-xs btn-primary"
+							data-dismiss="modal">Close</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="error" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="errormsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="invalidfile" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="invalidfilemsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imageshow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="width: 1042px;">
+				<div class="modal-body" style="text-align: center">
+
+					<br /> <br /> <img class="img-responsive" id="doc_image"
+						style="max-height: 500px;">
+				</div>
+				<button type="button" class="btn btn-xs btn-primary"
+					data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

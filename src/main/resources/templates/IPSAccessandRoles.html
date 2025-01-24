@@ -1,0 +1,1493 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/chartjs/2.8.0/Chart.min.css"
+	th:href="@{webjars/chartjs/2.8.0/Chart.min.css}">
+<script src="webjars/chartjs/2.8.0/Chart.min.js"
+	th:src="@{webjars/chartjs/2.8.0/Chart.min.js}"></script>
+
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<script src="js/bootstrap411.js"></script>
+
+</head>
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+	font-weight: normal;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.imageround {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border-color: red;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+/* input[type="text"] {
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+ */
+.dataTables_empty {
+	color: #be3232;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+.dataTables_filter input {
+	color: black;
+	background-color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+.autocomplete {
+	/*the container must be positioned relative:*/
+	position: relative;
+	display: inline-block;
+}
+
+.autocomplete-items {
+	position: absolute;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+	border-top: none;
+	z-index: 99;
+	/*position the autocomplete items to be the same width as the container:*/
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+
+.autocomplete-items div {
+	padding: 10px;
+	cursor: pointer;
+	background-color: #fff;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+	/*when hovering an item:*/
+	background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+	/*when navigating through the items using the arrow keys:*/
+	background-color: DodgerBlue !important;
+	color: #ffffff;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+}
+
+.force-scroll {
+
+overflow-y: scroll;
+
+height: 54px;
+
+}
+
+.dataTables_scrollBody{
+    position: relative;
+    overflow: auto;
+    max-height: 439px;
+    width: 100%;
+    min-height: 146px;
+}
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} */
+</style>
+</head>
+
+<script>
+	/* jQuery(function($){
+	 $(document).ajaxSend(function() {
+	 $("#overlay").fadeIn(300);　
+	 });
+	
+	 $('.btn').click(function(){
+	 $.ajax({
+	 type: 'GET',
+	 success: function(data){
+	 console.log(data);
+	 }
+	 }).done(function() {
+	 setTimeout(function(){
+	 $("#overlay").fadeOut(300);
+	 },500);
+	 });
+	 });	
+	 }); */
+</script>
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	var ipsaccessrole = /*[[${ipsaccessrole}]]*/null;
+
+	console.log("ipsaccessrole  " + ipsaccessrole);
+
+	/*]]>*/
+
+	function getUserlist(mode, num, maxpage) {
+
+		var n = parseInt(num);
+		var max = parseInt(maxpage);
+		var Callurl = 'AccessandRoles?formmode=list';
+
+		switch (mode) {
+		case "nextpage":
+			n = n + 1;
+			if (n > max) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+			break;
+		case "prevpage":
+			n = n - 1;
+			if (n < 0) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+			break;
+		case "givenpage":
+			n = parseInt($("#pageno").val()) - 1;
+			if (n > max || n < 0) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+		}
+
+		location.href = Callurl;
+	}
+
+	function home() {
+		location.href = '/BSWIFT/BSWIFTDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function fnClick(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'AccessandRoles?formmode=edit&userid=' + userid
+	}
+
+	function adduser(a) {
+		location.href = 'AccessandRoles?formmode=add';
+	}
+
+	function list() {
+		location.href = 'AccessandRoles?formmode=list';
+	}
+
+	function edit_btn_submit(a) {
+
+		var srlno = a.getAttribute("data-role_id");
+		location.href = 'AccessandRoles?formmode=edit&userid=' + srlno;
+	}
+
+	function view_btn_submit(a) {
+		var srlno = a.getAttribute("data-role_id");
+
+		location.href = 'AccessandRoles?formmode=view&userid=' + srlno;
+
+	}
+	
+	function view_new_btn_submit(a) {
+		var srlno = a.getAttribute("data-role_id");
+
+		location.href = 'AccessandRoles?formmode=viewnew&userid=' + srlno;
+
+	}
+	function verify_btn_submit(a) {
+		var srlno = a.getAttribute("data-role_id");
+
+		location.href = 'AccessandRoles?formmode=verify&userid=' + srlno;
+
+	}
+	
+	function cancel_btn_submit(a) {
+		var srlno = a.getAttribute("data-role_id");
+
+		location.href = 'AccessandRoles?formmode=cancel&userid=' + srlno;
+
+	}
+
+	function delete_btn_submit(a) {
+		var rollID = a.getAttribute("data-role_id");
+		location.href = 'AccessandRoles?formmode=delete&userid=' + rollID;
+	}
+	
+	function delete_new_submit(a) {
+		var rollID = a.getAttribute("data-role_id");
+		location.href = 'AccessandRoles?formmode=delete&userid=' + rollID;
+	}
+	
+	function deleteSubmit(a) {
+		var formmode = a.getAttribute("data-formmode");
+		var url = "./createAccessRole?formmode=" + formmode;
+
+		$("#IPSAccessRole").attr('action', url);
+
+		var options = {
+			success : showResponse
+		};
+
+		$("#IPSAccessRole").ajaxSubmit(options);
+
+		function showResponse(responseText, statusText, xhr, $form) {
+
+			$("#alertmsg").text(responseText);
+
+			$('#alert').modal("toggle");
+
+		};
+	};
+	
+	
+	function verifySubmit(a) {
+		var entryuser = a.getAttribute("data-entry_user");
+		var modifyuser = a.getAttribute("data-modify_user");
+		var formmode = a.getAttribute("data-formmode");
+		var loginuser =  [[${session.USERID}]];
+ console.log(modifyuser);
+ console.log("ddd");
+
+		if (modifyuser !=null ) {
+			if (modifyuser != loginuser) {
+				console.log("first");
+				$('select option').prop('disabled', false);
+
+				if ($("#IPSAccessRole").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = "./createAccessRole?formmode=" + formmode;
+					$("#IPSAccessRole").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#IPSAccessRole').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+
+				$('#alert').modal("toggle");
+
+			}
+		} else if ( modifyuser == null) {
+			if (entryuser != loginuser) {
+				console.log("second");
+				$('select option').prop('disabled', false);
+
+				if ($("#IPSAccessRole").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = "./createAccessRole?formmode=" + formmode;
+					$("#IPSAccessRole").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#IPSAccessRole').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+				$('#alert').modal("toggle");
+
+			}
+		}
+
+	};
+		
+	
+	function cancelSubmit(a) {
+
+		var entryuser = a.getAttribute("data-entry_user");
+		var modifyuser = a.getAttribute("data-modify_user");
+		var formmode = a.getAttribute("data-formmode");
+		var loginuser = [[${session.USERID}]];
+
+		if ((modifyuser = "" && modifyuser == loginuser)
+				|| (modifyuser == null && entryuser == loginuser)) {
+			$("#alertmsg").text("Same user cannot Cancel");
+			$('#alert').modal("toggle");
+		} else {
+
+			alert("ok");
+			var url = "./createAccessRole?formmode=" + formmode;
+
+			$("#IPSAccessRole").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#IPSAccessRole").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+
+
+
+	function roledesc() {
+
+		var roleid = $("#roleId").find(':selected').val();
+
+		if (roleid == 'ADM') {
+			$("#roleDesc").val("Admin");
+		} else if (roleid == 'ADT') {
+			$("#roleDesc").val("Audit");
+		} else if (roleid == 'GEN') {
+			$("#roleDesc").val("General User");
+		}
+		$(this).find(':selected').text();
+
+	}
+
+	function submitform(a) {
+		
+var role_id= $("#role_id1").val();
+var formmode = a.getAttribute("data-formmode");
+
+if ($("#IPSAccessRole").valid()) {
+	//alert(role_id);
+	
+
+	
+	if(role_id != ''){
+			var checkBoxAdminValue, adminValue, cbAudit, auditValue, cbIPSOperations, IPSOperationsValue, CBMonitoring, monitoringValue, cbmy_tregistration, my_tregistrationValue,cbWalletMaster,walletMaster1,
+			consentRegistration,consentValue,merchantRegistration,merchantValue;
+			var finalVar = [];
+
+			checkBoxAdminValue = document.querySelector("#Admin:checked");
+			adminValue = (checkBoxAdminValue) ? 'Y' : 'N';
+
+			if (adminValue === "Y") {
+				finalVar.push("Admin");
+			}
+
+
+			cbAudit = document.querySelector("#Audit_operations:checked");
+			auditValue = (cbAudit) ? 'Y' : 'N';
+			if (auditValue === "Y") {
+				finalVar.push("Audit_operations");
+			}
+			cbIPSOperations = document.querySelector("#IPSOperations:checked");
+			IPSOperationsValue = (cbIPSOperations) ? 'Y' : 'N';
+			if (IPSOperationsValue === "Y") {
+				finalVar.push("IPSOperations");
+			}
+			CBMonitoring = document.querySelector("#Monitoring:checked");
+			monitoringValue = (CBMonitoring) ? 'Y' : 'N';
+			if (monitoringValue === "Y") {
+				finalVar.push("Monitoring");
+			}
+
+			cbmy_tregistration = document
+					.querySelector("#MYT_Registration:checked");
+			my_tregistrationValue = (cbmy_tregistration) ? 'Y' : 'N';
+			if (my_tregistrationValue === "Y") {
+				finalVar.push("MYT_Registration");
+			}
+			
+		
+			cbWalletMaster = document
+					.querySelector("#WalletMaster:checked");
+			walletMaster1 = (cbWalletMaster) ? 'Y' : 'N';
+			if (walletMaster1 === "Y") {
+				finalVar.push("Wallet_Master");
+			}
+			consentRegistration = document.querySelector("#Consent_registration:checked");
+			consentValue = (consentRegistration) ? 'Y' : 'N';
+
+			if (consentValue === "Y") {
+				finalVar.push("Consent_registration");
+			}
+			merchantRegistration = document.querySelector("#Merchant_registration:checked");
+			merchantValue = (merchantRegistration) ? 'Y' : 'N';
+
+			if (merchantValue === "Y") {
+				finalVar.push("Merchant_registration");
+			}
+			/* alert(walletMaster1); */
+			var formmode = a.getAttribute("data-formmode");
+
+			var finalString = finalVar.join(',');
+			
+			if(finalString==""){
+				$("#alertmsg1").text("Please Select Menu List");
+
+				$('#alert1').modal("toggle");
+			}else{
+				var url = "./createAccessRole?formmode=" + formmode + "&adminValue="
+				+ adminValue + "&auditValue=" + auditValue
+				+ "&IPSOperationsValue=" + IPSOperationsValue
+				+ "&monitoringValue=" + monitoringValue
+				+ "&my_tregistrationValue=" + my_tregistrationValue
+				+ "&walletMaster=" + walletMaster1+"&consentValue="+consentValue + "&merchantValue=" +merchantValue
+				+ "&finalString=" + finalString;
+
+		$("#IPSAccessRole").attr('action', url);
+
+		var options = {
+			success : showResponse
+		};
+
+		$("#IPSAccessRole").ajaxSubmit(options);
+
+		function showResponse(responseText, statusText, xhr, $form) {
+
+			$("#alertmsg").text(responseText);
+
+			$('#alert').modal("toggle");
+
+		}
+		;
+			}
+
+	}else{
+	$("#alertmsg1").text("Please fill the Role ID");
+
+				$('#alert1').modal("toggle");
+	}
+}
+
+	};
+
+	/*_$t*/
+</script>
+
+
+<style>
+.dropdown-toggle {
+	line-height: 1rem;
+}
+</style>
+
+<script>
+	function getvalue() {
+		/* $('#log').empty(); */
+        //$( "#log" ).load(window.location.href + " #log" );
+		
+		var data="";
+		var n1 = document.getElementById('log').innerText; 
+		document.getElementById('log').innerHTML=""; 
+		
+		$('#finusers :checkbox:checked').each(function() {
+		   
+			var status = (this.checked ? $(this).val() : "");
+			var id = $(this).attr("id");
+			$('#log').show();
+			
+			$('#menucontent').hide();
+			
+			data+="<p>" + id + "</p>";
+			
+		});
+		
+		$('#log').append(data);
+		/*  $('#log').append("<h3>" + id + " : " + status + "</h3>"); */
+	}
+	
+	$(document).ready(function() {
+		$('#my_table').DataTable({
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage" : {
+				"sSearch" : "",
+				"sSearchPlaceholder" : "Search Here"
+			},
+			"searching" : true,
+			"pageLength" : 25,
+			"lengthChange" : false,
+		});
+	});
+	
+</script>
+
+
+
+
+</head>
+<title>BSWIFT</title>
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+
+	<div class="container-manager">
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<!---------------------User List Starts------------------------------------------------------->
+		<div th:if="${formmode}=='list'" class=" content">
+
+			<div class="card-header"
+				style="background-color: #3e6369b5; height: 48px;">
+				<div class="float-left">
+					<h6 style="font-size: 1.2rem; color: white;">Access and Role</h6>
+				</div>
+				<div class="btn-group nav-buttons float-right">
+
+					<button type="button" class="btn btn-sm btn-primary " id="btnAdd"
+						onclick="adduser();" title="Add Role">Add Role</button>
+						<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+				</div>
+
+			</div>
+
+
+			<table
+				class="table table-striped table-bordered  table-hover table-sm"
+				id="my_table">
+				<thead class="thead-light">
+					<tr>
+						<th style="width: 15%">Role Id</th>
+						<th style="width: 15%">Role Description</th>
+						<th style="width: 15%">Work Class</th>
+						<th style="width: 40%">Menu List</th>
+						<th style="width: 40%">Status</th>
+						<th style="width: 15%">Select</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="AccessRole : ${AccessandRoles}"
+						th:attr="data-userid=${AccessRole?.role_id}"
+						th:id="${AccessRole?.role_id}" class="userlist">
+						<td style="width: 125px" th:text="${AccessRole?.role_id}"></td>
+						<td style="width: 250px" th:text="${AccessRole?.role_desc}"></td>
+						<!-- 	<td th:text="${AccessRole.work_class}">123</td> -->
+						<th:block th:switch="${AccessRole?.work_class}">
+							<td th:case="'M'">Maker</td>
+							<td th:case="'C'">Checker</td>
+							<td th:case="'B'">Reader</td>
+						</th:block>
+						<td style="width: 250px" th:text="${AccessRole?.menulist}"></td>
+						<th:block th:switch="${AccessRole?.entity_flg}">
+							<td th:case="'Y'" style="color: green;">Verified</td>
+							<td th:case="'N'" style="color: red;">UnVerified</td>
+						</th:block>
+						<td>
+							<div class="dropdown">
+								<button class="btn btn-secondary dropdown-toggle" type="button"
+									id="dropdownMenuButton" title="Action"
+									style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">Action</button>
+
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+									style="background-color: #e3e3e4; color: #3a4550;">
+
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										class="dropdown-item" title="Modify"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										id="edit_value" onclick="edit_btn_submit(this)"
+										th:if="${AccessRole?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">Modify</a>
+										
+																				
+
+									<div class="dropdown-divider"
+										th:if="${AccessRole?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'"></div>
+
+
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										class="dropdown-item" title="Inquiry"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick="view_btn_submit(this)" id="view_btn"
+										th:if="${AccessRole?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">View
+									</a>
+
+
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										class="dropdown-item" title="Inquiry"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick=" view_new_btn_submit(this)" id="view_new_btn"
+										th:if="${AccessRole?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'">View
+									</a>
+										
+										
+										<div class="dropdown-divider"
+										th:if="${AccessRole?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'"></div>
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										class="dropdown-item" title="Cancel"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										id="cancel_value" onclick="cancel_btn_submit(this)"
+										th:if="${AccessRole?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'">Cancel</a>
+										
+										<div class="dropdown-divider"
+										th:if="${AccessRole?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'"></div>
+
+
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										class="dropdown-item" title="Delete"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick="delete_btn_submit(this)" id="delete_value"
+										th:if="${AccessRole?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">Delete
+									</a>
+									
+									<div class="dropdown-divider"
+										th:if="${AccessRole?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'"></div>
+
+									<a th:attr="data-role_id=${AccessRole?.role_id}"
+										th:if="${AccessRole?.entity_flg} == 'N' AND ${IPSRoleMenu.work_class}=='C'"
+										class="dropdown-item" title="Verify"
+										style="cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+										onclick="verify_btn_submit(this)" id="MFundtransfer1">Verify
+									</a>
+									
+								</div>
+
+							</div>
+
+						</td>
+				</tbody>
+			</table>
+			<!-- 	<div class="float-right"
+								th:if="${AccessandRoles.totalPages} gt 1">
+								<a href="#"><i class="fas fa-caret-left fa-2x"
+									th:onclick="|getUserlist('prevpage',${AccessandRoles.number},${AccessandRoles.totalPages});|"></i></a>
+								<input type="text" id="pageno" style="width: 30px"
+									th:value="${AccessandRoles.number+1}"
+									th:onchange="|getUserlist('givenpage',${AccessandRoles.number},${AccessandRoles.totalPages});|"></input>
+								of <font th:text="${AccessandRoles.totalPages}"></font> <a
+									href="#"><i class="fas fa-caret-right fa-2x"
+									th:onclick="|getUserlist('nextpage',${AccessandRoles.number},${AccessandRoles.totalPages});|"></i></a>
+							</div> -->
+
+			<div class="card-footer text-center">
+
+				<div class="float-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+
+			</div>
+		</div>
+
+		<!---------------------User List Ends--------------------------------------------------------->
+		<!---------------------User Edit form Starts-------------------------------------------------->
+		<div
+			th:if="${formmode}=='edit' OR ${formmode}=='add' OR ${formmode}=='delete' OR ${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='cancel'">
+
+			<div class="card">
+			<div class="card-header"
+					style="background-color: #3e6369b5; height: 48px;">
+					<div class="float-left">
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='edit'">Access and Role- EDIT</h6>
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='add'">Access and Role- ADD</h6>
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='verify'">Access and Role- VERIFY</h6>
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='cancel'">Access and Role- CANCEL</h6>
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='view'">Access and Role- VIEW</h6>
+						<h6 style="font-size: 1.2rem; color: white;"
+							th:if="${formmode}=='delete'">Access and Role- DELETE</h6>
+					</div>
+				<div class="btn-group nav-buttons float-right">
+
+									<button type="button" class="btn btn-xs btn-primary btns"
+										id="btnInq" onclick="list();">List</button>
+								</div>
+				</div>
+
+				<div class="card-body">
+
+					<form action="#" th:object="${IPSAccessRole}" method="post"
+						autocomplete="off" id="IPSAccessRole" th:fragment="finuserapply">
+
+						<div class="row formline">
+							<label class="col-sm-2">Role Id</label>
+							<div class="col-sm-3" th:if="${formmode}=='add'">
+								<input type="text" id="role_id1" name="role_id"
+									th:value="${ref_id}" class="form-control form-control-sm" autocomplete="off"
+									required readonly />
+
+							</div>
+							<div class="col-sm-3"
+								th:if="${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+								<input type="text" id="role_id" th:value="*{role_id}"
+									th:field="*{role_id}" class="form-control form-control-sm"
+									required readonly />
+							</div>
+
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Role Description</label>
+							<div class="col-sm-3">
+								<input th:if="${formmode}=='add'" type="text" id="role_desc"
+									name="role_desc" class="form-control form-control-sm" required />
+								<input
+									th:if="${formmode}=='edit' OR ${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'"
+									type="text" id="role_desc" th:value="*{role_desc}"
+									th:field="*{role_desc}" class="form-control form-control-sm"
+									th:readonly="${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'" />
+
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						<div class="row formline">
+							<label style="height: 2px;"></label>
+
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Permissions</label>
+							<div class="col-sm-3"
+								th:if="${formmode}=='edit'OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+								<select id="permissions" class="form-control form-control-sm"
+									th:value="*{permissions}" th:field="*{permissions}"
+									th:readonly="${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'"
+									autocomplete="off" required>
+									<option value="O">Select</option>
+									<option value="R">Read</option>
+									<option value="W">Write</option>
+								</select>
+
+							</div>
+							<div class="col-sm-3" th:if="${formmode}=='add'">
+								<select id="permissions" class="form-control form-control-sm"
+									name="permissions" autocomplete="off" required>
+									<option value="">Select</option>
+									<option value="R">Read</option>
+									<option value="W">Write</option>
+								</select>
+
+							</div>
+
+							<div class="col-sm-3" th:if="${formmode}=='view' ">
+								<!-- <input type="text" id="permissions" th:value="*{permissions}"
+												th:field="*{permissions}" class="form-control form-control-sm"    readonly/> -->
+								<input type="text" id="permissions"
+									class="form-control form-control-sm"
+									th:value="${IPSAccessRole.permissions=='W'} ? 'Write' : 'Read'"
+									readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Remarks</label>
+							<div class="col-sm-3" th:if="${formmode}=='edit'">
+								<input th:value="${remarks}" id="remarks" th:field="*{remarks}"
+									class="form-control form-control-sm" required />
+
+							</div>
+							<div class="col-sm-3" th:if=" ${formmode}=='add'">
+								<input id="remarks" name="remarks"
+									class="form-control form-control-sm" required />
+
+							</div>
+							<div class="col-sm-3"
+								th:if="${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+								<input th:value="${remarks}" id="remarks" th:field="*{remarks}"
+									class="form-control form-control-sm" readonly />
+
+							</div>
+
+						</div>
+						<div class="row formline">
+							<label style="height: 2px;"></label>
+
+						</div>
+						<div class="row formline">
+							<label class="col-sm-2">Work Class</label>
+							<div class="col-sm-3"
+								th:if="${formmode}=='edit'OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+								<select id="work_class" class="form-control form-control-sm"
+									th:value="*{work_class}" th:field="*{work_class}"
+									onchange="roledesc();" autocomplete="off" required
+									th:readonly="${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'">
+									<option value="">Select</option>
+									<option value="M">Maker</option>
+									<option value="C">Checker</option>
+									<option value="B">Reader</option>
+								</select>
+							</div>
+
+							<div class="col-sm-3" th:if="${formmode}=='add'">
+								<select id="work_class" class="form-control form-control-sm"
+									name="work_class" onchange="roledesc();" autocomplete="off"
+									required>
+									<option value="">Select</option>
+									<option value="M">Maker</option>
+									<option value="C">Checker</option>
+									<option value="B">Reader</option>
+								</select>
+							</div>
+							<div class="col-sm-3" th:if="${formmode}=='view'">
+								<input type="text" id="work_class"
+									class="form-control form-control-sm"
+									th:value="${IPSAccessRole.work_class=='M'} ? 'Maker' : 'Checker'"
+									readonly />
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Menu List</label>
+							<div class="col-sm-3">
+								<div id="log" style="background-color: #dbdfe2; display: none;"></div>
+								<div
+									th:if="${formmode}=='edit' OR ${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='cancel' OR ${formmode}=='delete'"
+									id="menucontent">
+									<!-- <h6 th:if="*{admin}=='Y'" style="color: black">Admin</h6>
+											<h6 th:if="*{audit_operations}=='Y'" style="color: black">Audit
+												Operations</h6>
+											<h6 th:if="*{ips_operations}=='Y'" style="color: black">IPS
+												Operations</h6>
+											<h6 th:if="*{monitoring}=='Y'" style="color: black">Monitoring</h6>
+											<h6 th:if="*{myt_registration}=='Y'" style="color: black">My_t
+												Registration</h6> -->
+									<p id="menuValue"
+										th:each="message:${#strings.arraySplit(IPSAccessRole.menulist, ',')}"
+										th:text="${message}"></p>
+
+								</div>
+							</div>
+
+							<div class="col-sm-1">
+								<a th:if="${formmode}=='add' OR ${formmode}=='edit'" href="#"><i
+									class="fas fa-search searchico" data-toggle="modal"
+									data-target="#finusers" id="iconacc"></i></a>
+							</div>
+
+						</div>
+
+						<div class="modal fade" id="finusers">
+							<div
+								class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+								<div class="modal-content" style="border: 2px solid black;">
+
+									<!-- Modal Header -->
+									<div class="modal-header" style="background-color: #386276;">
+										<h4 class="modal-title">Menu List</h4>
+										<button type="button" class="close" data-dismiss="modal">×</button>
+									</div>
+									<!-- Modal body -->
+									<div class="modal-body" style="background-color: #e6eaed;">
+
+										<input type="checkbox" id="Admin" value="Y" name="admin"
+											th:checked="${IPSAccessRole?.admin}==Y" /> Admin Operations
+
+
+
+										<ul>
+											<li>User Profile Maintenance</li>
+											<li>Access and Roles</li>
+											<li>Organisation And Branch Master</li>
+											<li>IPS Parameter
+												<ul>
+													<li>Login Security</li>
+												</ul>
+												<ul>
+													<li>Service Charges and Fees</li>
+												</ul>
+												<ul>
+													<li>Participating Banks</li>
+												</ul>
+												<ul>
+													<li>Settlement Account</li>
+												</ul>
+												<ul>
+													<li>Business Hours</li>
+												</ul>
+												<ul>
+													<li>Merchant Category Code</li>
+												</ul>
+												<ul>
+													<li>Wallet Fees and Charges</li>
+												</ul>
+												<ul>
+													<li>Notification Charges</li>
+												</ul>
+											</li>
+
+										</ul>
+
+										<input type="checkbox" id="Audit_operations" value='Y'
+											name="audit_operations"
+											th:checked="${IPSAccessRole?.audit_operations}=='Y'" />Audit
+										Operations
+
+										<ul>
+											<li>User Login History</li>
+											<li>Service Audits</li>
+										</ul>
+
+
+
+										<input type="checkbox" id="IPSOperations" value='Y'
+											name="ips_operations"
+											th:checked="${IPSAccessRole?.ips_operations}=='Y'" />IPS
+										Operations
+
+										<ul>
+											<li>Bulk Transaction
+												<ul>
+													<li>Bulk Credit Transaction</li>
+													<li>Bulk Debit Transaction</li>
+												</ul>
+											</li>
+											<li>Manual Transaction</li>
+											<li>RTP Transaction</li>
+											<li>Settlement Transaction</li>
+											<li>Reversal Transaction</li>
+											<li>IPS Reconciliation</li>
+											<li>Mandate Management</li>
+											<!-- <li>Merchant Registration</li> -->
+										</ul>
+
+										<input type="checkbox" id="WalletMaster" value='Y'
+											name="wallet_master"
+											th:checked="${IPSAccessRole?.wallet_master}=='Y'" />Wallet
+										Master
+
+										<ul></ul>
+										<input type="checkbox" id="Monitoring" value='Y'
+											name="monitoring"
+											th:checked="${IPSAccessRole?.monitoring}=='Y'" />Monitoring
+										<ul>
+											<li>Outgoing Credit Transaction Monitor</li>
+											<li>RTP-Outgoing Transaction Monitor</li>
+											<li>Inward Credit Transaction Monitor</li>
+											<li>RTP-Incoming Transaction Monitor</li>
+											<li>CBS Monitor</li>
+											<li>IPS Monitor</li>
+											<li>BOM Settlement Report</li>
+
+										</ul>
+										<input type="checkbox" id="MYT_Registration" value='Y'
+											name="myt_registration"
+											th:checked="${IPSAccessRole?.myt_registration}=='Y'" /> MY-T
+										Registration
+
+										<ul>
+											<li>User Registration</li>
+
+
+										</ul>
+										<input type="checkbox" id="Consent_registration" value='Y'
+											name="consent_registration"
+											th:checked="${IPSAccessRole?.consent_registration}=='Y'" />Consent
+										Outgoing Registration
+
+										<ul>
+											<li>Registration</li>
+											<li>AISP Request</li>
+											<li>Participant Fees</li>
+										</ul>
+
+										<input type="checkbox" id="Merchant_registration" value='Y'
+											name="merchant_registration"
+											th:checked="${IPSAccessRole?.merchant_registration}=='Y'" />Merchant
+										Registration
+
+										<ul>
+											<li>Merchant QR Registration</li>
+
+										</ul>
+
+
+										<div style="float: right;">
+											<button type="button" class="btn btn-primary"
+												data-dismiss="modal" onclick="getvalue();">SUBMIT</button>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</form>
+
+
+				</div>
+				<div class="card-footer text-center">
+					<button th:if="${formmode}=='edit' OR ${formmode}=='add'"
+						type="button" class="btn btn-sm btn-primary" form="IPSAccessRole"
+						th:attr="data-formmode=${formmode}" id="btnSubmit"
+						onclick="submitform(this);">Submit</button>
+
+					<button th:if="${formmode}=='verify'" type="button"
+						class="btn btn-sm btn-primary" form="IPSAccessRole"
+						th:attr="data-formmode='verify',data-entry_user=${IPSAccessRole.entry_user},
+									data-modify_user=${IPSAccessRole.modify_user}"
+						id="btnSubmit" onclick="verifySubmit(this);">Verify</button>
+
+					<button th:if="${formmode}=='cancel'" type="button"
+						class="btn btn-sm btn-primary" form="IPSAccessRole"
+						th:attr="data-formmode='cancel',data-entry_user=${IPSAccessRole.entry_user},
+									data-modify_user=${IPSAccessRole.modify_user}"
+						id="btnSubmit" onclick="cancelSubmit(this);">Submit</button>
+
+					<button th:if="${formmode}=='delete'" type="button"
+						class="btn btn-sm btn-primary" form="IPSAccessRole"
+						th:attr="data-formmode='delete',data-entry_user=${IPSAccessRole.entry_user},
+									data-modify_user=${IPSAccessRole.modify_user}"
+						id="btnSubmit" onclick="deleteSubmit(this);">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+
+				</div>
+
+			</div>
+
+			<div class="container content"
+				th:if="${formmode}=='add' OR ${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='cancel'"
+				th:each="alert : ${IPSAccessRole}"
+				style="border: 1px solid #36404a; padding: 15px;">
+
+				<div class="row formline">
+
+
+					<label class="col-sm-2">Entry User</label>
+
+					<div class="col-sm-2">
+
+						<input type="text" th:if="${formmode}=='add'"
+							th:value="${session.USERID}" id="entry_user" name="entry_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text"
+							th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='cancel'"
+							th:value="${alert?.entry_user}" id="entry_user" name="entry_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+					</div>
+
+					<label class="col-sm-2">Modify User</label>
+
+					<div class="col-sm-2">
+
+						<input type="text" th:if=" ${formmode}=='add'" name="modify_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text"
+							th:if=" ${formmode}=='verify' OR ${formmode}=='cancel'"
+							th:value="${alert?.modify_user}" id="modify_user"
+							name="modify_user" class="form-control form-control-sm"
+							autocomplete="off" readonly />
+							 <input type="text"
+							th:if="${formmode}=='edit'" th:value="${session.USERID}"
+							id="modify_user" name="modify_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+					</div>
+
+					<label class="col-sm-2">Verify User</label>
+
+					<div class="col-sm-2">
+
+						<input type="text" th:if="${formmode}=='add'" id="verify_user"
+							name="verify_user" class="form-control form-control-sm"
+							autocomplete="off" readonly /> <input type="text"
+							th:if="${formmode}=='edit'" id="verify_user" name="verify_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text" th:if="${formmode}=='verify'"
+							th:value="${session.USERID}" id="verify_user" name="verify_user"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text" th:if="${formmode}=='cancel'" id="verify_user"
+							name="verify_user" class="form-control form-control-sm"
+							autocomplete="off" readonly />
+
+
+					</div>
+
+				</div>
+
+				<div class="row formline">
+
+					<label class="col-sm-2">Entry Time</label>
+
+					<div class="col-sm-2">
+
+						<input type="text" th:if="${formmode}=='add' "
+							th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}"
+							id="entry_date" name="entry_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text"
+							th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='cancel'"
+							th:value="${#dates.format(alert?.entry_time,'dd-MM-yyyy HH:mm')}"
+							id="entry_date" name="entry_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+					</div>
+
+
+					<label class="col-sm-2">Modify Time</label>
+
+					<div class="col-sm-2">
+
+						<input type="text" th:if="${formmode}=='add'" id="modify_date"
+							name="modify_time" class="form-control form-control-sm"
+							autocomplete="off" readonly /> <input type="text"
+							th:if="${formmode}=='verify' OR ${formmode}=='cancel'"
+							th:value="${#dates.format(alert?.modify_time,'dd-MM-yyyy HH:mm')}"
+							id="modify_date" name="modify_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+
+						<input type="text" th:if="${formmode}=='edit'"
+							th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}"
+							id="modify_date" name="modify_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+
+					</div>
+
+					<label class="col-sm-2">Verify Time</label>
+
+					<div class="col-sm-2">
+
+						<input type="text"
+							th:if="${formmode}=='add' OR ${formmode}=='edit' "
+							id="verify_time" name="verify_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text" th:if="${formmode}=='verify'"
+							th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy HH:mm')}"
+							id="verify_date" name="verify_time"
+							class="form-control form-control-sm" autocomplete="off" readonly />
+
+						<input type="text" th:if="${formmode}=='cancel'" id="verify_date"
+							name="verify_time" class="form-control form-control-sm"
+							autocomplete="off" readonly />
+
+
+					</div>
+					<label></label>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="alert" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM FINANCE</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="alertmsg"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal"
+							onclick="list();">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="alert1" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM FINANCE</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="alertmsg1"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="datadelete" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM FINANCE</div>
+					</div>
+					<div class="modal-body"
+						style="margin-top: 8px; text-align: center; background-color: #c6ccd2">
+						<button type="button" class="close" data-dismiss="modal">×</button>
+						Are you Sure want to delete?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitformdelete(this);" th:attr="data-formmode=delete">Submit</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="formmsg" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM FINANCE</div>
+					</div>
+					<div class="modal-body"
+						style="margin-top: 8px; text-align: center; background-color: #c6ccd2">
+						<button type="button" class="close" data-dismiss="modal">×</button>
+						<a th:value="${msg}"></a>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitformdelete(this);" th:attr="data-formmode=delete">Submit</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

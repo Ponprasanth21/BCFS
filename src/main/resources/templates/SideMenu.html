@@ -1,0 +1,1017 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta charset="utf-8">
+<title>IPSAdmin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description">
+<meta content="Coderthemes" name="author">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+<!-- App css -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/materialdesignicons.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.css.map}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.min.css.map}" rel="stylesheet"
+	type="text/css">
+<!-- <link href="css/loginfontawesome4.css" rel="stylesheet" type="text/css"> -->
+<link rel="stylesheet"
+	href="//cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css">
+<script th:src="@{/js/bootstrap411.js}"></script>
+
+<style type="text/css">
+.jqstooltip {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	visibility: hidden;
+	background: rgb(0, 0, 0) transparent;
+	background-color: rgba(0, 0, 0, 0.6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,
+		endColorstr=#99000000);
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	color: white;
+	font: 10px arial, san serif;
+	text-align: left;
+	white-space: nowrap;
+	padding: 5px;
+	border: 1px solid white;
+	box-sizing: content-box;
+	z-index: 10000;
+}
+
+.jqsfield {
+	color: white;
+	font: 10px arial, san serif;
+	text-align: left;
+}
+
+#left_menu {
+	background: linear-gradient(to bottom, #3f93c0 22%, #1b6491 62%);
+	color: white;
+	padding: 15px;
+	height: 100%;
+	overflow-y: scroll;
+}
+
+.profile-dropdown {
+	position: absolute;
+	will-change: transform;
+	top: 0px;
+	left: 0px;
+	transform: translate3d(30px, 2px, 0px);
+}
+
+.waves-effect {
+	font-size: 13px;
+}
+</style>
+
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+	$(function() {
+		 $(".submenu").hide();
+		var menu = /*[[${menu}]]*/ null;
+
+		var changepassword = /*[[${changepassword}]]*/null;
+
+		var checkpassExpiry = /*[[${checkpassExpiry}]]*/null;
+
+		var checkAcctExpiry = /*[[${checkAcctExpiry}]]*/null;
+		
+		$("#"+menu).css("background-color","rgb(79, 123, 162)");
+		
+		$("#adminflag").show("submenu");
+		$("#userprofileflag").show("submenu");
+		$("#alertflag").show("submenu");
+		$("#ruleflag").show("submenu");
+		
+		$("#inquiryflag").show("submenu");
+		$("#monitoringflag").show("submenu");
+		
+		$("#listmgntflag").show("submenu");
+		$("#custlistflag").show("submenu");
+		$("#reglistflag").show("submenu");
+
+		$("#riskmgntflag").show("submenu");
+		$("#riskcatflag").show("submenu");
+
+		$("#reportsflag").show("submenu");
+
+		
+		
+
+		if (changepassword == 'N') {
+
+			$("#changepassword").modal("toggle");
+		}
+		;
+
+		if (parseInt(checkpassExpiry) <= 3) {
+
+			$("#menualertmsg").text(
+					"Your password will be expired in " + checkpassExpiry
+							+ " days. Please change Password.");
+			$('#menualert').modal("toggle");
+		}
+
+		if (parseInt(checkAcctExpiry) <= 3) {
+
+			$("#menualertmsg").text(
+					"Your Account will be expired in " + checkAcctExpiry
+							+ " days. Please contact Administrator");
+			$('#menualert').modal("toggle");
+
+		}
+
+		$("#chngPass").on("click", function() {
+
+			$("#changepassword").modal("toggle");
+
+		});
+
+		function showlogout() {
+
+			var options = {};
+
+			if ($("#logoutmenu").css("display") == "none") {
+				$("#logoutmenu:hidden").show("Drop");
+			} else {
+				$("#logoutmenu:visible").hide("Drop");
+			}
+
+		}
+		/* function runEffect() {
+
+			var options = {};
+
+			if ($("#menu").css("display") == "none") {
+				$("#menu:hidden").show("slide");
+			} else {
+				$("#menu:visible").hide("slide");
+			}
+
+		} */
+		$("#userdtl").on("click", function() {
+			showlogout();
+		});
+/* 
+		 $("#showmenu").on("click", function() {
+			runEffect();
+		}); */ 
+
+		  $(".content, .header2").click(function(e) {
+			$("#menu:visible").hide("slide");
+		}); 
+		
+		
+		$("#logoutbtn").on("click",function(){
+			
+			url = /*[[@{/logoutUpdate}]]*/ null;
+			
+			$.ajax({
+				type : "post",
+				cache : false,
+				url : url,
+				success : function(data) {
+
+					location.href=/*[[@{/logout}]]*/ null;
+				}
+			});
+			
+			
+			
+		});
+		
+
+	});
+	
+
+	function changepassword() {
+		
+		//Validating password fields
+		$.validator.addMethod(
+		        "regex",
+		        function(value, element, regexp) {
+		            var re = new RegExp(regexp);
+		            return this.optional(element) || re.test(value);
+		        },
+		        "Password required atleast one Uppercase, Lowercase, Numeric and special character"
+		);
+		
+		
+		 $("#passform").validate({
+			 rules : {
+				 newpass : {
+					 required : true,
+					 minlength: 8,
+					 maxlength : 16,
+					 regex: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+				 },
+				 oldpass : {
+					 required : true,
+					 minlength: 8,
+					 maxlength : 16,
+					 regex: "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+				 }
+			 },
+			 messages :{}
+			 
+		 });
+		
+		if($("#passform").valid()){
+
+		var oldpass = $("#oldpass").val();
+		var newpass = $("#newpass").val();
+
+		var url =  /*[[@{/changePassword}]]*/ null;
+		var passdata = {
+			oldpass : oldpass,
+			newpass : newpass
+		}
+
+		$.ajax({
+			type : "post",
+			cache : false,
+			url : url,
+			data : passdata, // multiple data sent using ajax
+			success : function(data) {
+
+				$("#menualertmsg").text(data);
+				$('#menualert').modal("toggle");
+				if (data == 'Password Changed Successfully') {
+					$("#changepassword").modal("hide");
+				}
+			}
+		});
+		
+		}
+
+	};
+    /* menu navigation */
+	function contentLoad(a) {
+
+		location.href = "/IPSAdmin/" + a.id;
+	}
+	
+	/* reports navigation */
+	function contentLoad1(a) {
+		var reportid = a.getAttribute("reportvalue");
+		
+		var Callurl =/*[[@{'/AMLReports?'}]]*/;
+
+		location.href = Callurl+"reportid="+reportid;
+		
+		
+
+				
+			}
+	function docEmb(page) {
+		
+		url = /*[[@{/document/XBRL.pdf}]]*/
+
+		var pageNum = 0;
+		if (page == "UserProfile") {
+			pageNum = 1;
+		}
+		if (page == "Report") {
+			pageNum = 2;
+		}
+		window.open(url+"#page=" + pageNum, "_blank",
+				"width=600, height=500");
+	}
+	
+	/*<![CDATA[*/
+</script>
+
+</head>
+<body>
+	 
+
+
+	<!-- Begin page -->
+	<div id="wrapper">
+
+		<!-- Topbar Start -->
+		<div class="navbar-custom">
+			<ul class="list-unstyled topnav-menu float-right mb-0">
+
+				<li class="d-none d-sm-block">
+					<form class="app-search">
+						
+					</form>
+				</li>
+
+
+
+				<li class="dropdown notification-list"><a
+					class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
+					data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+					aria-expanded="false"> <i
+						class="rounded-circle mdi mdi-18px mdi-account"></i> <span
+						class="pro-user-name ml-1"
+						th:text="'&nbsp&nbsp'+${session.USERNAME}"> KALAIVANAN</i>
+					</span>
+				</a>
+					<div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+						<!-- item-->
+						<div class="dropdown-header noti-title">
+							<a id="logout" onclick="contentLoad(this)"
+								href="javascript:void(0);" class="dropdown-item notify-item">
+								<span>Logout</span>
+							</a>
+						</div>
+</div></li>
+
+
+
+
+			</ul>
+
+		
+			<!-- ========== Left Sidebar Start ========== -->
+			<div class="left-side-menu" id="left_menu" style="height: auto;">
+
+				<div class="slimScrollDiv"
+					style="position: relative; overflow: hidden; width: auto; height: 245px;">
+					<div class="slimscroll-menu"
+						style="overflow: hidden; width: auto; height: 100%;">
+
+						<!--- Sidemenu -->
+						<div id="sidebar-menu" class="mm-active sidebar-menu">
+
+							<ul class="metismenu mm-show" id="side-menu">
+
+
+								<!-- 	<li><a id="Dashboard" href="#" onclick="contentLoad(this)"></a></li> -->
+
+
+								<!-- ////////-----------------------Admin Starts----------------------/////////-->
+								<li class="mm-active"><a href="javascript: void(0);"
+									class="waves-effect"><img class="gn-icon"
+										style="margin: -8px -5px;" /><span> Admin</span> </a>
+
+
+									<ul class="submenu nav-second-level" th:id="${adminflag}"
+										aria-expanded="false" style="position: relative;">
+										<!--------------------------------- Dash board Starts----------------------------------- -->
+										<li class="mm-active"><a href="javascript: void(0);"
+											id="Dashboard" onclick="contentLoad(this)"
+											class="waves-effect"> <img class="gn-icon"
+												style="margin: -8px -5px;" /> <span>Dashboard</span></a></li>
+										<!--------------------------------- Dash board ends----------------------------------- -->
+										<!--------------------------  secondlevel menu-User Profile---------------------- -->
+
+										<li class="mm-active"><a href="javascript: void(0);"
+											class="waves-effect" id="userprofile"> <img
+												class="gn-icon" style="margin: -8px -5px;" /> <span>User
+													Profile</span></a>
+
+											<ul class="submenu nav-third-level"
+												th:id="${userprofileflag}" aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="UserProfile" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /> <span>User
+															Creation </span></a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLAccessandRoles" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /> <span>Access
+															and Roles </span></a></li>
+
+
+											</ul></li>
+
+										<!--------------------------  secondlevel menu-Alert Management---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Alert
+													Management</span>
+										</a>
+											<ul class="submenu nav-third-level" th:id="${alertflag}"
+												aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLAlertParameters" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /> <span>Alert
+															Parameters</span></a></li>
+
+
+
+
+											</ul></li>
+
+										<!--------------------------  secondlevel menu-Rule Engine---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Rule
+													Engine</span>
+										</a>
+											<ul class="submenu nav-third-level" th:id="${ruleflag}"
+												aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLRuleEngine2" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /> <span>Screening
+															Validations</span></a></li>
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="transactionvalidations" onclick="contentLoad(this)">
+														<img class="gn-icon" style="margin: -8px -5px;" /> <span>Transaction
+															Validations</span>
+												</a></li>
+
+
+
+
+											</ul></li>
+										<!--------------------------  secondlevel menu-Reference Code Master---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="ReferenceCodeMaster" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /> <span>Reference
+													Code Master </span>
+										</a></li>
+
+
+										<!--------------------------  secondlevel menu-Bank and Branch Details---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Bank
+													and Branch Details</span>
+										</a></li>
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="monitoringparameter" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /> <span>Monitoring
+													Parameter</span>
+										</a></li>
+
+									</ul></li>
+								<!------------///////////-------------- Admin ends-----------//////////--------------- -->
+
+
+
+								<!------------///////////-------------- Inquiry Starts-----------//////////--------------- -->
+								<li><a href="javascript: void(0);" class="waves-effect"
+									id="inquiry"><img class="gn-icon"
+										style="margin: -8px -5px;" /><span> Inquiry</span> </a>
+									<ul class="submenu nav-second-level" th:id="${inquiryflag}"
+										aria-expanded="false">
+
+
+										<!--------------------------  secondlevel menu-Customer Inquiry---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="CustomerInquiry" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /> <span>Customer
+													Inquiry </span>
+										</a></li>
+										<!--------------------------  secondlevel menu-Accounts Inquiry---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLAccountsInquiry" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /><span>
+													Accounts Inquiry </span>
+										</a></li>
+
+										<!--------------------------  secondlevel menu-Transaction Inquiry---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="TransactionInquiry" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /><span>
+													Transaction Inquiry </span>
+										</a></li>
+									</ul></li>
+								<!------------///////////-------------- Inquiry ends-----------//////////--------------- -->
+								<!-- ---------------- Monitoring------------------------->
+								<li><a href="javascript: void(0);" class="waves-effect"><img
+										class="gn-icon" style="margin: -8px -5px;" /><span>
+											Monitoring</span> </a>
+									<ul class="submenu nav-second-level" th:id="${monitoringflag}"
+										aria-expanded="false">
+										<!--------------------------  secondlevel menu-Transaction Monitoring---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLTransMonitoring" onclick="contentLoad(this)"> <img
+												class="gn-icon" style="margin: -8px -5px;" /> <span>Transaction
+													Monitoring </span>
+										</a></li>
+
+
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLRemittanceTransaction" onclick="contentLoad(this)">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Remittance
+													Transaction </span>
+										</a></li>
+
+										<!--------------------------  secondlevel menu-Suspicious Transaction---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="" onclick="contentLoad(this)"> <img class="gn-icon"
+												style="margin: -8px -5px;" /><span> Suspicious
+													Transaction</span>
+										</a></li>
+
+
+									</ul></li>
+								<!------------///////////-------------- Monitoring ends-----------//////////--------------- -->
+
+
+								<!------------///////////-------------- List Management Starts-----------//////////--------------- -->
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>List
+											Management</span>
+								</a>
+
+									<ul class="submenu nav-second-level" th:id="${listmgntflag}"
+										aria-expanded="false">
+
+										<!--------------------------  secondlevel menu-Customized Lists---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Customized
+													List</span>
+										</a>
+											<ul class="submenu nav-third-level" th:id="${custlistflag}"
+												aria-expanded="false">
+
+
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLBlacklist" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /><span>
+															Black Listing</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLnegativelist" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /><span>
+															Negative Listing</span>
+												</a></li>
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLduplication" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /><span>
+															Deduplication</span>
+												</a></li>
+
+
+											</ul></li>
+										<!--------------------------  secondlevel menu-Regulatory Lists---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Regulatory
+													Lists</span>
+										</a>
+											<ul class="submenu nav-third-level" th:id="${reglistflag}"
+												aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> World Check</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> World
+															Compliance</span>
+												</a></li>
+
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> OFAC</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Pelican</span>
+												</a></li>
+
+											</ul></li>
+
+
+									</ul></li>
+								<!------------///////////-------------- List Management ends-----------//////////--------------- -->
+
+								<!------------///////////-------------- Interfaces starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>Interfaces</span>
+								</a>
+
+									<ul class="submenu nav-second-level" aria-expanded="false">
+
+										<!--------------------------  secondlevel menu-GoAML---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>GoAML</span>
+										</a>
+											<ul class="submenu nav-third-level" aria-expanded="false">
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> STR</span>
+												</a></li>
+
+
+											</ul></li>
+
+
+
+									</ul></li>
+								<!------------///////////-------------- Interfaces ends-----------//////////--------------- -->
+
+
+								<!------------///////////-------------- Screening starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>Screening</span>
+								</a>
+
+									<ul class="submenu nav-second-level" aria-expanded="false">
+
+										<!--------------------------  secondlevel menu-Watch List---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Watch
+													List</span>
+										</a>
+
+											<ul class="submenu nav-third-level" aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> World Check</span>
+												</a></li>
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> World
+															Compliancek</span>
+												</a></li>
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Customized
+															Lists</span>
+												</a></li>
+
+
+											</ul></li>
+									</ul></li>
+								<!------------///////////-------------- Screening ends-----------//////////--------------- -->
+
+
+								<!------------///////////-------------- Risk Management starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>Risk
+											Management</span>
+								</a>
+
+									<ul class="submenu nav-second-level" th:id="${riskmgntflag}"
+										aria-expanded="false">
+										<!--------------------------  secondlevel menu-Risk Categorization---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Risk
+													Categorization</span>
+										</a>
+
+											<ul class="submenu nav-third-level" th:id="${riskcatflag}"
+												aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLCustomerKYC" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /><span>
+															Customer KYC</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLCustomerRiskProfiling" onclick="contentLoad(this)">
+														<img class="gn-icon" style="margin: -8px -5px;" /><span>
+															Customer Risk Profiling</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="AMLRiskRating" onclick="contentLoad(this)"> <img
+														class="gn-icon" style="margin: -8px -5px;" /><span>
+															Customer Risk Rating</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Batch Jobs</span>
+												</a></li>
+
+											</ul></li>
+									</ul></li>
+								<!------------///////////-------------- Risk Management ends-----------//////////--------------- -->
+
+								<!------------///////////--------------Transactions starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>Transactions</span>
+								</a>
+									<ul class="submenu nav-second-level" aria-expanded="false">
+										<!--------------------------  secondlevel menu-Transactions Monitoring---------------------- -->
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>Transactions
+													Monitoring</span>
+										</a>
+
+											<ul class="submenu nav-third-level" aria-expanded="false">
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> High Value
+															Cash Deposit/Withdrawals in a Day</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span>High Value
+															Non-Cash Deposits/Withdrawals in a Day</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Cumulative
+															transaction value of X amount of cash deposit/withdrawal
+															over a giver period</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Total Daily
+															Cash Transactions exceeding 100,000</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Total split
+															cash transactions over a period of 14 days exceeding
+															300,000</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Total split
+															cash transactions over a period of 6 months exceeding
+															500,000</span>
+												</a></li>
+
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span>Cash
+															Transactions above 75,000 and the source of funds</span>
+												</a></li>
+
+
+
+											</ul></li>
+									</ul></li>
+								<!------------///////////--------------Transactions ends-----------//////////--------------- -->
+
+								<!------------///////////--------------General starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>General</span>
+								</a>
+
+									<ul class="submenu nav-second-level" aria-expanded="false">
+										<!--------------------------  secondlevel menu-General Monitoring---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect">
+												<img class="gn-icon" style="margin: -8px -5px;" /> <span>General
+													Monitoring</span>
+										</a>
+
+											<ul class="submenu nav-third-level" aria-expanded="false">
+												<li><a href="javascript: void(0);" class="waves-effect"
+													id="" onclick="contentLoad(this)"> <img class="gn-icon"
+														style="margin: -8px -5px;" /><span> Suspicious
+															Transactions</span>
+												</a></li>
+
+											</ul></li>
+									</ul></li>
+								<!------------///////////--------------General ends-----------//////////--------------- -->
+
+								<!------------///////////--------------Report starts-----------//////////--------------- -->
+
+								<li><a href="javascript: void(0);" class="waves-effect">
+										<img class="gn-icon" style="margin: -8px -5px;" /> <span>Report</span>
+								</a>
+
+									<ul class="submenu nav-second-level" th:id="${reportsflag}"
+										aria-expanded="false">
+										<!--------------------------  secondlevel menu-General Monitoring---------------------- -->
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLReports" onclick="contentLoad1(this)"
+											th:attr="reportvalue='t2current'"> <img class="gn-icon"
+												style="margin: -8px -5px;" /> <span>T2 Current</span>
+										</a></li>
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLReports" onclick="contentLoad1(this)"
+											th:attr="reportvalue='t5'"> <img class="gn-icon"
+												style="margin: -8px -5px;" /> <span>T5</span>
+										</a></li>
+
+										<li><a href="javascript: void(0);" class="waves-effect"
+											id="AMLReports" onclick="contentLoad1(this)"
+											th:attr="reportvalue='t7'"> <img class="gn-icon"
+												style="margin: -8px -5px;" /> <span>T7</span>
+										</a></li>
+									</ul></li>
+								<!------------///////////--------------Report ends-----------//////////--------------- -->
+
+							</ul>
+
+						</div>
+						<!-- End Sidebar -->
+
+						<div class="clearfix"></div>
+
+					</div>
+
+					<!-- Sidebar -left -->
+
+				</div>
+				<!-- Left Sidebar End -->
+
+
+			</div>
+		</div></div>
+		<!-- END wrapper -->
+
+		<!-- Right Sidebar -->
+		<div class="right-bar">
+			<div class="rightbar-title">
+				<a href="javascript:void(0);" class="right-bar-toggle float-right">
+					<i class="fe-x noti-icon"></i>
+				</a>
+				<h4 class="m-0 text-white">Settings</h4>
+			</div>
+			<div class="slimScrollDiv"
+				style="position: relative; overflow: hidden; width: auto; height: 245px;">
+				<div class="slimscroll-menu"
+					style="overflow: hidden; width: auto; height: 245px;">
+					<!-- User box -->
+					<div class="user-box">
+						<div class="user-img">
+							<a href="javascript:void(0);" class="user-edit"> <i
+								class="mdi mdi-18px mdi-account"></i>
+							</a>
+						</div>
+
+						<h5>
+							<a href="javascript: void(0);">AML</a>
+						</h5>
+						<p class="text-muted mb-0">
+							<small>Admin Head</small>
+						</p>
+					</div>
+
+					<ul class="nav nav-pills bg-light nav-justified">
+						<li class="nav-item"><a href="#home1" data-toggle="tab"
+							aria-expanded="false" class="nav-link rounded-0"> General </a></li>
+						<li class="nav-item"><a href="#messages1" data-toggle="tab"
+							aria-expanded="false" class="nav-link rounded-0 active"> Chat
+						</a></li>
+					</ul>
+					<div class="tab-content pl-3 pr-3">
+						<div class="tab-pane" id="home1">
+							<div class="row mb-2">
+								<div class="col">
+									<h5 class="m-0 font-15">Notifications</h5>
+									<p class="text-muted">
+										<small>Do you need them?</small>
+									</p>
+								</div>
+								<!-- end col-->
+								<div class="col-auto">
+									<div class="custom-control custom-switch mb-2">
+										<input type="checkbox" class="custom-control-input"
+											id="tabswitch1"> <label class="custom-control-label"
+											for="tabswitch1"></label>
+									</div>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row-->
+
+							<div class="row mb-2">
+								<div class="col">
+									<h5 class="m-0 font-15">API Access</h5>
+									<p class="text-muted">
+										<small>Enable/Disable access</small>
+									</p>
+								</div>
+								<!-- end col-->
+								<div class="col-auto">
+									<div class="custom-control custom-switch mb-2">
+										<input type="checkbox" class="custom-control-input" checked=""
+											id="tabswitch2"> <label class="custom-control-label"
+											for="tabswitch2"></label>
+									</div>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row-->
+
+							<div class="row mb-2">
+								<div class="col">
+									<h5 class="m-0 font-15">Auto Updates</h5>
+									<p class="text-muted">
+										<small>Keep up to date</small>
+									</p>
+								</div>
+								<!-- end col-->
+								<div class="col-auto">
+									<div class="custom-control custom-switch mb-2">
+										<input type="checkbox" class="custom-control-input"
+											id="tabswitch3"> <label class="custom-control-label"
+											for="tabswitch3"></label>
+									</div>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row-->
+
+							<div class="row mb-2">
+								<div class="col">
+									<h5 class="m-0 font-15">Online Status</h5>
+									<p class="text-muted">
+										<small>Show your status to all</small>
+									</p>
+								</div>
+								<!-- end col-->
+								<div class="col-auto">
+									<div class="custom-control custom-switch mb-2">
+										<input type="checkbox" class="custom-control-input" checked=""
+											id="tabswitch4"> <label class="custom-control-label"
+											for="tabswitch4"></label>
+									</div>
+								</div>
+								<!-- end col -->
+							</div>
+							<!-- end row-->
+
+							<div class="alert alert-success alert-dismissible fade mt-3 show"
+								role="alert">
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h5 class="text-success">Unlimited Access</h5>
+								Upgrade to plan to get access to unlimited reports <br> <a
+									href="javascript: void(0);"
+									class="btn btn-outline-success mt-3 btn-sm">Upgrade<i
+									class="ml-1 mdi mdi-arrow-right"></i></a>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="slimScrollBar"
+					style="background: rgb(158, 165, 171); width: 8px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 60.6313px;"></div>
+				<div class="slimScrollRail"
+					style="width: 8px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+			</div>
+			<!-- end slimscroll-menu-->
+		</div>
+		<!-- /Right-bar -->
+
+		<!-- Right bar overlay-->
+		<div class="rightbar-overlay"></div>
+
+
+		<script src="./js/jquery.knob.min.js"></script>
+		<script src="./js/jquery.peity.min.js"></script>
+
+		<!-- Sparkline charts -->
+		<script src="./js/jquery.sparkline.min.js"></script>
+
+		<!-- init js -->
+		<script src="./js/dashboard-1.init.js"></script>
+
+		<!-- App js -->
+		<script src="./js/app.min.js"></script>
+
+
+
+
+
+
+</body>
+</html>

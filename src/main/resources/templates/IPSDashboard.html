@@ -1,0 +1,402 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<!-- <link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}"> -->
+<!-- <link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}"> -->
+<!-- <link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}"> -->
+
+
+<!-- <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script> -->
+
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<!-- <script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script> -->
+
+<!-- <script src="webjars/chartjs/2.8.0/Chart.min.js"
+	th:src="@{webjars/chartjs/2.8.0/Chart.min.js}"></script>
+
+<link rel="stylesheet" type="text/css"
+	href="webjars/chartjs/2.8.0/Chart.min.css"
+	th:href="@{webjars/chartjs/2.8.0/Chart.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+
+
+<script src="./js/bootstrap411.js"></script> -->
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.card-box {
+	background-color: #d9dbdc;
+	background-clip: border-box;
+	padding: 1.1rem;
+	margin-bottom: 24px;
+	border-radius: .25rem;
+}
+
+button {
+	background-color: #616c77;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	bottom: 23px;
+	right: 28px;
+	width: 150px;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
+
+.container-manager {
+	width: 83.5%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 17.3%;
+	margin-top: 80px;
+}
+
+.content-page {
+    margin-left: 55px;
+    overflow: hidden;
+    padding: 0 15px 65px 15px;
+    min-height: 80vh;
+    margin-top: 101px;
+    }
+    
+
+    
+</style>
+</head>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+		
+
+	/*<![CDATA[*/
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+		
+
+	$(function() {
+		
+		
+		var completed = /*[[${completed}]]*/0;
+		var uncompleted = /*[[${uncompleted}]]*/0;
+
+		var ctxL = document.getElementById("pieChart").getContext('2d');
+		var myLineChart = new Chart(ctxL, {
+			type : 'pie',
+			data : {
+				labels : [ "Completed", "Un Completed" ],
+				datasets : [ {
+					label : "My First dataset",
+					data : [ 30, 40 ],
+					backgroundColor : [ 'rgba(102,153,51,1)',
+							'rgba(105, 0, 132, .2)' ],
+					borderColor : [ 'rgba(102,153,51,1)',
+							'rgba(200, 99, 132, .7)' ],
+					borderWidth : 3
+				} ]
+			},
+			options : {
+				responsive : true
+			}
+		});
+
+	});
+
+	$(document).ready(function() {
+		
+
+
+		//var tot = /*[[${Mttomxtot}]]*/0;
+		var mtsucc = /*[[${Mttomxsuccess}]]*/0;
+		var mtfail = /*[[${MttomxFail}]]*/0;
+		
+		var mxsucc = /*[[${Mttomxsuccess}]]*/0;
+		var mxfail = /*[[${MttomxFail}]]*/0;
+		
+		var MCTranF = /*[[${MCTranF}]]*/0;
+		var INCTranF = /*[[${INCTranF}]]*/0;
+		var RTPTranF = /*[[${RTPTranF}]]*/0;
+		
+		var MCTranIP = /*[[${MCTranIP}]]*/0;
+		var INCTranIP = /*[[${INCTranIP}]]*/0;
+		var RTPTranIP = /*[[${RTPTranIP}]]*/0;
+		
+		var MCTranR = /*[[${MCTranR}]]*/0;
+		var INCTranR = /*[[${INCTranR}]]*/0;
+		var RTPTranR = /*[[${RTPTranR}]]*/0;
+		
+	
+		var o, e = function() {
+			$("#Mconnect").sparkline([  mtsucc, mtfail ], {
+				type : "pie",
+				width : "315",
+				height : "315",
+				sliceColors : [ "#77b179", "#ff8f9f"]
+
+			}), $("#INC1").sparkline([ mxsucc, mxfail ], {
+				type : "pie",
+				width : "315",
+				height : "315",
+				sliceColors : [ "#77b179", "#ff8f9f" ]
+
+			})
+		};
+		e(), $(window).resize(function(i) {
+			clearTimeout(o), o = setTimeout(function() {
+				e()
+			}, 300)
+		})
+	});
+	/*]]>*/
+</script>
+
+
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+
+
+		<!-- ============================================================== -->
+		<!-- Start Page Content here -->
+		<!-- ============================================================== -->
+
+		<div class="content-page">
+			<div class="content">
+
+				<!-- Start Content-->
+				<div class="container-fluid">
+
+
+					<!-- end page title -->
+
+					<div class="row">
+
+
+						<div class="col-xl-6 col-md-9">
+							<div class="card-box">
+								<div class="float-left" dir="ltr">
+									<div style="display: inline; width: 70px; height: 70px;">
+										<canvas width="70" height="70"></canvas>
+										<input data-plugin="knob" data-width="70" data-height="70"
+											data-fgcolor="#0e0c0c" data-bgcolor="rgba(112, 129, 146,0.2)"
+											th:value="${Mttomxsuccess}" data-skin="tron"
+											data-angleoffset="0" data-readonly="true"
+											data-thickness=".15" readonly="readonly"
+											style="width: 39px; height: 23px; position: absolute; vertical-align: middle; margin-top: 23px; margin-left: -54px; border: 0px; background: none; font: bold 14px Arial; text-align: center; color: rgb(0, 177, 157); padding: 0px; -webkit-appearance: none;">
+									</div>
+								</div>
+								<div class="text-right">
+									<h3 class="mb-1" th:text="${Mttomxsuccess}"></h3>
+									<p class="text-muted mb-1">MT to MX Conversion</p>
+								</div>
+							</div>
+						</div>
+						<!-- end col -->
+
+						<div class="col-xl-6 col-md-9">
+							<div class="card-box">
+								<div class="float-left" dir="ltr">
+									<div style="display: inline; width: 70px; height: 70px;">
+										<canvas width="70" height="70"></canvas>
+										<input data-plugin="knob" data-width="70" data-height="70"
+											data-fgcolor="#0e0c0c" data-bgcolor="rgba(112, 129, 146,0.2)"
+											th:value="${Mxtomxsuccess}" data-skin="tron"
+											data-angleoffset="0" data-readonly="true"
+											data-thickness=".15" readonly="readonly"
+											style="width: 39px; height: 23px; position: absolute; vertical-align: middle; margin-top: 23px; margin-left: -54px; border: 0px; background: none; font: bold 14px Arial; text-align: center; color: rgb(0, 177, 157); padding: 0px; -webkit-appearance: none;">
+									</div>
+								</div>
+								<div class="text-right">
+									<h3 class="mb-1" th:text="${Mxtomxsuccess}"></h3>
+									<p class="text-muted mb-1">MX to MT Conversion</p>
+								</div>
+							</div>
+						</div>
+						<!-- end col -->
+
+						
+						
+
+					</div>
+					<!-- end row -->
+
+					<div class="row">
+
+
+						<div class="col-xl-6">
+							<div class="card-box">
+
+
+								<h3 class="header-title" style="font-size: 1rem;">MT to MX Conversion</h3>
+
+								<div class="mt-3 text-center">
+
+
+									<div id="Mconnect" class="text-center mt-3">
+										<canvas width="210" height="210"
+											style="display: inline-block; width: 315px; height: 315px; vertical-align: top;"></canvas>
+									</div>
+	
+									<div class="row mt-3">
+										<div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">Success</p>
+											<h4 style="background: #77b179; color:#e6e7e7;" th:text="${Mttomxsuccess}"></h4>
+										</div>
+										<div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">Failure</p>
+											<h4 style="background:#ff8f9f; color:#e6e7e7;" th:text="${MttomxFail}"></h4>
+										</div>
+										<!-- <div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">In
+												Progress</p>
+											<h4 style="background: #8a929a; color:#e6e7e7;" th:text="${MttomxFail}"></h4>
+										</div> -->
+										<!-- <div class="col-3">
+											<p class="text-muted font-15 mb-1 text-truncate">R-Failure</p>
+											<h4 style="background: #f7bb86; color:#e6e7e7;" th:text="${MCTranR}"></h4>
+										</div> -->
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-xl-6">
+							<div class="card-box">
+
+
+								<h3 class="header-title"  style="font-size: 1rem;">MX to MT Conversion</h3>
+
+								<div class="mt-3 text-center">
+
+
+									<div id="INC1" class="text-center mt-3">
+										<canvas width="210" height="210"
+											style="display: inline-block; width: 315px; height: 315px; vertical-align: top;"></canvas>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">Success</p>
+											<h4 style="background: #77b179; color:#e6e7e7;" th:text="${Mxtomxsuccess}"></h4>
+										</div>
+										<div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">Failure</p>
+											<h4 style="background: #ff8f9f; color:#e6e7e7;" th:text="${MxtomxFail}"></h4>
+										</div>
+										<!-- <div class="col-4">
+											<p class="text-muted font-15 mb-1 text-truncate">In
+												Progress</p>
+											<h4 style="background: #8a929a; color:#e6e7e7;" th:text="${INCTranIP}"></h4>
+										</div> -->
+										<!-- <div class="col-3">
+											<p class="text-muted font-15 mb-1 text-truncate">R-Failure</p>
+											<h4 style="background: #f7bb86; color:#e6e7e7;" th:text="${INCTranR}"></h4>
+										</div> -->
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+
+						
+					<!-- end row -->
+
+
+				</div>
+				<!-- end col -->
+			</div>
+			<!-- end row -->
+
+		</div>
+		<!-- container -->
+
+	</div>
+	<!-- content -->
+
+
+
+	<!-- ============================================================== -->
+	<!-- End Page content -->
+	<!-- ============================================================== -->
+
+
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IPSAdmin
+Bundle-SymbolicName: IPSAdmin
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.bornfire,
+ com.bornfire.configuration,
+ com.bornfire.controllers,
+ com.bornfire.entity,
+ com.bornfire.services

@@ -1,0 +1,1523 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+
+		$(document).ready(function() {
+			var formode = $("#formmode1").val();
+			if (formode == "view") {
+				$('input').attr('readonly', true);
+			} else if (formode == "verify") {
+				$('input').attr('readonly', true);
+			}
+
+		});
+
+	});
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function fnClick(a) {
+		var merchantCode = a.getAttribute("data-feesSrlNo")
+		var menAcctNumber = a.getAttribute("data-walletTranType")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = 'WalletFees?formmode=' + formmode + '&feesSrlNo='
+				+ feesSrlNo + '&walletTranType=' + walletTranType;
+	}
+
+	function addWalletFees(a) {
+		location.href = 'WalletFees?formmode=add';
+	}
+
+	function list() {
+		location.href = 'WalletFees?formmode=list';
+	}
+	
+	function fnEditClick(a) {
+		var feesSrlNo = a.getAttribute("data-feesSrlNo")
+		var walletTranType = a.getAttribute("data-walletTranType")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = './WalletFees?formmode=' + formmode + '&feesSrlNo='
+				+ feesSrlNo + '&walletTranType=' + walletTranType;
+	}
+	
+	function fnVerifyClick(a) {
+		var feesSrlNo = a.getAttribute("data-feesSrlNo")
+		var walletTranType = a.getAttribute("data-walletTranType")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = './WalletFees?formmode=' + formmode + '&feesSrlNo='
+				+ feesSrlNo + '&walletTranType=' + walletTranType;
+	}
+
+	function fnViewClick(a) {
+		var feesSrlNo = a.getAttribute("data-feesSrlNo")
+		var walletTranType = a.getAttribute("data-walletTranType")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = './WalletFees?formmode=' + formmode + '&feesSrlNo='
+				+ feesSrlNo + '&walletTranType=' + walletTranType;
+	}
+	
+	function submitform() {
+
+		if ($("#walletProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			alert("ok");
+			var url = "./createWalletFees?formmode=" + formmode;
+
+			$("#walletProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#walletProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function editsubmitform() {
+
+		if ($("#walletProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+//alert(formmode);
+			var url = "./editWalletFees?formmode=" + formmode;
+
+			$("#walletProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#walletProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+	
+	function verifysubmitform(a) {
+
+		var modifyuser = a.getAttribute("data-modify_user");
+		var entry_user = a.getAttribute("data-entry_user");
+		var loginuser = /*[[${session.USERID}]]*/null;
+		
+		
+		
+				if ($("#walletProfile").valid()) {
+					$("#loader1").modal("toggle");
+					var formmode = /*[[${formmode}]]*/null;
+
+					var url = "./verifyWalletFees?formmode=" + formmode;
+
+					$("#walletProfile").attr('action', url);
+
+					var options = {
+						success : showResponse
+					};
+
+					$("#walletProfile").ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+		
+		};
+		
+		
+
+	
+	
+	function deleteform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+
+	function submitformdelete(a) {
+
+		$("#datadelete").hide();
+		if ($("#walletProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./deleteMandate?formmode=" + formmode;
+
+			$("#walletProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#walletProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	/*]]>*/
+</script>
+
+<script>
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+	function fnClickview(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=view&userid=' + userid
+	}
+
+	function fnClickCancel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=cancel&userid=' + userid
+	}
+
+	function fnClickviewnew(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=viewnew&userid=' + userid
+	}
+	function fnClickdel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=delete&userid=' + userid
+	}
+
+	function fnClickVerify(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=verify&userid=' + userid
+	}
+
+
+	
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function finuser(a) {
+
+		var Mandate_ref_no = a.getAttribute("data-mand_ref_no")
+		$
+				.ajax({
+
+					type : 'get',
+					url : "./getBlobImage/" + Mandate_ref_no,
+					success : function(response) {
+						$('#imageshow').modal('show');
+						document.getElementById("doc_image").src = "data:image/png;base64,"
+								+ response;
+
+					}
+
+				});
+
+	}
+	////Bulk Transaction submission 
+	function submitUploadForm(a) {
+		//alert("INSIDE");
+		var validate = true;
+		$('#my_table').find('tr input[type=text]').each(function() {
+			//  	alert("true");
+			if ($(this).val() == "") {
+				//	alert("false");
+				validate = false;
+			}
+		});
+
+		if (validate) {
+			//alert("validate"+validate);
+			if ($("#MandateUpload").valid()) {
+
+				var formmode = a.getAttribute("data-formmode");
+				var url = "./mandateUpload?formmode=" + formmode;
+				//    alert(url);
+				$("#MandateUpload").attr('action', url);
+
+				var options = {
+					success : showResponse
+				};
+
+				$("#MandateUpload").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					//	alert("responseText"+responseText);
+					if (responseText.tranID == "0") {
+						$("#errormsg").text(responseText.status);
+						$('#error').modal("toggle");
+					} else {
+						$("#alertmsg").text(responseText.status);
+
+						$('#alert').modal("toggle");
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+
+	};
+
+	////Upload Document
+	function fire_ajax_submit() {
+		$('#fileupload').hide();
+		//$("#loader1").modal("toggle");
+
+		var form = $('#fileUploadForm')[0];
+		var data = new FormData(form);
+		var trHTML = '';
+		$('#my_tabletr').empty();
+
+		$
+				.ajax({
+					type : "POST",
+					enctype : 'multipart/form-data',
+					url : "ws/fileUploadMandate",
+					data : data,
+					processData : false, //prevent jQuery from automatically transforming the data into a query string
+					contentType : false,
+					cache : false,
+					timeout : 600000,
+					success : function(list) {
+
+						$
+								.each(
+										list,
+										function(KEY, data) {
+											trHTML += "<tr id='trBody'>"
+													+ '<td><input type="text" name="merchant_code" id="mand_account_no1"' + data.merchant_code  + '" class="form-control" value="' + data.merchant_code + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_name" id="mand_account_name1' + data.mand_account_name  + '" class="form-control" value="' + data.mand_account_name + '" readonly/></td>'
+													+ '<td><input type="text" name="periodicity" id="periodicity1' + data.periodicity  + '" class="form-control" value="' + data.periodicity + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_type" id="mand_account_type1'   + data.mand_account_type  + '" class="form-control" value="' + data.mand_account_type + '" required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_no" id="ben_account_no'   + data.ben_account_no  + '" class="form-control" value="' + data.ben_account_no + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_name" id="ben_account_name1'   + data.ben_account_name  + '" class="form-control" value="' + data.ben_account_name + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_bank_name" id="ben_bank_name1'   + data.ben_bank_name  + '" class="form-control" value="' + data.ben_bank_name + '" required readonly/></td>'
+													+ '<td><input type="text" name="mand_cust_ref_no" id="mand_cust_ref_no1'   + data.mand_cust_ref_no  + '" class="form-control" value="' + data.mand_cust_ref_no + '" readonly/></td>'
+													+ '<td><input type="text" name="purpose" id="purpose1'   + data.purpose  + '" class="form-control" value="' + data.purpose + '"readonly/></td>'
+													+ '<td><input type="text" name="remarks" id="remarks1' + data.remarks  + '" class="form-control" value="' + data.remarks + '"readonly/></td>'
+													+ '<td><input type="text" name="mand_bank_code" id="mand_bank_code1' + data.mand_bank_code  + '" class="form-control" value="' + data.mand_bank_code + '"readonly/></td>'
+													+ '</tr>';
+
+										});
+
+						$('#my_table').append(trHTML);
+						//$("#loader1").hide();
+
+						return data;
+					},
+					error : function(e) {
+						//$("#loader1").hide();
+						$("#invalidfilemsg").text(e.responseText);
+						$("#invalidfile").modal("toggle");
+
+					}
+				});
+	}
+	$(function() {
+		$("#FEE_DATE").datepicker({
+			minDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#ed_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+	$(function() {
+		$("#START_DATE").datepicker({
+			maxDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#end_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+
+	$(function() {
+		$("#END_DATE").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+		});
+
+	});
+	$(function() {
+		$("#ed_date1").datepicker({
+
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+
+		});
+
+	});
+	
+	$(function(){
+		  $('input[type="radio"]').click(function(){
+		    if ($(this).is(':checked'))
+		    {
+		    	if($(this).val()=='Variable'){
+		    		//alert("ok");
+		    		document.getElementById('minVarAmountIdLabel').style.display="block";
+		    		document.getElementById('maxVarAmountIdLabel').style.display="block";
+		    		document.getElementById('min_amountDiv').style.display="block";
+		    		document.getElementById('max_amountDiv').style.display="block";
+		    	}else if($(this).val()=='Fixed'){
+		    		//alert("not");
+		    		document.getElementById('minVarAmountIdLabel').style.display="none";
+		    		document.getElementById('maxVarAmountIdLabel').style.display="none";
+		    		document.getElementById('min_amountDiv').style.display="none";
+		    		document.getElementById('max_amountDiv').style.display="none";
+		    	}
+		      //alert();
+		    }
+		  });
+		});
+</script>
+
+</head>
+<title>IPSAdmin</title>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">Wallet Fees And Charges</h6>
+							</div>
+
+							<div class="btn-group nav-buttons float-right">
+								<button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="addWalletFees();" th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Add</button>
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<!-- <th></th> -->
+									<th>Fees Srl No</th>
+									<th>Wallet Tran Type</th>
+									<th>Date</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>Status</th>
+
+
+									<th style="width: 19px;">Select</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="walletProfile : ${walletProfiles}" class="userlist">
+
+									<td th:text="${walletProfile.FEE_SRL_NO}"></td>
+									<td th:text="${walletProfile.WALLET_TRAN_TYPE}"></td>
+									<td th:text="${#dates.format(walletProfile.FEE_DATE, 'dd-MM-yyyy')}"></td>
+									<td th:text="${#dates.format(walletProfile.START_DATE, 'dd-MM-yyyy')}"></td>
+									<td th:text="${#dates.format(walletProfile.END_DATE, 'dd-MM-yyyy')}"></td>
+									<th:block th:switch="${walletProfile.ENTITY_FLG}">
+											<td th:case="'Y'" style="color: green;">Verified</td>
+											<td th:case="'N'" style="color: red;">UnVerified</td>
+										</th:block>
+							
+
+									
+								<!-- 	<td 
+										class=underline onclick="finuser(this);"
+										th:attr="data-mand_ref_no=${merchantProfile.mandate_ref_no}"
+										title="click to view Image" id="openUploadModal">show</td> -->
+
+									<td>
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" title="Action"
+												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">Action</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton"
+												style="line-height: 0.7; background-color: #e3e3e4;">
+												<a class="dropdown-item" title="Modify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnEditClick(this);"
+													th:attr="data-feesSrlNo=${walletProfile.FEE_SRL_NO},data-walletTranType=${walletProfile.WALLET_TRAN_TYPE},
+													data-formmode='edit'"
+													th:id="${walletProfile.FEE_SRL_NO}"
+													th:if="${walletProfile.ENTITY_FLG}!='N' and ${IPSRoleMenu.permissions}=='W' ">Modify</a>
+
+												<div th:if="${walletProfile.ENTITY_FLG}!='N' and OR ${IPSRoleMenu.permissions}=='W' " class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+												
+												<a class="dropdown-item" title="Modify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnVerifyClick(this);"
+													th:attr="data-feesSrlNo=${walletProfile.FEE_SRL_NO},data-walletTranType=${walletProfile.WALLET_TRAN_TYPE},
+													data-formmode='verify'"
+													th:id="${walletProfile.FEE_SRL_NO}"
+													th:if="${walletProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C'" >Verify</a>
+
+												<div th:if="${walletProfile.ENTITY_FLG}=='N' and ${IPSRoleMenu.work_class}=='C'" class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="View"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnViewClick(this);"
+													th:attr="data-feesSrlNo=${walletProfile.FEE_SRL_NO},data-walletTranType=${walletProfile.WALLET_TRAN_TYPE},
+													data-formmode='view'"
+													th:id="${walletProfile.FEE_SRL_NO}"
+													th:if="${walletProfile.ENTITY_FLG}=='Y' OR ${walletProfile.ENTITY_FLG}=='N'">View</a>
+
+												
+
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="home();">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!---------------------User List Ends--------------------------------------------------------->
+
+
+	
+
+		<!---------------------User Edit form Starts-------------------------------------------------->
+
+		<div
+			th:if="${formmode}=='view' OR ${formmode}=='add' OR ${formmode}=='cancel' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='verify'  OR ${formmode}=='viewnew'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<form action="#" th:object="${walletProfile}" method="post"
+							autocomplete="off" id="walletProfile" th:fragment="finuserapply">
+
+							<div class="card-header" style="background-color: #3e6369b5;">
+								<div class="float-left">
+									<h3 th:if="${formmode}=='add'" style="color: white">
+										 Wallet Fees And Charges - Add</h3>
+									<h3
+										th:if="${formmode}=='edit' AND ${walletProfile?.ENTITY_FLG}!='N'"
+										style="color: white"> Wallet Fees And Charges - Modify</h3>
+									<h3
+										th:if="${formmode}=='verify' AND ${walletProfile?.ENTITY_FLG}=='N'"
+										style="color: white"> Wallet Fees And Charges - Verify</h3>
+									<h3
+										th:if="${formmode}=='view' AND ${walletProfile?.ENTITY_FLG}!='N'"
+										style="color: white"> Wallet Fees And Charges - View</h3>
+
+
+									<h3
+										th:if="${formmode}=='delete'AND ${walletProfile?.DEL_FLG}=='N'"
+										style="color: white"> Wallet Fees And Charges - Delete</h3>
+
+								</div>
+								<div class="btn-group nav-buttons float-right">
+
+									<button type="button" class="btn btn-xs btn-primary btns"
+										id="btnInq" onclick="list();">List</button>
+								</div>
+							</div>
+							<div class="card-body">
+
+								
+								<div class="form-group">
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="FEE_SRL_NO">Srl No	
+											</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="merchant_code"
+												name="FEE_SRL_NO" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="FEE_SRL_NO"
+												name="FEE_SRL_NO"
+												th:value="${walletProfile?.FEE_SRL_NO}"
+												class="form-control form-control-sm" autocomplete="off"
+												required 
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='edit'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Date	
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="FEE_DATE"
+												name="FEE_DATE"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+											
+												th:value="${#dates.format(walletProfile?.FEE_DATE, 'dd-MM-yyyy')}"
+												id="FEE_DATE" name="FEE_DATE"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+									<label></label>
+
+									
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Tran Type	
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="WALLET_TRAN_TYPE"
+												name="WALLET_TRAN_TYPE" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="WALLET_TRAN_TYPE"
+												name="WALLET_TRAN_TYPE"
+												th:value="${walletProfile?.WALLET_TRAN_TYPE}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Tran Category
+	
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="TRAN_CATEGORY"
+												name="TRAN_CATEGORY" class="form-control form-control-sm"
+												autocomplete="false" maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${walletProfile?.TRAN_CATEGORY}"
+												id="TRAN_CATEGORY" name="TRAN_CATEGORY"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+
+								<label>	</label>
+
+								<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Fee Type
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="FEE_TYPE"
+												name="FEE_TYPE" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="FEE_TYPE"
+												name="FEE_TYPE"
+												th:value="${walletProfile?.FEE_TYPE}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Fee Percentage
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="FEE_PERCENTAGE"
+												name="FEE_PERCENTAGE" class="form-control form-control-sm"
+												autocomplete="false" maxlength="100"  />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="number"
+												th:value="${walletProfile?.FEE_PERCENTAGE}"
+												id="FEE_PERCENTAGE" name="FEE_PERCENTAGE"
+												class="form-control form-control-sm" autocomplete="false"
+												 maxlength="100"
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+
+								<label>	</label>
+								
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Fixed Fees	
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="FEE_FIXED"
+												name="FEE_FIXED" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="FEE_FIXED"
+												name="FEE_FIXED"
+												th:value="${walletProfile?.FEE_FIXED}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Fee Logic
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="FEE_LOGIC"
+												name="FEE_LOGIC" class="form-control form-control-sm"
+												autocomplete="false" maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${walletProfile?.FEE_LOGIC}"
+												id="FEE_LOGIC" name="FEE_LOGIC"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+
+								<label>	</label>
+							
+									
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Start Date </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="START_DATE" 
+											
+												class="form-control form-control-sm" autocomplete="off"
+												 />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="START_DATE" 
+												th:value="${#dates.format(walletProfile?.START_DATE,'dd-MM-yyyy')}"
+												class="form-control form-control-sm" autocomplete="off"
+												
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">End Date</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="END_DATE" 
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100"  />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" id="END_DATE" 
+												th:value="${#dates.format(walletProfile?.END_DATE,'dd-MM-yyyy')}"
+												class="form-control form-control-sm" autocomplete="off"
+												
+												th:readonly="${walletProfile?.ENTITY_FLG=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew'" />
+										</div>
+									</div>
+									<label></label>
+									
+								<div class="card-footer text-center">
+									<button type="button" class="btn btn-xs btn-primary"
+										id="btnHome" onclick="home();">Home</button>
+
+
+									<button
+										th:if=" ${formmode}=='delete' AND ${walletProfile?.DEL_FLG}=='N'"
+										type="button" class="btn btn-xs btn-primary"
+										th:attr="data-formmode=${formmode},data-del=${DEL_FLG}"
+										onclick="deleteform(this);" id="btnModify">Delete</button>
+
+									<button th:if=" ${formmode}=='add'" type="button"
+										class="btn btn-xs btn-primary" form="walletProfile"
+										id="btnSubmit" onclick="submitform();"
+										th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG}">Submit</button>
+									
+									<button th:if=" ${formmode}=='verify'" type="button"
+										class="btn btn-xs btn-primary" form="walletProfile"
+										id="btnSubmit" onclick="verifysubmitform(this);"
+										th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG},data-modify_user=${walletProfile?.MODIFY_USER},data-entry_user=${walletProfile?.ENTRY_USER}">Submit</button>
+										
+									<button th:if="${formmode}=='edit' " type="button"
+										class="btn btn-xs btn-primary" form="walletProfile"
+										id="btnSubmit" onclick="editsubmitform();"
+										th:attr="data-formmode=${formmode},data-entity=${ENTITY_FLG}">Submit</button>
+
+
+									<button type="button" class="btn btn-xs btn-primary"
+										id="btnBack" onclick="back();">Back</button>
+
+								</div>
+
+									<div class="content" th:if="${formmode}=='add'"
+										style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+										<div class="row formline">
+											<label class="col-sm-1">Entry User</label>
+
+											<div class="col-sm-2">
+												<input type="text" id="entryUserVerify"
+													th:value="${walletProfile?.ENTRY_USER}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify User</label>
+											<div class="col-sm-2">
+												<input type="text" id="modifyUserVerify"
+													th:value="${walletProfile?.MODIFY_USER}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Verify User</label>
+											<div class="col-sm-2">
+												<input type="text" id="verifyUserVerify"
+													th:value="${session.USERID}" form="BankandBranchverify"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+
+											</div>
+										</div>
+
+										<div class="row formline">
+
+											<label class="col-sm-1">Entry Time</label>
+											<div class="col-sm-2">
+												<input type="text" id="entryTimeVerify"
+													th:value="${#dates.format(walletProfile?.ENTRY_TIME,'dd-MM-yyyy HH:mm')}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify Time</label>
+											<div class="col-sm-2">
+												<input type="text"
+													th:value="${#dates.format(walletProfile?.MODIFY_TIME,'dd-MM-yyyy HH:mm')}"
+													id="modifyTimeVerify" class="form-control form-control-sm"
+													autocomplete="off" readonly>
+
+											</div>
+											<div class="col-sm-1"></div>
+											<label class="col-sm-1">Verify Time</label>
+
+											<div class="col-sm-2">
+												<input type="text"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													id="verifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchverify" autocomplete="off" readonly>
+
+											</div>
+
+										</div>
+									</div>
+									
+									
+									<div class="content" th:if="${formmode}=='edit'"
+										style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+										<div class="row formline">
+											<label class="col-sm-1">Entry User</label>
+
+											<div class="col-sm-2">
+												<input type="text" id="entryUserVerify"
+													th:value="${walletProfile?.ENTRY_USER}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify User</label>
+											<div class="col-sm-2">
+												<input type="text" id="modifyUserVerify"
+													th:value="${session.USERID}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Verify User</label>
+											<div class="col-sm-2">
+												<input type="text" id="verifyUserVerify"
+													th:value="${session.USERID}" form="BankandBranchverify"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+
+											</div>
+										</div>
+
+										<div class="row formline">
+
+											<label class="col-sm-1">Entry Time</label>
+											<div class="col-sm-2">
+												<input type="text" id="entryTimeVerify"
+													th:value="${#dates.format(walletProfile?.ENTRY_TIME,'dd-MM-yyyy HH:mm')}"
+													class="form-control form-control-sm" autocomplete="off"
+													readonly>
+											</div>
+											<div class="col-sm-1"></div>
+
+											<label class="col-sm-1">Modify Time</label>
+											<div class="col-sm-2">
+												<input type="text"
+													th:value="${#dates.format(walletProfile?.MODIFY_TIME,'dd-MM-yyyy HH:mm')}"
+													id="modifyTimeVerify" class="form-control form-control-sm"
+													autocomplete="off" readonly>
+
+											</div>
+											<div class="col-sm-1"></div>
+											<label class="col-sm-1">Verify Time</label>
+
+											<div class="col-sm-2">
+												<input type="text"
+													th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+													id="verifyTimeVerify" class="form-control form-control-sm"
+													form="BankandBranchverify" autocomplete="off" readonly>
+
+											</div>
+
+										</div>
+									</div>
+
+								</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="modal fade" id="verifybox">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="verifyboxmsg"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--------------------------User Edit form Ends-------------------------------------------------->
+				<!-- -----------------------Pop window - fin user list starts--------------------------------->
+
+				<div class="modal fade" id="finusers">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Finacle Users</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<table class="table table-hover" id="finusertb">
+									<thead class="thead-light">
+										<tr>
+											<th>Branch code</th>
+											<th>Employee Id</th>
+											<th>User Id</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="userProfile : ${FinUserProfiles}"
+											th:id="${userProfile.userid}" class="userlist"
+											th:onclick="finuser(this)">
+											<td th:text="${userProfile.finSolTb.sol_id}">123</td>
+											<td th:text="${userProfile.finGenEmpTb.emp_id}">123</td>
+											<td th:text="${userProfile.userid}">456</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - fin user list Ends--------------------------------->
+				<!-- ---------------------Pop window - Domain list starts--------------------------------->
+
+				<div class="modal fade" id="getDomain">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Domain Id</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<ul class="list-group">
+									<li class="list-group-item" th:each="domainlist : ${domains}">
+										<input type="checkbox" name="dom" th:value="${domainlist}" />
+										<label th:text="${domainlist}"></label>
+
+									</li>
+								</ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitdata();">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - Domain  list Ends--------------------------------->
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+				<div class="modal fade" id="alert">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="alertmsg" style="font-size: 16px;"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="datadelete">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; color: #f15362; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to delete?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformdelete(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="datacancel">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to Cancel?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformcancel(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alert1">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg1" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addCredit">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Please fill the required fields</p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="fileupload" data-keyboard="true"
+		data-backdrop="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<h1>Upload only xlsx, xls or csv files</h1>
+					<br /> <br />
+					<form action="#" th:object="${fileUploadForm}" method="POST"
+						autocomplete="off" id="fileUploadForm"
+						enctype="multipart/form-data">
+						<div></div>
+						<input id="file" type="file" name="file" accept=".xls,.xlsx,.csv" /><br />
+						<br /> <input type="hidden" id="mandateServices"
+							name="mandateServices" value="mandateServices">
+						<button type="button" th:attr="data-formmode=submitupload"
+							class="btn btn-xs btn-primary" onclick="fire_ajax_submit();"
+							form="fileUploadForm" id="btn_Upload_Submit">Submit</button>
+
+						<button type="button" class="btn btn-xs btn-primary"
+							data-dismiss="modal">Close</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="error">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="errormsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="invalidfile">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="invalidfilemsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imageshow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="width: 1042px;">
+				<div class="modal-body" style="text-align: center">
+
+					<br /> <br /> <img class="img-responsive" id="doc_image"
+						style="max-height: 500px;">
+				</div>
+				<button type="button" class="btn btn-xs btn-primary"
+					data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+

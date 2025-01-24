@@ -1,0 +1,657 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+<style>
+.modal-backdrop.show {
+	opacity: -1.5;
+}
+
+@media screen and (min-width: 768px) {
+	#fullHeightModalRight {
+		top: 66px;
+		left: auto;
+		bottom: auto;
+		overflow: visible;
+	}
+}
+
+/* .modal-backdrop {
+	display: none !important;
+	
+} */
+
+.modal {
+	pointer-events: none;
+}
+
+body {
+	position: relative
+}
+
+/* .overlay, .sideMenu {
+	position: fixed;
+	bottom: 0
+} */
+
+a:hover {
+	background-color: rgb(214, 214, 214);
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+/* 
+.overlay {
+	top: 0;
+	left: -100%;
+	right: 100%;
+	margin: auto;
+	background-color: White;
+	z-index: 998;
+	transition: all ease 0.2s
+} */
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(90, 90, 90, 0.5);
+  z-index: 9999;
+  
+}
+
+
+/* 
+.overlay.open {
+	left: 0;
+	right: 0
+} */
+
+.sidebarNavigation {
+	margin-bottom: 0;
+	z-index: 999;
+	justify-content: flex-start
+}
+
+.sidebarNavigation .leftNavbarToggler {
+	margin-right: 10px;
+	order: -1
+}
+
+.sideMenu {
+	left: -100%;
+	top: 52px;
+	transition: all ease 0.5s;
+	overflow: hidden;
+	width: 100%;
+	z-index: 999;
+	max-width: 80%;
+	margin-bottom: 0;
+	padding: 1rem
+}
+
+.sideMenu.open {
+	left: 0;
+	display: block;
+	overflow-y: auto
+}
+
+.sideMenu ul {
+	margin: 0;
+	padding: 0 15px
+}
+</style>
+<style type="text/css">
+#nav-loginsec:hover+#loginsec {
+	opacity: 1;
+	visibility: visible;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+</style>
+<style>
+body {
+	background-color: lightgrey;
+	line-height: 1.8;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+a:not ([href] ):not ([tabindex] ):focus, a:not ([href] ):not ([tabindex]
+	 ):hover {
+	color: white;
+	text-decoration: none
+}
+
+.pagebut {
+	margin-top: 0.5%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	height: 50px;
+	border-color: #d4d7da;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 19.3%;
+	margin-top: 80px;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+	font-size: small;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
+
+table td {
+	font-size: small;
+}
+
+
+
+select {
+	width: 50px;
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+/* 
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+} */
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+
+</style>
+</head>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	var id = /*[[${id}]]*/0;
+	
+	var loginUser=/*[[${loginUser}]]*/;
+	
+	function home() {
+		location.href = 'admin'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function alertCloseDialog() {
+		window.history.go(-2);
+	}
+
+	function submitform(a) {
+		$("#loader1").modal("toggle");
+		
+		var audit = a.getAttribute("data-audit");
+		var type = a.getAttribute("data-tran-type");
+		var type1 = a.getAttribute("data-type");
+		var seqUniqueID = "";
+		var currency = a.getAttribute("data-currency");
+		var amount = a.getAttribute("data-amount");
+		var acctNumber = a.getAttribute("data-acctNumber");
+		var loginUser = a.getAttribute("data-loginUser");
+		var typeMode = "";
+		var remark=$("#remarks").val();
+		//alert(remark);
+		
+		
+		//alert(type1);
+		if (type1 == ("0")) {
+			typeMode = "0";
+			seqUniqueID = a.getAttribute("data-seqUniqueID");
+
+		} else if (type1 == ("1")) {
+			typeMode = "1";
+			seqUniqueID = a.getAttribute("data-seqUniqueID");
+
+		}else if (type1 == ("2")) {
+			typeMode = "2";
+			seqUniqueID = a.getAttribute("data-seqUniqueID");
+
+		}  else if (type1 == ("3")) {
+			typeMode = "3";
+			seqUniqueID = id;
+		}else if (type1 == ("4")) {
+			typeMode = "4";
+			seqUniqueID = a.getAttribute("data-seqUniqueID");
+
+		}
+
+		//alert(loginUser);
+		var myKeyVals = {
+			"sequence_unique_id" : seqUniqueID,
+			"tran_no" : audit,
+			"tran_type" : type1,
+			"tran_currency" : currency,
+			"tran_amt" : amount,
+			"debit_remarks":remark,
+		};
+		
+		var settings = {
+
+			"url" : "/IPSAdmin/ReversalTransaction?userID="+loginUser,
+			"method" : "POST",
+			"headers" : {
+				"content-type" : "application/json",
+				"cache-control" : "no-cache",
+			},
+			"processData" : false,
+			"data" : JSON.stringify(myKeyVals)
+		};
+		//$('body').loadingIndicator();
+
+		$.ajax(settings).done(function(response) {
+			$("#loader1").modal("hide");
+			$("#alertmsg").text(response);
+			var modal = document.getElementById("alert");
+			//modal.style.display = "block";
+			
+		//	$("#invalidfilemsg").text(e.responseText);
+			$("#alert").modal("toggle");
+
+		});
+
+	}
+	/*<![CDATA[*/
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+
+		<div class="content" id="yes">
+
+			
+			<form action="#" th:object="${ReverseTran}" method="POST"
+				autocomplete="off" id="ReverseTran">
+				<div class="card-header" style="background-color: #2e455d;">
+					<div class="float-left">
+						<h6 style="color: white;">Reversal Transaction</h6>
+					</div>
+				</div>
+				<div class="content" id="yes">
+					<div class="card-body text-center" >
+
+
+                        <div class="row formline ">
+							<div class="col-sm-3"></div>
+
+							<label class="col-sm-2">Tran Date</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${#dates.format(#dates.createNow(), 'dd-MM-yyyy')}"
+									id="tran_date" class="form-control form-control-sm"
+									name="tran_date" autocomplete="off" readonly> 
+							</div>
+						</div>
+												
+						<label></label>
+						
+						<div class="row formline ">
+							<div class="col-sm-3"></div>
+
+							<label class="col-sm-2">Value Date</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${#dates.format(tranMonitorCBS?.tran_date,'dd-MM-yyyy')}"									
+									id="value_date" class="form-control form-control-sm"
+									name="value_date" autocomplete="off" readonly> 
+							</div>
+						</div>
+						
+						<label></label>
+						
+						
+						
+						
+                        <div class="row formline">
+							<div class="col-sm-3"></div>
+							<label for="userName" class="col-sm-2"> From Account</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${tranMonitorCBS?.to_account_no}"
+									id="to_account_no" class="form-control form-control-sm"
+									name="to_account_no" autocomplete="off" required>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline ">
+							<div class="col-sm-3"></div>
+
+							<label class="col-sm-2">To Account</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${tranMonitorCBS?.from_account_no}"
+									id="from_account_no" class="form-control form-control-sm"
+									name="from_account_no" autocomplete="off" required> 
+							</div>
+							
+						</div>
+						
+						<label></label>
+						
+						<div class="row formline">
+							<div class="col-sm-3"></div>
+							<label for="userName" class="col-sm-2"> Tran Type</label>
+
+
+							<div class="col-sm-3">
+							
+								<input th:if="${tranMonitorCBS?.tran_type}=='DR'" type="text" 
+									th:value="CREDIT"
+									id="tran_type" class="form-control form-control-sm"
+									name="tran_type" autocomplete="off" readonly>
+									
+								<input th:if="${tranMonitorCBS?.tran_type}=='CR'" type="text" 
+									th:value="DEBIT"
+									id="tran_type" class="form-control form-control-sm"
+									name="tran_type" autocomplete="off" readonly>
+							</div>
+						</div>
+						
+						<label></label>
+						
+						<div class="row formline">
+							<div class="col-sm-3"></div>
+							<label for="userName" class="col-sm-2"> Currency</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${tranMonitorCBS?.tran_currency}"
+									id="tran_currency" class="form-control form-control-sm"
+									name="tran_currency" autocomplete="off" readonly>
+							</div>
+						</div>
+						
+
+						<label></label>
+						
+						<div class="row formline">
+							<div class="col-sm-3"></div>
+							<label for="userName" class="col-sm-2"> Amount</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									th:value="${tranMonitorCBS?.tran_amt}"
+									id="tran_amt" class="form-control form-control-sm"
+									name="tran_amt" autocomplete="off" readonly>
+							</div>
+						</div>
+						
+
+						<label></label>
+						
+						<div class="row formline">
+							<div class="col-sm-3"></div>
+							<label for="userName" class="col-sm-2"> Remarks</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" 
+									
+									id="remarks" class="form-control form-control-sm"
+									name="remarks" autocomplete="off" required>
+							</div>
+						</div>
+						<label></label>
+
+					</div>
+
+
+				</div>
+				
+			<div class="card-footer text-center" >
+
+				<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+					onclick="home();">Home</button>
+				<button type="button" class="btn btn-sm btn-primary"
+					th:attr="data-audit=${tranMonitorCBS.tran_no},data-tran-type=${tranMonitorCBS.tran_type}
+					,data-seqUniqueID=${tranMonitorCBS.sequence_unique_id},data-currency=${tranMonitorCBS.tran_currency}
+					,data-amount=${tranMonitorCBS.tran_amt},data-acctNumber=${tranMonitorCBS.from_account_no},
+					data-loginUser=${session.USERID},data-type=${type}"
+					id="btnSubmit" onclick="submitform(this);">Submit</button>
+				<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+					onclick="back();">Back</button>
+
+
+			</div> 
+			
+			
+				<!-- <div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+					<button  type="button"
+						class="btn btn-sm btn-primary" onclick="submiteditform(this);"
+						form="SettlementModify" id="btnSubmit"
+						th:attr="data-formmode=${formmode}">Submit</button>
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+
+				</div> -->
+
+
+
+			</form>
+		</div>
+
+
+
+		<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+		<div class="modal fade" id="alert" data-backdrop="static" data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content" >
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+					<div class="modal-body" style="text-align: center;background-color: #c6ccd2">
+						<p id="alertmsg" style="font-size: 20px;"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal"
+							onclick="alertCloseDialog();">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- <div class="modal fade" id="invalidfile" data-backdrop="static" data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM FINANCE</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="invalidfilemsg"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+</body>
+</html>

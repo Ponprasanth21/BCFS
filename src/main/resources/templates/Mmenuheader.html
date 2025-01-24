@@ -1,0 +1,63 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+	
+<head>
+
+<link href="css/bootstrap4.css" rel="Stylesheet" />
+
+
+<!--**************** Header Style starts********************* -->
+<style>
+
+.headershade {
+     padding: 6px 0% 1px;
+} 
+
+#boblogo{
+font-weight: 700;
+font-size: larger;
+}
+
+#ipsword {
+	color:#ffffff;
+	right: 26%;
+    top: 0%;
+    font-weight: 900;
+    position: absolute;
+    padding: 16px 0% 1px;
+}
+#bfirelogo {
+	right: 3%;
+    top: 1%;
+    position: absolute;
+  
+}
+
+
+html {
+	zoom: 0.85;
+} 
+.headershade{
+ background: linear-gradient(to bottom, #1b6491 10%,#4ba2cf 50%); /* W3C */  
+}
+</style>
+<!--**************** Header Style end********************* -->
+
+</head>
+<body>
+
+
+	
+	
+		<div class="col-sm-18 headershade">
+		<div class="col-sm-6 headershade" style="height: 84px;">
+			<img th:src=@{/images/Bornfire.png} style="width: 80px;height: 80px;" id="boblogo" alt="Bornfire"> 
+		</div>
+		<h1 class="col-sm-6 " id="ipsword">Bornfire Instant Payment System</h1>	
+		<img th:src=@{/images/bornfireheaderips.png} id="bfirelogo" style="width:183px" alt="Bornfire">
+	   </div>
+	 
+</body>
+	
+</html>

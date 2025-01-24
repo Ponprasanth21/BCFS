@@ -1,0 +1,977 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.imageround {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border-color: red;
+  
+}
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+/* input[type="text"] {
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+ */
+.dataTables_empty {
+	color: #be3232;
+}
+
+.dataTables_wrapper .dataTables_filter{
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+
+.dataTables_filter input {
+  color: black;
+  background-color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+}
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} */
+</style>
+
+
+
+
+
+<title>IPSAdmin</title>
+</head>
+<script type="text/javascript">
+
+
+function fnClickVerify(a) {
+	
+	location.href = 'Inward_Swift_Messages?formmode=verify' 
+}
+function list() {
+	location.href = 'Inward_Swift_Messages?formmode=list';
+}
+
+function fnClickView() {
+	location.href = 'Inward_Swift_Messages?formmode=view';
+}
+function fnClickmessage() {
+	location.href = 'Inward_Swift_Messages?formmode=message';
+}
+function fnClickProcess() {
+	location.href = 'Inward_Swift_Messages?formmode=process';
+}
+function fnClickDelete() {
+	location.href = 'Inward_Swift_Messages?formmode=delete';
+}
+function fnClickModify() {
+	location.href = 'Inward_Swift_Messages?formmode=modify';
+}
+
+function BrowseFolder() {
+	  let input = document.createElement('input');
+	  input.type = 'file';
+	  input.onchange = _ => {
+	    // you can use this method to get file and perform respective operations
+	            let files =   Array.from(input.files);
+	            console.log(files);
+	        };
+	  input.click();
+	  
+	}
+
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+	<!---------------------User List Starts------------------------------------------------------->
+
+<div th:if="${formmode}=='list'">
+	<!-- Start Content-->
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div >
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">INWARD SWIFT MESSAGES</h6>
+							</div>
+							<div class="btn-group nav-buttons float-right">
+							<button type="button" class="btn btn-xs btn-primary btns"
+									id="btnBrowse" onclick="BrowseFolder();" Style =" width: 123px;background-color: black;">Browse</button>
+								<!-- <button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="adduser();" th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Create User</button> -->
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<table class="table table-striped table-bordered table-hover "
+							id="">
+							<thead class="thead-light">
+								<tr>
+									<!-- <th></th> -->
+									
+									<th>Srl</th>
+									<th>Date</th>
+									<th>Reference Id</th>
+									<th>File Name</th>
+									<th>Sender Ref</th>
+									<th>Receiver Ref</th>
+									<th>Receiver</th>
+									<th>Msg Status</th>
+									<th>Date Processed</th>
+									<th>Remarks</th>
+									<th>MT No</th>
+									<th>MX No</th>
+									
+									
+									<th style="width: 19px;">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+								
+								<tr style="font-size: smaller"
+									>
+									
+                                    
+									<td >456</td>
+									<td>12.12.2021</td>
+									<td >1233</td>
+									<td>Message1</td>
+									<td >CHENNAI</td>
+									<td>TEST</td>
+									 <td>TEST</td>
+									 <td>TEST</td>
+									 <td>TEST</td>
+									 <td>TEST</td>
+									 <td>TEST</td>
+									 <td>TEST</td>
+									
+									
+										
+									
+									<td>
+										<!-- #ccc6d8a3 -->
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" title="Action"
+												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">Action</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton" title=""
+												style="line-height: 0.7; background-color: #e3e3e4;">
+												<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickView(this);"
+													>View</a>
+													<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+													<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickmessage(this);"
+													>Message</a>
+														<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+												<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickProcess(this);"
+													>Process</a>
+														<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+												<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickDelete(this);" title="Verify"
+													>Delete</a>
+														<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+													<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickModify(this);"
+													>Modify</a>
+														<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+													<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickVerify(this);"
+													>Verify</a>
+
+										
+
+											</div>
+										</div>
+									</td>
+								</tr>
+
+								
+								
+							</tbody>
+						</table>
+						</div>
+					
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="home();">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+			<div th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+						<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div >
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;"> MESSAGE MASTER</h6>
+							</div>
+							<div class="btn-group nav-buttons float-right">
+								<!-- <button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="adduser();" th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Create User</button> -->
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<div class="card-body">
+
+								<input autocomplete="false" name="hidden" type="text"
+									style="display: none;">
+								<div class="form-group">
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Sender's Reference </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Bank Operation Code</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+									
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Instruction Code </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Transaction Type Code</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Interbank Settled Amount</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Instructed Amount</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div> 
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Exchange Rate</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Ordering Customer</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Ordering Institution</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Sender's Correspondent</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Receiver's Correspondent</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Third Reimbursement Institution</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Intermediary Institution </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Account with Institution</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Beneficiary Customer </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Remittance Information</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Details of Charges </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">Sender's Charges</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'">
+											<input type="text" 
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												/>
+										</div>
+									</div>
+									<div class="row formline">
+										<div class="col-sm-8">
+											<label></label>
+										</div>
+
+									</div>
+										<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">Sender to Receiver Information </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" 
+												id="userId"
+												name="userid" class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='verify' OR ${formmode}=='modify' OR ${formmode}=='delete' OR ${formmode}=='process' OR ${formmode}=='message' OR ${formmode}=='view'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" 
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												 />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										
+</div></div>
+						</div>
+					
+						<div class="card-footer text-center">
+						<button type="button" class="btn btn-xs btn-primary" id="btnsubmit"
+								onclick="Submit();">Submit</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="home();">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div></div>
+</div>
+		</body>
+		</html>

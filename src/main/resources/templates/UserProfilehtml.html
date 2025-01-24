@@ -1,0 +1,2507 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<!-- <link rel="stylesheet" href="css/spur.css"> -->
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+	font-weight: normal;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.imageround {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border-color: red;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+/* input[type="text"] {
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+ */
+.dataTables_empty {
+	color: #be3232;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+.dataTables_filter input {
+	color: black;
+	background-color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+.autocomplete {
+	/*the container must be positioned relative:*/
+	position: relative;
+	display: inline-block;
+}
+
+.autocomplete-items {
+	position: absolute;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+	border-top: none;
+	z-index: 99;
+	/*position the autocomplete items to be the same width as the container:*/
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+
+.autocomplete-items div {
+	padding: 10px;
+	cursor: pointer;
+	background-color: #fff;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+	/*when hovering an item:*/
+	background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+	/*when navigating through the items using the arrow keys:*/
+	background-color: DodgerBlue !important;
+	color: #ffffff;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+}
+
+.force-scroll {
+
+overflow-y: scroll;
+
+height: 54px;
+
+}
+
+.dataTables_scrollBody{
+    position: relative;
+    overflow: auto;
+    max-height: 439px;
+    width: 100%;
+    min-height: 146px;
+}
+
+.input-container input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+/* Chrome, Safari, Edge, Opera */
+/* input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+} */
+</style>
+</head>
+
+<!-- <script>
+
+jQuery(function($){
+	$(document).ajaxSend(function() {
+		$("#overlay").fadeIn(300);　
+	});
+		
+	$('.btn').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+});
+
+
+</script> -->
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	$(document)
+			.ready(
+					function() {
+						$(window).keydown(function(event) {
+							//alert($('#alert').hasClass('show'));
+							if (event.keyCode == 13) {
+								event.preventDefault();
+								return false;
+							}
+						});
+
+						//var arr = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+
+						var inp = document.getElementById("userId");
+						var inpName = document.getElementById("userName");
+						var inpMail = document.getElementById("emailId");
+						var currentFocus;
+						/*execute a function when someone writes in the text field:*/
+						inp
+								.addEventListener(
+										"input",
+										function(e) {
+											var a, b, i, val = this.value;
+											/*close any already open lists of autocompleted values*/
+											closeAllLists();
+											if (!val) {
+												return false;
+											}
+											currentFocus = -1;
+											/*create a DIV element that will contain the items (values):*/
+											a = document.createElement("DIV");
+											a.setAttribute("id", this.id
+													+ "autocomplete-list");
+											a.setAttribute("class",
+													"autocomplete-items");
+											/*append the DIV element as a child of the autocomplete container:*/
+											this.parentNode.appendChild(a);
+											/*for each item in the array...*/
+
+											$
+													.ajax({
+														url : '/IPSAdmin/searchLdapList?userId='
+																+ val,
+														dataType : "json",
+														type : "GET",
+
+														success : function(arr) {
+															//alert(data[0].name);
+															for (i = 0; i < arr.length; i++) {
+																/*check if the item starts with the same letters as the text field value:*/
+																// if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+																/*create a DIV element for each matching element:*/
+																b = document
+																		.createElement("DIV");
+																/*make the matching letters bold:*/
+																b.innerHTML = "<strong>"
+																		+ arr[i].userID
+																		+ "</strong>";
+																//  b.innerHTML += arr[i].userID;
+																/*insert a input field that will hold the current array item's value:*/
+																b.innerHTML += "<input type='hidden' value='" + arr[i].userID + "'>";
+																b.innerHTML += "<input type='hidden' value='" + arr[i].name + "'>";
+
+																b.innerHTML += "<input type='hidden' value='" + arr[i].mail + "'>";
+																/*execute a function when someone clicks on the item value (DIV element):*/
+																b
+																		.addEventListener(
+																				"click",
+																				function(
+																						e) {
+																					/*insert the value for the autocomplete text field:*/
+																					inp.value = this
+																							.getElementsByTagName("input")[0].value;
+																					inpName.value = this
+																							.getElementsByTagName("input")[1].value;
+
+																					if (this
+																							.getElementsByTagName("input")[2].value != "") {
+																						inpMail.value = this
+																								.getElementsByTagName("input")[2].value;
+																					}
+																					/*close the list of autocompleted values,
+																					(or any other open lists of autocompleted values:*/
+																					closeAllLists();
+																				});
+																a
+																		.appendChild(b);
+																//}
+															}
+														},
+														error : function() {
+
+														}
+													});
+
+											/*  $.ajax({
+												type : 'get',
+												url : '/IPSAdmin/ldapListGrp?userId=' + val,
+												
+												success : function(response) {				
+												 	alert(response.name);
+													
+
+												}
+
+											});
+											 */
+
+										});
+						/*execute a function presses a key on the keyboard:*/
+						inp.addEventListener("keydown", function(e) {
+							var x = document.getElementById(this.id
+									+ "autocomplete-list");
+							if (x)
+								x = x.getElementsByTagName("div");
+							if (e.keyCode == 40) {
+								/*If the arrow DOWN key is pressed,
+								increase the currentFocus variable:*/
+								currentFocus++;
+								/*and and make the current item more visible:*/
+								addActive(x);
+							} else if (e.keyCode == 38) { //up
+								/*If the arrow UP key is pressed,
+								decrease the currentFocus variable:*/
+								currentFocus--;
+								/*and and make the current item more visible:*/
+								addActive(x);
+							} else if (e.keyCode == 13) {
+								/*If the ENTER key is pressed, prevent the form from being submitted,*/
+								e.preventDefault();
+								if (currentFocus > -1) {
+									/*and simulate a click on the "active" item:*/
+									if (x)
+										x[currentFocus].click();
+								}
+							}
+						});
+						function addActive(x) {
+							/*a function to classify an item as "active":*/
+							if (!x)
+								return false;
+							/*start by removing the "active" class on all items:*/
+							removeActive(x);
+							if (currentFocus >= x.length)
+								currentFocus = 0;
+							if (currentFocus < 0)
+								currentFocus = (x.length - 1);
+							/*add class "autocomplete-active":*/
+							x[currentFocus].classList
+									.add("autocomplete-active");
+						}
+						function removeActive(x) {
+							/*a function to remove the "active" class from all autocomplete items:*/
+							for (var i = 0; i < x.length; i++) {
+								x[i].classList.remove("autocomplete-active");
+							}
+						}
+						function closeAllLists(elmnt) {
+							/*close all autocomplete lists in the document,
+							except the one passed as an argument:*/
+							var x = document
+									.getElementsByClassName("autocomplete-items");
+							for (var i = 0; i < x.length; i++) {
+								if (elmnt != x[i] && elmnt != inp) {
+									x[i].parentNode.removeChild(x[i]);
+								}
+							}
+						}
+						/*execute a function when someone clicks in the document:*/
+						document.addEventListener("click", function(e) {
+							closeAllLists(e.target);
+						});
+
+					});
+
+	/*]]>*/
+</script>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+
+		$(document).ready(function() {
+			var formode = $("#formmode1").val();
+			if (formode == "view") {
+				$('input').attr('readonly', true);
+			} else if (formode == "verify") {
+				$('input').attr('readonly', true);
+			}
+
+		});
+		
+		$(function(){
+		    var dtToday = new Date();
+		    
+		    var month = dtToday.getMonth() + 1;
+		    var day = dtToday.getDate();
+		    var year = dtToday.getFullYear();
+		    if(month < 10)
+		        month = '0' + month.toString();
+		    if(day < 10)
+		        day = '0' + day.toString();
+		    
+		    var maxDate = year + '-' + month + '-' + day;
+
+		    // or instead:
+		    // var maxDate = dtToday.toISOString().substr(0, 10);
+
+		    
+		    $('#disableDate').attr('min', maxDate);
+		    $('#disableenddate').attr('min', maxDate);
+		    $('#expiryDate').attr('min', maxDate);
+		});
+		
+
+		/*$("#disableDate").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#disableenddate").datepicker("option", "minDate", dt);
+
+			}
+		});
+		$("#disableenddate").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+		});
+		$("#expiryDate,#passExDate").datepicker({
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() + 1);
+			}
+		});*/
+
+	});
+
+	var usrprfle = /*[[${userProfilecheck}]]*/null;
+	if (usrprfle != null) {
+		if (usrprfle.entity_flg == 'N') {
+			$('#userProfile').datetimepicker({
+				Readonly : true
+			});
+		}
+	}
+	function getUserlist(mode, num, maxpage) {
+
+		var n = parseInt(num);
+		var max = parseInt(maxpage);
+		var Callurl = 'UserProfile?formmode=list';
+
+		switch (mode) {
+		case "nextpage":
+			n = n + 1;
+			if (n > max) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+			break;
+		case "prevpage":
+			n = n - 1;
+			if (n < 0) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+			break;
+		case "givenpage":
+			n = parseInt($("#pageno").val()) - 1;
+			if (n > max || n < 0) {
+				break;
+			}
+			Callurl = Callurl + "&page=" + n;
+		}
+
+		location.href = Callurl;
+	}
+
+	function pressBankBranchData(a) {
+		var bank_code = a.getAttribute("data-bank_code");
+		var bank_name = a.getAttribute("data-bank_name");
+		var br_code = a.getAttribute("data-parm_1");
+		var br_name = a.getAttribute("data-parm_2");
+
+		$("#bankCode").val(bank_code);
+		$("#bankName").val(bank_name);
+		$("#branchCode").val(br_code);
+		$("#branchName").val(br_name);
+		document.getElementById('bankCodeerror').style.display="none";
+		document.getElementById('bankNameerror').style.display="none";
+		document.getElementById('branchCodeerror').style.display="none";
+		document.getElementById('branchNameerror').style.display="none";
+		$("#MyModalBank").modal("hide");
+
+	}
+
+	function home() {
+		location.href = '/BSWIFT/BSWIFTDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function Back() {
+		location.href = 'UserProfile?formmode=verify&userid='+ userid
+	}
+	
+	function fnClick(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=edit&userid=' + userid
+	}
+
+	function adduser(a) {
+		location.href = 'UserProfile?formmode=add';
+	}
+
+	function list() {
+		location.href = 'UserProfile?formmode=list';
+	}
+
+	function verifyform(a) {
+		var entryuser = a.getAttribute("data-entry_user");
+		//var entryuser = $("#entry_user").val();
+		//var modifyuser = $("#modify_user").val();
+		var modifyuser = a.getAttribute("data-modify_user");
+		var loginuser = /*[[${session.USERID}]]*/null;
+		if (modifyuser != "") {
+			if (modifyuser != loginuser) {
+				$('select option').prop('disabled', false);
+
+				if ($("#userProfile").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = './verifyUser';
+					$("#userProfile").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#userProfile').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+
+				$('#alert').modal("toggle");
+
+			}
+		} else if (modifyuser == "") {
+			if (entryuser != loginuser) {
+				$('select option').prop('disabled', false);
+
+				if ($("#userProfile").valid()) {
+					$("#loader1").modal("toggle");
+					var userid = a.getAttribute("data-userid");
+					var url = './verifyUser';
+					$("#userProfile").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$('#userProfile').ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+						$("#loader1").hide();
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				}
+			} else {
+				$("#alertmsg").text("Same user cannot verify");
+				$('#alert').modal("toggle");
+
+			}
+		}
+
+	};
+
+	function roledesc() {
+
+		var roleid = $("#roleId").find(':selected').val();
+
+		$.ajax({
+			type : 'get',
+			url : '/BSWIFT/getRoleDetails/' + roleid,
+
+			success : function(response) {
+				$("#roleDesc").val(response);
+
+			}
+
+		});
+
+	}
+
+	$('#loginLow1').ptTimeSelect({
+		containerClass : "timeCntr",
+		containerWidth : "350px",
+		setButtonLabel : "Select",
+		minutesLabel : "min",
+		hoursLabel : "Hrs"
+	});
+
+	$(document).ready(function() {
+		$('input[name="login_high"]').ptTimeSelect();
+	});
+	function submitform(a) {
+
+		/* //Creating Validating Rules
+		$('#userProfile').validate({
+			messages : {
+				userid : "Please Provide User Id"
+			}
+		});
+		 */
+		var bankCode = document.getElementById('bankCode').value;
+		 var bankName = document.getElementById('bankName').value;
+		 var branchCode = document.getElementById('branchCode').value;
+		 var branchName = document.getElementById('branchName').value;
+	
+		 
+		 if(bankCode!=null && bankCode !="" && bankName!=null && bankName !="" && branchCode!=null && branchCode !="" && branchName!=null && branchName !=""){
+		
+						 
+					 }else{
+						 document.getElementById("branchNameerror").style.display="block";
+						 document.getElementById("branchCodeerror").style.display="block";
+						 document.getElementById("bankNameerror").style.display="block";  
+						 document.getElementById("bankCodeerror").style.display="block";
+						 }
+					 
+				 
+		 
+		 
+		$.validator
+				.addMethod(
+						"regex2",
+						function(value, element, regexp) {
+							var re = new RegExp(regexp);
+							return this.optional(element) || re.test(value);
+
+						},
+
+						"Password required atleast one Uppercase, Lowercase, Numeric and special character");
+
+		$("#userProfile")
+				.validate(
+						{
+							rules : {
+								password : {
+									required : true,
+									minlength : 8,
+									maxlength : 16,
+									regex2 : "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+								}
+							},
+							messages : {}
+
+						});
+
+		$.validator.addMethod("regex", function(value, element, regexp) {
+			var re = new RegExp(regexp);
+			return this.optional(element) || re.test(value);
+		}, "Date required format dd-mm-yyyy");
+
+		$("#userProfile")
+				.validate(
+						{
+							rules : {
+								disableDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								disableTilDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								passExDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								expiryDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								}
+
+							},
+							messages : {
+
+							}
+
+						});
+
+		if ($("#userProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./createUser?formmode=" + formmode;
+
+			$("#userProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#userProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function clickPhoto(a) {
+
+		var userid = a.getAttribute("data-userid")
+		$
+				.ajax({
+
+					type : 'get',
+					url : "./getUserBlobImage/" + userid,
+					success : function(response) {
+						$('#imageshow').modal('show');
+						document.getElementById("doc_image").src = "data:image/png;base64,"
+								+ response;
+
+					}
+
+				});
+
+	}
+
+	function editsubmitform(a) {
+
+		//Creating Validating Rules
+		/* $('#userProfile').validate({
+			messages : {
+				userid : "Please Provide User Id"
+			}
+		}); */
+
+		$.validator.addMethod("regex", function(value, element, regexp) {
+			var re = new RegExp(regexp);
+			return this.optional(element) || re.test(value);
+		}, "Date required format dd-mm-yyyy");
+
+		$("#userProfile")
+				.validate(
+						{
+							rules : {
+								disableDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								disableTilDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								passExDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+								expiryDate : {
+									required : true,
+									regex : "^(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])-[0-9]{4}$"
+								},
+
+							},
+							messages : {
+
+							}
+
+						});
+
+		if ($("#userProfile").valid()) {
+			$("#loader1").modal("toggle");
+
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./editUser?formmode=" + formmode;
+
+			$("#userProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#userProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+	function deleteform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+	function addform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+
+	function cancelform(a) {
+
+		$("#datacancel").modal("toggle");
+
+	}
+	
+	
+
+	function submitformcancel(a) {
+
+		$("#datacancel").hide();
+		if ($("#userProfile").valid()) {
+
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./cancelUser?formmode=" + formmode;
+
+			$("#userProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#userProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function submitformdelete(a) {
+
+		$("#datadelete").hide();
+		if ($("#userProfile").valid()) {
+
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./deleteUser?formmode=" + formmode;
+
+			$("#userProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#userProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function passwordReset(a) {
+		var userid = a.getAttribute("data-userid");
+		document.getElementById("userid1").value = userid;
+		$("#resetpassword").modal("toggle");
+		/*$("#loader1").modal("toggle");
+		
+		var url = "./passwordReset?userid=" + userid;
+
+		$.ajax({
+			type : "POST",
+
+			url : url,
+			data : userid,
+			processData : false,
+
+			success : function(data) {
+				$("#loader1").hide();
+				$('#alert1').modal("toggle");
+				$("#alertmsg1").text(data);
+
+			}
+		});*/
+	}
+
+	function submitresetpassword(a) {
+
+		var getLoginSecurityData = null;
+		$
+				.ajax({
+					type : "get",
+					url : "/IPSAdmin/getLoginSecurityData",
+
+					success : function(data) {
+						getLoginSecurityData = data;
+						//var getLoginSecurityData = /*[[${getLoginSecurityData}]]*/null;
+
+						var maxLengthPass = parseInt(getLoginSecurityData.pw_length);
+						var errorMsg = "";
+						var regexPass = ""
+
+						if (getLoginSecurityData.com_flg == 'Y') {
+							if (getLoginSecurityData.alpha_flg == 'Y'
+									&& getLoginSecurityData.cap_flg == 'Y'
+									&& getLoginSecurityData.num_flg == 'Y'
+									&& getLoginSecurityData.spl_char_flg == 'Y') {
+								errorMsg = "Password required atleast one Uppercase, Lowercase, Numeric and special character";
+								regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+
+							} else if (getLoginSecurityData.alpha_flg == 'Y'
+									&& getLoginSecurityData.cap_flg == 'Y'
+									&& getLoginSecurityData.num_flg == 'Y'
+									&& getLoginSecurityData.spl_char_flg == 'N') {
+								errorMsg = "Password required atleast one Uppercase, Lowercase, and Numeric";
+								regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})";
+
+							} else if (getLoginSecurityData.alpha_flg == 'Y'
+									&& getLoginSecurityData.cap_flg == 'Y'
+									&& getLoginSecurityData.num_flg == 'N'
+									&& getLoginSecurityData.spl_char_flg == 'Y') {
+								errorMsg = "Password required atleast one Uppercase, Lowercase and special character";
+								regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+							} else if (getLoginSecurityData.alpha_flg == 'Y'
+									&& getLoginSecurityData.cap_flg == 'Y'
+									&& getLoginSecurityData.num_flg == 'N'
+									&& getLoginSecurityData.spl_char_flg == 'N') {
+								errorMsg = "Password required atleast one Uppercase, Lowercase";
+								regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})";
+							} else {
+								errorMsg = "Password required atleast one Uppercase, Lowercase, Numeric and special character";
+								regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+							}
+						} else {
+							errorMsg = "Password required atleast one Uppercase, Lowercase, Numeric and special character";
+							regexPass = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+						}
+
+						//Validating password fields
+						$.validator.addMethod("regex1", function(value,
+								element, regexp) {
+							var re = new RegExp(regexp);
+							return this.optional(element) || re.test(value);
+						}, errorMsg);
+
+						$("#passformreset").validate({
+							rules : {
+								newpass1 : {
+									required : true,
+									minlength : 8,
+									maxlength : maxLengthPass,
+									regex1 : regexPass
+								},
+								Connewpass1 : {
+									required : true,
+									minlength : 8,
+									maxlength : maxLengthPass,
+									equalTo : "#newpass1",
+									regex1 : regexPass
+
+								}
+							},
+							messages : {}
+
+						});
+
+						if ($("#passformreset").valid()) {
+
+							var newpass = $("#newpass1").val();
+							var conpass = $("#Connewpass1").val();
+							var userid = $("#userid1").val();
+
+							if (newpass == conpass) {
+								var url = "./passwordReset1";
+								var passdata = {
+									newpass : newpass,
+									userid : userid
+								}
+
+								$
+										.ajax({
+											type : "post",
+											cache : false,
+											url : url,
+											data : passdata, // multiple data sent using ajax
+											success : function(data) {
+
+												if (data == 'Password Resetted Successfully') {
+													$("#resetpassword").modal(
+															"hide");
+													$('#alert1')
+															.modal("toggle");
+													$("#alertmsg1").text(data);
+												} else {
+													alert("Noty");
+													$('#alert1')
+															.modal("toggle");
+													$("#alertmsg1").text(data);
+												}
+											}
+										});
+
+							} else {
+								$("#resetpassword").modal("hide");
+								$('#alert1').modal("toggle");
+								$("#alertmsg1")
+										.text(
+												"New Password and Confirm Passsword must be Same !");
+
+							}
+						}
+
+					}
+				});
+
+	};
+
+	/*]]>*/
+</script>
+<script>
+	
+</script>
+<script>
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage" : {
+				"sSearch" : "",
+				"sSearchPlaceholder" : "Search Here"
+			},
+			"searching" : true,
+			"pageLength" : 25,
+			"lengthChange" : false,
+		});
+	});
+
+	function submitdata() {
+		var domainids = [];
+		$.each($("input[name='dom']:checked"), function() {
+			domainids.push($(this).val());
+		});
+		$("#getDomain").modal('hide');
+		$("#domainId").val(domainids.join(","));
+	}
+	function fnClickview(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=view&userid=' + userid
+	}
+
+	function fnClickCancel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=cancel&userid=' + userid
+	}
+
+	function fnClickviewnew(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=viewnew&userid=' + userid
+	}
+	function fnClickdel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=delete&userid=' + userid
+	}
+
+	function fnClickVerify(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=verify&userid=' + userid
+	}
+</script>
+
+</head>
+<title>BSWIFT</title>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+	<!---------------------User List Starts------------------------------------------------------->
+
+
+	<!-- Start Content-->
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card" style = "max-height: 400px">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">User Profile</h6>
+							</div>
+							<div class="btn-group nav-buttons float-right">
+								<button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="adduser();"
+									th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Create
+									User</button>
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<!-- <th></th> -->
+									<th></th>
+									<th>User Id</th>
+									<th>User Name</th>
+									<th>Employee Id</th>
+									<th>Branch code</th>
+									<th>Branch Name</th>
+									<th>Status</th>
+									<th style="width: 19px;">Select</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="userProfile : ${userProfiles}" class="userlist">
+
+									<td th:if="${userProfile.xbrl_report}==null"><img
+										th:src=@{/images/UserImage.png} class="imageround"
+										style="color: blue; font-size: 20px;"></td>
+									<td th:if="${userProfile.xbrl_report}!=null"><img
+										th:src="*{'data:image/png;base64,'+userProfile.xbrl_report}"
+										class="imageround"></img></td>
+
+									<td th:text="${userProfile.userid}">456</td>
+									<td th:text="${userProfile.username}">TEST</td>
+									<td th:text="${userProfile.empid}">123</td>
+									<td th:text="${userProfile.branch_code}">123</td>
+									<td th:text="${userProfile.branch_name}">CHENNAI</td>
+									<th:block th:switch="${userProfile.entity_flg}">
+										<td th:case="'Y'" style="color: green;">Active</td>
+										<td th:case="'N'" style="color: red;">UnVerified</td>
+									</th:block>
+									<td>
+										<!-- #ccc6d8a3 -->
+										
+										<div class="dropdown ">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" title="Action"
+												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">Action</button>
+											
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton" 
+												style="line-height: 0.7; background-color: #e3e3e4;">
+												
+											<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-userid=${userProfile.userid}"
+													th:id="${userProfile.userid}"
+													th:if="${userProfile.entity_flg}=='Y' AND ${loginuser} !=${userProfile.userid}  AND ${IPSRoleMenu.permissions}=='W'"
+													th:disabled="${loginuser} ==${userProfile.userid}">Modify</a>
+											
+											
+											<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClickVerify(this);" title="Verify"
+													th:attr="data-userid=${userProfile.userid}"
+													th:id="${userProfile.userid}"
+													th:if="${userProfile.entity_flg}=='N' AND ${IPSRoleMenu.work_class}=='C'">Verify</a>
+											
+											<div class="dropdown-divider"
+													th:if="${userProfile.entity_flg}=='Y' AND ${loginuser} !=${userProfile.userid}  AND ${IPSRoleMenu.permissions}=='W'"
+													style="height: 2px; line-height: 0.7;"></div>
+											
+																		
+												<a class="dropdown-item" title="View"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													th:attr="data-userid=${userProfile.userid}"
+													onclick="fnClickview(this);" th:id="${userProfile.userid}"
+													th:if="${userProfile?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">View
+
+												</a> 
+																
+												
+													<div class="dropdown-divider"
+										th:if="${userProfile?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'"></div>
+												
+												
+												
+												<a class="dropdown-item" title="View"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													th:attr="data-userid=${userProfile.userid}"
+													onclick="fnClickviewnew(this);" th:id="${userProfile.userid}"
+													th:if="${userProfile?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'">View</a>
+											
+											<div class="dropdown-divider"
+													th:if="${userProfile.entity_flg}=='N' "
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="Cancel"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													th:attr="data-userid=${userProfile.userid}"
+													onclick="fnClickCancel(this);"
+													th:id="${userProfile.userid}"
+													th:if="${userProfile.entity_flg}=='N' ">Cancel</a>
+													
+													
+
+
+												<!-- <div class="dropdown-divider"
+													th:if="${userProfile.entity_flg}=='Y' and ${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W'"
+													style="height: 2px; line-height: 0.7;"></div>
+												<a class="dropdown-item"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="passwordReset(this);"
+													th:attr="data-userid=${userProfile.userid}"
+													th:id="${userProfile.userid}"
+													
+													th:if="${userProfile.entity_flg}=='Y' and ${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W'">Password Reset</a>
+ -->
+
+											</div>	
+											</div>
+	
+											
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="back()">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!---------------------User List Ends--------------------------------------------------------->
+		<!---------------------User Edit form Starts-------------------------------------------------->
+
+		<div
+			th:if="${formmode}=='view' OR ${formmode}=='add' OR ${formmode}=='cancel' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='verify'  OR ${formmode}=='viewnew'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<form action="#" th:object="${userProfile}" method="post"
+							autocomplete="off" id="userProfile" th:fragment="finuserapply">
+
+							<div class="card-header" style="background-color: #3e6369b5;">
+								<div class="float-left">
+									<h3 th:if="${formmode}=='add'" style="color: white">User
+										Profile - Add</h3>
+									<h3 th:if="${formmode}=='edit' " style="color: white">User
+										Profile - Modify</h3>
+									<h3 th:if="${formmode}=='view' " style="color: white">User
+										Profile - View</h3>
+
+									<h3 th:if="${formmode}=='viewnew' " style="color: white">User
+										Profile - View</h3>
+
+									<h3 th:if="${formmode}=='verify' " style="color: white">User
+										Profile - Verify</h3>
+
+									<h3 th:if="${formmode}=='delete'" style="color: white">User
+										Profile - Delete</h3>
+
+									<h3 th:if="${formmode}=='cancel'" style="color: white">User
+										Profile - Cancel</h3>
+
+								</div>
+								<div class="btn-group nav-buttons float-right">
+
+									<button type="button" class="btn btn-xs btn-primary btns"
+										id="btnInq" onclick="list();">List</button>
+								</div>
+							</div>
+							<div class="card-body">
+
+								<input autocomplete="false" name="hidden" type="text"
+									style="display: none;">
+								<div class="form-group">
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userId">User Id </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userId" name="userid"
+												class="form-control form-control-sm autocomplete"
+												autocomplete="off" required />
+										</div>
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text"
+												onkeyup="this.value = this.value.toUpperCase();" id="userId"
+												name="userid" th:value="${userProfile?.userid}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='edit'" />
+										</div>
+										<div class="col-sm-1"></div>
+										<!-- <div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#finusers" id="iconacc"></i></a>
+										</div> -->
+										<div class="col-sm-2">
+											<label for="userName">User Name</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" th:value="${userProfile?.username}"
+												id="userName" name="username"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='edit'" />
+										</div>
+									</div>
+
+									<div class="row formline">
+
+										<label class="col-sm-2">Bank Code</label>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+
+											<input type="text" name="bank_code" th:value="${bank_code}"
+												id="bankCode" value="" class="form-control form-control-sm"
+												maxlength="50" autocomplete="false" onpaste="return false" onkeydown="return false"/>
+											<h6>	<p id="bankCodeerror" style="color: red; font-size:14px ;display: none;"> This field is required. </p></h6>
+																						</div>
+
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="bank_code"
+												th:value="${userProfile?.bank_code}" id="bankCode" value=""
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="50"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='edit'" />
+										</div>
+
+										<div class="col-sm-1">
+											<a th:if="${formmode}=='add'" href="#"><i
+												class="fas fa-search searchico" data-toggle="modal"
+												data-target="#MyModalBank" id="iconacc"></i></a>
+										</div>
+
+
+										<label class="col-sm-2">Bank Name</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="bank_name" th:value="${bank_name}"
+												id="bankName" value="" class="form-control form-control-sm"
+												maxlength="100" autocomplete="false" onpaste="return false" onkeydown="return false"/>
+												<h6><p id="bankNameerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="bank_name"
+												th:value="${userProfile?.bank_name}" id="bankName" value=""
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='edit'" />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+
+
+									<div class="row formline">
+
+										<label class="col-sm-2">Branch Code</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="branch_code"
+												th:value="${branch_code}" id="branchCode" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												maxlength="50" onpaste="return false" onkeydown="return false"/>
+												<h6> <p id="branchCodeerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="branch_code"
+												th:value="${userProfile?.branch_code}" id="branchCode"
+												value="" class="form-control form-control-sm"
+												autocomplete="off" required maxlength="50"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'  OR ${formmode}=='viewnew'  OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='verify'OR ${formmode}=='edit'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+
+										<label class="col-sm-2">Branch Name</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="branch_name" id="branchName"
+												value="" class="form-control form-control-sm"
+												maxlength="100" autocomplete="off" onpaste="return false" onkeydown="return false">
+												<h6> <p id="branchNameerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'OR ${formmode}=='cancel'">
+											<input type="text" name="branch_name"
+												th:value="${userProfile?.branch_name}" id="branchName"
+												value="" class="form-control form-control-sm"
+												autocomplete="off" required maxlength="100"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+									<div class="row formline">
+
+										<label class="col-sm-2">Employee Id</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="empid" id="empId" value=""
+												maxlength="20" class="form-control form-control-sm"
+												autocomplete="off" required />
+
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="empid"
+												th:value="${userProfile?.empid}" id="empId" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												required maxlength="20"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew'  OR ${formmode}=='verify'OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
+										</div>
+										<div class="col-sm-1"></div>
+
+
+										<label class="col-sm-2">Employee Name</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="emp_name" id="empName" value=""
+												maxlength="100" class="form-control form-control-sm"
+												required />
+
+
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew'  OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="emp_name"
+												th:value="${userProfile?.emp_name}" id="empName" value=""
+												class="form-control form-control-sm" required
+												maxlength="100"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+									<div class="row formline">
+
+
+										<label class="col-sm-2">Mobile No</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" name="mob_number" maxlength="11"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												id="mobNo" class="form-control form-control-sm"
+												autocomplete="off" required />
+
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'OR ${formmode}=='cancel'">
+											<input type="text" name="mob_number" maxlength="11"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+												th:value="${userProfile?.mob_number}" id="mobNo"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='verify' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+
+										<label class="col-sm-2">Email Id</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="email" name="email_id" id="emailId" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												required />
+
+
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<input type="email" name="email_id"
+												th:value="${userProfile?.email_id}" id="emailId" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='cancel' OR ${formmode}=='delete' OR ${formmode}=='verify' " />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+
+
+									<div class="row formline">
+
+
+										<label class="col-sm-2">Login Low</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="time" name="login_low" id="loginLow1" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="time" name="login_low"
+												th:value="${userProfile?.login_low}" id="loginLow" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='verify' " />
+										</div>
+
+										<div class="col-sm-1"></div>
+
+										<label class="col-sm-2">Login High</label>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="time" name="login_high" id="emailId" value=""
+												class="form-control form-control-sm" autocomplete="off"
+												required />
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<input type="time" name="login_high"
+												th:value="${userProfile?.login_high}" id="loginHigh"
+												value="" class="form-control form-control-sm"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='verify' " />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+									<div class="row formline">
+
+										<label class="col-sm-2">User Disable Date</label>
+										
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="date" name="disable_start_date" 
+												max = "2050-12-12" onkeydown="return false"
+												id="disableDate" value=""
+												class="form-control form-control-sm"  required  />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="disable_start_date"
+												th:value="${#dates.format(userProfile?.disable_start_date, 'yyyy-MM-dd')}"
+												 value="" onkeydown="return false"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly=" ${formmode}=='verify' OR ${formmode}=='cancel'OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'"
+												readonly />
+										</div>
+										<div class="col-sm-1"></div>
+
+
+										<label class="col-sm-2">User Disable Till Date</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<input type="date" name="disable_end_date"
+												id="disableenddate" value="" max = "2050-12-12" onkeydown="return false"
+												class="form-control form-control-sm" autocomplete="off"
+												 required />
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<input type="text" name="disable_end_date"
+												th:value="${#dates.format(userProfile?.disable_end_date, 'yyyy-MM-dd')}"
+												value="" onkeydown="return false"
+												class="form-control form-control-sm"
+												th:readonly="${userProfile?.entity_flg=='N'}  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='add' OR ${formmode}=='verify' "
+												readonly />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+
+									<!-- <div class="row formline">
+
+
+										<label class="col-sm-2">Password</label>
+										<div class="col-sm-3"
+											th:if=" ${formmode}=='add'">
+											<input type="password"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"
+												id="pass" value="" name="password" 
+												class="form-control form-control-sm" autocomplete="off"
+												required />
+												
+												
+										</div>
+										
+										<div class="col-sm-3"
+											th:if=" ${formmode}=='edit'">
+											<input type="text" style="background-color: #c0c3c7;"
+												id="pass" value="" placeholder="**********"
+												class="form-control form-control-sm" autocomplete="off"
+												readonly />
+										</div>
+
+										<div class="col-sm-3"
+											th:if=" ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='cancel'OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='viewnew'">
+											<input type="text" style="background-color: #c0c3c7;"
+												id="pass" value="" placeholder="**********"
+												class="form-control form-control-sm" autocomplete="off"
+												readonly />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<label class="col-sm-2">Password Expiry Date</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<input type="text" name="pass_exp_date" id="passExDate"
+												value="" class="form-control form-control-sm" required />
+
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" name="pass_exp_date" readonly
+												th:value="${#dates.format(userProfile?.pass_exp_date, 'dd-MM-yyyy')}"
+												id="passExDate" value=""
+												class="form-control form-control-sm" required
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='delete'OR${formmode}=='add'" />
+										</div>
+										<div class="col-sm-1"></div>
+									</div> -->
+
+									<div class="row formline">
+										<label class="col-sm-2">User Status</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<select name="user_status" th:value="${user_status}"
+												id="userStatus" class="form-control form-control-sm"
+												autocomplete="off" required
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='viewnew'">
+												<option value="">SELECT</option>
+												<option value="Active"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='delete' OR ${formmode}=='view' OR ${formmode}=='cancel' OR ${formmode}=='viewnew' OR ${formmode}=='viewnew'">Active</option>
+												<option value="Inactive"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='delete'   OR ${formmode}=='cancel'OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='viewnew'">Inactive</option>
+											</select>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<select th:field="*{user_status}" name="user_status"
+												th:value="${userProfile?.user_status}" id="userStatus"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option value="Active">SELECT</option>
+												<option value="Active"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Active</option>
+												<option value="Inactive"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Inactive</option>
+											</select>
+										</div>
+
+										<div class="col-sm-1"></div>
+
+										<label class="col-sm-2">Login Status</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<select name="login_status" th:value="${login_status}"
+												id="loginStatus" class="form-control form-control-sm"
+												autocomplete="off" required
+												th:readonly="${userProfile?.entity_flg=='N'}  OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option value="">SELECT</option>
+												<option value="Active"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Active</option>
+												<option value="Inactive"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Inactive</option>
+											</select>
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<select th:field="*{login_status}" name="login_status"
+												th:value="${userProfile?.login_status}" id="loginStatus"
+												class="form-control form-control-sm" autocomplete="off"
+												th:readonly="${userProfile?.entity_flg=='N'}  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+												<option value="Active">SELECT</option>
+												<option value="Active"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Active</option>
+												<option value="Inactive"
+													th:disabled="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'">Inactive</option>
+
+											</select>
+										</div>
+
+										<div class="col-sm-1"></div>
+									</div>
+
+
+
+									<div class="row formline">
+
+										<label class="col-sm-2">Account Expiry Date</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<input type="date" name="acc_exp_date" id="expiryDate" max = "2050-12-12" onkeydown="return false"
+												value="" class="form-control form-control-sm"   required />
+										</div>
+
+										<div class="col-sm-3"
+											th:if="${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<input type="text" name="acc_exp_date" readonly='true'
+												th:value="${#dates.format(userProfile?.acc_exp_date, 'yyyy-MM-dd')}"
+												 value="" onkeydown="return false"
+												class="form-control form-control-sm" required
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='add' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
+										</div>
+
+										<input type="hidden" name="new_user_flg"
+											th:value="${userProfile?.new_user_flg}" id="new_user_flg">
+
+										<div class="col-sm-1"></div>
+
+										<label class="col-sm-2">Remarks</label>
+
+										<div class="col-sm-3" th:if="${formmode}=='add' ">
+											<input type="text" id="remarks" value="" name="remarks"
+												class="form-control form-control-sm" />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='view' OR ${formmode}=='edit' OR ${formmode}=='viewnew' OR ${formmode}=='verify'OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+
+											<input type="text" name="remarks" readonly='true'
+												th:value="${userProfile?.remarks}" id="remarks" value=""
+												class="form-control form-control-sm"
+												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify'  OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
+										</div>
+
+
+										<div class="col-sm-1"></div>
+									</div>
+									<br>
+
+									<div class="row"
+										style="background-color: #018398; color: white; height: 44px; border-radius: .20rem; padding: 11px 10px; top: 10px;">
+										<h4 style="color: white;">Role and Rights</h4>
+									</div>
+									<br>
+
+									<!-- The value of tester is [[${userProfile?.country_code}]]. -->
+									<div class="row formline">
+
+
+										<label class="col-sm-2">Role Id</label>
+										<div class="col-sm-3"
+											th:if="${formmode}=='view' OR ${formmode}=='viewnew'  OR ${formmode}=='verify'OR ${formmode}=='cancel' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input name="role_id" th:value="${userProfile?.role_id}"
+												id="roleId" class="form-control form-control-sm" readonly>
+
+
+										</div>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+										<select name="role_id" th:value="${role_id}" id="roleId"
+												class="form-control form-control-sm" onchange="roledesc();"
+												autocomplete="off" required>
+												
+												<option value="">SELECT</option>
+												<option id="role_id"
+													th:each="monitoringparam : ${RuleIDType}"
+													th:value="${monitoringparam}" th:text="${monitoringparam}"></option>
+													</select>
+													</div>
+													<div class="col-sm-3" th:if="${formmode}=='edit'">
+													<select th:field="*{role_id}" name="role_id"
+												th:value="${userProfile?.role_id}" id="roleId"
+												class="form-control form-control-sm" onchange="roledesc();"
+												autocomplete="off">
+												<option value="">SELECT</option>
+												<option id="role_id"
+													th:each="monitoringparam : ${RuleIDType}"
+													th:value="${monitoringparam}" th:text="${monitoringparam}"></option>
+													</select>
+										</div>
+										
+							
+										
+										<div class="col-sm-1"></div>
+										<label class="col-sm-2">Role Description</label>
+										<div th:if="${formmode}=='add'"
+											class="col-sm-3">
+											<input type="text" name="role_desc" th:value="${role_desc}"
+												id="roleDesc" value="" class="form-control form-control-sm" />
+										</div>
+										<div th:if="${formmode}=='edit'"
+											class="col-sm-3">
+											<input type="text" name="role_desc"
+												th:value="${userProfile?.role_desc}" id="roleDesc1" value=""
+												class="form-control form-control-sm"  />
+												</div>
+										
+										<div
+											th:if=" ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'"
+											class="col-sm-3">
+											<input type="text" name="role_desc"
+												th:value="${userProfile?.role_desc}" id="roleDesc1" value=""
+												class="form-control form-control-sm" readonly />
+										</div>
+										<div class="col-sm-1"></div>
+									</div>
+
+									<br>
+									<div class="row formline">
+										<div th:if="${formmode}=='add' OR ${formmode}=='edit'"
+											class="col-sm-2">
+											<label for="mand_account_number">Upload Image</label>
+										</div>
+
+										<div
+											th:if="(${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete') AND ${userProfile.photo}!=null"
+											class="col-sm-2">
+											<label for="mand_account_number">Upload Image</label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-2">
+											<input type="file" id="file" name="file"
+												accept="image/png, image/jpeg">
+										</div>
+										<div th:if="${formmode}=='edit'" class="col-sm-2">
+
+											<input type="file" id="file" name="file"
+												accept="image/png, image/jpeg"> <span
+												th:if="${userProfile.photo}!=null" class=underline
+												onclick="clickPhoto(this);"
+												th:attr="data-userid=${userProfile.userid}"
+												title="click to view Image" id="openUploadModal">show</span>
+
+										</div>
+										<div
+											th:if=" (${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete') AND ${userProfile.photo}!=null"
+											class="col-sm-3">
+											<span class=underline onclick="clickPhoto(this);"
+												th:attr="data-userid=${userProfile.userid}"
+												title="click to view Image" id="openUploadModal">show</span>
+										</div>
+										<div class="col-sm-1"></div>
+										<div class="col-sm-1"></div>
+										<label class="col-sm-2"
+											th:if="${formmode}=='add' or ${formmode}=='edit' ">Country
+											Code</label>
+										<div th:if="${formmode}=='add' " class="col-sm-3">
+
+											<select name="country_code" id="country_code"
+												class="form-control form-control-sm">
+												<option value="">Select</option>
+												<option value="BWA">Botswana</option>
+												<option value="MWI">Malawi</option>
+												<option value="MUS">Mauritius</option>
+												<option value="MOZ">Mozambique</option>
+												<option value="ZMB">Zambia</option>
+												<option value="ZWE">Zimbabwe</option>
+											</select>
+										</div>
+										<div th:if="${formmode}=='edit'" class="col-sm-3">
+
+											<select name="country_code" id="country_code" th:value="${userProfile?.country_code}"
+												th:field="*{country_code}" class="form-control form-control-sm">
+												<option value="">Select</option>
+												<option th:selected="${userProfile?.country_code}=='BWA'"
+													value="BWA">Botswana</option>
+												<option th:selected="${userProfile?.country_code}=='MWI'"
+													value="MWI">Malawi</option>
+												<option th:selected="${userProfile?.country_code}=='MUS'"
+													value="MUS">Mauritius</option>
+												<option th:selected="${userProfile?.country_code}=='MOZ'"
+													value="MOZ">Mozambique</option>
+												<option th:selected="${userProfile?.country_code}=='ZMB'"
+													value="ZMB">Zambia</option>
+												<option th:selected="${userProfile?.country_code}=='ZWE'"
+													value="ZWE">Zimbabwe</option>
+											</select>
+										</div>
+
+
+									</div>
+									<div class="row formline"
+										th:if=" ${formmode}=='viewnew' or ${formmode}=='verify' or ${formmode}=='view' or ${formmode}=='cancel'">
+										<label class="col-sm-2">Country Code</label>
+										<div
+											class="col-sm-3">
+											<input type="text" name="country_code"
+												th:value="${userProfile?.country_code}" id="country_code"
+												value="" class="form-control form-control-sm" readonly />
+										</div>
+
+
+									</div>
+
+									<!-- <div class="row formline">
+
+										<label class="col-sm-2">Permissions</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+											<select name="permissions" id="permissions"
+												class="form-control form-control-sm" autocomplete="off">
+												<option value="">Select</option>
+												<option value="R">Read</option>
+												<option value="W">Write</option>
+											</select>
+
+
+
+										</div>
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<select name="permissions" th:value="${permissions}"
+												id="permissions" class="form-control form-control-sm"
+												autocomplete="off" readonly>
+												<option value=""
+													th:disabled="${userProfile?.entity_flg=='N'}  OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Select</option>
+												<option value="R"
+													th:disabled="${userProfile?.entity_flg=='N'}  OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Read</option>
+												<option value="W"
+													th:disabled="${userProfile?.entity_flg=='N'}   OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Write</option>
+											</select>
+
+
+
+										</div>
+										<div class="col-sm-1"></div>
+
+										<label class="col-sm-2">Work Class</label>
+										<div class="col-sm-3" th:if="${formmode}=='add'">
+
+											<select name="work_class" th:value="${work_class}"
+												id="workclass" class="form-control form-control-sm"
+												autocomplete="off">
+												<option value="">Select</option>
+												<option value="M">Maker</option>
+												<option value="C">Checker</option>
+											</select>
+										</div>
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='view' OR ${formmode}=='verify' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<select name="work_class" th:value="${work_class}"
+												id="workclass" class="form-control form-control-sm"
+												autocomplete="off" readonly>
+												<option value=""
+													th:disabled="${userProfile?.entity_flg=='N'}  OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Select</option>
+												<option value="M"
+													th:disabled="${userProfile?.entity_flg=='N'}   OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Maker</option>
+												<option value="C"
+													th:disabled="${userProfile?.entity_flg=='N'}   OR ${formmode}=='edit' OR ${formmode}=='view'OR ${formmode}=='verify' OR ${formmode}=='delete'">Checker</option>
+											</select>
+										</div>
+									</div> -->
+								</div>
+
+							</div>
+							<div class="card-footer text-center">
+								<button type="button" class="btn btn-xs btn-primary"
+									id="btnHome" onclick="home();">Home</button>
+
+								<button
+									th:if=" ${formmode}=='verify' AND ${userProfile?.entity_flg}=='N'"
+									type="button" class="btn btn-xs btn-primary"
+									th:attr="data-userid=${userProfile.userid},data-entry_user=${userProfile.entry_user},data-modify_user=${userProfile.modify_user}"
+									onclick="verifyform(this);" id="btnModify">Verify</button>
+								<!-- <button
+											th:if="${formmode}=='edit' AND ${userProfile.entity_flg}=='Y'"
+											type="button" class="btn btn-xs btn-primary" id="btnpassrst"
+											onclick="passwordReset();">PasswordReset</button> -->
+
+								<button
+									th:if=" ${formmode}=='delete' AND ${userProfile?.del_flg}=='N'"
+									type="button" class="btn btn-xs btn-primary"
+									th:attr="data-formmode=${formmode},data-del=${del_flg}"
+									onclick="deleteform(this);" id="btnModify">Delete</button>
+
+								<button
+									th:if=" ${formmode}=='cancel' AND ${userProfile?.entity_flg}=='N'"
+									type="button" class="btn btn-xs btn-primary"
+									th:attr="data-formmode=${formmode},data-del=${del_flg}"
+									onclick="cancelform(this);" id="btnModify">Cancel</button>
+									
+								<button th:if=" ${formmode}=='add'" type="button"
+									class="btn btn-xs btn-primary" form="userProfile"
+									id="btnSubmit" onclick="submitform(this);"
+									th:attr="data-formmode=${formmode},data-entity=${entity_flg}">Submit</button>
+
+								<button th:if="${formmode}=='edit' " type="button"
+									class="btn btn-xs btn-primary" form="userProfile"
+									id="btnSubmit" onclick="editsubmitform(this);"
+									th:attr="data-formmode=${formmode},data-entity=${entity_flg}">Submit</button>
+
+
+								<button type="button" class="btn btn-xs btn-primary"
+									id="btnBack" onclick="back()">Back</button>
+
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="modal fade" id="verifybox" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="verifyboxmsg"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!---------------------User Edit form Ends-------------------------------------------------->
+				<!-- ---------------------Pop window - fin user list starts--------------------------------->
+
+				<div class="modal fade" id="finusers" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Finacle Users</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<table class="table table-hover" id="finusertb">
+									<thead class="thead-light">
+										<tr>
+											<th>Branch code</th>
+											<th>Employee Id</th>
+											<th>User Id</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="userProfile : ${FinUserProfiles}"
+											th:id="${userProfile.userid}" class="userlist"
+											th:onclick="finuser(this)">
+											<td th:text="${userProfile.finSolTb.sol_id}">123</td>
+											<td th:text="${userProfile.finGenEmpTb.emp_id}">123</td>
+											<td th:text="${userProfile.userid}">456</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - fin user list Ends--------------------------------->
+				<!-- ---------------------Pop window - Domain list starts--------------------------------->
+
+				<div class="modal fade" id="getDomain" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Domain Id</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<ul class="list-group">
+									<li class="list-group-item" th:each="domainlist : ${domains}">
+										<input type="checkbox" name="dom" th:value="${domainlist}" />
+										<label th:text="${domainlist}"></label>
+
+									</li>
+								</ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitdata();">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - Domain  list Ends--------------------------------->
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+				<div class="modal fade" id="alert" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="alertmsg" style="font-size: 16px;"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="list();">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="datadelete" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; color: #f15362; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to delete?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformdelete(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="datacancel" data-backdrop="static"
+					data-keyboard="false">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to Cancel?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformcancel(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alert1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg1" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="MyModalBank">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Bank Master</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<table class="table table-hover" id="finusertb">
+						<thead class="thead-light">
+							<tr>
+								<th>Bank code</th>
+								<th>Bank Name</th>
+								<th>Branch Code</th>
+								<th>Branch Name</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="bankbranchdata : ${bankbranch}"
+								th:id="${bankbranchdata.sol_id}" class="userlist"
+								th:onclick="pressBankBranchData(this)"
+								th:attr="data-bank_code=${bankbranchdata.bank_code},
+								data-bank_name=${bankbranchdata.bank_name},
+								data-parm_1=${bankbranchdata.parm_1},
+								data-parm_2=${bankbranchdata.parm_2}">
+								<td th:text="${bankbranchdata.bank_code}">123</td>
+								<td th:text="${bankbranchdata.bank_name}">123</td>
+								<td th:text="${bankbranchdata.parm_1}">456</td>
+								<td th:text="${bankbranchdata.parm_2}">456</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="resetpassword" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="color: cadetblue;">
+				<!-- Modal Header -->
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">RESET PASSWORD</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<form th:object=${singledetail} id="passformreset" method="post">
+						<div class="form-group">
+
+							<div class="row">
+								<label class="col-sm-5" for="acctName">New Password :</label> <input
+									class="form-control col-sm-5" type="password" id="newpass1"
+									name="newpass1" required />
+							</div>
+
+							<input class="form-control col-sm-5" type="hidden" id="userid1"
+								name="userid1" />
+
+							<div class="row">
+								<label class="col-sm-5" for="acctName">Confirm New
+									Password :</label> <input class="form-control col-sm-5" type="password"
+									id="Connewpass1" name="Connewpass1" required />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer" style="background-color: #c6ccd2">
+					<button type="button" class="btn btn-primary"
+						data-target="#resetpassword" onclick="submitresetpassword(this);">Submit</button>
+					<button id="logout" type="button" class="btn btn-primary"
+						data-dismiss="modal" onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="imageshow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="width: 1042px;">
+				<div class="modal-body" style="text-align: center">
+
+					<br /> <br /> <img class="img-responsive" id="doc_image"
+						style="max-height: 500px;">
+				</div>
+				<button type="button" class="btn btn-xs btn-primary"
+					data-dismiss="modal" onclick="Back();">Close</button>
+			</div>
+		</div>
+	</div>
+
+	
+</body>
+</html>

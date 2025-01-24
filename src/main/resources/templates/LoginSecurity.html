@@ -1,0 +1,782 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+<script>
+	window.onload = function() {
+		if (window.jQuery) {
+			$(document).ready(
+					function() {
+						$(".sidebarNavigation .navbar-collapse").hide().clone()
+								.appendTo("body").removeAttr("class").addClass(
+										"sideMenu").show();
+						$("body").append("<div class='overlay'></div>");
+						$(".navbar-toggle, .navbar-toggler").on(
+								"click",
+								function() {
+									$(".sideMenu").addClass(
+											$(".sidebarNavigation").attr(
+													"data-sidebarClass"));
+									$(".sideMenu, .overlay")
+											.toggleClass("open");
+									$(".overlay").on("click", function() {
+										$(this).removeClass("open");
+										$(".sideMenu").removeClass("open")
+									})
+								});
+						$("body").on(
+								"click",
+								".sideMenu.open .nav-item",
+								function() {
+									if (!$(this).hasClass("dropdown")) {
+										$(".sideMenu, .overlay").toggleClass(
+												"open")
+									}
+								});
+						$(window).resize(function() {
+							if ($(".navbar-toggler").is(":hidden")) {
+								$(".sideMenu, .overlay").hide()
+							} else {
+								$(".sideMenu, .overlay").show()
+							}
+						})
+					})
+		} else {
+			console.log("sidebarNavigation Requires jQuery")
+		}
+	}
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+<style>
+body {
+	position: relative
+}
+
+@media ( min-width : 1200px) .container {
+	max-width
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	:
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	2538
+	px
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	;
+}
+
+.overlay, .sideMenu {
+	position: fixed;
+	bottom: 0
+}
+
+a:hover {
+	background-color: rgb(214, 214, 214);
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: small;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+.overlay {
+	top: 0;
+	left: -100%;
+	right: 100%;
+	margin: auto;
+	background-color: White;
+	z-index: 998;
+	transition: all ease 0.2s
+}
+
+.overlay.open {
+	left: 0;
+	right: 0
+}
+
+.sidebarNavigation {
+	margin-bottom: 0;
+	z-index: 999;
+	justify-content: flex-start
+}
+
+.sidebarNavigation .leftNavbarToggler {
+	margin-right: 10px;
+	order: -1
+}
+
+.sideMenu {
+	left: -100%;
+	top: 52px;
+	transition: all ease 0.5s;
+	overflow: hidden;
+	width: 100%;
+	z-index: 999;
+	max-width: 80%;
+	margin-bottom: 0;
+	padding: 1rem
+}
+
+.sideMenu.open {
+	left: 0;
+	display: block;
+	overflow-y: auto
+}
+
+.sideMenu ul {
+	margin: 0;
+	padding: 0 15px
+}
+</style>
+<style>
+body {
+	background-color: lightgrey;
+	line-height: 1.8;
+}
+
+.bg-light {
+	background-color: #1f6996 !important;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+a:not ([href] ):not ([tabindex] ):focus, a:not ([href] ):not ([tabindex]
+	 ):hover {
+	color: white;
+	text-decoration: none
+}
+
+.btn {
+	background-color: hsl(188, 39%, 38%);
+	border-color: #3b7d87;
+}
+
+.pagebut {
+	margin-top: 0.5%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+.container-manager {
+	width: 81.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 19.3%;
+	margin-top: 80px;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+<script>
+	/* jQuery(function($){
+	 $(document).ajaxSend(function() {
+	 $("#overlay").fadeIn(300);　
+	 });
+	
+	 $('.btn').click(function(){
+	 $.ajax({
+	 type: 'GET',
+	 success: function(data){
+	 console.log(data);
+	 }
+	 }).done(function() {
+	 setTimeout(function(){
+	 $("#overlay").fadeOut(300);
+	 },500);
+	 });
+	 });	
+	 }); */
+</script>
+<script>
+	$(function() {
+		$("#entry_time1,verify_time1,modify_time1").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+
+	});
+</script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	function submitform(a) {
+
+		if ($("#loginSecurity").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "IPSLoginSecurity?formmode=" + formmode;
+
+			$("#loginSecurity").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+
+			};
+
+			$("#loginSecurity").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+	};
+
+	$(function() {
+
+		$('#reportForm :input').attr('readonly', 'readonly');
+		$("#edit").on("click", function() {
+			$("#alertmsg").text("Do You Want to Change the Parameter?");
+			$('#alert').modal("toggle");
+
+		});
+	});
+
+	function YES() {
+		$('#reportForm :input').removeAttr('readonly', 'readonly');
+		$("#edit").hide();
+	}
+	function home() {
+
+	}
+	function back() {
+		window.history.back();
+	}
+	function LoginSecurity(a) {
+
+		location.href = 'LoginSecurity';
+	}
+	function BankBranchMaster(a) {
+
+		location.href = 'IpsBankandBranchMaster';
+	}
+	function ServicesCharges(a) {
+
+		location.href = 'ServiceChargesAndFees';
+	}
+	function SettlementAccount(a) {
+
+		location.href = 'SettlementAccount';
+	}
+	function BusinessHours(a) {
+
+		location.href = 'BusinessHours';
+	}
+	$(function() {
+
+		$('input[type=radio]').click(function() {
+			if ($(this).prop('id') == "emailno") {
+				$("#alpha_flg").prop("disabled", true);
+				$("#num_flg").prop("disabled", true);
+				$("#cap_flg").prop("disabled", true);
+				$("#spl_char_flg").prop("disabled", true);
+
+			} else if ($(this).prop('id') == "emailyes") {
+				$("#alpha_flg").prop("disabled", false);
+				$("#num_flg").prop("disabled", false);
+				$("#cap_flg").prop("disabled", false);
+				$("#spl_char_flg").prop("disabled", false);
+
+			}
+		});
+	});
+
+	/*]]>*/
+</script>
+<script>
+	$(function() {
+
+		/*    $("#pw_life").on("keypress", function(){
+		   	
+		   	if($("#pw_life").val().length > 1)
+		       {
+		           this.value = parseInt(this.value).toFixed(1);
+		       }
+		   });
+		 */
+
+	});
+</script>
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+
+		<div class="card" id="loginsec">
+			<div class="card-header">
+				<div class="float-left">
+					<h5 style="color: white">Login Security</h5>
+
+				</div>
+			</div>
+
+			<div class="content" id="yes">
+
+				<div class="card-body">
+					<form action="#" th:object="${loginSecurity}" method="POST"
+						autocomplete="off" id="loginSecurity">
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Password Life</label>
+							<div class="col-sm-1">
+								<input type="text" maxlength="2"
+									oninput="this.value=this.value.replace(/[^0-99]/g,'');"
+									th:value="${loginsec?.pw_life}" id="pw_life" name="pw_life"
+									value="" class="form-control form-control-sm"
+									autocomplete="false" required />
+										
+							</div>
+							
+							<span  class="col-sm-2" style="text-align: center,left;margin-top: 8px">in Month(s)</span>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-2">No Of Attempts</label>
+							<div class="col-sm-3">
+								<input th:value="${loginsec?.nof_atp}" id="nof_atp"
+									name="nof_atp" type="text" maxlength="1"
+									oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+									class="form-control form-control-sm" autocomplete="false"
+									required />
+							</div>
+							
+							<div class="col-sm-1"></div>
+						</div>
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Login Low Time</label>
+							<div class="col-sm-3">
+								<input type="time" id="login_low" name="login_low"
+									th:value="${loginsec?.login_low}"
+									class="form-control form-control-sm" autocomplete="false"
+									required />
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-2">Login High Time</label>
+							<div class="col-sm-3">
+								<input type="time" id="login_high" name="login_high"
+									th:value="${loginsec?.login_high}"
+									class="form-control form-control-sm" autocomplete="false"
+									required />
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Inactive Time</label>
+							<div class="col-sm-3">
+								<input type="time" id="inact_time" name="inact_time"
+									class="form-control form-control-sm" autocomplete="false"
+									th:value="${loginsec?.inact_time}" required />
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-2">Password Warning</label>
+							<div class="col-sm-1">
+								<input type="text" maxlength="1"
+									oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+									id="pw_warn_days" name="pw_warn_days" value=""
+									class="form-control form-control-sm" autocomplete="false"
+									th:value="${loginsec?.pw_warn_days}" required />
+							</div>
+							
+							<span  class="col-sm-2" style="text-align: center,left;margin-top: 8px">day(s)</span>
+							
+							<div class="col-sm-1"></div>
+						</div>
+						
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Previous Password Check</label>
+							<div class="col-sm-3" style="margin-top: 5px;">
+								<div class="form-check-inline  ">
+									<label class="form-check-label" for="radio1"> <input
+										type="radio" class="form-check-input " id="emailyes"
+										name="pre_pw_chk_flg" value="Y"
+										th:checked="${loginsec.pre_pw_chk_flg}!='N' ">Yes
+									</label>
+								</div>
+
+								<div class="form-check-inline  ">
+									<label class="form-check-label" for="radio1"> <input
+										type="radio" class="form-check-input " id="emailyes"
+										name="pre_pw_chk_flg" value="N"
+										th:checked="${loginsec.pre_pw_chk_flg}=='N'">No
+									</label>
+								</div>
+
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-2">No Of Passwords</label>
+							<div class="col-sm-3">
+								<input type="text" maxlength="1"
+									oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+									th:value="${loginsec?.nof_pre_pws}" id="nof_pre_pws"
+									name="nof_pre_pws" value=""
+									class="form-control form-control-sm" autocomplete="false"
+									required />
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Password Length</label>
+							<div class="col-sm-3">
+								<input type="text" maxlength="2"
+									oninput="this.value=this.value.replace(/[^0-9-10-20-30]/g,'');"
+									th:value="${loginsec?.pw_length}" id="pw_length"
+									name="pw_length" value="" class="form-control form-control-sm"
+									autocomplete="false" required />
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-2" >Combinations</label>
+						
+
+							<div class="col-sm-3" style="margin-top: 5px;">
+								<div class="form-check-inline  ">
+									<label class="form-check-label" for="radio1"> <input
+										type="radio" class="form-check-input " id="emailyes"
+										name="com_flg" value="Y" th:checked="${compflg}">Yes
+									</label>
+								</div>
+								<div class="form-check-inline -3">
+									<label class="form-check-label " for="radio2"> <input
+										type="radio" class="form-check-input" id="emailno"
+										th:checked="${compflg?false :true}" name="com_flg" value="N">No
+									</label>
+								</div>
+							</div>
+						</div>
+						
+						<label></label>
+
+						<div class="row formline">
+
+							<label class="col-sm-2">Alpha Flag</label>
+							<div class="col-sm-3">
+								<select id="alpha_flg" name="alpha_flg"
+									class="form-control form-control-sm" autocomplete="off"
+									required>
+									<option value="O">Select</option>
+									<option th:selected="${loginsec?.alpha_flg}=='Y'" value="Y">Yes</option>
+									<option th:selected="${loginsec?.alpha_flg}=='N'" value="N">No</option>
+								</select>
+							</div>
+
+
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Numeric Flag</label>
+							<div class="col-sm-3">
+								<select id="num_flg" name="num_flg"
+									class="form-control form-control-sm" autocomplete="off"
+									required>
+									<option value="O">Select</option>
+									<option th:selected="${loginsec?.num_flg}=='Y'" value="Y">Yes</option>
+									<option th:selected="${loginsec?.num_flg}=='N'" value="N">No</option>
+								</select>
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						
+						<label></label>
+
+						<div class="row formline">
+
+
+							<label class="col-sm-2">Capital Letter</label>
+							<div class="col-sm-3">
+								<select id="cap_flg" name="cap_flg"
+									class="form-control form-control-sm" autocomplete="off"
+									required>
+									<option value="O">Select</option>
+									<option th:selected="${loginsec?.cap_flg}=='Y'" value="Y">Yes</option>
+									<option th:selected="${loginsec?.cap_flg}=='N'" value="N">No</option>
+								</select>
+							</div>
+
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Special Characters</label>
+							<div class="col-sm-3">
+								<select id="spl_char_flg" name="spl_char_flg"
+									class="form-control form-control-sm" autocomplete="off"
+									required>
+									<option value="O">Select</option>
+									<option th:selected="${loginsec?.spl_char_flg}=='Y'" value="Y">Yes</option>
+									<option th:selected="${loginsec?.spl_char_flg}=='N'" value="N">No</option>
+								</select>
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+					</form>
+				</div>
+
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						title="Go Home" onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" title="Submit" th:if="${IPSRoleMenu.work_class}=='C'"
+						onclick="submitform(this);" form="loginSecurity" id="btnSubmit1"
+						th:attr="data-formmode=submit">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						title="Go Back" onclick="back();">Back</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+	<div class="modal fade" id="alert" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="verifybox" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-body" style="text-align: center">
+					<p id="verifyboxmsg"></p>
+					<button type="button" class="btn btn-primary">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="alert" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-body" style="text-align: center">
+					<p id="alertmsg" style="font-size: 16px;">Are you sure want to
+						leave</p>
+					<address></address>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="YES();">YES</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">NO</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

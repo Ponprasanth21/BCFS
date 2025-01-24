@@ -1,0 +1,537 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+<script>
+	window.onload = function() {
+		if (window.jQuery) {
+			$(document).ready(
+					function() {
+						$(".sidebarNavigation .navbar-collapse").hide().clone()
+								.appendTo("body").removeAttr("class").addClass(
+										"sideMenu").show();
+						$("body").append("<div class='overlay'></div>");
+						$(".navbar-toggle, .navbar-toggler").on(
+								"click",
+								function() {
+									$(".sideMenu").addClass(
+											$(".sidebarNavigation").attr(
+													"data-sidebarClass"));
+									$(".sideMenu, .overlay")
+											.toggleClass("open");
+									$(".overlay").on("click", function() {
+										$(this).removeClass("open");
+										$(".sideMenu").removeClass("open")
+									})
+								});
+						$("body").on(
+								"click",
+								".sideMenu.open .nav-item",
+								function() {
+									if (!$(this).hasClass("dropdown")) {
+										$(".sideMenu, .overlay").toggleClass(
+												"open")
+									}
+								});
+						$(window).resize(function() {
+							if ($(".navbar-toggler").is(":hidden")) {
+								$(".sideMenu, .overlay").hide()
+							} else {
+								$(".sideMenu, .overlay").show()
+							}
+						})
+					})
+		} else {
+			console.log("sidebarNavigation Requires jQuery")
+		}
+	}
+</script>
+<style>
+body {
+	position: relative
+}
+
+.overlay, .sideMenu {
+	position: fixed;
+	bottom: 0
+}
+
+a:hover {
+	background-color: rgb(214, 214, 214);
+}
+
+.overlay {
+	top: 0;
+	left: -100%;
+	right: 100%;
+	margin: auto;
+	background-color: White;
+	z-index: 998;
+	transition: all ease 0.2s
+}
+
+.overlay.open {
+	left: 0;
+	right: 0
+}
+
+.sidebarNavigation {
+	margin-bottom: 0;
+	z-index: 999;
+	justify-content: flex-start
+}
+
+.sidebarNavigation .leftNavbarToggler {
+	margin-right: 10px;
+	order: -1
+}
+
+.sideMenu {
+	left: -100%;
+	top: 52px;
+	transition: all ease 0.5s;
+	overflow: hidden;
+	width: 100%;
+	z-index: 999;
+	max-width: 80%;
+	margin-bottom: 0;
+	padding: 1rem
+}
+
+.sideMenu.open {
+	left: 0;
+	display: block;
+	overflow-y: auto
+}
+
+.sideMenu ul {
+	margin: 0;
+	padding: 0 15px
+}
+</style>
+<style type="text/css">
+#nav-loginsec:hover+#loginsec {
+	opacity: 1;
+	visibility: visible;
+}
+</style>
+<style>
+body {
+	background-color: lightgrey;
+	line-height: 1.8;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+a:not ([href] ):not ([tabindex] ):focus, a:not ([href] ):not ([tabindex]
+	 ):hover {
+	color: white;
+	text-decoration: none
+}
+
+button {
+	background-color: #616c77;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	bottom: 23px;
+	right: 28px;
+	width: 150px;
+}
+
+.pagebut {
+	margin-top: 0.5%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 17.3%;
+	margin-top: 80px;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
+/* #select{
+	display: none;
+} */
+/* #initially {
+    display: none;
+} */
+</style>
+<script>
+	$(function() {
+		$("#entry_time1,verify_time1,modify_time1").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+		$("#nav-loginsec")
+				.on(
+						"click",
+						function() {
+
+							document.querySelector('#nav-bankmaster').style.background = 'white';
+							document.querySelector('#nav-services').style.background = 'white';
+							document.querySelector('#nav-loginsec').style.background = 'rgb(214, 214, 214)';
+							document.querySelector('#nav-settlement').style.background = 'white';
+							document.querySelector('#nav-business').style.background = 'white';
+							$("#abc").hide();
+							$("#loginsec").show();
+							$("#services").hide();
+							$("#settlement").hide();
+							$("#business").hide();
+						});
+
+		$("#nav-loginsec").on("mouseenter", function() {
+			$("#abc").hide();
+			$("#loginsec").show();
+			$("#services").hide();
+			$("#settlement").hide();
+			$("#business").hide();
+		});
+
+		$("#nav-services")
+				.on(
+						"click",
+						function() {
+							document.querySelector('#nav-bankmaster').style.background = 'white';
+							document.querySelector('#nav-services').style.background = 'rgb(214, 214, 214)';
+							document.querySelector('#nav-loginsec').style.background = 'white';
+							document.querySelector('#nav-settlement').style.background = 'white';
+							document.querySelector('#nav-business').style.background = 'white';
+							$("#loginsec").hide();
+							$("#services").show();
+							$("#abc").hide();
+							$("#settlement").hide();
+							$("#business").hide();
+						});
+		        $("#nav-services").on("mouseenter", function() {
+			       $("#abc").hide();
+			       $("#loginsec").hide();
+			       $("#services").show();
+			       $("#settlement").hide();
+			       $("#business").hide();
+	         	});
+
+		$("#nav-bankmaster")
+				.on(
+						"click",
+						function() {
+							document.querySelector('#nav-bankmaster').style.background = 'rgb(214, 214, 214)';
+							document.querySelector('#nav-services').style.background = 'white';
+							document.querySelector('#nav-loginsec').style.background = 'white';
+							document.querySelector('#nav-settlement').style.background = 'white';
+							document.querySelector('#nav-business').style.background = 'white';
+
+							$("#loginsec").hide();
+							$("#services").hide();
+							$("#abc").show();
+							$("#settlement").hide();
+							$("#business").hide();
+						});
+
+		$("#nav-bankmaster").on("mouseenter", function() {
+			$("#abc").show();
+			$("#loginsec").hide();
+			$("#services").hide();
+			$("#settlement").hide();
+			$("#business").hide();
+		});
+
+		$("#nav-settlement")
+				.on(
+						"click",
+						function() {
+							document.querySelector('#nav-bankmaster').style.background = 'white';
+							document.querySelector('#nav-services').style.background = 'white';
+							document.querySelector('#nav-loginsec').style.background = 'white';
+							document.querySelector('#nav-settlement').style.background = 'rgb(214, 214, 214)';
+							document.querySelector('#nav-business').style.background = 'white';
+
+							$("#loginsec").hide();
+							$("#services").hide();
+							$("#abc").hide();
+							$("#settlement").show();
+							$("#business").hide();
+						});
+
+		$("#nav-settlement").on("mouseenter", function() {
+			$("#abc").hide();
+			$("#loginsec").hide();
+			$("#services").hide();
+			$("#settlement").show();
+			$("#business").hide();
+		});
+
+		$("#nav-business")
+				.on(
+						"click",
+						function() {
+							document.querySelector('#nav-bankmaster').style.background = 'white';
+							document.querySelector('#nav-services').style.background = 'white';
+							document.querySelector('#nav-loginsec').style.background = 'white';
+							document.querySelector('#nav-settlement').style.background = 'white';
+							document.querySelector('#nav-business').style.background = 'rgb(214, 214, 214)';
+							$("#loginsec").hide();
+							$("#services").hide();
+							$("#abc").hide();
+							$("#settlement").hide();
+							$("#business").show();
+						});
+		$("#nav-business").on("mouseenter", function() {
+			$("#abc").hide();
+			$("#loginsec").hide();
+			$("#services").hide();
+			$("#settlement").hide();
+			$("#business").show();
+		});
+
+		/* 
+		$(document).ready(function () {
+		    $(document).on('mouseenter', '.cart', function () {                       
+		        $(this).next(".laptop").show();
+
+		    }).on('mouseleave', '.cart', function () {
+		        $(this).next(".laptop").hide();
+		    });
+		}); */
+	});
+</script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	function submitform(a) {
+
+		if ($("#loginSecurity").valid()) {
+
+			var formmode = a.getAttribute("data-formmode");
+			var url = "./createloginSecurity?formmode=" + formmode;
+
+			$("#loginSecurity").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+
+			};
+
+			$("#loginSecurity").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+	};
+
+	$(function() {
+
+		$('#reportForm :input').attr('readonly', 'readonly');
+		$("#edit").on("click", function() {
+			$("#alertmsg").text("Do You Want to Change the Parameter?");
+			$('#alert').modal("toggle");
+
+		});
+	});
+
+	function YES() {
+		$('#reportForm :input').removeAttr('readonly', 'readonly');
+		$("#edit").hide();
+	}
+	function home() {
+
+	}
+	function back() {
+		window.history.back();
+	}
+	function LoginSecurity(a) {
+
+		location.href = 'LoginSecurity';
+	}
+	function BankBranchMaster(a) {
+
+		location.href = 'IpsBankandBranchMaster';
+	}
+	function ServicesCharges(a) {
+
+		location.href = 'ServiceChargesAndFees';
+	}
+	function SettlementAccount(a) {
+
+		location.href = 'SettlementAccount';
+	}
+	function BusinessHours(a) {
+
+		location.href = 'BusinessHours';
+	}
+	$(function() {
+
+		$('input[type=radio]').click(function() {
+			if ($(this).prop('id') == "emailno") {
+				$("#alpha_flg").prop("readonly", true);
+				$("#num_flg").prop("readonly", true);
+				$("#cap_flg").prop("readonly", true);
+				$("#spl_char_flg").prop("readonly", true);
+
+			} else if ($(this).prop('id') == "emailyes") {
+				$("#alpha_flg").prop("readonly", false);
+				$("#num_flg").prop("readonly", false);
+				$("#cap_flg").prop("readonly", false);
+				$("#spl_char_flg").prop("readonly", false);
+
+			}
+		});
+	});
+
+	/*]]>*/
+</script>
+<body>
+	<div th:insert="Mmenupage :: header"></div>
+
+	<div class="container-manager">
+
+		<!------ Include the above in your HEAD tag ---------->
+
+
+		<!------ Include the above in your HEAD tag ---------->
+<div class="container">
+		<div class="container-fluid">
+		<div class="card">
+
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+				<!-- <button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarTogglerDemo02"
+					aria-controls="navbarTogglerDemo02" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+ -->
+
+
+				<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+					<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+						<li class="nav-item active "><a class="nav-link"
+							href="#" onclick="LoginSecurity()" id="nav-loginsec"
+							style="font-size: larger; color: #2e455d;">Login Security </a></li>
+						<li class="nav-item"><a
+							style="font-size: larger; color: #2e455d;" class="nav-link"
+							href="#bankmaster" id="nav-bankmaster" onclick="BankBranchMaster()"data-toggle="tab">Bank
+								and Branch Master</a></li>
+						<li class="nav-item"><a
+							style="font-size: larger; color: #2e455d;" class="nav-link"
+							href="#" id="nav-services" onclick="ServicesCharges()">Services Charges and Fees</a></li>
+						<li class="nav-item"><a
+							style="font-size: larger; color: #2e455d;" class="nav-link"
+							href="#" id="nav-settlement" onclick="SettlementAccount()">Settlement Accounts</a></li>
+						<li class="nav-item"><a
+							style="font-size: larger; color: #2e455d;" class="nav-link"
+							href="#" id="nav-business" onclick="BusinessHours()">Business Hours</a></li>
+					</ul>
+
+
+
+
+				</div>
+			</nav>
+		</div>
+		</div>
+		</div>
+		</div>
+	
+
+	<div class="modal fade" id="alert">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-body" style="text-align: center">
+					<p id="alertmsg" style="font-size: 16px;">Are</p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="YES();">YES</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">NO</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>                

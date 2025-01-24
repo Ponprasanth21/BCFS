@@ -1,0 +1,1288 @@
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	font-size: small;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+<script>
+
+jQuery(function($){
+	/* $(document).ajaxSend(function() {
+		$("#overlay").fadeIn(300);　
+	}); */
+		
+	$('#PayablePro').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+	
+	$('#ReceivablePro').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+	
+	$('#IncomePro').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+	
+	$('#ExpensePro').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+});
+
+
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	var formmode=/*[[${formmode}]]*/;
+
+	$(document).ready(function() {
+		
+		if(formmode!="list"){
+			var trFlg=/*[[${trFlg}]]*/;
+			
+			if(trFlg=="Y"){
+				 $('#alertFlg').modal("toggle");
+			}
+		}
+	});
+	 
+
+	$(function() {
+		$("#disableDate").datepicker(
+				{
+					maxDate : 0,
+					changeMonth:true,
+					changeYear:true,
+					dateFormat : "dd-MM-yy",
+					onSelect : function(selected) {
+						var dt = $(this).datepicker('getDate');
+						dt.setDate(dt.getDate());
+						$("#disableTilDate")
+								.datepicker("option", "minDate", dt);
+
+						location.href = "SettlementTransaction?tranDate="
+								+ $("#disableDate").val();
+
+					}
+				});
+	})
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+	function ProceedPopUp() {
+		
+		 if ($("#SetPayable").valid()) {
+		  $('#ProceedPopUp').modal("toggle");
+		 }
+		
+		
+	}
+	function ProceedPopUp1() {
+		
+		  if ($("#SetReceivable").valid()) {
+		  $('#ProceedPopUp1').modal("toggle");
+		  }
+		
+		
+	}
+	
+	function ProceedPopUp2(a) {
+		
+		  if ($("#SetIncome").valid()) {
+		  $('#ProceedPopUp2').modal("toggle");
+		  }
+		
+	}
+	
+	function ProceedPopUp3(a) {
+		
+		  if ($("#SetExpense").valid()) {
+		  $('#ProceedPopUp3').modal("toggle");
+		  }
+		
+	}
+	
+	$(document).ready(function() {
+	    $('#usertable').DataTable({
+	        "destroy" : true,
+	        "scrollCollapse" : false,
+	        "paging" : false,
+	        "autoWidth" : true,
+	        "ordering" : true,
+	        "searching" : false,
+	        "bInfo": false,
+	        "lengthChange" : false,
+	    });
+	});
+	
+function submitPay(a) {
+		
+	$('#ProceedPopUp').hide();
+		
+	var userID=/*[[${userID}]]*/;
+	var entryUser=/*[[${entryUser}]]*/;
+	
+	if(userID==entryUser){
+		$("#alertmsg").text("Same User Cannot Execute Transaction");
+		$('#alert').modal("toggle");
+	}else{
+		  if ($("#SetPayable").valid()) {
+				
+			  $("#loader1").modal("toggle");
+			  
+				var formmode = a.getAttribute("data-formmode");
+				var url = "ProceedSettlementTran?formmode=submit&frAcct="+$("#payAcctNumP").val()
+						+"&toAcct="+$("#settlAcctNumP").val()+"&tranDate="+$("#tranDateP").val()
+						+"&trAmt="+$("#trAmtP").val()+"&tranType="+$("#tranTypeP").val()+"&trAmtSP="+$("#trAmtSP1").val()
+						+"&trAmtPP1="+$("#trAmtP1").val()
+							+"&type=Payable";
+
+				$("#SetPayable").attr('action', url);
+
+				var options = {
+					success : showResponse
+				// post-submit callback 
+				};
+
+				$("#SetPayable").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					    $("#loader1").hide();
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+					}
+
+				}
+	}
+		
+				
+};
+
+function receivablePay(a) {
+	  $('#ProceedPopUp1').hide();
+	
+	var userID=/*[[${userID}]]*/;
+	var entryUser=/*[[${entryUser}]]*/;
+	if(userID==entryUser){
+		$("#alertmsg").text("Same User Cannot Execute Transaction");
+		$('#alert').modal("toggle");
+	}else{
+		 if ($("#SetReceivable").valid()) {
+			  $("#loader1").modal("toggle");
+				var formmode = a.getAttribute("data-formmode");
+				
+				var url = "ProceedSettlementTran?formmode=submit&frAcct="+$("#receivableAcctNumR").val()
+				+"&toAcct="+$("#settlAcctNumR").val()+"&tranDate="+$("#tranDateR").val()
+				+"&trAmt="+$("#trAmtR").val()+"&tranType="+$("#tranTypeR").val()+"&trAmtSR="+$("#trAmtSR1").val()+"&trAmtRR1="+$("#trAmtR1").val()
+					+"&type=Receivable";
+
+				$("#SetReceivable").attr('action', url);
+
+				var options = {
+					success : showResponse
+				// post-submit callback 
+				};
+
+				$("#SetReceivable").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					$("#loader1").hide();
+					
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+					}
+
+				}
+	}
+	
+	 
+		};
+		
+    function submitIncome(a) {
+	
+	
+	$('#ProceedPopUp2').hide();
+		
+		  if ($("#SetIncome").valid()) {
+				var formmode = a.getAttribute("data-formmode");
+				var url = "ProceedSettlementTran?formmode=submit&frAcct="+$("#incomeAcctNumI").val()
+						+"&toAcct="+$("#settlAcctNumI").val()+"&tranDate="+$("#tranDateI").val()
+						+"&trAmt="+$("#trAmtI").val()+"&tranType="+$("#tranTypeI").val()
+							+"&type=Income";
+
+				$("#SetIncome").attr('action', url);
+
+				var options = {
+					success : showResponse
+				// post-submit callback 
+				};
+
+				$("#SetIncome").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					
+						$("#alertmsg").text(responseText);
+						$('#alert').modal("toggle");
+					}
+
+				}
+				
+			};
+			
+			function submitExpense(a) {
+				
+				
+				$('#ProceedPopUp3').hide();
+					
+					  if ($("#SetExpense").valid()) {
+							var formmode = a.getAttribute("data-formmode");
+							var url = "ProceedSettlementTran?formmode=submit&frAcct="+$("#expenseAcctNumE").val()
+									+"&toAcct="+$("#settlAcctNumE").val()+"&tranDate="+$("#tranDateE").val()
+									+"&trAmt="+$("#trAmtE").val()+"&tranType="+$("#tranTypeE").val()
+										+"&type=Expense";
+
+							$("#SetExpense").attr('action', url);
+
+							var options = {
+								success : showResponse
+							// post-submit callback 
+							};
+
+							$("#SetExpense").ajaxSubmit(options);
+
+							function showResponse(responseText, statusText, xhr, $form) {
+								
+									$("#alertmsg").text(responseText);
+									$('#alert').modal("toggle");
+								}
+
+							}
+							
+						};
+	/*<![CDATA[*/
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<div class="card" th:if="${formmode}=='list'">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Settlement Transaction</h6>
+				</div>
+
+				<div class="float-right">
+
+					<div class="row formline">
+
+						<!-- <label style="color: white; padding-right: 20px;">Tran
+							Date </label> -->
+						<!-- <div>
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div> -->
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Account Type</th>
+									<th>Category</th>
+									<th>Account No</th>
+									<th>Name</th>
+									<th>Currency</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Created By</th>
+									<th>Verified By</th>
+
+									<!-- <th>Amount</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="settlementAccount : ${SettleAccount}"
+									class="userlist">
+
+									<th:block th:switch="${settlementAccount.acc_code}">
+										<td th:case="'04'"><a
+											th:href="@{'/SettlementTransaction?tranDate='+${tranDate}+'&formmode=Payable'}"
+											th:text="${settlementAccount.acct_type}"></a></td>
+										<td th:case="'03'"><a
+											th:href="@{'/SettlementTransaction?tranDate='+${tranDate}+'&formmode=Receivable'}"
+											th:text="${settlementAccount.acct_type}"></a></td>
+										<!-- <td th:case="'01'"><a
+											th:href="@{'/SettlementTransaction?tranDate='+${tranDate}+'&formmode=Income'}"
+											th:text="${settlementAccount.acct_type}"></a></td>
+										<td th:case="'02'"><a
+											th:href="@{'/SettlementTransaction?tranDate='+${tranDate}+'&formmode=Expense'}"
+											th:text="${settlementAccount.acct_type}"></a></td> -->
+										<td th:case="*" th:text="${settlementAccount.acct_type}"></td>
+									</th:block>
+									<td th:text="${settlementAccount?.category}"></td>
+									<td th:text="${settlementAccount?.account_number}"></td>
+									<td th:text="${settlementAccount?.name}"></td>
+									<td th:text="${settlementAccount?.crncy}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(settlementAccount?.acct_bal, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+									<th:block th:switch="${settlementAccount?.entity_flg}"
+										id="status">
+										<td th:case="'N'" style="color: red;">Waiting For
+											Approval</td>
+										<td th:case="'Y'" style="color: green;">Completed</td>
+										<td th:case="*"></td>
+									</th:block>
+
+									<td th:text="${settlementAccount?.entry_user}"></td>
+									<td th:text="${settlementAccount?.verify_user}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-manager"
+		>
+		<div class="card" th:if="${formmode}=='Payable'">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Settlement Transaction</h6>
+				</div>
+
+
+			</div>
+			<form action="#" th:object="${SetPayable}" method="POST"
+				autocomplete="off" id="SetPayable">
+				<div class="row">
+					<div class="col-sm-12">
+						<div style="background: lightgrey; padding: 10px;">
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Date</label>
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranDate}" id="tranDateP"
+										class="form-control form-control-sm" name="tranDateP"
+										autocomplete="off" required readonly>
+								</div>
+								<div class="col-sm-1"></div>
+								<label class="col-sm-2">Part Tran Type</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranType}" id="tranTypeP"
+										class="form-control form-control-sm" name="tranTypeP"
+										autocomplete="off" required readonly>
+
+
+								</div>
+							</div>
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Payable Account</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${payAcctNum}" id="payAcctNumP"
+										class="form-control form-control-sm" name="payAcctNumP"
+										autocomplete="off" required readonly>
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Payable Amount</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" style="text-align: right;"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${trAmtP1}" id="trAmtP1"
+										class="form-control form-control-sm" name="trAmtP1"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Settlement Account</label>
+
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${settlAcctNum}" id="settlAcctNumP"
+										class="form-control form-control-sm" name="settlAcctNumP"
+										autocomplete="off" required readonly>
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Settlement Amount</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" style="text-align: right;"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${trAmtSP}" id="trAmtSP1"
+										class="form-control form-control-sm" name="trAmtSP1"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Amount</label>
+
+								<div class="col-sm-3">
+									<input type="number" maxlength="15" step="0.01"
+										th:value="${trAmt}" id="trAmtP"
+										class="form-control form-control-sm" name="trAmtP"
+										autocomplete="off" required th:readonly="${trFlg=='N'}">
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Remarks</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g'');"
+										class="form-control form-control-sm" autocomplete="off"
+										th:readonly="${trFlg=='N'}">
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button th:if=" ${trFlg}==null" type="button"
+					class="btn btn-primary btn-sm" id="btnPaySubmit"
+					onclick="ProceedPopUp(this);">Submit</button>
+
+				<button th:if=" ${trFlg}=='N'" type="button"
+					class="btn btn-primary btn-sm" id="btnPayExeSubmit"
+					onclick="ProceedPopUp(this);">Execute</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+
+		</div>
+
+
+		<div class="card" th:if="${formmode}=='Receivable'">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Settlement Transaction</h6>
+				</div>
+
+
+			</div>
+			<form action="#" th:object="${SetReceivable}" method="POST"
+				autocomplete="off" id="SetReceivable">
+				<div class="row">
+					<div class="col-sm-12">
+						<div style="background: lightgrey; padding: 10px;">
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Date</label>
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" th:value="${tranDate}"
+										id="tranDateR" class="form-control form-control-sm"
+										name="tranDateR" autocomplete="off" required readonly>
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Part Tran Type</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" th:value="${tranType}"
+										id="tranTypeR" class="form-control form-control-sm"
+										name="tranTypeR" autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Receivable Account</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" step="0.1"
+										th:value="${receivableAcctNum}" id="receivableAcctNumR"
+										class="form-control form-control-sm" name="receivableAcctNumR"
+										autocomplete="off" required readonly>
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Receivable Amount</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" style="text-align: right;"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${trAmtR1}" id="trAmtR1"
+										class="form-control form-control-sm" name="trAmtR1"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Settlement Account</label>
+
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${settlAcctNum}" id="settlAcctNumR"
+										class="form-control form-control-sm" name="settlAcctNumR"
+										autocomplete="off" required readonly>
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Settlement Amount</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15" style="text-align: right;"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${trAmtSR}" id="trAmtSR1"
+										class="form-control form-control-sm" name="trAmtSR1"
+										autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Amount</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g'');"
+										th:value="${trAmt}" id="trAmtR"
+										class="form-control form-control-sm" name="trAmtR"
+										autocomplete="off" required th:readonly="${trFlg=='N'}">
+								</div>
+
+								<div class="col-sm-1"></div>
+
+								<label class="col-sm-2">Remarks</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g'');"
+										class="form-control form-control-sm" autocomplete="off"
+										th:readonly="${trFlg=='N'}">
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button th:if=" ${trFlg}==null" type="button"
+					class="btn btn-primary btn-sm" id="btnPaySubmit1"
+					onclick="ProceedPopUp1();">Submit</button>
+
+				<button th:if=" ${trFlg}=='N'" type="button"
+					class="btn btn-primary btn-sm" id="btnPayExeSubmit1"
+					onclick="ProceedPopUp1();">Execute</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+
+		</div>
+
+		<div class="card" th:if="${formmode}=='Income'">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Settlement Transaction</h6>
+				</div>
+
+
+			</div>
+			<form action="#" th:object="${SetIncome}" method="POST"
+				autocomplete="off" id="SetIncome">
+				<div class="row">
+					<div class="col-sm-12">
+						<div style="background: lightgrey; padding: 10px;">
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Income Account</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${incomeAcctNum}" id="incomeAcctNumI"
+										class="form-control form-control-sm" name="incomeAcctNumI"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Settlement Account</label>
+
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${settlAcctNum}" id="settlAcctNumI"
+										class="form-control form-control-sm" name="settlAcctNumI"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Date</label>
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranDate}" id="tranDateI"
+										class="form-control form-control-sm" name="tranDateI"
+										autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Type</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranType}" id="tranTypeI"
+										class="form-control form-control-sm" name="tranTypeI"
+										autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Amount</label>
+
+								<div class="col-sm-3">
+									<input type="number" maxlength="15" step="0.01"
+										th:value="${trAmt}" id="trAmtI"
+										class="form-control form-control-sm" name="trAmtI"
+										autocomplete="off" required>
+								</div>
+
+
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</form>
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button type="button" class="btn btn-primary btn-sm"
+					id="btnIncomeSubmit" onclick="ProceedPopUp2(this);">Submit</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+
+			<div class="modal fade" id="ProceedPopUp2">
+				<div
+					class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+					<div class="modal-content"
+						style="margin-bottom: 397px; margin-right: -79px;">
+						<div class="modal-body"
+							style="margin-top: 8px; text-align: center; color: aliceblue;">
+							<p>Do you want to proceed</p>
+							<button type="button" class="btn btn-primary" id="IncomePro"
+								form="SetIncome" th:attr="data-formmode=Income"
+								onclick="submitIncome(this);">Yes</button>
+							<button type="button" class="btn btn-primary"
+								data-dismiss="modal">No</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='Expense'">
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Settlement Transaction</h6>
+				</div>
+
+
+			</div>
+			<form action="#" th:object="${SetExpense}" method="POST"
+				autocomplete="off" id="SetExpense">
+				<div class="row">
+					<div class="col-sm-12">
+						<div style="background: lightgrey; padding: 10px;">
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Expense Account</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${expenseAcctNum}" id="expenseAcctNumE"
+										class="form-control form-control-sm" name="expenseAcctNumE"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Settlement Account</label>
+
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${settlAcctNum}" id="settlAcctNumE"
+										class="form-control form-control-sm" name="settlAcctNumE"
+										autocomplete="off" required readonly>
+								</div>
+
+							</div>
+
+							<label></label>
+
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Date</label>
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranDate}" id="tranDateE"
+										class="form-control form-control-sm" name="tranDateE"
+										autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Type</label>
+
+								<div class="col-sm-3">
+									<input type="text" maxlength="15"
+										oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+										th:value="${tranType}" id="tranTypeE"
+										class="form-control form-control-sm" name="tranTypeE"
+										autocomplete="off" required readonly>
+								</div>
+
+
+							</div>
+
+							<label></label>
+							<div class="row formline">
+
+								<label class="col-sm-2">Tran Amount</label>
+
+								<div class="col-sm-3">
+									<input type="number" maxlength="15" step="0.1"
+										th:value="${trAmt}" id="trAmtE"
+										class="form-control form-control-sm" name="trAmtE"
+										autocomplete="off" required>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</form>
+			<div class="card-footer text-center">
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+					onclick="home();">Home</button>
+
+				<button type="button" class="btn btn-primary btn-sm"
+					id="btnExpenseSubmit" onclick="ProceedPopUp3(this);">Submit</button>
+
+				<button type="button" class="btn btn-primary btn-sm" id="btnBack"
+					onclick="back();">Back</button>
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="ProceedPopUp3" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Do you want to proceed</p>
+					<button type="button" class="btn btn-primary" id="ExpensePro"
+						form="SetExpense" th:attr="data-formmode=Expense"
+						onclick="submitExpense(this);">Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="ProceedPopUp" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Do you want to proceed</p>
+					<button type="button" class="btn btn-primary" id="PayablePro"
+						form="SetPayable" th:attr="data-formmode=Payable"
+						onclick="submitPay(this);">Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="ProceedPopUp1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Do you want to proceed</p>
+					<button type="button" class="btn btn-primary" id="ReceivablePro"
+						form="SetReceivable" th:attr="data-formmode=Receivable"
+						onclick="receivablePay(this);">Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="alert" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg"></p>
+					<button type="button" class="btn btn-primary" onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="alertFlg" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Settlement transaction already initiated for this account</p>
+					<button type="button" class="btn btn-primary" onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+
+
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

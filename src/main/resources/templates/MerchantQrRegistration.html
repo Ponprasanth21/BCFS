@@ -1,0 +1,2281 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+	font-weight: normal;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+</style>
+</head>
+
+<script>
+	/* jQuery(function($){
+	 $(document).ajaxSend(function() {
+	 $("#overlay").fadeIn(300);　
+	 });
+	
+	 $('.btn').click(function(){
+	 $.ajax({
+	 type: 'GET',
+	 success: function(data){
+	 console.log(data);
+	 }
+	 }).done(function() {
+	 setTimeout(function(){
+	 $("#overlay").fadeOut(300);
+	 },500);
+	 });
+	 });	
+	 }); */
+</script>
+
+<script>
+$(document).ready(function() {
+  $(window).keydown(function(event){
+	 //alert($('#alert').hasClass('show'));
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+	function back() {
+		//window.history.back();
+		location.href = '/IPSAdmin/MerchantQRREG'
+	}
+
+	$(document).ready(function() {
+		$('#my_table').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+	function AddModal(a) {
+		//var bankcode = a.getAttribute("data-bank_code");
+		location.href = './MerchantQRREG?formmode=add';
+
+	}
+
+	function editcancel(a) {
+
+		location.href = './MerchantQRREG';
+
+	}
+	function edit_btn_submit(a) {
+		var merchant_acct_no = a.getAttribute("data-bank_code");
+		location.href = './MerchantQRREG?formmode=edit&merchant_acct_no='
+				+ merchant_acct_no;
+
+	}
+
+	function disable_btn_submit(a) {
+		var merchant_acct_no = a.getAttribute("data-bank_code");
+		location.href = './MerchantQRREG?formmode=disable&merchant_acct_no='
+				+ merchant_acct_no;
+
+	}
+
+	function delete_btn_submit(a) {
+		var merchant_acct_no = a.getAttribute("data-bank_code");
+		location.href = './MerchantQRREG?formmode=delete&merchant_acct_no='
+				+ merchant_acct_no;
+
+	}
+
+	function verify_btn_submit(a) {
+		var merchant_acct_no = a.getAttribute("data-bank_code");
+		location.href = './MerchantQRREG?formmode=verify&merchant_acct_no='
+				+ merchant_acct_no;
+
+	}
+	function validateForm() {
+		let x = document.forms["qrcodename"]["poi_method"].value;
+		if (x.length > 2) {
+			alert("Point Of Initiation Method length must be 2");
+			return false;
+		}
+	}
+
+	function submitaddform(a) {
+		var formmode1 = a.getAttribute("data-formmode");
+		document.getElementById('merchant_acct_no_val').innerHTML = "";
+		document.getElementById('merchant_id_val').innerHTML = "";
+		document.getElementById('merchant_name_val').innerHTML = "";
+		document.getElementById('merchant_category_code_val').innerHTML = "";
+		document.getElementById('transaction_crncy_val').innerHTML = "";
+		document.getElementById('value_conv_fees_val').innerHTML = "";
+		document.getElementById('country_val').innerHTML = "";
+		document.getElementById('zip_code_val').innerHTML = "";
+		document.getElementById('bill_number_val').innerHTML = "";
+		document.getElementById('mobile_val').innerHTML = "";
+		document.getElementById('store_label_val').innerHTML = "";
+		document.getElementById('loyalty_number_val').innerHTML = "";
+		document.getElementById('reference_label_val').innerHTML = "";
+		document.getElementById('customer_label_val').innerHTML = "";
+		document.getElementById('terminal_label_val').innerHTML = "";
+		document.getElementById('purpose_of_tran_val').innerHTML = "";
+		var merchant_acct_no = document.getElementById('merchant_acct_no').value;
+		var merchant_id = document.getElementById('merchant_id').value;
+		var merchant_name = document.getElementById('merchant_name').value;
+		var merchant_category_code = document
+				.getElementById('merchant_category_code').value;
+		var transaction_crncy = document.getElementById('transaction_crncy').value;
+		var tiptype = document.getElementById('tip_or_conv_indicator').value;
+		var country = document.getElementById('country').value;
+		var zip_code = document.getElementById('zip_code').value;
+		var bill_number = document.getElementById('bill_number').value;
+		var mobile = document.getElementById('mobile').value;
+		var store_label = document.getElementById('store_label').value;
+		var loyalty_number = document.getElementById('loyalty_number').value;
+		var reference_label = document.getElementById('reference_label').value;
+		var customer_label = document.getElementById('customer_label').value;
+		var terminal_label = document.getElementById('terminal_label').value;
+		var purpose_of_tran = document.getElementById('purpose_of_tran').value;
+		
+		
+
+		if (merchant_acct_no.length == 0 || merchant_acct_no.length > 38) {
+			document.getElementById('merchant_acct_no_val').innerHTML = "Merchant Acct Number length must be between 1 and 38";
+		} else if (merchant_id.length == 0 || merchant_id.length > 15) {
+			document.getElementById('merchant_id_val').innerHTML = "Merchant ID length must be between 1 and 15";
+		} else if (merchant_name.length == 0 || merchant_id.length > 25) {
+			document.getElementById('merchant_name_val').innerHTML = "Merchant Name length must be between 1 and 25";
+		} else if (merchant_category_code.length != 4) {
+			document.getElementById('merchant_category_code_val').innerHTML = "Merchant Code length must be 4";
+		} else if (country.length > 2 || country.length == 0) {
+			document.getElementById('country_val').innerHTML = "Country length must be 2";
+		} else if (transaction_crncy.length > 3
+				|| transaction_crncy.length == 0) {
+			document.getElementById('transaction_crncy_val').innerHTML = "Transaction Currency length must be 3";
+		}  else if (zip_code.length == 0 || zip_code.length > 10) {
+			document.getElementById('zip_code_val').innerHTML = "Postal Code length must be between 1 and 10";
+		} else if (bill_number.length > 25) {
+			document.getElementById('bill_number_val').innerHTML = "Bill Number length must be between 1 and 25";
+		} else if (mobile.length > 25) {
+
+			document.getElementById('mobile_val').innerHTML = "Mobile length must be between 1 and 25";
+
+		} else if (store_label.length > 25) {
+			document.getElementById('store_label_val').innerHTML = "Store Code length must be between 1 and 25";
+		} else if (loyalty_number.length > 25) {
+			document.getElementById('loyalty_number_val').innerHTML = "Loyal Number must be between 1 and 25";
+		} else if (reference_label.length > 25) {
+			document.getElementById('reference_label_val').innerHTML = "Reference Label length must be between 1 and 25";
+		} else if (customer_label.length > 25) {
+			document.getElementById('customer_label_val').innerHTML = "CustomerLabel length must be between 1 and 25";
+		} else if (terminal_label.length > 25) {
+			document.getElementById('terminal_label_val').innerHTML = "TerminalLabel length must be between 1 and 25";
+		} else if (purpose_of_tran.length > 25) {
+			document.getElementById('purpose_of_tran_val').innerHTML = "Purpose length must be between 1 and 25";
+		}/* else if(tiptype=='1'){
+							var value_conv_fees = document.getElementById("value_conv_fees").value;
+							var conv_fees_type = document.getElementById("conv_fees_type").value;
+							if(conv_fees_type=="Fixed" && (value_conv_fees.length==0||value_conv_fees.length>15)){
+						 			document.getElementById('value_conv_fees_val').innerHTML="Value length must be between 1 and 15";
+						 	}else if(conv_fees_type=="Percentage" && (value_conv_fees.length==0||value_conv_fees.length>5)){
+							 		document.getElementById('value_conv_fees_val').innerHTML="Value length must be between 1 and 5";
+						 	}
+						} */else {
+							
+				
+				if(formmode1=="addsubmit"){
+					if ($("#BankandBranch").valid()) {
+						
+						
+						var formmode = a.getAttribute("data-formmode");
+						var url = "addMerchantQRREG?formmode=" + formmode;
+
+						$("#BankandBranch").attr('action', url);
+
+						var options = {
+							success : showResponse
+						// post-submit callback 
+						};
+
+						$("#BankandBranch").ajaxSubmit(options);
+
+						function showResponse(responseText, statusText, xhr, $form) {
+
+							$("#alertmsg").text(responseText);
+							$("#add").hide();
+
+							$('#alert').modal("toggle");
+
+						}
+						;
+					}
+				}else if(formmode1=="editsubmit"){
+					if ($("#BankandBranchedit").valid()) {
+						
+						
+						var formmode = a.getAttribute("data-formmode");
+						var url = "addMerchantQRREG?formmode=" + formmode;
+
+						$("#BankandBranchedit").attr('action', url);
+
+						var options = {
+							success : showResponse
+						// post-submit callback 
+						};
+
+						$("#BankandBranchedit").ajaxSubmit(options);
+
+						function showResponse(responseText, statusText, xhr, $form) {
+
+							$("#alertmsg").text(responseText);
+							$("#add").hide();
+
+							$('#alert').modal("toggle");
+
+						}
+						;
+					}
+				}
+			
+		}
+	};
+	function submiteditform(a) {
+
+		if ($("#BankandBranchedit").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addMerchantQRREG?formmode=" + formmode;
+
+			$("#BankandBranchedit").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchedit").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+
+	function submitdeleteform(a) {
+
+		if ($("#BankandBranchdelete").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addMerchantQRREG?formmode=" + formmode;
+
+			$("#BankandBranchdelete").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchdelete").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	function submitdisableform(a) {
+
+		if ($("#BankandBranchdisable").valid()) {
+			var formmode = a.getAttribute("data-formmode");
+			var url = "addMerchantQRREG?formmode=" + formmode;
+
+			$("#BankandBranchdisable").attr('action', url);
+
+			var options = {
+				success : showResponse
+			// post-submit callback 
+			};
+
+			$("#BankandBranchdisable").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+
+				$("#alertmsg").text(responseText);
+				$("#add").hide();
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+		}
+
+	};
+	function submitverifyform(a) {
+
+		if ($("#BankandBranchverify").valid()) {
+			var entry = $("#entryUserVerify").val();
+			var modify = $("#modifyUserVerify").val();
+			var verify = $("#verifyUserVerify").val();
+
+			if (modify != "") {
+				if (modify != verify) {
+					var formmode = a.getAttribute("data-formmode");
+					var url = "./addMerchantQRREG?formmode=" + formmode;
+
+					$("#BankandBranchverify").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$("#BankandBranchverify").ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+				} else {
+					$("#verifyboxmsg").text("Same User Cannot Verify!");
+					$('#verifybox').modal("toggle");
+
+				}
+			} else {
+				if (entry != verify) {
+					var formmode = a.getAttribute("data-formmode");
+					var url = "./addMerchantQRREG?formmode=" + formmode;
+
+					$("#BankandBranchverify").attr('action', url);
+
+					var options = {
+						success : showResponse
+					// post-submit callback 
+					};
+
+					$("#BankandBranchverify").ajaxSubmit(options);
+
+					function showResponse(responseText, statusText, xhr, $form) {
+
+						$("#alertmsg").text(responseText);
+
+						$('#alert').modal("toggle");
+
+					}
+					;
+
+				} else {
+					$("#verifyboxmsg").text("Same User Cannot Verify!");
+					$('#verifybox').modal("toggle");
+
+				}
+
+			}
+
+		}
+	};
+
+	$(function() {
+
+		$("#entry_time1,verify_time1,modify_time1").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		var today = dd + '-' + mm + '-' + yyyy;
+		document.getElementById('entry_time1').value = today;
+		document.getElementById('verify_time1').value = today;
+		document.getElementById('modify_time1').value = today;
+	});
+
+	$(function() {
+
+		$("#entry_time2,verify_time2,modify_time2").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			maxDate : new Date(),
+			dateFormat : "dd-mm-yy"
+		});
+
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth() + 1; //January is 0!
+
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		}
+		if (mm < 10) {
+			mm = '0' + mm;
+		}
+		var today = dd + '-' + mm + '-' + yyyy;
+		document.getElementById('entry_time2').value = today;
+		document.getElementById('verify_time2').value = today;
+		document.getElementById('modify_time2').value = today;
+	});
+	function pressBankBranchData(a) {
+		var bank_code = a.getAttribute("data-mer_code");
+		var bank_name = a.getAttribute("data-mer_name");
+
+		$("#merchant_category_code").val(bank_code);
+
+		$("#MyModalBank").modal("hide");
+
+	}
+	/*]]>*/
+</script>
+<script>
+	$(window).load(function() {
+		// Animate loader off screen
+		$(".se-pre-con").fadeOut("slow");
+		;
+	});
+	//generate static qrcode
+	function StaticQR(a) {
+
+		var acct_num = a.getAttribute("data-bank_code");
+		var acct_name = a.getAttribute("data-acct_name");
+		$.ajax({
+			type : 'get',
+			url : '/IPSAdmin/getstaticqrcode/' + acct_num,
+
+			success : function(response) {
+
+				$("#QRdynamic").modal("hide");
+				$('#base64image').attr('src', response);
+				$('#qrcode').modal("toggle");
+				$("#qrsource").val(response);
+				$("#qrsourcename").val(acct_name);
+				$("#qrsourcenumber").val(acct_num);
+
+			}
+		});
+
+	}
+	//dunamic model for generate qr
+	function DynamicQR(a) {
+		var merchant_acct_no = a.getAttribute("data-bank_code");
+		var merchant_bill_number = a.getAttribute("data-billNumber");
+		var merchant_mobile = a.getAttribute("data-mobile");
+		var merchant_store_label = a.getAttribute("data-storeLabel");
+		var merchant_loyalty_number = a.getAttribute("data-loyaltyNumber");
+		var merchant_reference_label = a.getAttribute("data-referenceLabel");
+		var merchant_customer_label = a.getAttribute("data-customerLabel");
+		var merchant_terminal_label = a.getAttribute("data-terminalLabel");
+		var merchant_purp_tran = a.getAttribute("data-purposeTran");
+		var merchant_additional = a.getAttribute("data-data-additionalDetails");
+		$("#merchantID_DY").val(merchant_acct_no);
+		var acct_name = a.getAttribute("data-acct_name");
+		$("#qrsourcename").val(acct_name);
+		$("#qrsourcenumber").val(merchant_acct_no);
+		$("#tran_amt_dy").val('');
+		$("#bill_number_dy").val(merchant_bill_number);
+		$("#mobile_number_dy").val(merchant_mobile);
+		$("#loyalty_number_dy").val(merchant_loyalty_number);
+		$("#store_label_dy").val(merchant_store_label);
+		$("#customer_label_dy").val(merchant_customer_label);
+		$("#reference_label_dy").val(merchant_reference_label);
+		$("#terminal_label_dy").val(merchant_terminal_label);
+		$("#purpose_of_transaction_dy").val(merchant_purp_tran);
+		$("#additional_details_dy").val(merchant_additional);
+		$("#QRdynamic").modal("toggle");
+		/* location.href = './MerchantQRREG?formmode=qrcodedynamic&merchant_acct_no='
+				+ merchant_acct_no;  */
+	}
+	//generate dynamic qr code
+	function generateQRCode() {
+		var acct_num = $("#merchantID_DY").val();
+		var tran_amt = $("#tran_amt_dy").val();
+		var bill_num = $("#bill_number_dy").val();
+		var mob_num = $("#mobile_number_dy").val();
+		var loy_num = $("#loyalty_number_dy").val();
+		var sto_label = $("#store_label_dy").val();
+		var cust_label = $("#customer_label_dy").val();
+		var ref_label = $("#reference_label_dy").val();
+		var ter_label = $("#terminal_label_dy").val();
+		var pur_tran = $("#purpose_of_transaction_dy").val();
+		var add_det = $("#additional_details_dy").val();
+		
+
+		$.ajax({
+			type : 'get',
+			url : './getdynamicqrcode?acct_num='+acct_num + '&tran_amt=' + tran_amt + '&mob_num=' + mob_num + '&loy_num=' + loy_num+ '&sto_label=' + sto_label + '&cust_label=' + cust_label+ '&ref_label=' + ref_label + '&ter_label=' + ter_label+ '&pur_tran=' + pur_tran+ '&add_det=' + add_det+'&bill_num='+bill_num,
+
+			success : function(response) {
+
+				$("#QRdynamic").modal("hide");
+				$('#base64image').attr('src', response);
+				$('#qrcode').modal("toggle");
+				$("#qrsource").val(response);
+
+			}
+		});
+
+	}
+	function showtip() {
+		var tiptype = $('#tip_or_conv_indicator').val();
+		if (tiptype == '02') {
+			document.getElementById("value_conv_fees").required = true;
+			$("#conv_fees_type").prop("disabled", false);
+			document.getElementById("value_conv_fees").readOnly = false;
+		} else {
+			document.getElementById("value_conv_fees").readOnly = true;
+			document.getElementById("value_conv_fees").required = false;
+			$("#conv_fees_type").val(0).attr("selected","selected");
+
+			$("#conv_fees_type").prop("disabled", true);
+		}
+	}
+	//download QR
+	function DownloadQRCode() {
+		var qrsource1 = $("#qrsource").val();
+		var qrname = $("#qrsourcename").val();
+		var qrnumber = $("#qrsourcenumber").val();
+		var a = document.createElement("a");
+		a.href = qrsource1;
+		a.download = qrnumber + "-" + qrname + ".png";
+		a.click();
+	}
+</script>
+<body>
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="se-pre-con"></div>
+
+	<div class="container-manager">
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+
+
+		<div th:if="${formmode}=='list'" class="content">
+
+			<div class="card-header">
+				<div class="float-left">
+
+					<h6 style="font-size: 1.2rem; color: white;">Merchant QR
+						Registration List</h6>
+				</div>
+				<div class="btn-group nav-buttons float-right">
+
+					<button type="button" class="btn btn-sm btn-primary " id="addBtn"
+						onclick="AddModal(this)" title="Add"
+						th:if="${IPSRoleMenu.permissions}=='W'">Add</button>
+				</div>
+
+			</div>
+
+
+			<div class="table">
+
+
+				<table
+					class="table table-striped table-bordered  table-hover table-sm"
+					id="my_table">
+					<thead class="thead-light">
+						<tr>
+							<th>Merchant Account Number</th>
+							<th>Merchant Name</th>
+							<th>Merchant ID</th>
+							<th>Merchant Category Code</th>
+							<th>Currency</th>
+							<th>Action</th>
+							<th>Generate QR</th>
+
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr style="font-size: smaller;" th:each="bankList : ${bankDetail}"
+							class="userlist">
+
+							<td th:text="${bankList.merchant_acct_no}"></td>
+							<td th:text="${bankList.merchant_name}"></td>
+							<td th:text="${bankList.merchant_id}"></td>
+							<td th:text="${bankList.merchant_category_code}"></td>
+							<td th:text="${bankList.transaction_crncy}"></td>
+
+
+							<td>
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button"
+										id="dropdownMenuButton"
+										style="line-height: 0.7; width: 64px; font-size: 11px; color: #3a4550; background: #f8f9fa;"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Action</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+										style="background-color: #e3e3e4; color: #3a4550;">
+
+										<a class="dropdown-item" title="Modify"
+											th:attr="data-bank_code=${bankList?.merchant_acct_no}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="edit_value" onclick="edit_btn_submit(this)"
+											th:if="${IPSRoleMenu.permissions}=='W'">Modify</a>
+										<div class="dropdown-divider"
+											th:if="${IPSRoleMenu.permissions}=='W'"></div>
+
+										<a class="dropdown-item" title="Delete"
+											th:attr="data-bank_code=${bankList?.merchant_acct_no}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="delete_value" onclick="delete_btn_submit(this)"
+											th:if="(${bankList.del_flg}=='N' OR ${bankList.del_flg}==null) and ${IPSRoleMenu.work_class}=='C'">Delete</a>
+
+
+
+										<!-- <div th:if="${bankList.entity_flg == 'N' and bankList.entry_user !=session.USERID }"
+											class="dropdown-divider"></div>
+										<a th:if="${bankList.entity_flg == 'N' and bankList.entry_user !=session.USERID}"
+											class="dropdown-item" title="Verify"
+											th:attr="data-bank_code=${bankList?.bank_code}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="verify_value" onclick="verify_btn_submit(this)">verify</a>
+
+
+										<div th:if="${bankList.entity_flg}=='N'"
+											class="dropdown-divider"></div>
+
+									</div>
+ -->
+									</div>
+								</div>
+
+							</td>
+							<td><div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle" type="button"
+										id="dropdownMenuButton"
+										style="line-height: 0.7; width: 80px; font-size: 11px; color: #3a4550; background: #f8f9fa;"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">QR Type</button>
+									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+										style="background-color: #e3e3e4; color: #3a4550;">
+
+										<a class="dropdown-item" title="Static QR"
+											th:attr="data-bank_code=${bankList?.merchant_acct_no},data-acct_name=${bankList?.merchant_name}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="edit_value" onclick="StaticQR(this)">Static QR</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" title="Dynamic QR"
+											th:attr="data-bank_code=${bankList?.merchant_acct_no},data-acct_name=${bankList?.merchant_name}
+											,data-storeLabel=${bankList?.store_label},data-loyaltyNumber=${bankList?.loyalty_number}
+											,data-refereceLabel=${bankList?.reference_label},data-customerLabel=${bankList?.customer_label}
+											,data-terminalLabel=${bankList?.terminal_label},data-purposeTran=${bankList?.purpose_of_tran}
+											,data-additionalDetails=${bankList?.additional_details},data-mobile=${bankList?.mobile}"
+											style="cursor: pointer; height: 20px; width: 64px; color: #12161b; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+											id="delete_value" onclick="DynamicQR(this)">Dynamic QR</a>
+									</div>
+								</div></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+
+			<div class="card-footer text-center">
+
+				<div class="float-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="home();">Back</button>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div th:if="${formmode}=='add'" class="content">
+			<div class="card">
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">Merchant QR Registration - Add</h6>
+					</div>
+					<div class="btn-group nav-buttons float-right"></div>
+
+				</div>
+
+				<!-- Modal body -->
+				<div class="card-body">
+					<form action="#" th:object="${BankandBranch}" method="POST"
+						name="qrcodeadd" autocomplete="off" id="BankandBranch">
+
+						<div class="card-header">
+							<div class="float-left">
+
+								<h6 style="font-size: 1.2rem; color: white;">Merchant
+									Details</h6>
+							</div>
+
+
+						</div>
+						<label></label>
+						
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Account Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_acct_no"
+									class="form-control form-control-sm" name="merchant_acct_no"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_acct_no_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant ID</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_id"
+									class="form-control form-control-sm" name="merchant_id"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_id_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_name"
+									class="form-control form-control-sm" name="merchant_name"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_name_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant Category Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_category_code"
+									class="form-control form-control-sm"
+									placeholder="Length should be 4" name="merchant_category_code"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_category_code_val"></a>
+							</div>
+							<div class="col-sm-1">
+								<a href="#"><i class="fas fa-search searchico"
+									data-toggle="modal" data-target="#MyModalBank" id="iconacc"></i></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Transaction Currency</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="transaction_crncy"
+									class="form-control form-control-sm" name="transaction_crncy"
+									placeholder="Currency code Eg:MUR" autocomplete="off" required><a
+									style="color: red" id="transaction_crncy_val"> </a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Tip or Convenience Indicator</label>
+
+
+							<div class="col-sm-3">
+								<select name="tip_or_conv_indicator" id="tip_or_conv_indicator"
+									class="form-control form-control-sm" onchange="showtip()"
+									>
+									<option value="">Select</option>
+									<option value="01">Tip</option>
+									<option value="02">Convenience</option>
+									<!-- <option value="">other</option> -->
+
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<label></label>
+						<div class="row formline">
+ <label class="col-sm-2">Convenience Fee type</label>
+
+
+							<div class="col-sm-3">
+								<select name="conv_fees_type" id="conv_fees_type"
+									class="form-control form-control-sm" disabled>
+									<option value="">Select</option>
+									<option value="Fixed">Fixed</option>
+									<option value="Percentage">Percentage</option>
+
+
+								</select>
+
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Value of Convenience Fee </label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="value_conv_fees"
+									class="form-control form-control-sm" name="value_conv_fees"
+									autocomplete="off" readonly><a style="color: red"
+									id="value_conv_fees_val" ></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant City</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="city"
+									class="form-control form-control-sm" name="city"
+									autocomplete="off" required><a style="color: red"
+									id="city_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Country Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="country"
+									class="form-control form-control-sm" name="country"
+									placeholder="Country Code(Eg:MU)" autocomplete="off" required><a
+									style="color: red" id="country_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+							<div class="row formline">
+ 
+							<label class="col-sm-2">Postal Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="zip_code"
+									class="form-control form-control-sm" name="zip_code"
+									autocomplete="off"><a style="color: red"
+									id="zip_code_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						
+						<div class="card-header">
+							<div class="float-left">
+
+								<h6 style="font-size: 1.2rem; color: white;">Additional
+									Details</h6>
+							</div>
+
+
+						</div>
+						<label></label>
+
+						
+						<div class="row formline">
+<label class="col-sm-2">Bill Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bill_number"
+									class="form-control form-control-sm" name="bill_number"
+									autocomplete="off"><a style="color: red"
+									id="bill_number_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+								
+							<label class="col-sm-2">Mobile Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="mobile"
+									class="form-control form-control-sm" name="mobile"
+									autocomplete="off"><a style="color: red"
+									id="mobile_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						
+						<div class="row formline">
+
+						
+<label class="col-sm-2">Loyalty Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="loyalty_number"
+									class="form-control form-control-sm" name="loyalty_number"
+									autocomplete="off"><a style="color: red"
+									id="loyalty_number_val"></a>
+							</div>
+<div class="col-sm-1"></div>
+<label class="col-sm-2">Customer Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="customer_label"
+									class="form-control form-control-sm" name="customer_label"
+									autocomplete="off"><a style="color: red"
+									id="customer_label_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Store Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="store_label"
+									class="form-control form-control-sm" name="store_label"
+									autocomplete="off"><a style="color: red"
+									id="store_label_val"></a>
+							</div>
+							
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Terminal Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="terminal_label"
+									class="form-control form-control-sm" name="terminal_label"
+									autocomplete="off"><a style="color: red"
+									id="terminal_label_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Reference Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="reference_label"
+									class="form-control form-control-sm" name="reference_label"
+									autocomplete="off"><a style="color: red"
+									id="reference_label_val"></a>
+							</div>
+							
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Purpose Of Transaction</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="purpose_of_tran"
+									class="form-control form-control-sm" name="purpose_of_tran"
+									autocomplete="off"><a style="color: red"
+									id="purpose_of_tran_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							
+							
+							
+<label></label> <label class="col-sm-2">Additional Data</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="additional_details"
+									class="form-control form-control-sm" name="additional_details"
+									autocomplete="off">
+							</div>
+
+						</div>
+						<label></label>
+						
+					</form>
+				</div>
+			</div>
+			<div class="card-footer text-center">
+				<button type="button" class="btn btn-sm btn-primary"
+					form="BankandBranch" th:attr="data-formmode=addsubmit"
+					onclick="submitaddform(this);">Submit</button>
+				<button type="button" class="btn btn-sm btn-primary"
+					data-dismiss="modal" onclick="back();">Cancel</button>
+
+			</div>
+
+			<div class="content"
+				style="border: 1px solid #36404a; padding: 15px; background-color: #dbdfe2;">
+
+				<div class="row formline">
+					<label class="col-sm-1">Entry User</label>
+					<div class="col-sm-2">
+						<input type="text" id="entryUserAdd" th:value="${session.USERID}"
+							form="BankandBranch" class="form-control form-control-sm"
+							name="entry_user" autocomplete="off" readonly>
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Modify User</label>
+					<div class="col-sm-2">
+						<input type="text" id="modifyUserAdd"
+							th:value="${branchDet?.modify_user}"
+							class="form-control form-control-sm" name="modify_user"
+							autocomplete="off" readonly>
+
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Verify User</label>
+					<div class="col-sm-2">
+						<input type="text" id="verifyUserAdd"
+							class="form-control form-control-sm" name="verify_user"
+							autocomplete="off" readonly>
+
+					</div>
+				</div>
+
+				<div class="row formline">
+
+					<label class="col-sm-1">Entry Time</label>
+					<div class="col-sm-2">
+						<input type="text" id="entryTimeAdd"
+							th:value="${#calendars.format(#calendars.createNow(),'dd-MM-yyyy')}"
+							class="form-control form-control-sm" name="entry_time"
+							autocomplete="off" readonly>
+					</div>
+					<div class="col-sm-1"></div>
+
+					<label class="col-sm-1">Modify Time</label>
+					<div class="col-sm-2">
+						<input type="text"
+							th:value="${#dates.format(branchDet?.modify_time,'dd-MM-yyyy')}"
+							id="modifyTimeAdd" class="form-control form-control-sm"
+							name="modify_time" autocomplete="off" readonly>
+
+					</div>
+					<div class="col-sm-1"></div>
+					<label class="col-sm-1">Verify Time</label>
+					<div class="col-sm-2">
+						<input type="text" id="verifyTimeAdd"
+							th:value="${#dates.format(branchDet?.verify_time,'dd-MM-yyyy')}"
+							class="form-control form-control-sm" name="verify_time"
+							autocomplete="off" readonly>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<div th:if="${formmode}=='edit'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchedit}" method="POST"
+					autocomplete="off" id="BankandBranchedit">
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;">Merchant QR Registration - Edit</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+<label></label>
+						
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Account Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_acct_no"th:value="${branchDet?.merchant_acct_no}"
+									class="form-control form-control-sm" name="merchant_acct_no"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_acct_no_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant ID</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_id"th:value="${branchDet?.merchant_id}"
+									class="form-control form-control-sm" name="merchant_id"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_id_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_name"th:value="${branchDet?.merchant_name}"
+									class="form-control form-control-sm" name="merchant_name"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_name_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant Category Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_category_code"th:value="${branchDet?.merchant_category_code}"
+									class="form-control form-control-sm"
+									placeholder="Length should be 4" name="merchant_category_code"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_category_code_val"></a>
+							</div>
+							<div class="col-sm-1">
+								<a href="#"><i class="fas fa-search searchico"
+									data-toggle="modal" data-target="#MyModalBank" id="iconacc"></i></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Transaction Currency</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="transaction_crncy"th:value="${branchDet?.transaction_crncy}"
+									class="form-control form-control-sm" name="transaction_crncy"
+									placeholder="Currency code Eg:MUR" autocomplete="off" required><a
+									style="color: red" id="transaction_crncy_val"> </a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Tip or Convenience Indicator</label>
+
+
+							<div class="col-sm-3">
+								<select name="tip_or_conv_indicator" id="tip_or_conv_indicator"th:value="${branchDet?.tip_or_conv_indicator}"
+									class="form-control form-control-sm" onchange="showtip()"
+									>
+									<option value="">Select</option>
+									<option value="01">Tip</option>
+									<option value="02">Convenience</option>
+									<!-- <option value="">other</option> -->
+
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<label></label>
+						<div class="row formline">
+ <label class="col-sm-2">Convenience Fee type</label>
+
+
+							<div class="col-sm-3">
+								<select name="conv_fees_type" id="conv_fees_type"th:value="${branchDet?.conv_fees_type}"
+									class="form-control form-control-sm">
+									<option value="">Select</option>
+									<option value="Fixed">Fixed</option>
+									<option value="Percentage">Percentage</option>
+
+
+								</select>
+
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Value of Convenience Fee </label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="value_conv_fees"th:value="${branchDet?.value_conv_fees}"
+									class="form-control form-control-sm" name="value_conv_fees"
+									autocomplete="off"><a style="color: red"
+									id="value_conv_fees_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant City</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="city"th:value="${branchDet?.city}"
+									class="form-control form-control-sm" name="city"
+									autocomplete="off" required><a style="color: red"
+									id="city_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+							
+							<label class="col-sm-2">Country Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="country"th:value="${branchDet?.country}"
+									class="form-control form-control-sm" name="country"
+									placeholder="Country Code(Eg:MU)" autocomplete="off" required><a
+									style="color: red" id="country_val"></a>
+							</div>
+
+							
+						</div>
+						
+						<label></label>
+						<div class="row formline">
+						<label class="col-sm-2">Postal Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="zip_code"th:value="${branchDet?.zip_code}"
+									class="form-control form-control-sm" name="zip_code"
+									autocomplete="off"><a style="color: red"
+									id="zip_code_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="card-header">
+							<div class="float-left">
+
+								<h6 style="font-size: 1.2rem; color: white;">Additional
+									Details</h6>
+							</div>
+
+
+						</div>
+						<label></label>
+
+						
+						<div class="row formline">
+<label class="col-sm-2">Bill Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bill_number"th:value="${branchDet?.bill_number}"
+									class="form-control form-control-sm" name="bill_number"
+									autocomplete="off"><a style="color: red"
+									id="bill_number_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Mobile Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="mobile"th:value="${branchDet?.mobile}"
+									class="form-control form-control-sm" name="mobile"
+									autocomplete="off"><a style="color: red"
+									id="mobile_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						
+						<div class="row formline">
+
+							
+							<label class="col-sm-2">Loyalty Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="loyalty_number"th:value="${branchDet?.loyalty_number}"
+									class="form-control form-control-sm" name="loyalty_number"
+									autocomplete="off"><a style="color: red"
+									id="loyalty_number_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Customer Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="customer_label"th:value="${branchDet?.customer_label}"
+									class="form-control form-control-sm" name="customer_label"
+									autocomplete="off"><a style="color: red"
+									id="customer_label_val"></a>
+							</div>
+                          
+
+						</div>
+
+						<label></label>
+						<div class="row formline">
+						
+						     <label class="col-sm-2">Store Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="store_label"th:value="${branchDet?.store_label}"
+									class="form-control form-control-sm" name="store_label"
+									autocomplete="off"><a style="color: red"
+									id="store_label_val"></a>
+							</div>
+
+							<div class="col-sm-1"></div>
+							
+							<label class="col-sm-2">Terminal Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="terminal_label"th:value="${branchDet?.terminal_label}"
+									class="form-control form-control-sm" name="terminal_label"
+									autocomplete="off"><a style="color: red"
+									id="terminal_label_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Reference Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="reference_label"th:value="${branchDet?.reference_label}"
+									class="form-control form-control-sm" name="reference_label"
+									autocomplete="off"><a style="color: red"
+									id="reference_label_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Purpose Of Transaction</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="purpose_of_tran"th:value="${branchDet?.purpose_of_tran}"
+									class="form-control form-control-sm" name="purpose_of_tran"
+									autocomplete="off"><a style="color: red"
+									id="purpose_of_tran_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+						<label class="col-sm-2">Additional Data</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="additional_details" th:value="${branchDet?.additional_details}"
+									class="form-control form-control-sm" name="additional_details"
+									autocomplete="off">
+							</div>
+							
+							<div class="col-sm-1"></div>
+							
+							<label></label> 
+							<!-- <label class="col-sm-2">Additional Data</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="additional_details" th:value="${branchDet?.additional_details}"
+									class="form-control form-control-sm" name="additional_details"
+									autocomplete="off">
+							</div> -->
+
+						</div>
+						<label></label>
+					</div>
+
+					<div class="card-footer  text-center">
+
+						<button type="button" class="btn btn-primary btn-sm"
+							th:attr="data-formmode=editsubmit" form="BankandBranchedit"
+							onclick="submitaddform(this);">Submit</button>
+						<button type="button" class="btn btn-primary btn-sm"
+							onclick="editcancel();">Cancel</button>
+
+					</div>
+					<div class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry User</label>
+
+
+							<div class="col-sm-2">
+								<input type="text" id="entry_user"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" th:value="${session.USERID}" id="crncy"
+									class="form-control form-control-sm" name="modify_user"
+									form="BankandBranchedit" autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="crncy"
+									class="form-control form-control-sm" name="verify_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy')}"
+									id="entry_timeAdd" class="form-control form-control-sm"
+									name="entry_time" autocomplete="off" readonly>
+
+							</div>
+
+							<div class="col-sm-1"></div>
+
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy')}"
+									id="verify_time1" class="form-control form-control-sm"
+									name="modify_time" autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="verify_time1"
+									th:value="${#dates.format(branchDet?.verify_time,'dd-MM-yyyy')}"
+									class="form-control form-control-sm" name="verify_time"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+
+
+
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+		<div th:if="${formmode}=='delete'" class="content">
+			<div class="card">
+				<form action="#" th:object="${BankandBranchdelete}" method="POST"
+					autocomplete="off" id="BankandBranchdelete">
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;">Merchant QR Registration - Delete</h6>
+						</div>
+
+					</div>
+
+					<!-- Modal body -->
+					<div class="card-body">
+<label></label>
+						
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Account Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_acct_no"th:value="${branchDet?.merchant_acct_no}"
+									class="form-control form-control-sm" name="merchant_acct_no"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_acct_no_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant ID</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_id"th:value="${branchDet?.merchant_id}"
+									class="form-control form-control-sm" name="merchant_id"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_id_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant Name</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_name"th:value="${branchDet?.merchant_name}"
+									class="form-control form-control-sm" name="merchant_name"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_name_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Merchant Category Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="merchant_category_code"th:value="${branchDet?.merchant_category_code}"
+									class="form-control form-control-sm"
+									placeholder="Length should be 4" name="merchant_category_code"
+									autocomplete="off" required><a style="color: red"
+									id="merchant_category_code_val"></a>
+							</div>
+							<div class="col-sm-1">
+								<a href="#"><i class="fas fa-search searchico"
+									data-toggle="modal" data-target="#MyModalBank" id="iconacc"></i></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Transaction Currency</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="transaction_crncy"th:value="${branchDet?.transaction_crncy}"
+									class="form-control form-control-sm" name="transaction_crncy"
+									placeholder="Currency code Eg:MUR" autocomplete="off" required><a
+									style="color: red" id="transaction_crncy_val"> </a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Tip or Convenience Indicator</label>
+
+
+							<div class="col-sm-3">
+								<select name="tip_or_conv_indicator" id="tip_or_conv_indicator"th:value="${branchDet?.tip_or_conv_indicator}"
+									class="form-control form-control-sm" onchange="showtip()"
+									>
+								<option value="">Select</option>
+									<option value="01">Tip</option>
+									<option value="02">Convenience</option>
+									<!-- <option value="">other</option> -->
+
+
+								</select>
+
+							</div>
+
+						</div>
+
+						<label></label>
+						<div class="row formline">
+ <label class="col-sm-2">Convenience Fee type</label>
+
+
+							<div class="col-sm-3">
+								<select name="conv_fees_type" id="conv_fees_type"th:value="${branchDet?.conv_fees_type}"
+									class="form-control form-control-sm">
+									<option value="">Select</option>
+									<option value="Fixed">Fixed</option>
+									<option value="Percentage">Percentage</option>
+
+
+								</select>
+
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Value of Convenience Fee </label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="value_conv_fees"th:value="${branchDet?.value_conv_fees}"
+									class="form-control form-control-sm" name="value_conv_fees"
+									autocomplete="off"><a style="color: red"
+									id="value_conv_fees_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Merchant City</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="city"th:value="${branchDet?.city}"
+									class="form-control form-control-sm" name="city"
+									autocomplete="off" required><a style="color: red"
+									id="city_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-2">Postal Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="zip_code"th:value="${branchDet?.zip_code}"
+									class="form-control form-control-sm" name="zip_code"
+									autocomplete="off"><a style="color: red"
+									id="zip_code_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						<div class="card-header">
+							<div class="float-left">
+
+								<h6 style="font-size: 1.2rem; color: white;">Additional
+									Details</h6>
+							</div>
+
+
+						</div>
+						<label></label>
+
+						
+						<div class="row formline">
+<label class="col-sm-2">Bill Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="bill_number"th:value="${branchDet?.bill_number}"
+									class="form-control form-control-sm" name="bill_number"
+									autocomplete="off"><a style="color: red"
+									id="bill_number_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-2">Country Code</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="country"th:value="${branchDet?.country}"
+									class="form-control form-control-sm" name="country"
+									placeholder="Country Code(Eg:MU)" autocomplete="off" required><a
+									style="color: red" id="country_val"></a>
+							</div>
+						</div>
+
+						<label></label>
+						
+						<div class="row formline">
+
+							
+							<label class="col-sm-2">Mobile Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="mobile"th:value="${branchDet?.mobile}"
+									class="form-control form-control-sm" name="mobile"
+									autocomplete="off"><a style="color: red"
+									id="mobile_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Loyalty Number</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="loyalty_number"th:value="${branchDet?.loyalty_number}"
+									class="form-control form-control-sm" name="loyalty_number"
+									autocomplete="off"><a style="color: red"
+									id="loyalty_number_val"></a>
+							</div>
+
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Store Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="store_label"th:value="${branchDet?.store_label}"
+									class="form-control form-control-sm" name="store_label"
+									autocomplete="off"><a style="color: red"
+									id="store_label_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Customer Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="customer_label"th:value="${branchDet?.customer_label}"
+									class="form-control form-control-sm" name="customer_label"
+									autocomplete="off"><a style="color: red"
+									id="customer_label_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+
+							<label class="col-sm-2">Reference Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="reference_label"th:value="${branchDet?.reference_label}"
+									class="form-control form-control-sm" name="reference_label"
+									autocomplete="off"><a style="color: red"
+									id="reference_label_val"></a>
+							</div>
+							<div class="col-sm-1"></div>
+<label class="col-sm-2">Terminal Label</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="terminal_label"th:value="${branchDet?.terminal_label}"
+									class="form-control form-control-sm" name="terminal_label"
+									autocomplete="off"><a style="color: red"
+									id="terminal_label_val"></a>
+							</div>
+							
+						</div>
+
+						<label></label>
+						<div class="row formline">
+<label class="col-sm-2">Purpose Of Transaction</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="purpose_of_tran"th:value="${branchDet?.purpose_of_tran}"
+									class="form-control form-control-sm" name="purpose_of_tran"
+									autocomplete="off"><a style="color: red"
+									id="purpose_of_tran_val"></a>
+							</div>
+							
+							<div class="col-sm-1"></div>
+							
+<label></label> <label class="col-sm-2">Additional Data</label>
+
+
+							<div class="col-sm-3">
+								<input type="text" id="additional_details" th:value="${branchDet?.additional_details}"
+									class="form-control form-control-sm" name="additional_details"
+									autocomplete="off">
+							</div>
+
+						</div>
+						<label></label>
+					</div>
+
+					<div class="card-footer  text-center">
+						<button type="button" class="btn btn-sm btn-primary"
+							th:attr="data-formmode=deletesubmit" form="BankandBranchdelete"
+							onclick="submitdeleteform(this);">Delete</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							onclick="editcancel();">Cancel</button>
+					</div>
+
+					<div class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyUserVerify"
+									class="form-control form-control-sm" name="modify_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Del User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchdelete"
+									class="form-control form-control-sm" name="del_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy')}"
+									class="form-control form-control-sm" name="entry_time"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyTimeVerify"
+									class="form-control form-control-sm" name="modify_time"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Del Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy')}"
+									id="verifyTimeVerify" class="form-control form-control-sm"
+									form="BankandBranchdelete" name="verify_time"
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+	<!------------------------Pop window - Domain  list Ends--------------------------------->
+	<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+	<div class="modal fade" id="alert">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="verifybox">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-title" id="exampleModalLabel"
+					style="text-align: center; color: white;">CIM FINANCE</div>
+			</div>
+			<div class="modal-body"
+				style="text-align: center; background-color: #c6ccd2">
+				<p id="verifyboxmsg"></p>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="qrcode">
+
+		<div class="modal-dialog modal-dialog-centered">
+
+			<div class="modal-content" style="width: 600px; height: 600px;">
+
+				<h4 style="padding: 10px; background: #377486; color: white">
+					Merchant QR</h4>
+
+				<p id="alertmsg"></p>
+				<img style='display: block; width: 500px; height: 500px;'
+					id='base64image' />
+				<div class="row">
+					<div class="col text-center">
+						<button type="button" class="btn btn-primary"
+							onclick="DownloadQRCode();">Download QR</button>
+						<input type="text" id="qrsource" style="display: none;"> <input
+							type="text" id="qrsourcename" style="display: none;"> <input
+							type="text" id="qrsourcenumber" style="display: none;">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 	<div class="modal" id="qrcode">
+		<div class="modal-dialog modal-dialog-centered"
+			style='width: 800px; height: 800px;'>
+			<div class="modal-content"
+				style="width: 800px; height: 800px; margin-left: 0px;">
+				<div class="modal-body"
+					style="text-align: center; width: 800px; height: 800px;">
+					<p id="alertmsg"></p>
+					<img style='display: block; width: 800px; height: 800px;'
+						id='base64image' />
+					<div class="row">
+						<div class="col text-center">
+							<button type="button" class="btn btn-primary"
+								onclick="DownloadQRCode();">Download QR</button>
+							<input type="text" id="qrsource" style="display: none;">
+							<input type="text" id="qrsourcename" style="display: none;">
+							<input type="text" id="qrsourcenumber" style="display: none;">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="modal fade" id="QRdynamic">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+
+				<div class="modal-header">
+					<h4 class="modal-title">QR Generation</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				<div class="modal-body" style="text-align: center; flex: 0 0 auto;">
+
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Merchant ID</label> <input
+							class="form-control col-sm-5" type="text" id="merchantID_DY"
+							readonly />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Transaction Amount</label> <input
+							class="form-control col-sm-5" type="number" id="tran_amt_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Bill/Invoice Number</label> <input
+							class="form-control col-sm-5" type="text" id="bill_number_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Mobile Number</label> <input
+							class="form-control col-sm-5" type="number" id="mobile_number_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Loyalty Number</label> <input
+							class="form-control col-sm-5" type="number" id="loyalty_number_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Store Label</label> <input
+							class="form-control col-sm-5" type="text" id="store_label_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Customer Label</label> <input
+							class="form-control col-sm-5" type="text" id="customer_label_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Reference Label</label> <input
+							class="form-control col-sm-5" type="text" id="reference_label_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Terminal Label</label> <input
+							class="form-control col-sm-5" type="text" id="terminal_label_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Purpose Of Transaction</label> <input
+							class="form-control col-sm-5" type="text" id="purpose_of_transaction_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<label class="col-sm-5">Additional Details</label> <input
+							class="form-control col-sm-5" type="text" id="additional_details_dy" />
+					</div>
+					<label></label>
+					<div class="row">
+						<div class="col text-center">
+							<button type="button" class="btn btn-primary"
+								onclick="generateQRCode();">Generate QR</button>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="modal fade" id="MyModalBank">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Merchant Category Code</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<table class="table table-hover" id="finusertb">
+						<thead class="thead-light">
+							<tr>
+								<th>Merchant code</th>
+								<th>Merchant Description</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="bankbranchdata : ${merchantcategory}"
+								th:id="${bankbranchdata.merchant_code}" class="userlist"
+								th:onclick="pressBankBranchData(this)"
+								th:attr="data-mer_code=${bankbranchdata.merchant_code},
+								data-mer_name=${bankbranchdata.merchant_desc}">
+								<td th:text="${bankbranchdata.merchant_code}">123</td>
+								<td th:text="${bankbranchdata.merchant_desc}">123</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

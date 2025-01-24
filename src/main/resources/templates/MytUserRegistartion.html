@@ -1,0 +1,456 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+.dataTables_wrapper .dataTables_filter{
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+
+.dataTables_filter input {
+  color: black;
+  background-color: white;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+<!-- <script>
+
+jQuery(function($){
+	$(document).ajaxSend(function() {
+		 $("#overlay").fadeIn(300);　 
+	});
+		
+	$('.btn').click(function(){
+		$.ajax({
+			type: 'POST',
+			success: function(data){
+				console.log(data);
+				
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(300);
+			},500);
+		});
+	});	
+});
+
+
+</script> -->
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var tranMonitorType = /*[[${tranMonitorType}]]*/0;
+	$(function() {
+		$("#disableDate").datepicker({
+			maxDate : 0,
+			changeMonth:true,
+			changeYear:true,
+			dateFormat : "dd-MM-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+
+				//submitDate($("#disableDate").val());
+				//alert( $("#disableDate").val());
+				
+				if (tranMonitorType == "MYT") {
+					
+					var viewType=$( "#viewType option:selected" ).val();
+					
+					location.href = "MyTUserReg?tranDate="
+							+ $("#disableDate").val()+"&viewType="+viewType;
+				}
+
+			}
+		});
+		
+		
+		
+		$("#disableMonth").datepicker({
+			maxDate : 0,
+			changeMonth:true,
+			changeYear:true,
+			dateFormat : "MM-yy",
+	        showButtonPanel: true,
+	        onChangeMonthYear: function (year, month, inst) {
+	            $(this).val($.datepicker.formatDate('MM-yy', new Date(year, month - 1, 1)));
+	        },
+	        onClose: function(dateText, inst) {
+	            var month = $(".ui-datepicker-month :selected").val();
+	            var year = $(".ui-datepicker-year :selected").val();
+	            $(this).val($.datepicker.formatDate('MM-yy', new Date(year, month, 1)));
+	            
+	            
+                if (tranMonitorType == "MYT") {
+					
+					var viewType=$( "#viewType option:selected" ).val();
+					
+					location.href = "MyTUserReg?tranDate="
+							+ $("#disableMonth").val()+"&viewType="+viewType;
+				}
+	        },
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+
+				//submitDate($("#disableDate").val());
+				//alert( $("#disableDate").val());
+				
+				if (tranMonitorType == "MYT") {
+					
+					var viewType=$( "#viewType option:selected" ).val();
+					alert(viewType);
+					
+					//location.href = "MyTUserReg?tranDate="
+						//	+ $("#disableDate").val()+"&viewType="+viewType;
+				}
+
+			}
+		}).focus(function () {
+		    $(".ui-datepicker-calendar").hide();
+		});
+		
+		
+	})
+	
+	
+
+
+	function home() {
+		location.href = 'IPSDashboard'
+	}
+
+	function back() {
+		location.href = 'IPSDashboard'
+	}
+
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage": { "sSearch": "",
+				 "sSearchPlaceholder": "Search Here"}, 
+			"searching" : true,
+			"pageLength" : 25,
+			"lengthChange" : false,
+		});
+	});
+
+	
+	function GetSelectedTextValue(ddlFruits) {
+        var selectedText = ddlFruits.options[ddlFruits.selectedIndex].innerHTML;
+        var selectedValue = ddlFruits.value;
+        
+        location.href = "MyTUserReg?viewType="+selectedValue;
+        //alert("Selected Text: " + selectedText + " Value: " + selectedValue);
+        
+        
+    }
+	
+
+	
+	/*<![CDATA[*/
+</script>
+<body>
+
+
+	<div th:insert="MMenupage :: header"></div>
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+		<form action="#" th:object="${MyTUserReg}" method="POST"
+			autocomplete="off" id="MyTUserReg">
+
+			<div class="card">
+				<div class="card-header">
+
+					<div class="float-left">
+						<h6 style="color: white;">My.T User Registration</h6>
+					</div>
+
+					<div class="float-right">
+
+						<div class="row formline">
+
+							<div style="top: -6px; margin-right: 14px" class="btn-group">
+
+								<label style="color: white; padding-right: 20px;margin-top: 6px">Type</label>
+								 <select
+									id="viewType" name="viewType"
+									class="form-control form-control-sm" autocomplete="off" onchange="GetSelectedTextValue(this)"
+									required>
+									<option th:selected="${viewType}=='D'" value="D">Daily</option>
+									<option th:selected="${viewType}=='M'" value="M">Monthly</option>
+								</select>
+							</div>
+
+
+							<label th:if="${viewType}=='D'" style="color: white; padding-right: 20px;">Date</label>
+							<div style="top: -6px;" th:if="${viewType}=='D'">
+								<input type="text" readonly th:value="${tranDate}"
+									id="disableDate" value="" class="form-control form-control-sm"
+									autocomplete="off" required />
+							</div>
+							
+							<label th:if="${viewType}=='M'" style="color: white; padding-right: 20px;">Select Month</label>
+							<div th:if="${viewType}=='M'">
+								<input type="text" readonly th:value="${tranMonth}"
+									id="disableMonth" value="" class="form-control form-control-sm"
+									autocomplete="off" required />
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+
+
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div
+							style="overflow-y: auto; overflow-x: auto; background: lightgrey">
+
+							<table class="table table-striped table-bordered table-hover "
+								id="usertable">
+								<thead class="thead-light">
+
+									<tr>
+										<th>Date</th>
+										<th>Device ID</th>
+										<th>IP address</th>
+										<th>Account Number</th>
+										<th>Document Number</th>
+										<th>Phone Number</th>
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr style="font-size: smaller"
+										th:each="regPublickey : ${regPublickey}"
+										onclick="fnClick(this);" class="userlist">
+
+										<td
+											th:text="${#dates.format(regPublickey.entry_time,'dd-MM-yyyy')}"></td>
+
+										<td th:text="${regPublickey.device_id}"></td>
+										<td th:text="${regPublickey.ip_address}"></td>
+										<td th:text="${regPublickey.acct_number}"></td>
+										<!-- <td><a
+											th:href="@{'/TransMonitorRTP/'+${regPublickey.acct_number}}"
+											th:text="${regPublickey.acct_number}"></a></td> -->
+										<td th:text="${regPublickey.national_id}"></td>
+										<td th:text="${regPublickey.phone_number}"></td>
+										<td th:text="${regPublickey.account_status}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,1178 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+
+		$(document).ready(function() {
+			var formode = $("#formmode1").val();
+			if (formode == "view") {
+				$('input').attr('readonly', true);
+			} else if (formode == "verify") {
+				$('input').attr('readonly', true);
+			}
+
+		});
+
+	});
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function fnClick(a) {
+		var AcctNumber = a.getAttribute("data-AcctNumber")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = 'MerchantFee?formmode=' + formmode + '&AcctNumber=' + AcctNumber;
+	}
+
+	function addMerchant(a) {
+		location.href = 'MerchantFee?formmode=add';
+	}
+	
+	
+
+	function list() {
+		location.href = 'MerchantFee?formmode=list';
+	}
+
+	function submitform() {
+
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./createMerchantFee?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function editsubmitform() {
+
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./editMerchantFee?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+	function deleteform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+
+	function submitformdelete(a) {
+
+		$("#datadelete").hide();
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./deleteMandate?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	/*]]>*/
+</script>
+
+<script>
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+		
+	function home() {
+		location.href = './IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	$(function() {
+		$("#start_date").datepicker({
+			maxDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#end_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+
+	$(function() {
+		$("#end_date").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+		});
+
+	});
+	$(function() {
+		$("#ed_date1").datepicker({
+
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+
+		});
+
+	});
+	
+	
+</script>
+
+</head>
+<title>IPSAdmin</title>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">Merchant Registration</h6>
+							</div>
+
+							<div class="btn-group nav-buttons float-right">
+								<button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="addMerchant();">Add</button>
+								<button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<!-- <th></th> -->
+									<th>Type</th>
+									<th>FEE/COM Code</th>
+									<th>Description</th>
+									<th>Periodicity</th>
+									<th>Account No</th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>Status</th>
+									<th>Script Name</th>
+
+									<th style="width: 19px;">Select</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="merchantProfile : ${merchantProfiles}" class="userlist">
+
+									<td th:text="${merchantProfile.type}"></td>
+									<td th:text="${merchantProfile.fee_com_code}"></td>
+									<td th:text="${merchantProfile.description}"></td>
+									<td th:text="${merchantProfile.periodicity}"></td>
+									<td th:text="${merchantProfile.account_no}"></td>
+									<td th:text="${#dates.format(merchantProfile?.start_date,'dd-MM-yyyy')}"></td>
+									<td th:text="${#dates.format(merchantProfile?.end_date,'dd-MM-yyyy')}"></td>
+									<td th:text="${merchantProfile.status1}"></td>
+									<td th:text="${merchantProfile.script_name}"></td>
+
+									
+								<!-- 	<td 
+										class=underline onclick="finuser(this);"
+										th:attr="data-mand_ref_no=${merchantProfile.mandate_ref_no}"
+										title="click to view Image" id="openUploadModal">show</td> -->
+
+									<td>
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle"
+												type="button" id="dropdownMenuButton" title="Action"
+												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
+												data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="false">Action</button>
+											<div class="dropdown-menu"
+												aria-labelledby="dropdownMenuButton"
+												style="line-height: 0.7; background-color: #e3e3e4;">
+												<a class="dropdown-item" title="Modify"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-AcctNumber=${merchantProfile.account_no},
+													data-formmode='edit'"
+													th:id="${merchantProfile.fee_com_code}"
+													th:if="${merchantProfile.entity_flg}=='Y' ">Modify</a>
+
+												<div class="dropdown-divider"
+													style="height: 2px; line-height: 0.7;"></div>
+
+												<a class="dropdown-item" title="View"
+													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
+													onclick="fnClick(this);"
+													th:attr="data-AcctNumber=${merchantProfile.account_no},
+													data-formmode='view'"
+													th:id="${merchantProfile.fee_com_code}"
+													th:if="${merchantProfile.entity_flg}=='Y' ">View</a>
+
+												
+
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="home();">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!---------------------User List Ends--------------------------------------------------------->
+
+
+	
+
+		<!---------------------User Edit form Starts-------------------------------------------------->
+
+		<div
+			th:if="${formmode}=='view' OR ${formmode}=='add' OR ${formmode}=='cancel' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='verify'  OR ${formmode}=='viewnew'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<form action="#" th:object="${merchantProfile}" method="post"
+							autocomplete="off" id="merchantProfile" th:fragment="finuserapply">
+
+							<div class="card-header" style="background-color: #3e6369b5;">
+								<div class="float-left">
+									<h3 th:if="${formmode}=='add'" style="color: white">
+										Merchant Registration Process - Add</h3>
+									<h3
+										th:if="${formmode}=='edit' AND ${merchantProfile?.entity_flg}!='N'"
+										style="color: white">Merchant Registration Process - Modify</h3>
+									<h3
+										th:if="${formmode}=='view' AND ${merchantProfile?.entity_flg}!='N'"
+										style="color: white">Merchant Registration Process - View</h3>
+
+									<h3
+										th:if="${formmode}=='delete'AND ${merchantProfile?.del_flg}=='N'"
+										style="color: white">Merchant Registration Process - Delete</h3>
+
+								</div>
+								<div class="btn-group nav-buttons float-right">
+								
+			
+
+									<button type="button" class="btn btn-xs btn-primary btns"
+										id="btnInq" onclick="list();">List</button>
+								</div>
+							</div>
+							<div class="card-body">
+
+								
+								<div class="form-group">
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="merchant_code">Fee/Com Code	
+											</label>
+										</div>
+										
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="fee_com_code" th:value="${MERCHANTFEECODE}"
+												name="fee_com_code" class="form-control form-control-sm"
+												autocomplete="off" required readonly/>
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="fee_com_code"
+												name="fee_com_code"
+												th:value="${merchantProfile?.fee_com_code}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='edit'" />
+										</div>
+
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Type	
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="type"
+												name="type"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${merchantProfile?.type}"
+												id="type" name="type"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+									<label></label>
+
+									
+
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Description	
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="description"
+												name="description" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="description"
+												name="description"
+												th:value="${merchantProfile?.description}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="userName">Periodicity	
+											</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="periodicity"
+												name="periodicity" class="form-control form-control-sm"
+												autocomplete="false" maxlength="100" required />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text"
+												th:value="${merchantProfile?.periodicity}"
+												id="periodicity" name="periodicity"
+												class="form-control form-control-sm" autocomplete="false"
+												required maxlength="100"
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify'" />
+										</div>
+									</div>
+
+								<label>	</label>
+
+								<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Account Number
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="number" id="account_no"
+												name="account_no" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="number" id="account_no"
+												name="account_no"
+												th:value="${merchantProfile?.account_no}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="mand_account_number">Start Date </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="start_date"  name="start_date"
+											
+												class="form-control form-control-sm" autocomplete="off"
+												 />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="start_date" 
+												th:value="${#dates.format(merchantProfile?.start_date,'dd-MM-yyyy')}"
+												class="form-control form-control-sm" autocomplete="off"
+												
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew'" />
+										</div>
+
+									</div>
+
+								<label>	</label>
+								
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="userName">End Date</label>
+										</div>
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="end_date"  name="end_date"
+												class="form-control form-control-sm" autocomplete="false"
+												maxlength="100"  />
+										</div>
+										<div class="col-sm-3"
+											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
+											<input type="text" id="end_date1" 
+												th:value="${#dates.format(merchantProfile?.end_date,'dd-MM-yyyy')}"
+												class="form-control form-control-sm" autocomplete="off"
+												
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew'" />
+										</div>
+										
+										<div class="col-sm-1"></div>
+
+										<div class="col-sm-2">
+											<label for="mand_account_number">Status
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="status1"
+												name="status1" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="status1"
+												name="status1"
+												th:value="${merchantProfile?.status1}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew' " />
+										</div>
+
+									</div>
+
+								<label>	</label>
+									
+									
+									<div class="row formline">
+										<div class="col-sm-2">
+											<label for="mand_account_number">Script Name
+											
+												 </label>
+										</div>
+
+										<div th:if="${formmode}=='add'" class="col-sm-3">
+											<input type="text" id="script_name"
+												name="script_name" class="form-control form-control-sm"
+												autocomplete="off" required />
+										</div>
+
+										<div
+											th:if="${formmode}=='edit' OR ${formmode}=='verify'  OR ${formmode}=='cancel' OR ${formmode}=='view'  OR ${formmode}=='viewnew' OR ${formmode}=='delete'"
+											class="col-sm-3">
+											<input type="text" id="script_name"
+												name="script_name"
+												th:value="${merchantProfile?.script_name}"
+												class="form-control form-control-sm" autocomplete="off"
+												required
+												th:readonly="${merchantProfile?.entity_flg=='N'} OR ${formmode}=='verify'  OR ${formmode}=='view' OR ${formmode}=='viewnew'" />
+										</div>
+										<div class="col-sm-6"></div>
+
+										
+									</div>
+
+								<label>	</label>
+
+								
+								<div class="card-footer text-center">
+									<button type="button" class="btn btn-xs btn-primary"
+										id="btnHome" onclick="home();">Home</button>
+
+
+									<button
+										th:if=" ${formmode}=='delete' AND ${merchantProfile?.del_flg}=='N'"
+										type="button" class="btn btn-xs btn-primary"
+										th:attr="data-formmode=${formmode},data-del=${del_flg}"
+										onclick="deleteform(this);" id="btnModify">Delete</button>
+
+									<button th:if=" ${formmode}=='add'" type="button"
+										class="btn btn-xs btn-primary" form="merchantProfile"
+										id="btnSubmit" onclick="submitform();"
+										th:attr="data-formmode=${formmode},data-entity=${entity_flg}">Submit</button>
+
+									<button th:if="${formmode}=='edit' " type="button"
+										class="btn btn-xs btn-primary" form="merchantProfile"
+										id="btnSubmit" onclick="editsubmitform();"
+										th:attr="data-formmode=${formmode},data-entity=${entity_flg}">Submit</button>
+
+
+									<button type="button" class="btn btn-xs btn-primary"
+										id="btnBack" onclick="back();">Back</button>
+
+								</div>
+								
+								<div class="content"
+						style="border: 1px solid #36404a; padding: 15px; background-color: #ffffff;">
+
+						<div class="row formline">
+							<label class="col-sm-1">Entry User</label>
+
+							<div class="col-sm-2">
+								<input type="text" id="entryUserVerify"
+									th:value="${branchDet?.entry_user}"
+									class="form-control form-control-sm" name="entry_user"
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="modifyUserVerify"
+									th:value="${branchDet?.modify_user}"
+									class="form-control form-control-sm" name="modify_user"
+									autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Verify User</label>
+							<div class="col-sm-2">
+								<input type="text" id="verifyUserVerify"
+									th:value="${session.USERID}" form="BankandBranchverify"
+									class="form-control form-control-sm" name="verify_user"
+									autocomplete="off" readonly>
+
+							</div>
+						</div>
+
+						<div class="row formline">
+
+							<label class="col-sm-1">Entry Time</label>
+							<div class="col-sm-2">
+								<input type="text" id="entryTimeVerify"
+									th:value="${#dates.format(branchDet?.entry_time,'dd-MM-yyyy HH:mm')}"
+									class="form-control form-control-sm" 
+									autocomplete="off" readonly>
+							</div>
+							<div class="col-sm-1"></div>
+
+							<label class="col-sm-1">Modify Time</label>
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#dates.format(branchDet?.modify_time,'dd-MM-yyyy HH:mm')}"
+									id="modifyTimeVerify" class="form-control form-control-sm"
+									 autocomplete="off" readonly>
+
+							</div>
+							<div class="col-sm-1"></div>
+							<label class="col-sm-1">Verify Time</label>
+
+							<div class="col-sm-2">
+								<input type="text"
+									th:value="${#calendars.format(#calendars.createNow(), 'dd-MM-yyyy HH:mm')}"
+									id="verifyTimeVerify" class="form-control form-control-sm"
+									form="BankandBranchverify" 
+									autocomplete="off" readonly>
+
+							</div>
+
+						</div>
+					</div>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<div class="modal fade" id="verifybox">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="verifyboxmsg"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--------------------------User Edit form Ends-------------------------------------------------->
+				<!-- -----------------------Pop window - fin user list starts--------------------------------->
+
+				<div class="modal fade" id="finusers">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Finacle Users</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<table class="table table-hover" id="finusertb">
+									<thead class="thead-light">
+										<tr>
+											<th>Branch code</th>
+											<th>Employee Id</th>
+											<th>User Id</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="userProfile : ${FinUserProfiles}"
+											th:id="${userProfile.userid}" class="userlist"
+											th:onclick="finuser(this)">
+											<td th:text="${userProfile.finSolTb.sol_id}">123</td>
+											<td th:text="${userProfile.finGenEmpTb.emp_id}">123</td>
+											<td th:text="${userProfile.userid}">456</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - fin user list Ends--------------------------------->
+				<!-- ---------------------Pop window - Domain list starts--------------------------------->
+
+				<div class="modal fade" id="getDomain">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">Domain Id</h4>
+								<button type="button" class="close" data-dismiss="modal">×</button>
+							</div>
+
+							<!-- Modal body -->
+							<div class="modal-body">
+								<ul class="list-group">
+									<li class="list-group-item" th:each="domainlist : ${domains}">
+										<input type="checkbox" name="dom" th:value="${domainlist}" />
+										<label th:text="${domainlist}"></label>
+
+									</li>
+								</ul>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitdata();">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!------------------------Pop window - Domain  list Ends--------------------------------->
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+				<div class="modal fade" id="alert">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<p id="alertmsg" style="font-size: 16px;"></p>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal" onclick="back();">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="datadelete">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; color: #f15362; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to delete?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformdelete(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal fade" id="datacancel">
+					<div
+						class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+						<div class="modal-content">
+							<div class="menu-title-header">
+								<div class="modal-title" id="exampleModalLabel"
+									style="text-align: center; color: white;">CIM FINANCE</div>
+							</div>
+							<div class="modal-body"
+								style="text-align: center; background-color: #c6ccd2">
+								<button type="button" class="close" data-dismiss="modal">×</button>
+								Are you Sure want to Cancel?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary"
+									onclick="submitformcancel(this);"
+									th:attr="data-formmode=delete">Submit</button>
+								<button type="button" class="btn btn-primary"
+									data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alert1">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="alertmsg1" style="font-size: 16px;"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onclick="back();">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="addCredit">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p>Please fill the required fields</p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="fileupload" data-keyboard="true"
+		data-backdrop="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<h1>Upload only xlsx, xls or csv files</h1>
+					<br /> <br />
+					<form action="#" th:object="${fileUploadForm}" method="POST"
+						autocomplete="off" id="fileUploadForm"
+						enctype="multipart/form-data">
+						<div></div>
+						<input id="file" type="file" name="file" accept=".xls,.xlsx,.csv" /><br />
+						<br /> <input type="hidden" id="mandateServices"
+							name="mandateServices" value="mandateServices">
+						<button type="button" th:attr="data-formmode=submitupload"
+							class="btn btn-xs btn-primary" onclick="fire_ajax_submit();"
+							form="fileUploadForm" id="btn_Upload_Submit">Submit</button>
+
+						<button type="button" class="btn btn-xs btn-primary"
+							data-dismiss="modal">Close</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="error">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="errormsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="invalidfile">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="invalidfilemsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imageshow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="width: 1042px;">
+				<div class="modal-body" style="text-align: center">
+
+					<br /> <br /> <img class="img-responsive" id="doc_image"
+						style="max-height: 500px;">
+				</div>
+				<button type="button" class="btn btn-xs btn-primary"
+					data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+

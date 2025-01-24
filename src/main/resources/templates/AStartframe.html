@@ -1,0 +1,76 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+
+<title>
+BORNFIRE IPS
+</title>
+<style>
+
+.background {
+    
+    border: 2px red;
+    border-radius:0px;
+    width:24%;
+    height:70%;
+    padding:5px 1% 0px;
+    background: linear-gradient(to bottom, #23384b 14%,#5f84a1 68%);
+/*  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPAHRTihU2k2L8fY3QVFB0OKqEGq10lI3q8dGS_CwCF8uxhZfq") ;
+ */   
+ 	background-repeat:no-repeat;
+    background-size:cover;
+} 
+
+</style>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+		function contentLoad() {
+	
+		location.href = "Blogin.html" ;
+	}
+	
+		function contentLoad() {
+			
+			location.href = "UserRegistration.html" ;
+		}
+		
+		
+		
+		/*]]>*/
+</script>
+	
+
+<body>
+<div th:fragment="navbar" >
+	<div class="container login">
+		<div class="card card-container" style="margin-left: 164px;">
+			<img id="profile-img" class="profile-img-card"
+				th:src=@{/images/born_fire_logo.png} />
+			<p id="profile-name" class="profile-name-card">IPS Login</p>
+			<form th:action="@{/login}" method="post" name="Login_Form"
+				class="form-signin">
+				<input type="text" onkeyup="this.value = this.value.toUpperCase();"
+					class="form-control" name="userid" placeholder="User Id"
+					id="userid" required autofocus> <input type="password"
+					class="form-control" name="password" placeholder="Password"
+					id="password" required>
+				<div style="text-align: center; padding-bottom: 10px;">
+					<span style="color: #cd103c;" th:if="${param.error}"
+						th:text="${param.error}">test</span> <span style="color: #34af32;"
+						th:if="${param.logout}">You have been logged out.</span>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block btn-signin"
+					type="submit">Sign in</button>
+			</form>
+			<!-- /form -->
+		</div>
+		<!-- /card-container -->
+	</div>  
+</div>
+
+</body></html>
+ 
+

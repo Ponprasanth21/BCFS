@@ -1,0 +1,1289 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+<head>
+<meta charset="utf-8">
+<title>BSWIFT</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta
+	content="A fully featured admin theme which can be used to build CRM, CMS, etc."
+	name="description">
+<meta content="Coderthemes" name="author">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- App favicon -->
+<link rel="shortcut icon" href="assets/images/favicon.ico">
+
+<!-- App css -->
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/icons.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/app.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/materialdesignicons.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.css.map}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.min.css}" rel="stylesheet"
+	type="text/css">
+<link th:href="@{/css/materialdesignicons.min.css.map}" rel="stylesheet"
+	type="text/css">
+<!-- <link href="css/loginfontawesome4.css" rel="stylesheet" type="text/css"> -->
+<link rel="stylesheet"
+	href="//cdn.materialdesignicons.com/4.5.95/css/materialdesignicons.min.css">
+
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css">
+
+<script th:src="@{/js/bootstrap411.js}"></script>
+
+
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+</head>
+<style>
+.header1 {
+	background-color: #83b5ec;
+}
+
+.dropdown-menu>li {
+	margin-left: 10px;
+}
+
+.error {
+	color: red;
+	padding-left: 10px;
+}
+
+#menu {
+	/* background-color: #2b506f; */
+	background-color: #1f6996;
+	/*  display: none;  */
+	position: absolute;
+	z-index: 1;
+	width: 300px;
+	top: 70px;
+	left: -1px;
+	position: fixed;
+	overflow-y: auto;
+	height: 100%;
+}
+
+#menu>ul>li>a {
+	display: block;
+	background-color: rgba(45, 67, 90, 0.38);
+	color: #f1eaea;
+	font-size: small;
+	border-bottom-style: outset;
+}
+
+#menu>ul>li>a:hover, .submenu1>ul>li>a:hover {
+	background-color: #7593b3;
+	color: #f1eaea;
+}
+
+#userdtl, #dropico {
+	float: right;
+}
+
+.submenu1>ul>li>a {
+	display: block;
+	background-color: #018398;
+	color: #f1eaea;
+	font-size: small;
+}
+
+#headerdiv {
+	
+	left: 50%;
+	color: white;
+	position: absolute;
+	text-align: center;
+	margin: -38px 0 0 -31px;
+}
+
+#showmenu, #userdtl {
+	font-weight: 700;
+	font-size: larger;
+	/* color: white; */
+}
+
+nav {
+	/* background-color: #4d8cb9; */
+	background-color: #f3f4f473;
+}
+
+#pagetitle {
+	top: 114%;
+	left: 50%;
+	height: 50px;
+	color: #e80909;
+	position: absolute;
+	text-align: center;
+	margin: -25px 0 0 -31px;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-footer {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: small;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#logoutmenu {
+	display: none;
+	position: absolute;
+	z-index: 1031;
+	width: 200px;
+	background-color: #dee2e6;
+	box-shadow: 3px 1px 11px 1px #888888;
+	border-radius: 5px;
+	background-color: #dee2e6;
+	right: 0px;
+	top: 70px;
+	border: 2px solid #4d8cb9;
+	position: fixed;
+}
+
+#ques {
+	margin-top: -54px;
+	float: right;
+	padding: 65px;
+}
+
+.logout {
+	color: #2e7bd0;
+}
+
+html {
+	zoom: 0.7;
+}
+
+label {
+	text-align: left;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+	color: #fff;
+	background-color: #0062cc;
+	border-color: #fff #fff #fff;
+}
+
+.nav-tabs .nav-link {
+	color: #fff;
+	/* background-color: #e77400; */
+	border-color: #fff #fff #fff;
+}
+
+#button {
+	display: block;
+	margin: 20px auto;
+	padding: 10px 30px;
+	background-color: #eee;
+	border: solid #ccc 1px;
+	cursor: pointer;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+
+.imageround {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border-color: red;
+  
+}
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+.is-hide {
+	display: none;
+}
+
+.modal-backdrop {
+	width: 200vw;
+	height: 200vh;
+}
+/* #Monitoringsubmenu{
+display:none;}
+#Dashboardsubmenu{
+display:none;}
+#adminsubmenu{
+display:none;}
+#parametersubmenu{
+display:none;}
+#Auditsubmenu{
+display:none;} */
+</style>
+
+<style>
+#ipsword {
+	color: #ffffff;
+	top: 0%;
+	font-weight: 900;
+	position: absolute;
+	padding: 10px 0% 1px;
+	inline-size: max-content;
+	margin: 0 0;
+	margin-left: -345%;
+}
+
+body {
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.gn-submenu {
+	display: none;
+}
+
+.nav {
+	display: block;
+}
+
+.sub-menu {
+	display: none
+}
+
+ul li ul li:hover ul {
+	display: block;
+}
+
+
+</style>
+<!-- <script>
+
+jQuery(function($){
+	$(document).ajaxSend(function() {
+		$("#overlay").fadeIn(300);　
+	});
+		
+	$('.submenu1').click(function(){
+		$.ajax({
+			type: 'GET',
+			success: function(data){
+				console.log(data);
+			}
+		}).done(function() {
+			setTimeout(function(){
+				$("#overlay").fadeOut(100);
+			},300);
+		});
+	});	
+});
+
+
+</script> -->
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+
+		var getLoginSecurityData = null;
+		
+	function showlogout() {
+
+		var options = {};
+
+		if ($("#logoutmenu").css("display") == "none") {
+			$("#logoutmenu:hidden").show("Drop");
+		} else {
+			$("#logoutmenu:visible").hide("Drop");
+		}
+
+	}
+	
+	function docEmb() {
+		url = /*[[@{/document/BIPS_UserManual.pdf}]]*/
+
+		
+		var pageNum = 1;
+		window.open(url+"#page=" + pageNum, "_blank",
+		"width=600, height=500");
+
+		
+	}
+
+	$(function() {
+
+		var menu = /*[[${menu}]]*/null;
+
+		//var changepassword = /*[[${changepassword}]]*/null;
+
+		var checkpassExpiry = /*[[${checkpassExpiry}]]*/null;
+
+		var checkAcctExpiry = /*[[${checkAcctExpiry}]]*/null;
+		
+		
+		/* var url1 = /*[[@{/getLoginSecurityData}]]
+		
+		alert(url1.pw_life); */
+
+		//var getLoginSecurityData = /*[[${getLoginSecurityData}]]*/null;
+		//alert(getLoginSecurityData);
+		
+		var data1="";
+
+	/* 	if (changepassword == 'Y') {
+
+			$("#changepassword").modal("toggle");
+
+			$('#changepassword').modal({
+				backdrop : 'static',
+				keyboard : 'false'
+			})
+		}
+		; */
+
+		var getLoginSecurityData = null;
+		/* $.ajax({
+			type : "get",
+			url : "/IPSAdmin/getLoginSecurityData",
+			
+			success : function(data) {
+				getLoginSecurityData=data;
+				if (parseInt(checkpassExpiry) <= parseInt(getLoginSecurityData.pw_warn_days)) {
+
+					$("#menualertmsg").text(
+							"Your password will be expired in " + checkpassExpiry
+									+ " days. Please change Password.");
+					$('#menualert').modal("toggle");
+				}
+				
+			}
+		});  */
+		/* 
+		alert(checkpassExpiry);
+		alert(getLoginSecurityData.pw_warn_days); */
+	
+		
+
+		if (parseInt(checkAcctExpiry) <= 3) {
+
+			$("#menualertmsg").text(
+					"Your Account will be expired in " + checkAcctExpiry
+							+ " days. Please contact Administrator");
+			$('#menualert').modal("toggle");
+
+		}
+
+		$("#chngPass").on("click", function() {
+
+			$("#changepassword").modal("toggle");
+
+		});
+
+		$("#userdtl").on("click", function() {
+
+			showlogout();
+		});
+		$("#chngPass").on("click", function() {
+
+			
+			$("#changepassword").modal("toggle");
+			
+		
+
+		});
+
+	});
+	function contentLoad(a) {
+		$("#loader1").modal("toggle");
+		location.href = "/BSWIFT/" + a.id;
+	}
+	
+	function close() {
+		$('#menualertmenu').modal("hide");
+	}
+	function logout() {
+
+		$("#datalogout").modal("toggle");
+		$("logoutmenu").hide();
+	}
+
+	function submitchangepassword(a) {
+		
+		var getLoginSecurityData = null;
+		$.ajax({
+			type : "get",
+			url : "/BSWIFT/getLoginSecurityData",
+			
+			success : function(data) {
+				//alert(data.pw_life);
+				getLoginSecurityData=data;
+				//var getLoginSecurityData = /*[[${getLoginSecurityData}]]*/null;
+
+				var maxLengthPass=parseInt(getLoginSecurityData.pw_length);
+				var errorMsg="";
+				var oldpwd = $("#oldpass").val();
+				var newpwd =  $("#newpass").val();
+			
+				var regexPass=""
+				if(getLoginSecurityData.com_flg=='Y'){
+					if(getLoginSecurityData.alpha_flg=='Y' && getLoginSecurityData.cap_flg=='Y'
+							&& getLoginSecurityData.num_flg=='Y' && getLoginSecurityData.spl_char_flg=='Y'){
+						errorMsg="Password required atleast one Uppercase, Lowercase, Numeric and special character";
+						regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+
+					}
+					else if(getLoginSecurityData.alpha_flg=='Y' && getLoginSecurityData.cap_flg=='Y'
+							&& getLoginSecurityData.num_flg=='Y' && getLoginSecurityData.spl_char_flg=='N'){
+						errorMsg="Password required atleast one Uppercase, Lowercase, and Numeric";
+						regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})";
+
+					}else if(getLoginSecurityData.alpha_flg=='Y' && getLoginSecurityData.cap_flg=='Y'
+							&& getLoginSecurityData.num_flg=='N' && getLoginSecurityData.spl_char_flg=='Y'){
+						errorMsg="Password required atleast one Uppercase, Lowercase and special character";
+						regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+					}else if(getLoginSecurityData.alpha_flg=='Y' && getLoginSecurityData.cap_flg=='Y'
+							&& getLoginSecurityData.num_flg=='N' && getLoginSecurityData.spl_char_flg=='N'){
+						errorMsg="Password required atleast one Uppercase, Lowercase";
+						regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})";
+					}else{
+						errorMsg="Password required atleast one Uppercase, Lowercase, Numeric and special character";
+						regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+					}
+				}else{
+					errorMsg="Password required atleast one Uppercase, Lowercase, Numeric and special character";
+					regexPass="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})";
+				}
+				
+				//Validating password fields
+				$.validator
+						.addMethod(
+								"regex",
+								function(value, element, regexp) {
+									var re = new RegExp(regexp);
+									return this.optional(element) || re.test(value);
+								},
+								errorMsg);
+
+				$("#passform")
+						.validate(
+								{
+									rules : {
+										newpass : {
+											required : true,
+											minlength : 8,
+											maxlength : maxLengthPass,
+											regex : regexPass
+										},
+										oldpass : {
+											required : true,
+											minlength : 8,
+											maxlength : maxLengthPass,
+											regex : regexPass
+										}
+										
+									},
+									messages : {}
+
+								});
+
+				if ($("#passform").valid()) {
+
+					var oldpass = $("#oldpass").val();
+					var newpass = $("#newpass").val();
+					var conpass = $("#Connewpass").val();
+
+					if (newpass == conpass) {
+						var url = "./changePassword";
+						var passdata = {
+							oldpass : oldpass,
+							newpass : newpass
+						}
+
+						 $.ajax({
+							type : "post",
+							cache : false,
+							url : url,
+							data : passdata, // multiple data sent using ajax
+							success : function(data) {
+								
+
+								$("#menualertmsgmenu").text(data);
+								$('#menualertmenu').modal("toggle");
+								if (data == 'Password Changed Successfully') {
+									$("#changepassword").modal("hide");
+								}
+							}
+						}); 
+
+					} else {
+						$("#menualertmsgmenu1").text(
+								"New Password and Confirm Passsword must be Same !");
+						$('#menualertmenuchange').modal("toggle");
+
+					}
+				}
+			}
+		}); 
+
+
+
+	};
+	function menuicon(a) {
+
+		$("#menu").hide();
+		$("#smallmenu").show();
+	}
+	
+	
+	/*<![CDATA[*/
+</script>
+
+<body>
+
+	<nav class="navbar fixed-top navbar-expand-md navbar-dark  mb-3"
+		style="box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color:white; height: 70px;border-color: red;padding: 10px;">
+
+		<div class="col-sm-12" style="border-color: red">
+
+
+			<img th:src=@{/images/FCapital.png} style="width: 200px;" 
+				id="showmenu" alt="Bornfire">
+			<div id="headerdiv">
+				<img  th:src=@{/images/Bornfire.png} id="bfirelogo"
+					style=" margin-left: 18px;  height:50px;  margin-top: -14px;" alt="Bornfire">
+			</div>
+
+
+			<div  class="btn float-right" id="userdtl"
+				title="Profile" style="margin-top: 5px;">
+				
+					
+				<i th:if="${session.IMAGEUSER}==null"><img  th:src=@{/images/UserImage.png} class="imageround" style="color: blue;font-size: 20px;"><font Style="font-family: calibri;color: blue;font-size:18px"
+					th:text="'&nbsp&nbsp'+${session.USERNAME}"></font></i>
+				
+				<i th:if="${session.IMAGEUSER}!=null"><img  th:src="*{'data:image/png;base64,'+session.IMAGEUSER}"  class="imageround" style="color: blue;font-size: 20px;"><font Style="font-family: calibri;color: blue;font-size:18px"
+					th:text="'&nbsp&nbsp'+${session.USERNAME}"></font></i>
+			</div>
+
+			<div class="btn  float-right"
+				onclick="docEmb()" id="Manual"
+				style="margin-top: 16px; width: 4px; margin-left: 17px;margin-right: 32px;">
+				<i class="fa fa-question-circle" style="color: blue;width: 30px;height: 30px;font-size: 18px;" onclick="docEmb()" title="Manual"
+					id="Manual"></i>
+			</div>
+			
+			<div class="btn btn-default float-right"
+				
+				style="margin-top: 16px; width: 4px; margin-left: 17px; margin-right: 32px;">
+				<i class="fa fa-home" style="color: blue;width: 30px;height: 30px;font-size: 18px;" onclick="contentLoad(this)" title="Dashboard"
+					id="BSWIFTDashboard"></i>
+			</div>
+			
+			
+			<div  class="btn btn-default float-right" 
+				
+				style="margin-top: 16px; width: 4px; margin-left: 17px; margin-right: 32px;">
+				<!-- <i class="fa fa-area-chart" style="color: blue;width: 30px;height: 30px;font-size: 18px;" onclick="contentLoad(this)" title="Snapshot"
+					id="snapShot"></i> -->
+					<!-- <i class="fa fa-area-chart" style="color: blue;width: 30px;height: 30px;font-size: 18px;"  title="Snapshot"
+					id="snapShot"></i> -->
+			</div>
+
+            
+
+		</div>
+	</nav>
+
+	<!-- <div id="menu"
+		style="width: 18%; box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color: #018398; ">
+		<ul class="nav flex-column">
+		<li class="nav-item"><a class="nav-link" onclick="menuicon(this);"
+				href="#" id="admin"><img th:src=@{/images/icons8-menu-48.png} style="width: 30px;"
+				id="showmenu" alt="Bornfire">
+				 </a></li>
+				 
+				 </ul>
+				 </div> -->
+
+	<div id="menu"
+		style="width: 18%; box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color: #018398;">
+		<!-- <ul class="nav flex-column">
+		<li class="nav-item"><a class="nav-link" onclick="menuicon(this);"
+				href="#" id="admin"><img th:src=@{/images/icons8-menu-48.png} style="width: 30px;"
+				id="showmenu" alt="Bornfire">
+				 </a></li>
+				 
+				 </ul> -->
+
+
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<ul class="nav flex-column" id="Wholeul">
+
+			<!-- 	<li th:if="${session.ROLEID=='ADM'}" class="nav-item"><a
+				class="nav-link" data-toggle="collapse" onclick="contentLoad(this)"
+				id="IPSDashboard"><i class="fa fa-home"
+					style="margin-right: 5%;"></i>Dashboard</a> 	<div id="Dashboardsubmenu" class="collapse submenu1 ">
+					
+				</div></li> -->
+
+
+			<!-- <li th:if="${IPSRoleMenu.menulist.contains('Admin')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#adminsubmenu" id="admin"><i
+					class="fa fa-fw fa-university"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Admin Operation<i
+					id="dropico" class="fa fa-caret-down" aria-hidden="true"></i> </a>
+
+				<div id="adminsubmenu" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="UserProfile"
+							href="#" onclick="contentLoad(this)">User Profile Maintenance
+						</a></li>
+
+						<li class="nav-item"><a class="nav-link"
+							id="IPSAccessandRoles" href="#" onclick="contentLoad(this)">Access
+								and Roles </a></li>
+								
+						 <li class="nav-item"><a class="nav-link"
+							id="BankBranchMaster" href="#" onclick="contentLoad(this)">Organization and Branch Master</a></li>
+								
+						<li class="nav-item"><a class="nav-link" id="LoginSecurity"
+							href="#Parametersubmenu" data-toggle="collapse">IPS Parameter
+								<i id="dropico" class="fa fa-caret-down" aria-hidden="true"></i>
+						</a>
+							<div id="Parametersubmenu" class="collapse submenu1 ">
+								<ul class="nav flex-column">
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="LoginSecurity" href="javascript: void(0);"
+										onclick="contentLoad(this)">LoginSecurity</a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="ServiceChargesAndFees" href="javascript: void(0);"
+										onclick="contentLoad(this)">Service Charges and Fees </a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="participatingBanks" href="javascript: void(0);"
+										onclick="contentLoad(this)">Participating Banks</a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="SettlementAccount" href="javascript: void(0);"
+										onclick="contentLoad(this)">Settlement Account</a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="BusinessHours" href="javascript: void(0);"
+										onclick="contentLoad(this)">Business Hours</a></li>
+									<li class="nav-item"><a class="nav-link"
+										id="MerchantCategoryCode" href="#" onclick="contentLoad(this)">
+											Merchant Category Code</a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="WalletFees" href="javascript: void(0);"
+										onclick="contentLoad(this)">Wallet Fees And Charges</a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="NotificationParms" href="javascript: void(0);"
+										onclick="contentLoad(this)">Notification Parameter</a></li>
+								</ul>
+							</div></li>
+					</ul>
+				</div></li> -->
+				
+				
+			<li 
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Admin_Module" id="AdminModule"><i class="fa fa-fw fa-university"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Admin Module <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="Admin_Module" class="collapse submenu1 ">
+					<ul class="nav flex-column" th:id="${auditflag}"
+						aria-expanded="false">
+						<li class="nav-item"><a class="nav-link" id="UserProfile"
+							href="#" onclick="contentLoad(this)">User Profile</a></li>
+						<li class="nav-item"><a class="nav-link" 
+							href="javascript: void(0);" id="AccessandRoles" onclick="contentLoad(this)">Access Controls </a></li>
+							<li class="nav-item"><a class="nav-link" id="NotificationParms" href="javascript: void(0);"
+										onclick="contentLoad(this)">Notification and Alerts</a></li>
+						<li class="nav-item"><a class="nav-link" id="Folder_Configuration"
+							href="javascript: void(0);" onclick="contentLoad(this)">Folder Configuration </a></li>
+							
+							<li class="nav-item"><a class="nav-link" id="Massage_Parameters"
+							href="javascript: void(0);" onclick="contentLoad(this)">Massage Parameters</a></li>
+						<li class="nav-item"><a class="nav-link"   id="userActivities"
+							href="javascript: void(0);" onclick="contentLoad(this)">Audit Operations</a></li>
+							
+<!-- id="Audit_Operations" -->
+					</ul>
+				</div></li>
+				
+				
+			<li
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Operations" id="operations"><i class="fa fa-fw fa-tasks"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Operations <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="Operations" class="collapse submenu1 ">
+					<ul class="nav flex-column" 
+						aria-expanded="false">
+						<!-- <li class="nav-item"><a class="nav-link" id="Outward_Swift_Messages"
+							href="javascript: void(0);" onclick="contentLoad(this)">Outward Swift Messages </a></li>
+						<li class="nav-item"><a class="nav-link" id="Inward_Swift_Messages"
+							href="javascript: void(0);" onclick="contentLoad(this)">Inward Swift Messages </a></li>
+							<li class="nav-item"><a class="nav-link" id="Swift_MX_Menu "
+							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MX Menu </a></li>
+							<li class="nav-item"><a class="nav-link" id="Swift_MT_Menu"
+							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MT Menu </a></li> -->
+							
+							<li class="nav-item"><a class="nav-link" id="FolderManagmt"
+							href="javascript: void(0);" onclick="contentLoad(this)"> Message Conversion</a></li>
+
+					</ul>
+				</div></li>
+				
+				<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#inquiry" id="reports"><i class="fa fa-fw fa-tasks"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Inquiries <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="inquiry" class="collapse submenu1 ">
+					<ul class="nav flex-column" 
+						aria-expanded="false">
+						<li class="nav-item"><a class="nav-link" id="File_Management"
+							href="javascript: void(0);" onclick="contentLoad(this)">File Management</a></li>
+							<li class="nav-item"><a class="nav-link" id="Swift_MX_Menu_inquiries"
+							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MX Messages </a></li>
+							<li class="nav-item"><a class="nav-link" id="Swift_MT_Menu_inquiries"
+							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MT Messages </a></li>
+
+					</ul>
+				</div></li>
+				
+				<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Reports" id="reports"><i class="fa fa-fw fa-edit"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Reports <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="Reports" class="collapse submenu1 ">
+					<ul class="nav flex-column" 
+						aria-expanded="false">
+						<li class="nav-item"><a class="nav-link" id="Proccessed_Messages"
+							href="javascript: void(0);" onclick="contentLoad(this)">Proccessed Messages </a></li>
+						<li class="nav-item"><a class="nav-link" id="Failed_Messages"
+							href="javascript: void(0);" onclick="contentLoad(this)">Failed Messages </a></li>
+							<li class="nav-item"><a class="nav-link" id="Pending_Messages"
+							href="javascript: void(0);" onclick="contentLoad(this)">Pending Messages</a></li>
+
+					</ul>
+				</div></li>
+				
+					<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Audit_Logs" id="audit_logs"><i class="fa fa-fw fa-edit"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Audit Logs <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="Audit_Logs" class="collapse submenu1 ">
+					<ul class="nav flex-column" 
+						aria-expanded="false">
+						<li class="nav-item"><a class="nav-link" id="userActivities"
+							href="javascript: void(0);" onclick="contentLoad(this)">User Operations </a></li>
+						<li class="nav-item"><a class="nav-link"  id="OperationLog"
+							href="javascript: void(0);" onclick="contentLoad(this)">Business Operations </a></li>
+
+					</ul>
+				</div></li>
+				
+				
+			<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse" id="BSWIFTDashboard"
+							href="javascript: void(0);" onclick="contentLoad(this)"	><i class="fa  fa-desktop"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Dashboards <!-- <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> --> </a>
+
+				<div id="Dashboards" class="collapse submenu1 ">
+					<ul class="nav flex-column" 
+						aria-expanded="false">
+						<!-- <li class="nav-item"><a class="nav-link" id="IPSDashboard"
+							href="javascript: void(0);" onclick="contentLoad(this)">Messages </a></li> -->
+					
+					</ul>
+				</div></li>
+
+
+<!-- 
+			<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Auditsubmenu" id="auditmenu"><i class="fa fa-fw fa-edit"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Audit
+					Operations <i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="Auditsubmenu" class="collapse submenu1 ">
+					<ul class="nav flex-column" th:id="${auditflag}"
+						aria-expanded="false">
+						<li class="nav-item"><a class="nav-link" id="userActivities"
+							href="javascript: void(0);" onclick="contentLoad(this)">User Activity Audits </a></li>
+						<li class="nav-item"><a class="nav-link" id="OperationLog"
+							href="javascript: void(0);" onclick="contentLoad(this)">Service Audits </a></li>
+
+					</ul>
+				</div></li>
+
+
+			<li th:if="${IPSRoleMenu.menulist.contains('IPSOperations')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#IPSsubmenu" id="ipsMenu"><i class="fa fa-fw fa-tasks "
+					style="margin-right: 5%; color: darkgoldenrod;"></i>IPS Operations
+					<i id="dropico" class="fa fa-caret-down" aria-hidden="true"></i> </a>
+
+				<div id="IPSsubmenu" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link"
+							data-toggle="collapse" href="#IPSsecondsubmenu" id="ipsMenu">Bulk
+								Transaction <i id="dropico" class="fa fa-caret-down"
+								aria-hidden="true"></i>
+						</a>
+							<div id="IPSsecondsubmenu" class="collapse submenu1 ">
+								<ul class="nav flex-column">
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="BulkCredit" href="javascript: void(0);"
+										onclick="contentLoad(this)">Bulk Credit Transaction </a></li>
+									<li class="nav-item"><a class="nav-link"
+										style="color: rgb(224, 224, 224); font-size: small;"
+										id="BulkDebit" href="javascript: void(0);"
+										onclick="contentLoad(this)">Bulk Debit Transaction </a></li>
+								</ul>
+							</div>
+						<li class="nav-item"><a class="nav-link"
+							id="IPSManualTransaction" href="#" onclick="contentLoad(this)">Manual
+								Transaction </a></li>
+								
+						<li class="nav-item"><a class="nav-link"
+							id="RTPTransaction" href="#" onclick="contentLoad(this)">RTP
+								Transaction </a></li>
+						<li class="nav-item"><a class="nav-link" id="UserProfile"
+							href="#" onclick="contentLoad(this)">Settlement Transaction </a></li>
+							
+						<li class="nav-item"><a class="nav-link"
+							id="SettlementTransaction" href="#" onclick="contentLoad(this)">Settlement
+								Transaction </a></li>
+
+						<li class="nav-item"><a class="nav-link"
+							id="ReversalTransaction" href="#" onclick="contentLoad(this)">Reversal
+								Transaction </a></li>
+
+						<li class="nav-item"><a class="nav-link"
+							id="IPSReconciliation" href="#" onclick="contentLoad(this)">IPS
+								Reconciliation </a></li>
+
+						<li class="nav-item"><a class="nav-link"
+							id="Mandate" href="#" onclick="contentLoad(this)">
+								Mandate Management</a></li>
+								
+						<li class="nav-item"><a class="nav-link"
+							id="Merchant" href="#" onclick="contentLoad(this)">
+								Merchant Registration</a></li>	
+						
+						
+						<li class="nav-item"><a class="nav-link"
+							id="Wallet" href="#" onclick="contentLoad(this)">
+								Wallet Master</a></li>	
+
+
+					</ul>
+				</div></li>
+				
+			<li th:if="${IPSRoleMenu.menulist.contains('Wallet_Master')}"
+				class="nav-item"><a class="nav-link"  onclick="contentLoad(this)"
+				 id="Wallet"><i  class="fa  fa-credit-card"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Wallet Master<i id="dropico" 
+					aria-hidden="true"></i> </a>
+
+			</li>
+
+			<li th:if="${IPSRoleMenu.menulist.contains('Monitoring')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#Monitoringsubmenu" id="monitoring"><i
+					class="fa  fa-desktop"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Monitoring<i
+					id="dropico" class="fa fa-caret-down" aria-hidden="true"></i> </a>
+
+				<div id="Monitoringsubmenu" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="TransMonitorMC"
+							href="#" onclick="contentLoad(this)">Outgoing Credit Transaction
+								Monitor </a></li>
+
+					</ul>
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="RTPOUTING"
+							href="#" onclick="contentLoad(this)">RTP-Outgoing Transaction Monitor
+						</a></li>
+					</ul>
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="TransMonitorINC"
+							href="#" onclick="contentLoad(this)">Inward Credit Transaction
+								Monitor </a></li>
+					</ul>
+
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="TransMonitorRTP"
+							href="#" onclick="contentLoad(this)">RTP-Incoming Transaction Monitor
+						</a></li>
+					</ul>
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link"
+							id="TransMonitorBulk" href="#" onclick="contentLoad(this)">Bulk
+								Transaction Monitor </a></li>
+					</ul>
+					
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="CBSMonitor"
+							href="#" onclick="contentLoad(this)">CBS Monitor </a></li>
+					</ul>
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="IPSMonitor"
+							href="#" onclick="contentLoad(this)">IPS Monitor </a></li>
+					</ul>
+
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link"
+							id="SettlementReport" href="#" onclick="contentLoad(this)">BOM
+								Settlement Report </a></li>
+					</ul>
+
+					
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link"
+							id="TransactionEntries" href="#" onclick="contentLoad(this)">Transaction
+								Summary </a></li>
+
+					</ul>
+					
+					
+				</div></li>
+
+			<li th:if="${IPSRoleMenu.menulist.contains('MYT_Registration')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#my_t" id="my_t1"><i class="fa  fa-desktop"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>MyT
+					Registration<i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="my_t" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="MyTUserReg"
+							href="#" onclick="contentLoad(this)">User Registration</a></li>
+					</ul>
+
+				</div></li>
+				
+				<li th:if="${IPSRoleMenu.menulist.contains('Consent_registration')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#cons_out_reg" id="my_t1"><i class="fa  fa-desktop"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Consent outgoing Registration<i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="cons_out_reg" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="ConOutReg"
+							href="#" onclick="contentLoad(this)">Consent Account Registration</a></li>
+					</ul>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="AISPReq"
+							href="#" onclick="contentLoad(this)">AISP Request</a></li>
+					</ul>
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="ParticipantFees"
+							href="#" onclick="contentLoad(this)">Participant Fees</a></li>
+					</ul>
+
+				</div></li>
+
+<li th:if="${IPSRoleMenu.menulist.contains('Merchant_registration')}"
+				class="nav-item"><a class="nav-link" data-toggle="collapse"
+				href="#merchantreg" id="my_t1"><i class="fa  fa-desktop"
+					style="margin-right: 5%; color: darkgoldenrod;"></i>Merchant Registration
+					<i id="dropico" class="fa fa-caret-down"
+					aria-hidden="true"></i> </a>
+
+				<div id="merchantreg" class="collapse submenu1 ">
+					<ul class="nav flex-column">
+						<li class="nav-item"><a class="nav-link" id="MerchantQRREG"
+							href="#" onclick="contentLoad(this)">Merchant-QR Registration</a></li>
+					</ul>
+
+				</div></li> -->
+		</ul>
+	</div>
+
+	<!--------------------------------------------------------- Logout menu------------------------------------------------ -->
+	<div id="logoutmenu" style="width: 10%; margin-left: 16px;"
+		data-backdrop="static" data-keyboard="false">
+		<ul class="nav flex-column">
+			<li class="nav-item"><input type="button" id="logout"
+				style="margin-left: 12px" class="btn btn-default logout"
+				value="LogOut" onclick="logout()" /></li>
+			<li class="nav-item"><input type="button"
+				style="margin-left: 12px" class="btn btn-default logout "
+				value="Change Password" id="chngPass" /></li>
+
+		</ul>
+		<!-- <ul class="nav flex-column">
+		
+	
+			 <li class="nav-item"><a href="javascript:void(0);"
+				class="dropdown-item notify-item" style="color: #cadetblue"
+				id="chngPass" value="Change Password"> <span>Change
+						Password</span>
+			</a></li>
+		</ul> -->
+
+	</div>
+	<!--------------------------------------------------------- Logout menu------------------------------------------------ -->
+	<!--------------------------------------------------------- Password change modal------------------------------------------------ -->
+	<!--------------------------------------------------------- Password change modal------------------------------------------------ -->
+	<div class="modal fade" id="changepassword" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="color: cadetblue;">
+				<!-- Modal Header -->
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CHANGE PASSWORD</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<form th:object=${singledetail} id="passform" method="post">
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-5" for="acctNum">Old Password :</label> <input
+									class="form-control col-sm-5" type="password" id="oldpass"
+									name="oldpass" required />
+							</div>
+							<div class="row">
+								<label class="col-sm-5" for="acctName">New Password :</label> <input
+									class="form-control col-sm-5" type="password" id="newpass"
+									name="newpass" required />
+							</div>
+							<div class="row">
+								<label class="col-sm-5" for="acctName">Confirm New
+									Password :</label> <input class="form-control col-sm-5" type="password"
+									id="Connewpass" name="newpass" required />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer" style="background-color: #c6ccd2">
+					<button type="button" class="btn btn-primary"
+						data-target="#changepassword"
+						onclick="submitchangepassword(this);">Submit</button>
+					<button id="logout" type="button" class="btn btn-primary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--------------------------------------------------------- Password change modal------------------------------ -->
+	<!-- -------------------------------------------------Logout Modal ------------------------------>
+	<div class="modal fade" id="datalogout">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">LOGOUT</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+
+					<p>Are You Sure Want to Logout ?</p>
+				</div>
+				<div class="modal-footer" style="background-color: #c6ccd2">
+					<button type="button" class="btn btn-primary" id="logout"
+						onclick="contentLoad(this)" th:attr="data-formmode=delete">Yes</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!----------------------------------------------------- Modal for alert messages----------------------->
+	<div class="modal fade" id="menualert">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="menualertmsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="menualertmenuchange">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="menualertmsgmenu1"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="menualertmsg">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="password not same"></p>
+					<button id="logout" onclick="contentLoad(this)" type="button"
+						class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="loader" style="display: none;">
+
+		<div class="loading">Loading&#8230;</div>
+	</div>
+
+	<script src="./js/jquery.knob.min.js"></script>
+	<script src="./js/jquery.peity.min.js"></script>
+
+	<!-- Sparkine charts -->
+	<script src="./js/jquery.sparkline.min.js"></script>
+	<!-- App js -->
+	<script src="./js/app.min.js"></script>
+
+	<div class="modal fade" id="menualertmenu">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="menualertmsgmenu"></p>
+					<button id="logout" onclick="close(this)" type="button"
+						class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background-color: #94b8dd00;">
+				<div class="modal-body" style="text-align: center">
+					<div class="loader">Loading...</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+</body>
+
+</html>

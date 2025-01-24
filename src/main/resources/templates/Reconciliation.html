@@ -1,0 +1,1305 @@
+
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+</style>
+</head>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+
+	
+	$(document).ready(function() {
+		$('#mainTable').DataTable({
+			"destroy" : true,
+			"scrollY" : 400,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : false,
+			"ordering" : false,
+			"searching" : false,
+			"pageLength" : 100,
+			"lengthChange" : false
+			 "bInfo":false
+		});
+	});
+	/*<![CDATA[*/
+</script>
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+
+	
+$(document).ready(function() {
+	$('#usertable').DataTable({ 
+		 "destroy" : true,
+	        "scrollY" : 400,
+	        "scrollCollapse" : true,
+	        "paging" : true,
+	        "autoWidth" : false,
+	        "ordering" : true,
+	        "searching" : false,
+	        "pageLength" : 100,
+	        "lengthChange" : false,
+	});
+});
+
+$(function() {
+	 $("#disableDate").datepicker({
+			maxDate : 0,
+			changeMonth:true,
+			changeYear:true,
+			dateFormat : "dd-MM-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());		
+				  $("#loader1").modal("toggle");
+				location.href = 'IPSReconciliation?formmode=Main&tranDate='+$("#disableDate").val();
+			}
+		});
+})
+
+
+	/*<![CDATA[*/
+</script>
+<script>
+function home() {
+	location.href = '/IPSAdmin/IPSDashboard'
+}
+
+function back(a) {
+	window.history.back();
+}
+function BOBInward(a) {
+	
+	location.href = 'IPSReconciliation?formmode=BOBInward&tranDate='+$("#disableDate").val();
+}
+function BOMInward(a) {
+	
+	location.href = 'IPSReconciliation?formmode=BOMInward&tranDate='+$("#disableDate").val();
+}
+function BOBOutward(a) {
+	location.href = 'IPSReconciliation?formmode=BOBOutward&tranDate='+$("#disableDate").val();
+}
+function BOMOutward(a) {
+	location.href = 'IPSReconciliation?formmode=BOMOutward&tranDate='+$("#disableDate").val();
+}
+function BOBFailed(a) {
+	location.href = 'IPSReconciliation?formmode=BOBFailed&tranDate='+$("#disableDate").val();
+}
+function BOMFailed(a) {
+	location.href = 'IPSReconciliation?formmode=BOMFailed&tranDate='+$("#disableDate").val();
+}
+function BOBOffset(a) {
+	location.href = 'IPSReconciliation?formmode=BOBOffset&tranDate='+$("#disableDate").val();
+}
+function BOMOffset(a) {
+	location.href = 'IPSReconciliation?formmode=BOMOffset';
+}
+function BOBUnmatched(a) {
+	location.href = 'IPSReconciliation?formmode=BOBUnmatched&tranDate='+$("#disableDate").val();
+}
+function BOMUnmatched(a) {
+	location.href = 'IPSReconciliation?formmode=BOMUnmatched';
+}
+
+function pdfdownload(a) {
+	var filetype = a.getAttribute("data-filetype")
+	var TRAN_REASON = $("#tran_reason").text();
+	var TRAN_STATUS = $("#tran_status").text();
+	var TRAN_DATE = $("#disableDate").val();
+	location.href = 'downloadJasperReCon?' + '&filetype=' + filetype
+			+ '&TRAN_DATE=' + TRAN_DATE;
+}
+
+function exceldownload(a) {
+	var filetype = a.getAttribute("data-filetype")
+	var TRAN_DATE = $("#disableDate").val();
+	location.href = 'downloadJasperReCon?' + '&filetype=' + filetype
+			+ '&TRAN_DATE=' + TRAN_DATE;
+}
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div class="card" th:if="${formmode}=='Main'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">IPS Reconciliation</h6>
+				</div>
+
+				<div class="float-right">
+
+					<div class="row formline">
+					
+					<div style="top: -6px; margin-right: 14px;" class="btn-group">
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">
+								Download <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a class="underline" id="pdf"
+									onclick="pdfdownload(this);" th:attr="data-filetype='pdf'"
+									style="cursor: pointer;">PDF</a></li>
+								<label></label>
+								<li><a class="underline" id="xcel" style="cursor: pointer;"
+									onclick="exceldownload(this);" th:attr="data-filetype='excel'">EXCEL</a></li>
+
+
+
+
+							</ul>
+						</div>
+
+						<label style="color: white; padding-right: 20px;">Tran
+							Date </label>
+						<div>
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+						<table class="table table-striped table-bordered table-hover "
+							id="mainTable">
+							<thead class="thead-light">
+								<tr>
+									<th style="border-style: dotted;">Our Accounts</th>
+									<th style="border-style: dotted;">No.of Txs</th>
+									<th style="border-style: dotted;">Amount</th>
+									<th style="border-style: ridge;">BOM Accounts</th>
+									<th style="border-style: ridge;">No.of Txs</th>
+									<th style="border-style: ridge;">Amount</th>
+								</tr>
+							</thead>
+							<tbody style="border: groove;">
+								<!-- 
+								<tr class="userlist" style="background-color: rgba(26, 132, 231, 0.15);"> 
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;">Settlement
+										Account</td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;"></td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;"></td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;">Settlement
+										Account</td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;"></td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;"></td>
+
+								</tr> -->
+								<tr style="font-size: smaller" class="userlist">
+									<td class="underline" onclick='BOBInward(this)'>Inward
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(inwardBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(inwardBOBCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+									<td class="underline" onclick='BOMInward(this)'>Inward
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(inwardBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(inwardBOMCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+								<tr style="font-size: smaller" class="userlist">
+									<td class="underline" onclick='BOBOutward(this)'>Outward
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(outwardBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(outwardBOBCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+									<td class="underline" onclick='BOMOutward(this)'>Outward
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(outwardBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(outwardBOMCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+
+								<tr style="font-size: smaller" class="userlist">
+									<td class="underline" onclick='BOBUnmatched(this)'>Unmatched
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(unmatchBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(unmatchBOBCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+									<td class="underline" onclick='BOMUnmatched(this)'>Unmatched
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(unmatchBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(unmatchBOMCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+								</tr>
+
+								<tr
+									style="font-size: smaller; background-color: rgba(26, 132, 231, 0.15);"
+									class="userlist">
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;">Total</td>
+									<td
+										th:text="${#numbers.formatDecimal(totalBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body; text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(totalBOBTotAmt, 0, 'COMMA', 2, 'POINT')}"
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body; text-align: right;"></td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body;">Total</td>
+									<td
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body; text-align: right;"
+										th:text="${#numbers.formatDecimal(totalBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"></td>
+									<td
+										th:text="${#numbers.formatDecimal(totalBOMTotAmt, 0, 'COMMA', 2, 'POINT')}"
+										style="background-color: rgba(26, 132, 231, 0.15); font-size: large; font-family: -webkit-body; text-align: right;"></td>
+								</tr>
+
+								<tr style="font-size: smaller" class="userlist">
+									<td class="underline" onclick='BOBOffset(this)'>Offset
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(offsetBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(offsetBOBCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+									<td class="underline" onclick='BOMOffset(this)'>Offset
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(offsetBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(offsetBOMCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+								</tr>
+								<tr style="font-size: smaller" class="userlist">
+									<td class="underline" onclick='BOBFailed(this)'>Failed
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(failedBOBNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(failedBOBCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+									<td class="underline" onclick='BOMFailed(this)'>Failed
+										Transactions</td>
+									<td
+										th:text="${#numbers.formatDecimal(failedBOMNoTxs, 0, 'COMMA', 0, 'POINT')}"
+										style="text-align: right;"></td>
+									<td
+										th:text="${#numbers.formatDecimal(failedBOMCount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+
+		<div class="card" th:if="${formmode}=='BOBInward'">
+
+
+
+			<div class="card-header" style="background-color: #2e455d;">
+				<div class="float-left">
+					<h6 style="color: white;">Inward Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Status</th>
+									<th>Matching Criteria</th>
+									<th>Amount</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card" th:if="${formmode}=='BOMInward'">
+
+
+
+			<div class="card-header" style="background-color: #2e455d;">
+				<div class="float-left">
+					<h6 style="color: white;">Inward Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Status</th>
+									<th>Matching Criteria</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card" th:if="${formmode}=='BOBOutward'">
+
+
+
+			<div class="card-header" style="background-color: #2e455d;">
+				<div class="float-left">
+					<h6 style="color: white;">Outward Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Status</th>
+									<th>Matching Criteria</th>
+									<th>Amount</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card" th:if="${formmode}=='BOMOutward'">
+
+
+
+			<div class="card-header" style="background-color: #2e455d;">
+				<div class="float-left">
+					<h6 style="color: white;">Outward Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Status</th>
+									<th>Matching Criteria</th>
+									<th>Amount</th>
+
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card" th:if="${formmode}=='BOBOffset'">
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Offset Transaction</h6>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+
+
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Status</th>
+									<th>Matching Criteria</th>
+									<th>Reversal Date</th>
+									<th>Amount</th>
+
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.reversalDate,'dd-MM-yyyy')}"></td>
+
+
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='BOMOffset'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Offset Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+
+
+									<th rowspan="2">Tran Date</th>
+									<th rowspan="2">Value Date</th>
+									<th colspan="2">Transaction Type</th>
+									<th rowspan="2">Amount</th>
+									<th rowspan="2">Account No</th>
+									<th rowspan="2">Account Name</th>
+									<th rowspan="2">Other Bank</th>
+									<th rowspan="2">Tran Particular</th>
+									<th rowspan="2">Transaction Status</th>
+									<th rowspan="2">Matching Criteria</th>
+									<th rowspan="2">Transaction Amount</th>
+
+								</tr>
+								<tr>
+									<!-- skip 1st column because it merges vertically -->
+									<th>Inward</th>
+									<th>Outward</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr class="userlist">
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='BOBFailed'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Failed Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+
+
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Reason</th>
+									<th>Matching Criteria</th>
+
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.reason}"></td>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='BOMFailed'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">Failed Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+
+
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Reason</th>
+									<th>Matching Criteria</th>
+
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='BOBUnmatched'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">UnReconciled Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+
+
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Reason</th>
+									<th>Matching Criteria</th>
+
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr style="font-size: smaller"
+									th:each="tranMonitoring : ${tranDetail}"
+									onclick="fnClick(this);" class="userlist">
+
+									<td
+										th:text="${#dates.format(tranMonitoring.tran_date,'dd-MM-yyyy')}"></td>
+
+									<td
+										th:text="${#dates.format(tranMonitoring.value_date,'dd-MM-yyyy')}"></td>
+
+									<td th:text="${tranMonitoring.msg_type}"></td>
+
+									<td th:text="${tranMonitoring.tran_type}"></td>
+
+									<td th:text="${tranMonitoring.bob_account}"></td>
+
+									<td th:text="${tranMonitoring.bob_account_name}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account}"></td>
+
+									<td th:text="${tranMonitoring.ipsx_account_name}"></td>
+
+									<td th:text="${tranMonitoring.tran_particulars}"></td>
+
+									<td
+										th:text="${#numbers.formatDecimal(tranMonitoring.tran_amount, 0, 'COMMA', 2, 'POINT')}"
+										style="text-align: right;"></td>
+
+									<th:block th:switch="${tranMonitoring.tran_status}">
+										<td th:case="'FAILURE'" style="color: red;">FAILURE</td>
+										<td th:case="'SUCCESS'" style="color: green;">SUCCESS</td>
+										<td th:case="'REVERSE_FAILURE'" style="color: red;">REVERSE
+											FAILURE</td>
+										<td th:case="'IN_PROGRESS'" style="color: blue;">In
+											Progress</td>
+										<td th:case="*" style="color: blue;"
+											th:text="${tranMonitoring.tran_status}"></td>
+
+									</th:block>
+
+									<td th:text="${tranMonitoring.reason}"></td>
+
+									<td th:text="${tranMonitoring.sequence_unique_id}"></td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" th:if="${formmode}=='BOMUnmatched'">
+
+
+
+			<div class="card-header">
+				<div class="float-left">
+					<h6 style="color: white;">UnReconciled Transaction</h6>
+				</div>
+
+
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div style="background: lightgrey">
+
+						<table class="table table-striped table-bordered table-hover "
+							id="usertable">
+							<thead class="thead-light">
+								<tr>
+									<th>Tran Date</th>
+									<th>Value Date</th>
+									<th>Msg Type</th>
+									<th>Tran Type</th>
+									<th>Account Number</th>
+									<th>Account Name</th>
+									<th>IPSX Account Number</th>
+									<th>IPSX Account Name</th>
+									<th>Tran Particular</th>
+									<th>Amount</th>
+									<th>Status</th>
+									<th>Reason</th>
+									<th>Matching Criteria</th>
+
+								</tr>
+
+							</thead>
+							<tbody>
+
+								<tr class="userlist">
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer text-center">
+
+			<button type="button" class="btn btn-primary btn-sm" id="btnHome"
+				onclick="home();">Home</button>
+
+			<button th:if="${formmode}=='Main'" type="button"
+				class="btn btn-primary btn-sm" id="btnBack" onclick="home();">Back</button>
+
+			<button th:if="${formmode}!='Main'" type="button"
+				class="btn btn-primary btn-sm" id="btnBack" onclick="back(this);">Back</button>
+
+		</div>
+
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+
+
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

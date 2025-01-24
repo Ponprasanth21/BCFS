@@ -1,0 +1,906 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+
+<style>
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: normal;
+}
+
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+input[type="text"] {
+	line-height: 15px;
+	font-size: small;
+	height: 25px;
+}
+
+.dataTables_empty {
+	color: #be3232;
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+</head>
+
+
+<script th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+
+		$(document).ready(function() {
+			var formode = $("#formmode1").val();
+			if (formode == "view") {
+				$('input').attr('readonly', true);
+			} else if (formode == "verify") {
+				$('input').attr('readonly', true);
+			}
+
+		});
+
+	});
+
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function fnClick(a) {
+		var merchantCode = a.getAttribute("data-merchantCode")
+		var menAcctNumber = a.getAttribute("data-menAcctNumber")
+		var formmode = a.getAttribute("data-formmode")
+
+		location.href = 'Merchant?formmode=' + formmode + '&merchantCode='
+				+ merchantCode + '&menAcctNumber=' + menAcctNumber;
+	}
+
+	function addMerchant(a) {
+		location.href = 'Merchant?formmode=add';
+	}
+	
+	function addFees(a) {
+		location.href = 'MerchantFee?formmode=list';
+	}
+
+	function list() {
+		location.href = 'MerchantCategoryCode';
+	}
+
+	function submitform() {
+
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./createMerchant?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	function editsubmitform() {
+
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./editMerchant?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+	function deleteform(a) {
+
+		$("#datadelete").modal("toggle");
+
+	}
+
+	function submitformdelete(a) {
+
+		$("#datadelete").hide();
+		if ($("#merchantProfile").valid()) {
+			$("#loader1").modal("toggle");
+			var formmode = /*[[${formmode}]]*/null;
+
+			var url = "./deleteMandate?formmode=" + formmode;
+
+			$("#merchantProfile").attr('action', url);
+
+			var options = {
+				success : showResponse
+			};
+
+			$("#merchantProfile").ajaxSubmit(options);
+
+			function showResponse(responseText, statusText, xhr, $form) {
+				$("#loader1").hide();
+				$("#alertmsg").text(responseText);
+
+				$('#alert').modal("toggle");
+
+			}
+			;
+
+		}
+
+	};
+
+	/*]]>*/
+</script>
+
+<script>
+	$(document).ready(function() {
+		$('#usertable').DataTable({
+			"destroy" : true,
+			"scrollCollapse" : false,
+			"paging" : false,
+			"autoWidth" : true,
+			"ordering" : true,
+			"searching" : false,
+			"bInfo" : false,
+			"lengthChange" : false,
+		});
+	});
+
+	function fnClickview(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=view&userid=' + userid
+	}
+
+	function fnClickCancel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=cancel&userid=' + userid
+	}
+
+	function fnClickviewnew(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=viewnew&userid=' + userid
+	}
+	function fnClickdel(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=delete&userid=' + userid
+	}
+
+	function fnClickVerify(a) {
+		var userid = a.getAttribute("data-userid")
+		location.href = 'UserProfile?formmode=verify&userid=' + userid
+	}
+
+
+	
+	function home() {
+		location.href = '/IPSAdmin/IPSDashboard'
+	}
+
+	function back() {
+		window.history.back();
+	}
+
+	function finuser(a) {
+
+		var Mandate_ref_no = a.getAttribute("data-mand_ref_no")
+		$
+				.ajax({
+
+					type : 'get',
+					url : "./getBlobImage/" + Mandate_ref_no,
+					success : function(response) {
+						$('#imageshow').modal('show');
+						document.getElementById("doc_image").src = "data:image/png;base64,"
+								+ response;
+
+					}
+
+				});
+
+	}
+	////Bulk Transaction submission 
+	function submitUploadForm(a) {
+		//alert("INSIDE");
+		var validate = true;
+		$('#my_table').find('tr input[type=text]').each(function() {
+			//  	alert("true");
+			if ($(this).val() == "") {
+				//	alert("false");
+				validate = false;
+			}
+		});
+
+		if (validate) {
+			//alert("validate"+validate);
+			if ($("#MandateUpload").valid()) {
+
+				var formmode = a.getAttribute("data-formmode");
+				var url = "./mandateUpload?formmode=" + formmode;
+				//    alert(url);
+				$("#MandateUpload").attr('action', url);
+
+				var options = {
+					success : showResponse
+				};
+
+				$("#MandateUpload").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					//	alert("responseText"+responseText);
+					if (responseText.tranID == "0") {
+						$("#errormsg").text(responseText.status);
+						$('#error').modal("toggle");
+					} else {
+						$("#alertmsg").text(responseText.status);
+
+						$('#alert').modal("toggle");
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+
+	};
+
+	////Upload Document
+	function fire_ajax_submit() {
+		$('#fileupload').hide();
+		//$("#loader1").modal("toggle");
+
+		var form = $('#fileUploadForm')[0];
+		var data = new FormData(form);
+		var trHTML = '';
+		$('#my_tabletr').empty();
+
+		$
+				.ajax({
+					type : "POST",
+					enctype : 'multipart/form-data',
+					url : "ws/fileUploadMandate",
+					data : data,
+					processData : false, //prevent jQuery from automatically transforming the data into a query string
+					contentType : false,
+					cache : false,
+					timeout : 600000,
+					success : function(list) {
+
+						$
+								.each(
+										list,
+										function(KEY, data) {
+											trHTML += "<tr id='trBody'>"
+													+ '<td><input type="text" name="merchant_code" id="mand_account_no1"' + data.merchant_code  + '" class="form-control" value="' + data.merchant_code + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_name" id="mand_account_name1' + data.mand_account_name  + '" class="form-control" value="' + data.mand_account_name + '" readonly/></td>'
+													+ '<td><input type="text" name="periodicity" id="periodicity1' + data.periodicity  + '" class="form-control" value="' + data.periodicity + '" readonly/></td>'
+													+ '<td><input type="text" name="mand_account_type" id="mand_account_type1'   + data.mand_account_type  + '" class="form-control" value="' + data.mand_account_type + '" required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_no" id="ben_account_no'   + data.ben_account_no  + '" class="form-control" value="' + data.ben_account_no + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_account_name" id="ben_account_name1'   + data.ben_account_name  + '" class="form-control" value="' + data.ben_account_name + '"  required readonly/></td>'
+													+ '<td><input type="text" name="ben_bank_name" id="ben_bank_name1'   + data.ben_bank_name  + '" class="form-control" value="' + data.ben_bank_name + '" required readonly/></td>'
+													+ '<td><input type="text" name="mand_cust_ref_no" id="mand_cust_ref_no1'   + data.mand_cust_ref_no  + '" class="form-control" value="' + data.mand_cust_ref_no + '" readonly/></td>'
+													+ '<td><input type="text" name="purpose" id="purpose1'   + data.purpose  + '" class="form-control" value="' + data.purpose + '"readonly/></td>'
+													+ '<td><input type="text" name="remarks" id="remarks1' + data.remarks  + '" class="form-control" value="' + data.remarks + '"readonly/></td>'
+													+ '<td><input type="text" name="mand_bank_code" id="mand_bank_code1' + data.mand_bank_code  + '" class="form-control" value="' + data.mand_bank_code + '"readonly/></td>'
+													+ '</tr>';
+
+										});
+
+						$('#my_table').append(trHTML);
+						//$("#loader1").hide();
+
+						return data;
+					},
+					error : function(e) {
+						//$("#loader1").hide();
+						$("#invalidfilemsg").text(e.responseText);
+						$("#invalidfile").modal("toggle");
+
+					}
+				});
+	}
+	$(function() {
+		$("#st_date").datepicker({
+			minDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#ed_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+	$(function() {
+		$("#start_date").datepicker({
+			maxDate : 0,
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = $(this).datepicker('getDate');
+				dt.setDate(dt.getDate());
+				$("#end_date").datepicker("option", "minDate", dt);
+
+			}
+		});
+
+	});
+
+	$(function() {
+		$("#end_date").datepicker({
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+		});
+
+	});
+	$(function() {
+		$("#ed_date1").datepicker({
+
+			changeMonth : true,
+			changeYear : true,
+			minDate : 0,
+			dateFormat : "dd-mm-yy",
+			onSelect : function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate() - 1);
+				//$("#period_start_date").datepicker("option", "maxDate", dt);
+			}
+
+		});
+
+	});
+	
+	$(function(){
+		  $('input[type="radio"]').click(function(){
+		    if ($(this).is(':checked'))
+		    {
+		    	if($(this).val()=='Variable'){
+		    		//alert("ok");
+		    		document.getElementById('minVarAmountIdLabel').style.display="block";
+		    		document.getElementById('maxVarAmountIdLabel').style.display="block";
+		    		document.getElementById('min_amountDiv').style.display="block";
+		    		document.getElementById('max_amountDiv').style.display="block";
+		    	}else if($(this).val()=='Fixed'){
+		    		//alert("not");
+		    		document.getElementById('minVarAmountIdLabel').style.display="none";
+		    		document.getElementById('maxVarAmountIdLabel').style.display="none";
+		    		document.getElementById('min_amountDiv').style.display="none";
+		    		document.getElementById('max_amountDiv').style.display="none";
+		    	}
+		      //alert();
+		    }
+		  });
+		});
+	function fnadd() {
+		$("#addedit").modal("toggle");
+		$("#formmode").val("add");
+		$("#btnSubmit").attr("onclick", "submitaddform()");
+		 
+
+	}
+	function fnedit(a){
+		var ref = a.getAttribute("data-merchantCode");
+		var refdesc = a.getAttribute("data-merchantdesc");
+		
+		$("#merchant_code").val(ref);
+		$("#merchant_desc").val(refdesc);
+		$("#formmode").val("edit");
+		$("#addedit").modal("toggle");
+		$("#btnSubmit").attr("onclick", "submitaddform()");
+		
+	}
+	function fndelete(a){
+		var ref = a.getAttribute("data-merchantCode");
+		var refdesc = a.getAttribute("data-merchantdesc");
+		alert(ref);
+		$("#merchant_code1").val(ref);
+		$("#merchant_desc1").val(refdesc);
+		$("#formmode1").val("delete");
+		$("#delete").modal("toggle");
+		$("#btnSubmit1").attr("onclick", "submitdeleteform()");
+		
+	}
+	
+	function submitaddform(){
+		$("#addedit").hide();
+		$("#loader1").modal("toggle");
+	var ref= $("#merchant_code").val();
+	var refdesc=$("#merchant_desc").val();
+	var formmode =$("#formmode").val();
+	
+	var url = "./createmerchantcategory?formmode=" + formmode + "&refcode="+ref + "&refdesc="+refdesc;
+	$.ajax({
+		type : 'post',
+		url : url,
+
+		success : function(response) {
+			$("#loader1").hide();
+			$("#alertmsg").text(response);
+			$('#alert').modal("toggle");
+		}})
+	
+	;
+	}
+	function submitdeleteform(){
+		$("#delete").hide();
+		$("#loader1").modal("toggle");
+	var ref= $("#merchant_code1").val();
+	var refdesc=$("#merchant_desc1").val();
+	var formmode =$("#formmode1").val();
+	
+	var url = "./createmerchantcategory?formmode=" + formmode + "&refcode="+ref + "&refdesc="+refdesc;
+	$.ajax({
+		type : 'post',
+		url : url,
+
+		success : function(response) {
+			$("#loader1").hide();
+			$("#alertmsg").text(response);
+			$('#alert').modal("toggle");
+		}})
+	
+	;
+	}
+</script>
+
+</head>
+<title>IPSAdmin</title>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card">
+						<div class="card-header" style="background-color: #3e6369b5;">
+							<div class="float-left">
+								<h6 style="color: white;">Merchant Category Code</h6>
+							</div>
+						</div>
+						<!-- <div class="card-body"> -->
+						<div>
+							<table
+								class="table  table-bordered table-hover table-condensed table-sm">
+								<thead class="thead-light">
+									<tr>
+
+										<th colspan="2" th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'"><a href="#" data-toggle="tooltip" 
+											class="editrec" title="Click to add new Records"><i
+												class="fa fa-plus-circle" 
+												id="addIcon" onclick="fnadd();" aria-hidden="true"></i></a></th>
+										<th style="text-align: center;">Reference Code</th>
+										<th style="text-align: center;">Description</th>
+										
+									</tr>
+								</thead>
+								<tbody id="refcodeconfig">
+								
+								<tr style="font-size: smaller"
+									th:each="merchantProfile : ${merchantcategory}" class="userlist">
+<td th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'"><a href='#' data-toggle='tooltip' class='editrec' th:attr="data-merchantCode=${merchantProfile.merchant_code},data-merchantdesc=${merchantProfile.merchant_desc}" onclick="fnedit(this);" ><i  class='fa fa-edit' ></i></a></td>
+<td th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'"><a href='#' data-toggle='tooltip' class='editrec' th:attr="data-merchantCode=${merchantProfile.merchant_code},data-merchantdesc=${merchantProfile.merchant_desc}" onclick="fndelete(this);" ><i class='fa fa-minus-circle' ></i></a></td>
+									<td th:text="${merchantProfile.merchant_code}"></td>
+									<td th:text="${merchantProfile.merchant_desc}"></td>
+								 </tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="card-footer text-center">
+							<button type="button" class="btn btn-xs btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-xs btn-primary" id="btnBack"
+								onclick="home();">Back</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!---------------------User List Ends--------------------------------------------------------->
+
+
+	
+
+	
+
+	 
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="error">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="errormsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="invalidfile">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="menu-title-header">
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+				</div>
+				<div class="modal-body"
+					style="text-align: center; background-color: #c6ccd2">
+					<p id="invalidfilemsg"></p>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imageshow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="width: 1042px;">
+				<div class="modal-body" style="text-align: center">
+
+					<br /> <br /> <img class="img-responsive" id="doc_image"
+						style="max-height: 500px;">
+				</div>
+				<button type="button" class="btn btn-xs btn-primary"
+					data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- -----------------------------------Details edit modal form----------------------------------------------------->
+	<div class="modal fade" id="addedit" >
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Add/Edit Records</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<form th:object=${merchantcategory} id="dataedit" method="post">
+						<input type="hidden" id="trClass" />
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-6" for="refcode">Reference Code</label> <input
+									class="form-control col-sm-5" type="text" 
+									id="merchant_code" />
+							</div>
+							<div class="row">
+								<label class="col-sm-6" for="refCodeDesc">Ref Code Type</label>
+								<input class="form-control col-sm-5" type="text"
+									 id="merchant_desc" />
+								<input type="hidden" id ="formmode" >
+							</div>
+							
+
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<span id="errorMsg" style="display: none;"></span>
+					<button type="button" class="btn btn-primary" id="btnSubmit"
+						onclick="submitdataform();">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-------------------------------------Details edit modal form----------------------------------------------------->
+	<div class="modal fade" id="delete" >
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Delete Record</h4>
+					<button type="button" class="close" data-dismiss="modal">×</button>
+				</div>
+				<div class="modal-body" style="text-align: center">
+					<form th:object=${merchantcategory} id="dataedit" method="post">
+						<input type="hidden" id="trClass" />
+						<div class="form-group">
+							<div class="row">
+								<label class="col-sm-6" for="refcode">Reference Code</label> <input
+									class="form-control col-sm-5" type="text" 
+									id="merchant_code1" required/>
+							</div>
+							<div class="row">
+								<label class="col-sm-6" for="refCodeDesc">Ref Code Type</label>
+								<input class="form-control col-sm-5" type="text"
+									 id="merchant_desc1" required/>
+								<input type="hidden" id ="formmode1" >
+							</div>
+							
+
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<span id="errorMsg" style="display: none;"></span>
+					<button type="button" class="btn btn-primary" id="btnSubmit1"
+						onclick="submitdataform();">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alert">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">CIM</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="alertmsg"></p>
+						<button type="button" class="btn btn-primary" onclick="list();">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+

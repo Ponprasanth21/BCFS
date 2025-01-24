@@ -1,0 +1,529 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+<style>
+
+.container-manager{
+	width: 83.5%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 17.3%;
+    
+    margin-top: 80px;
+}
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+ .dataTables_empty{
+
+    color: #be3232;
+
+
+}
+button {
+	background-color: #616c77;
+	color: white;
+	padding: 16px 20px;
+	border: none;
+	cursor: pointer;
+	opacity: 0.8;
+	bottom: 23px;
+	right: 28px;
+	width: 150px;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color:#2e455d;
+	color: white;
+}
+
+
+
+.container-fluid {width: 83.5%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 17.5%;
+    margin-top: -52px;
+}
+select {
+	width: 150px;
+	margin: 10px;
+}
+td {
+background-color:#f8f7ff;
+
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+#hidden_div {
+	display: none;
+}
+table th {
+    color: white;
+    background-color:#2e455deb;
+    }
+/* #select{
+	display: none;
+} */
+/* #initially {
+    display: none;
+} */
+</style>
+</head>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+		
+	function showDiv(select) {
+		
+		if (select.value == "Select Period") {
+		   document.getElementById('Fromvalue').style.display = null;
+			document.getElementById('Tovalue').style.display = null;
+			document.getElementById('select').style.display = null;
+			
+		} else if (select.value == "Last One Week") {
+			document.getElementById('Fromvalue').style.display = "none";
+			document.getElementById('Tovalue').style.display = "none";
+			document.getElementById('select').style.display = "none";
+			var Acc_num = $('#acc_num').val();
+			var d = new Date();
+			var fromDate = (d.getFullYear()) + "-" + (d.getMonth()+1) + "-"
+					+ (d.getDate()-7);
+			var toDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ d.getDate();
+
+			if (Acc_num == "") {
+				alert("enter a valid account number");
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+
+			} else {
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + Acc_num + "/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+			}
+			
+		}  else if (select.value == "Last One Month") {
+			document.getElementById('Fromvalue').style.display = "none";
+			document.getElementById('Tovalue').style.display = "none";
+			document.getElementById('select').style.display = "none";
+			var Acc_num = $('#acc_num').val();
+			var d = new Date();
+			var fromDate = (d.getFullYear()) + "-" + (d.getMonth()) + "-"
+					+ d.getDate();
+			var toDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ d.getDate();
+
+			if (Acc_num == "") {
+				alert("enter a valid account number");
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+
+			} else {
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + Acc_num + "/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+			}
+			
+
+		}else if (select.value == "Last One Quarter") {
+			document.getElementById('Fromvalue').style.display = "none";
+			document.getElementById('Tovalue').style.display = "none";
+			document.getElementById('select').style.display = "none";
+			var Acc_num = $('#acc_num').val();
+			var d = new Date();
+			var fromDate = (d.getFullYear()) + "-" + (d.getMonth()-2) + "-"
+					+ d.getDate();
+			var toDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ d.getDate();
+			
+
+			if (Acc_num == "") {
+				alert("enter a valid account number");
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/"  + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+
+			} else {
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + Acc_num + "/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+			}
+			
+
+		}else if (select.value == "Last One Year") {
+			document.getElementById('Fromvalue').style.display = "none";
+			document.getElementById('Tovalue').style.display = "none";
+			document.getElementById('select').style.display = "none";
+			var Acc_num = $('#acc_num').val();
+			var d = new Date();
+			var fromDate = (d.getFullYear()-1) + "-" + (d.getMonth()+1) + "-"
+					+ d.getDate();
+			var toDate = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ d.getDate();
+			
+
+			if (Acc_num == "") {
+				alert("enter a valid account number");
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+
+			} else {
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + Acc_num + "/" + fromDate + "/"
+							+ toDate,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+			}
+			
+
+		}else if (select.value == "Last 10 Transactions") {
+			document.getElementById('Fromvalue').style.display = "none";
+			document.getElementById('Tovalue').style.display = "none";
+			document.getElementById('select').style.display = "none";
+			var Acc_num = $('#acc_num').val();
+			
+
+			if (Acc_num == "") {
+				alert("enter a valid account number");
+			
+
+			} else {
+				$('#transac').empty();
+				$.ajax({
+					type : "GET",
+					url : "./getTransaction/" + Acc_num ,
+
+					success : function(response) {
+
+						var selectedRefCode = response;
+						var trHTML = '';
+
+						$.each(response, function(key, value) {
+							trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+									+ value.tran_amt + '</td><td>'
+									+ value.tran_status + '</td><td>'
+									+ value.tran_report_code + '</td><td>'
+									+ value.part_tran_id + '</td></tr>';
+						});
+						$('#TransactionDetails').append(trHTML);
+					}
+				});
+			}
+			
+
+		}
+	}
+	function submit() {
+
+		var Acc_num = $('#acc_num').val();
+		var fromDate = $('#Fromvalue').val();
+		var toDate = $('#Tovalue').val();
+		var d = new Date();
+		var currDate = (d.getFullYear()) + "-" + (d.getMonth()+1) + "-"
+				+ (d.getDate());
+		
+
+		if (Acc_num == "") {
+			alert("enter a valid account number");
+			$('#transac').empty();
+			$.ajax({
+				type : "GET",
+				url : "./getTransaction/" + fromDate + "/" + toDate+ "/" + currDate,
+
+				success : function(response) {
+
+					var selectedRefCode = response;
+					var trHTML = '';
+
+					$.each(response, function(key, value) {
+						trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+								+ value.tran_amt + '</td><td>'
+								+ value.tran_status + '</td><td>'
+								+ value.tran_report_code + '</td><td>'
+								+ value.part_tran_id + '</td></tr>';
+					});
+					$('#TransactionDetails').append(trHTML);
+				}
+			});
+
+		} else {
+
+			$('#transac').empty();
+			$.ajax({
+				type : "GET",
+				url : "./getTransactionFrom/" + Acc_num + "/" + fromDate + "/" + toDate+ "/" + currDate,
+
+				success : function(response) {
+
+					var selectedRefCode = response;
+					var trHTML = '';
+
+					$.each(response, function(key, value) {
+						trHTML += '<tr><td>' + value.acct_num + '</td><td>'
+								+ value.tran_amt + '</td><td>'
+								+ value.tran_status + '</td><td>'
+								+ value.tran_report_code + '</td><td>'
+								+ value.part_tran_id + '</td></tr>';
+					});
+					$('#TransactionDetails').append(trHTML);
+				}
+			});
+		}
+	}
+
+	
+/*<![CDATA[*/
+</script>
+<body>
+<div th:insert="Mmenupage :: header"></div>
+	<div class="container-manager">
+		<h3 class="text-center pagebut">Transaction Inquiry</h3>
+	
+	<div class="container" style="padding-left: 30px" align="center">
+	<div>
+		<label  style="font-size: 20px">Account Number</label>
+		<input type="text" id="acc_num"> 
+		<select	id="type" class="col-sm-2 " name="typename" onchange="showDiv(this)">
+			<option value="Select">Select</option>
+			<option value="Last 10 Transactions">Last 10 Transactions</option>
+			<option value="Last One Week">Last One Week</option>
+			<option value="Last One Month">Last One Month</option>
+			<option value="Last One Quarter">Last One Quarter</option>
+			<option value="Last One Year">Last One Year</option>
+			<option value="Select Period">Select Period</option>
+		</select>
+		<input  type="date" style="display: none;" id="Fromvalue" placeholder="Date"  onfocus="(this.type='date')" onblur="(this.type='date')" min="2017-05-11" max="2020-01-01"> 
+		<input type="date" style="display: none;" id="Tovalue"  min="2018-05-11" max="2020-01-01" > 
+		</div>
+		
+		<!-- <div  id="hidden_div" style="display: none; padding-left: 30px">
+			<input  type="date" id="Fromvalue" placeholder="Date"  onfocus="(this.type='date')" onblur="(this.type='date')" min="2017-05-11" max="2020-01-01"> 
+			<input type="date" id="Tovalue"  min="2018-05-11" max="2020-01-01" > 
+		</div> -->
+		<div  id="select" style="display: none; padding-left: 30px">
+		<input type="button" id="button" onclick="submit()" value="SUBMIT">
+		</div>
+</div>
+	<div class="container" style="padding-left: 30px" align="center">
+		<h1 align="center">Transaction Details</h1>
+
+		<table class="table table-hover" id="TransactionDetails">
+			<thead>
+				<tr>
+					<th>Account Number</th>
+					<th>Transaction Amount</th>
+					<th>Transaction Status</th>
+					<th>Transaction Code</th>
+					<th>Part Tran ID</th>
+				</tr>
+			</thead>
+			<tbody id="transac">
+			</tbody>
+		</table>
+	</div>
+</div>
+</body>
+</html>
+
