@@ -4324,5 +4324,23 @@ System.out.println(date+"vishnu");
 		}
 		return "SwiftFolder";
 	}
+	
+//	@RequestParam(required = false) String merchant_acct_no,
+//	@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+//	@RequestParam(value = "size", required = false) Optional<Integer> size,
+//	@RequestParam(value = "refNo", required = false) String ref_Num,
+
+//	@ModelAttribute MerchantCategoryCodeEntity bankAgentTable,
+	@RequestMapping(value = "FolderConfiguration")
+	public String FolderConfiguration(
+			@RequestParam(value = "formmode", required = false) String formmode, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
+
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+
+	
+		return "FolderConfiguration";
+	}
 
 }

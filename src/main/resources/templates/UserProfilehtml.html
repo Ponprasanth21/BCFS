@@ -249,44 +249,41 @@ table td {
 keyframes sp-anime { 100% {
 	transform: rotate(360deg);
 }
-}
 
+}
 .force-scroll {
-
-overflow-y: scroll;
-
-height: 54px;
-
+	overflow-y: scroll;
+	height: 54px;
 }
 
-.dataTables_scrollBody{
-    position: relative;
-    overflow: auto;
-    max-height: 439px;
-    width: 100%;
-    min-height: 146px;
+.dataTables_scrollBody {
+	position: relative;
+	overflow: auto;
+	max-height: 439px;
+	width: 100%;
+	min-height: 146px;
 }
 
 .input-container input {
-    border: none;
-    box-sizing: border-box;
-    outline: 0;
-    padding: .75rem;
-    position: relative;
-    width: 100%;
+	border: none;
+	box-sizing: border-box;
+	outline: 0;
+	padding: .75rem;
+	position: relative;
+	width: 100%;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    background: transparent;
-    bottom: 0;
-    color: transparent;
-    cursor: pointer;
-    height: auto;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: auto;
+	background: transparent;
+	bottom: 0;
+	color: transparent;
+	cursor: pointer;
+	height: auto;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: auto;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -515,29 +512,27 @@ jQuery(function($){
 			}
 
 		});
-		
-		$(function(){
-		    var dtToday = new Date();
-		    
-		    var month = dtToday.getMonth() + 1;
-		    var day = dtToday.getDate();
-		    var year = dtToday.getFullYear();
-		    if(month < 10)
-		        month = '0' + month.toString();
-		    if(day < 10)
-		        day = '0' + day.toString();
-		    
-		    var maxDate = year + '-' + month + '-' + day;
 
-		    // or instead:
-		    // var maxDate = dtToday.toISOString().substr(0, 10);
+		$(function() {
+			var dtToday = new Date();
 
-		    
-		    $('#disableDate').attr('min', maxDate);
-		    $('#disableenddate').attr('min', maxDate);
-		    $('#expiryDate').attr('min', maxDate);
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate();
+			var year = dtToday.getFullYear();
+			if (month < 10)
+				month = '0' + month.toString();
+			if (day < 10)
+				day = '0' + day.toString();
+
+			var maxDate = year + '-' + month + '-' + day;
+
+			// or instead:
+			// var maxDate = dtToday.toISOString().substr(0, 10);
+
+			$('#disableDate').attr('min', maxDate);
+			$('#disableenddate').attr('min', maxDate);
+			$('#expiryDate').attr('min', maxDate);
 		});
-		
 
 		/*$("#disableDate").datepicker({
 			changeMonth : true,
@@ -622,10 +617,10 @@ jQuery(function($){
 		$("#bankName").val(bank_name);
 		$("#branchCode").val(br_code);
 		$("#branchName").val(br_name);
-		document.getElementById('bankCodeerror').style.display="none";
-		document.getElementById('bankNameerror').style.display="none";
-		document.getElementById('branchCodeerror').style.display="none";
-		document.getElementById('branchNameerror').style.display="none";
+		document.getElementById('bankCodeerror').style.display = "none";
+		document.getElementById('bankNameerror').style.display = "none";
+		document.getElementById('branchCodeerror').style.display = "none";
+		document.getElementById('branchNameerror').style.display = "none";
 		$("#MyModalBank").modal("hide");
 
 	}
@@ -639,9 +634,9 @@ jQuery(function($){
 	}
 
 	function Back() {
-		location.href = 'UserProfile?formmode=verify&userid='+ userid
+		location.href = 'UserProfile?formmode=verify&userid=' + userid
 	}
-	
+
 	function fnClick(a) {
 		var userid = a.getAttribute("data-userid")
 		location.href = 'UserProfile?formmode=edit&userid=' + userid
@@ -767,24 +762,21 @@ jQuery(function($){
 		});
 		 */
 		var bankCode = document.getElementById('bankCode').value;
-		 var bankName = document.getElementById('bankName').value;
-		 var branchCode = document.getElementById('branchCode').value;
-		 var branchName = document.getElementById('branchName').value;
-	
-		 
-		 if(bankCode!=null && bankCode !="" && bankName!=null && bankName !="" && branchCode!=null && branchCode !="" && branchName!=null && branchName !=""){
-		
-						 
-					 }else{
-						 document.getElementById("branchNameerror").style.display="block";
-						 document.getElementById("branchCodeerror").style.display="block";
-						 document.getElementById("bankNameerror").style.display="block";  
-						 document.getElementById("bankCodeerror").style.display="block";
-						 }
-					 
-				 
-		 
-		 
+		var bankName = document.getElementById('bankName').value;
+		var branchCode = document.getElementById('branchCode').value;
+		var branchName = document.getElementById('branchName').value;
+
+		if (bankCode != null && bankCode != "" && bankName != null
+				&& bankName != "" && branchCode != null && branchCode != ""
+				&& branchName != null && branchName != "") {
+
+		} else {
+			document.getElementById("branchNameerror").style.display = "block";
+			document.getElementById("branchCodeerror").style.display = "block";
+			document.getElementById("bankNameerror").style.display = "block";
+			document.getElementById("bankCodeerror").style.display = "block";
+		}
+
 		$.validator
 				.addMethod(
 						"regex2",
@@ -976,8 +968,6 @@ jQuery(function($){
 		$("#datacancel").modal("toggle");
 
 	}
-	
-	
 
 	function submitformcancel(a) {
 
@@ -1274,7 +1264,7 @@ jQuery(function($){
 		<div th:if="${formmode}=='list'">
 			<div class="row">
 				<div class="col-sm-12">
-					<div class="card" style = "max-height: 400px">
+					<div class="card" style="max-height: 400px">
 						<div class="card-header" style="background-color: #3e6369b5;">
 							<div class="float-left">
 								<h6 style="color: white;">User Profile</h6>
@@ -1327,60 +1317,61 @@ jQuery(function($){
 									</th:block>
 									<td>
 										<!-- #ccc6d8a3 -->
-										
+
 										<div class="dropdown ">
 											<button class="btn btn-secondary dropdown-toggle"
 												type="button" id="dropdownMenuButton" title="Action"
 												style="line-height: 0.7; font-size: 11px; color: #3a4550; background: #e3e3e4;"
 												data-toggle="dropdown" aria-haspopup="true"
 												aria-expanded="false">Action</button>
-											
+
 											<div class="dropdown-menu"
-												aria-labelledby="dropdownMenuButton" 
+												aria-labelledby="dropdownMenuButton"
 												style="line-height: 0.7; background-color: #e3e3e4;">
-												
-											<a class="dropdown-item"
+
+												<a class="dropdown-item"
 													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
 													onclick="fnClick(this);"
 													th:attr="data-userid=${userProfile.userid}"
 													th:id="${userProfile.userid}"
 													th:if="${userProfile.entity_flg}=='Y' AND ${loginuser} !=${userProfile.userid}  AND ${IPSRoleMenu.permissions}=='W'"
 													th:disabled="${loginuser} ==${userProfile.userid}">Modify</a>
-											
-											
-											<a class="dropdown-item"
+
+
+												<a class="dropdown-item"
 													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
 													onclick="fnClickVerify(this);" title="Verify"
 													th:attr="data-userid=${userProfile.userid}"
 													th:id="${userProfile.userid}"
 													th:if="${userProfile.entity_flg}=='N' AND ${IPSRoleMenu.work_class}=='C'">Verify</a>
-											
-											<div class="dropdown-divider"
+
+												<div class="dropdown-divider"
 													th:if="${userProfile.entity_flg}=='Y' AND ${loginuser} !=${userProfile.userid}  AND ${IPSRoleMenu.permissions}=='W'"
 													style="height: 2px; line-height: 0.7;"></div>
-											
-																		
+
+
 												<a class="dropdown-item" title="View"
 													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
 													th:attr="data-userid=${userProfile.userid}"
 													onclick="fnClickview(this);" th:id="${userProfile.userid}"
 													th:if="${userProfile?.entity_flg} =='Y' AND ${IPSRoleMenu.permissions}=='W'">View
 
-												</a> 
-																
-												
-													<div class="dropdown-divider"
-										th:if="${userProfile?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'"></div>
-												
-												
-												
+												</a>
+
+
+												<div class="dropdown-divider"
+													th:if="${userProfile?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'"></div>
+
+
+
 												<a class="dropdown-item" title="View"
 													style="line-height: 0.7; cursor: pointer; color: #3a4550; background: #e3e3e4; height: 16px; border-radius: .20rem; padding: 2px 10px; top: 10px;"
 													th:attr="data-userid=${userProfile.userid}"
-													onclick="fnClickviewnew(this);" th:id="${userProfile.userid}"
+													onclick="fnClickviewnew(this);"
+													th:id="${userProfile.userid}"
 													th:if="${userProfile?.entity_flg} =='N' AND ${IPSRoleMenu.permissions}=='W'">View</a>
-											
-											<div class="dropdown-divider"
+
+												<div class="dropdown-divider"
 													th:if="${userProfile.entity_flg}=='N' "
 													style="height: 2px; line-height: 0.7;"></div>
 
@@ -1390,8 +1381,8 @@ jQuery(function($){
 													onclick="fnClickCancel(this);"
 													th:id="${userProfile.userid}"
 													th:if="${userProfile.entity_flg}=='N' ">Cancel</a>
-													
-													
+
+
 
 
 												<!-- <div class="dropdown-divider"
@@ -1406,10 +1397,10 @@ jQuery(function($){
 													th:if="${userProfile.entity_flg}=='Y' and ${IPSRoleMenu.work_class}=='C' AND ${IPSRoleMenu.permissions}=='W'">Password Reset</a>
  -->
 
-											</div>	
 											</div>
-	
-											
+										</div>
+
+
 									</td>
 								</tr>
 							</tbody>
@@ -1520,9 +1511,14 @@ jQuery(function($){
 
 											<input type="text" name="bank_code" th:value="${bank_code}"
 												id="bankCode" value="" class="form-control form-control-sm"
-												maxlength="50" autocomplete="false" onpaste="return false" onkeydown="return false"/>
-											<h6>	<p id="bankCodeerror" style="color: red; font-size:14px ;display: none;"> This field is required. </p></h6>
-																						</div>
+												maxlength="50" autocomplete="false" onpaste="return false"
+												onkeydown="return false" />
+											<h6>
+												<p id="bankCodeerror"
+													style="color: red; font-size: 14px; display: none;">
+													This field is required.</p>
+											</h6>
+										</div>
 
 
 										<div class="col-sm-3"
@@ -1545,8 +1541,13 @@ jQuery(function($){
 										<div th:if="${formmode}=='add'" class="col-sm-3">
 											<input type="text" name="bank_name" th:value="${bank_name}"
 												id="bankName" value="" class="form-control form-control-sm"
-												maxlength="100" autocomplete="false" onpaste="return false" onkeydown="return false"/>
-												<h6><p id="bankNameerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+												maxlength="100" autocomplete="false" onpaste="return false"
+												onkeydown="return false" />
+											<h6>
+												<p id="bankNameerror"
+													style="color: red; font-size: 14px; display: none;">
+													This field is required.</p>
+											</h6>
 										</div>
 										<div class="col-sm-3"
 											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
@@ -1569,8 +1570,13 @@ jQuery(function($){
 											<input type="text" name="branch_code"
 												th:value="${branch_code}" id="branchCode" value=""
 												class="form-control form-control-sm" autocomplete="off"
-												maxlength="50" onpaste="return false" onkeydown="return false"/>
-												<h6> <p id="branchCodeerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+												maxlength="50" onpaste="return false"
+												onkeydown="return false" />
+											<h6>
+												<p id="branchCodeerror"
+													style="color: red; font-size: 14px; display: none;">
+													This field is required.</p>
+											</h6>
 
 										</div>
 										<div class="col-sm-3"
@@ -1588,8 +1594,13 @@ jQuery(function($){
 										<div th:if="${formmode}=='add'" class="col-sm-3">
 											<input type="text" name="branch_name" id="branchName"
 												value="" class="form-control form-control-sm"
-												maxlength="100" autocomplete="off" onpaste="return false" onkeydown="return false">
-												<h6> <p id="branchNameerror" style="color: red; font-size:14px ; display: none;"> This field is required. </p> </h6>
+												maxlength="100" autocomplete="off" onpaste="return false"
+												onkeydown="return false">
+											<h6>
+												<p id="branchNameerror"
+													style="color: red; font-size: 14px; display: none;">
+													This field is required.</p>
+											</h6>
 										</div>
 										<div class="col-sm-3"
 											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete'OR ${formmode}=='cancel'">
@@ -1705,7 +1716,6 @@ jQuery(function($){
 											<input type="time" name="login_low"
 												th:value="${userProfile?.login_low}" id="loginLow" value=""
 												class="form-control form-control-sm" autocomplete="off"
-												
 												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel' OR ${formmode}=='verify' " />
 										</div>
 
@@ -1733,18 +1743,17 @@ jQuery(function($){
 									<div class="row formline">
 
 										<label class="col-sm-2">User Disable Date</label>
-										
+
 										<div th:if="${formmode}=='add'" class="col-sm-3">
-											<input type="date" name="disable_start_date" 
-												max = "2050-12-12" onkeydown="return false"
-												id="disableDate" value=""
-												class="form-control form-control-sm"  required  />
+											<input type="date" name="disable_start_date" max="2050-12-12"
+												onkeydown="return false" id="disableDate" value=""
+												class="form-control form-control-sm" required />
 										</div>
 										<div class="col-sm-3"
 											th:if="${formmode}=='edit' OR ${formmode}=='verify' OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'">
 											<input type="text" name="disable_start_date"
 												th:value="${#dates.format(userProfile?.disable_start_date, 'yyyy-MM-dd')}"
-												 value="" onkeydown="return false"
+												value="" onkeydown="return false"
 												class="form-control form-control-sm" autocomplete="off"
 												th:readonly=" ${formmode}=='verify' OR ${formmode}=='cancel'OR ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='delete' OR ${formmode}=='cancel'"
 												readonly />
@@ -1755,9 +1764,10 @@ jQuery(function($){
 										<label class="col-sm-2">User Disable Till Date</label>
 										<div class="col-sm-3" th:if="${formmode}=='add'">
 											<input type="date" name="disable_end_date"
-												id="disableenddate" value="" max = "2050-12-12" onkeydown="return false"
+												id="disableenddate" value="" max="2050-12-12"
+												onkeydown="return false"
 												class="form-control form-control-sm" autocomplete="off"
-												 required />
+												required />
 										</div>
 
 										<div class="col-sm-3"
@@ -1891,8 +1901,9 @@ jQuery(function($){
 
 										<label class="col-sm-2">Account Expiry Date</label>
 										<div class="col-sm-3" th:if="${formmode}=='add'">
-											<input type="date" name="acc_exp_date" id="expiryDate" max = "2050-12-12" onkeydown="return false"
-												value="" class="form-control form-control-sm"   required />
+											<input type="date" name="acc_exp_date" id="expiryDate"
+												max="2050-12-12" onkeydown="return false" value=""
+												class="form-control form-control-sm" required />
 										</div>
 
 										<div class="col-sm-3"
@@ -1900,7 +1911,7 @@ jQuery(function($){
 
 											<input type="text" name="acc_exp_date" readonly='true'
 												th:value="${#dates.format(userProfile?.acc_exp_date, 'yyyy-MM-dd')}"
-												 value="" onkeydown="return false"
+												value="" onkeydown="return false"
 												class="form-control form-control-sm" required
 												th:readonly="${userProfile?.entity_flg=='N'} OR ${formmode}=='view'OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='add' OR ${formmode}=='edit' OR ${formmode}=='delete' OR ${formmode}=='cancel'" />
 										</div>
@@ -1949,18 +1960,18 @@ jQuery(function($){
 
 										</div>
 										<div class="col-sm-3" th:if="${formmode}=='add'">
-										<select name="role_id" th:value="${role_id}" id="roleId"
+											<select name="role_id" th:value="${role_id}" id="roleId"
 												class="form-control form-control-sm" onchange="roledesc();"
 												autocomplete="off" required>
-												
+
 												<option value="">SELECT</option>
 												<option id="role_id"
 													th:each="monitoringparam : ${RuleIDType}"
 													th:value="${monitoringparam}" th:text="${monitoringparam}"></option>
-													</select>
-													</div>
-													<div class="col-sm-3" th:if="${formmode}=='edit'">
-													<select th:field="*{role_id}" name="role_id"
+											</select>
+										</div>
+										<div class="col-sm-3" th:if="${formmode}=='edit'">
+											<select th:field="*{role_id}" name="role_id"
 												th:value="${userProfile?.role_id}" id="roleId"
 												class="form-control form-control-sm" onchange="roledesc();"
 												autocomplete="off">
@@ -1968,25 +1979,23 @@ jQuery(function($){
 												<option id="role_id"
 													th:each="monitoringparam : ${RuleIDType}"
 													th:value="${monitoringparam}" th:text="${monitoringparam}"></option>
-													</select>
+											</select>
 										</div>
-										
-							
-										
+
+
+
 										<div class="col-sm-1"></div>
 										<label class="col-sm-2">Role Description</label>
-										<div th:if="${formmode}=='add'"
-											class="col-sm-3">
+										<div th:if="${formmode}=='add'" class="col-sm-3">
 											<input type="text" name="role_desc" th:value="${role_desc}"
 												id="roleDesc" value="" class="form-control form-control-sm" />
 										</div>
-										<div th:if="${formmode}=='edit'"
-											class="col-sm-3">
+										<div th:if="${formmode}=='edit'" class="col-sm-3">
 											<input type="text" name="role_desc"
 												th:value="${userProfile?.role_desc}" id="roleDesc1" value=""
-												class="form-control form-control-sm"  />
-												</div>
-										
+												class="form-control form-control-sm" />
+										</div>
+
 										<div
 											th:if=" ${formmode}=='view' OR ${formmode}=='viewnew' OR ${formmode}=='verify' OR ${formmode}=='delete' OR ${formmode}=='cancel'"
 											class="col-sm-3">
@@ -2051,8 +2060,10 @@ jQuery(function($){
 										</div>
 										<div th:if="${formmode}=='edit'" class="col-sm-3">
 
-											<select name="country_code" id="country_code" th:value="${userProfile?.country_code}"
-												th:field="*{country_code}" class="form-control form-control-sm">
+											<select name="country_code" id="country_code"
+												th:value="${userProfile?.country_code}"
+												th:field="*{country_code}"
+												class="form-control form-control-sm">
 												<option value="">Select</option>
 												<option th:selected="${userProfile?.country_code}=='BWA'"
 													value="BWA">Botswana</option>
@@ -2074,8 +2085,7 @@ jQuery(function($){
 									<div class="row formline"
 										th:if=" ${formmode}=='viewnew' or ${formmode}=='verify' or ${formmode}=='view' or ${formmode}=='cancel'">
 										<label class="col-sm-2">Country Code</label>
-										<div
-											class="col-sm-3">
+										<div class="col-sm-3">
 											<input type="text" name="country_code"
 												th:value="${userProfile?.country_code}" id="country_code"
 												value="" class="form-control form-control-sm" readonly />
@@ -2171,7 +2181,7 @@ jQuery(function($){
 									type="button" class="btn btn-xs btn-primary"
 									th:attr="data-formmode=${formmode},data-del=${del_flg}"
 									onclick="cancelform(this);" id="btnModify">Cancel</button>
-									
+
 								<button th:if=" ${formmode}=='add'" type="button"
 									class="btn btn-xs btn-primary" form="userProfile"
 									id="btnSubmit" onclick="submitform(this);"
@@ -2381,7 +2391,7 @@ jQuery(function($){
 			</div>
 		</div>
 	</div>
-	
+
 
 
 	<div class="modal fade" id="loader1" data-backdrop="static"
@@ -2502,6 +2512,6 @@ jQuery(function($){
 		</div>
 	</div>
 
-	
+
 </body>
 </html>
