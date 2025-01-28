@@ -427,7 +427,7 @@ public class FileUploaderController {
 		return Ref;
 	}
 
-	private static final String PREDEFINED_FOLDER = "F:\\Git Proj";
+
 
 	@GetMapping("/get-files")
 	public Map<String, Object> getFilesAndFolders(@RequestParam(required = false) String folderPath) {

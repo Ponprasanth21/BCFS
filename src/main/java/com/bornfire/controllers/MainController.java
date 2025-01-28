@@ -4,14 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +31,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,7 +83,6 @@ import com.bornfire.entity.ParameterRepository;
 import com.bornfire.entity.RTPOutgoingHistRep;
 import com.bornfire.entity.RTPOutgoingRep;
 import com.bornfire.entity.RTPTransactionTable;
-import com.bornfire.entity.RTP_Outgoing_entity;
 import com.bornfire.entity.RegPublicKeyRep;
 import com.bornfire.entity.RegPublicKeyTmp;
 import com.bornfire.entity.SettlementAccountAmtRep;
@@ -93,7 +91,6 @@ import com.bornfire.entity.SettlementAccountRepository;
 import com.bornfire.entity.SettlementHistReportRep;
 import com.bornfire.entity.SettlementReportRep;
 import com.bornfire.entity.Swift_message_Upload;
-import com.bornfire.entity.TranCBSTable;
 import com.bornfire.entity.TranCBSTableRep;
 import com.bornfire.entity.TranCimCBSTable;
 import com.bornfire.entity.TranCimCBSTablePojo;
@@ -122,7 +119,6 @@ import com.bornfire.services.MerchantServices;
 import com.bornfire.services.MonitorService;
 import com.bornfire.services.NotificationParmsServices;
 import com.bornfire.services.SettlementAccountServices;
-
 import com.bornfire.services.TransactionService;
 import com.bornfire.services.UserProfileService;
 import com.bornfire.services.WalletFeesService;
@@ -130,22 +126,6 @@ import com.bornfire.services.WalletServices;
 import com.google.gson.Gson;
 
 import net.sf.jasperreports.engine.JRException;
-
-/*import org.springframework.ldap.core.AttributesMapper;
-import org.springframework.ldap.core.LdapTemplate;
-import org.springframework.ldap.filter.AndFilter;
-import static org.springframework.ldap.query.LdapQueryBuilder.query;
-
-import org.springframework.ldap.filter.EqualsFilter;
-import org.springframework.ldap.query.LdapQuery;
-import org.springframework.ldap.query.SearchScope;
-import org.springframework.ldap.support.LdapUtils;*/
-import org.springframework.stereotype.Service;
-import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.SearchControls;
-import java.util.List;
 
 @Controller
 @ConfigurationProperties("default")
@@ -4338,8 +4318,20 @@ System.out.println(date+"vishnu");
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-
-	
+		String ip ;
+		try(final DatagramSocket socket = new DatagramSocket()){
+			  socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			   ip = socket.getLocalAddress().getHostAddress();
+						  System.out.println(ip);
+			}
+			InetAddress name = InetAddress.getLocalHost();
+			System.out.println(name.getHostName());
+			
+			List<String> datas = new ArrayList<>();
+			datas.add(ip);
+			datas.add(name.getHostName());
+			md.addAttribute("datas", datas);
+			
 		return "FolderConfiguration";
 	}
 
