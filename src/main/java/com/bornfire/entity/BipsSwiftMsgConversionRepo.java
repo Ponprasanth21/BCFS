@@ -40,5 +40,14 @@ public interface BipsSwiftMsgConversionRepo extends JpaRepository<BIPS_SWIFT_MSG
 	
 	@Query(value = "SELECT COUNT(*) FROM BIPS_SWIFT_FILE_MGT_TABLE where swift_msg_type = 'MX' AND status = 'Completed'", nativeQuery = true)
 	String Mxtotalsuccess();
+	
+	@Query(value = "select * from BIPS_SWIFT_FILE_MGT_TABLE where status ='Completed'", nativeQuery = true)
+	List<BIPS_SWIFT_MSG_MGT> findprocessedvalue();
+	
+	@Query(value = "select * from BIPS_SWIFT_FILE_MGT_TABLE where status ='Inprogress'", nativeQuery = true)
+	List<BIPS_SWIFT_MSG_MGT> findfailuedvalue();
+	
+	@Query(value = "select * from BIPS_SWIFT_FILE_MGT_TABLE where status IS NULL", nativeQuery = true)
+	List<BIPS_SWIFT_MSG_MGT> findpendingvalue();
 
 }

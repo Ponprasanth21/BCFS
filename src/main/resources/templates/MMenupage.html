@@ -763,7 +763,7 @@ jQuery(function($){
 							id="NotificationParms" href="javascript: void(0);"
 							onclick="contentLoad(this)">Notification and Alerts</a></li>
 						<li class="nav-item"><a class="nav-link"
-							id="Folder_Configuration" href="javascript: void(0);"
+							id="FolderConfiguration" href="javascript: void(0);"
 							onclick="contentLoad(this)">Folder Configuration </a></li>
 
 						<li class="nav-item"><a class="nav-link"
@@ -813,6 +813,9 @@ jQuery(function($){
 							href="javascript: void(0);" onclick="contentLoad(this)">File
 								Management</a></li>
 						<li class="nav-item"><a class="nav-link"
+							id="FolderConfigurationInquiry" href="javascript: void(0);"
+							onclick="contentLoad(this)">Folder Configuration</a></li>
+						<li class="nav-item"><a class="nav-link"
 							id="Swift_MX_Menu_inquiries" href="javascript: void(0);"
 							onclick="contentLoad(this)"> Swift MX Messages </a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -831,7 +834,7 @@ jQuery(function($){
 				<div id="Reports" class="collapse submenu1 ">
 					<ul class="nav flex-column" aria-expanded="false">
 						<li class="nav-item"><a class="nav-link"
-							id="Proccessed_Messages" href="javascript: void(0);"
+							id="Proccessed_Messagess" href="javascript: void(0);"
 							onclick="contentLoad(this)">Proccessed Messages </a></li>
 						<li class="nav-item"><a class="nav-link" id="Failed_Messages"
 							href="javascript: void(0);" onclick="contentLoad(this)">Failed
@@ -876,14 +879,6 @@ jQuery(function($){
 
 					</ul>
 				</div></li>
-
-			<li th:if="${IPSRoleMenu.menulist.contains('Audit_operations')}"
-				class="nav-item"><a class="nav-link" data-toggle="collapse"
-				id="FolderConfiguration" href="javascript: void(0);"
-				onclick="contentLoad(this)"><i class="fa  fa-desktop"
-					style="margin-right: 5%; color: darkgoldenrod;"></i>Folder
-					Configuration <!-- <i id="dropico" class="fa fa-caret-down"
-					aria-hidden="true"></i> --> </a></li>
 
 
 			<!-- 

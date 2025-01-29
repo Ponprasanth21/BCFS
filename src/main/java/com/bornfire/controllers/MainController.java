@@ -54,6 +54,8 @@ import com.bornfire.entity.BankAndBranchRepository;
 import com.bornfire.entity.BipsSwiftMsgConversionRepo;
 import com.bornfire.entity.BipsSwiftMtMsgRepo;
 import com.bornfire.entity.BipsSwiftMxMsgRepo;
+import com.bornfire.entity.Bswift_Parameter_Rep;
+import com.bornfire.entity.Bswift_Parameter_value_Rep;
 import com.bornfire.entity.BulkTransaction;
 import com.bornfire.entity.BulkTransactionPojo;
 import com.bornfire.entity.BulkTransactionRepository;
@@ -286,6 +288,12 @@ public class MainController {
 
 	@Autowired
 	BipsSwiftMxMsgRepo bipsSwiftMxMsgRepo;
+	
+	@Autowired
+	Bswift_Parameter_Rep bswift_Parameter_Rep;
+	
+	@Autowired
+	Bswift_Parameter_value_Rep bswift_Parameter_value_Rep;
 
 	private String pagesize;
 
@@ -4334,5 +4342,209 @@ System.out.println(date+"vishnu");
 			
 		return "FolderConfiguration";
 	}
+	
+	@RequestMapping(value = "FolderConfigurationInquiry")
+	public String FolderConfigurationInquiry(
+			@RequestParam(value = "formmode", required = false) String formmode, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
 
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+		String ip ;
+		try(final DatagramSocket socket = new DatagramSocket()){
+			  socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			   ip = socket.getLocalAddress().getHostAddress();
+						  System.out.println(ip);
+			}
+			InetAddress name = InetAddress.getLocalHost();
+			System.out.println(name.getHostName());
+			
+			List<String> datas = new ArrayList<>();
+			datas.add(ip);
+			datas.add(name.getHostName());
+			md.addAttribute("datas", datas);
+			
+		return "FolderConfigurationInquiry.html";
+	}
+	
+	@RequestMapping(value = "Massage_Parameters")
+	public String Massage_Parameters(@RequestParam(required = false) String merchant_acct_no,
+			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "formmode", required = false) String formmode,
+			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
+
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+
+		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
+		if (formmode == null || formmode.equals("list")) {
+
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
+			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
+			md.addAttribute("formmode", "list");
+			md.addAttribute("menu", "MMenupage");
+
+		} else if (formmode.equals("Finaclefoldervalue")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+
+		} else if (formmode.equals("SwiftfolderDetails")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+		}
+
+		return "MessageParameters.html";
+	}
+	
+	
+	@RequestMapping(value = "Proccessed_Messagess")
+	public String Proccessed_Messagess(@RequestParam(required = false) String merchant_acct_no,
+			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "formmode", required = false) String formmode,
+			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
+
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+
+		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
+		if (formmode == null || formmode.equals("list")) {
+
+			md.addAttribute("Mxlist", bipsSwiftMsgConversionRepo.findprocessedvalue());
+
+			md.addAttribute("formmode", "list");
+			md.addAttribute("menu", "MMenupage");
+
+		} else if (formmode.equals("upload")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			md.addAttribute("menuname", "SWIFT MX MESSAGE");
+
+		} else if (formmode.equals("AfterConvList")) {
+			md.addAttribute("Mtlist", bipsSwiftMtMsgRepo.findmtbySrl(ref_Num));
+			md.addAttribute("Mxlist", bipsSwiftMxMsgRepo.findmxbySrl(ref_Num));
+			md.addAttribute("MsgType", bipsSwiftMsgConversionRepo.findmsgtype(ref_Num));
+			System.out.println(bipsSwiftMsgConversionRepo.findmsgtype(ref_Num) + "msgtypeval+++++");
+
+			BIPS_SWIFT_MX_MSG bipsSwiftmxMsg = bipsSwiftMxMsgRepo.findmxbySrl(ref_Num);
+
+			System.out.println("clobtext vishnu" + bipsSwiftmxMsg.getMx_message_file());
+
+			md.addAttribute("formmode", "AfterConvList");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("message")) {
+			md.addAttribute("formmode", "message");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("MT&Mxview")) {
+			md.addAttribute("formmode", "MT&Mxview");
+
+			System.out.println("bae" + ref_Num);
+			md.addAttribute("menu", "MMenupage");
+		}
+
+		return "commonprocessingmessage.html";
+	}
+	
+	@RequestMapping(value = "Failed_Messages")
+	public String Failed_Messages(@RequestParam(required = false) String merchant_acct_no,
+			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "formmode", required = false) String formmode,
+			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
+
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+
+		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
+		if (formmode == null || formmode.equals("list")) {
+
+			md.addAttribute("Mxlist", bipsSwiftMsgConversionRepo.findfailuedvalue());
+			md.addAttribute("formmode", "list");
+			md.addAttribute("menu", "MMenupage");
+
+		} else if (formmode.equals("upload")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			md.addAttribute("menuname", "SWIFT MX MESSAGE");
+
+		} else if (formmode.equals("AfterConvList")) {
+			md.addAttribute("Mtlist", bipsSwiftMtMsgRepo.findmtbySrl(ref_Num));
+			md.addAttribute("Mxlist", bipsSwiftMxMsgRepo.findmxbySrl(ref_Num));
+			md.addAttribute("MsgType", bipsSwiftMsgConversionRepo.findmsgtype(ref_Num));
+			System.out.println(bipsSwiftMsgConversionRepo.findmsgtype(ref_Num) + "msgtypeval+++++");
+
+			BIPS_SWIFT_MX_MSG bipsSwiftmxMsg = bipsSwiftMxMsgRepo.findmxbySrl(ref_Num);
+
+			System.out.println("clobtext vishnu" + bipsSwiftmxMsg.getMx_message_file());
+
+			md.addAttribute("formmode", "AfterConvList");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("message")) {
+			md.addAttribute("formmode", "message");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("MT&Mxview")) {
+			md.addAttribute("formmode", "MT&Mxview");
+
+			System.out.println("bae" + ref_Num);
+			md.addAttribute("menu", "MMenupage");
+		}
+
+		return "commonfailuremessage.html";
+	}
+	
+	@RequestMapping(value = "Pending_Messages")
+	public String Pending_Messages(@RequestParam(required = false) String merchant_acct_no,
+			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "formmode", required = false) String formmode,
+			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
+
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+
+		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
+		if (formmode == null || formmode.equals("list")) {
+
+			md.addAttribute("Mxlist", bipsSwiftMsgConversionRepo.findpendingvalue());
+			md.addAttribute("formmode", "list");
+			md.addAttribute("menu", "MMenupage");
+
+		} else if (formmode.equals("upload")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			md.addAttribute("menuname", "SWIFT MX MESSAGE");
+
+		} else if (formmode.equals("AfterConvList")) {
+			md.addAttribute("Mtlist", bipsSwiftMtMsgRepo.findmtbySrl(ref_Num));
+			md.addAttribute("Mxlist", bipsSwiftMxMsgRepo.findmxbySrl(ref_Num));
+			md.addAttribute("MsgType", bipsSwiftMsgConversionRepo.findmsgtype(ref_Num));
+			System.out.println(bipsSwiftMsgConversionRepo.findmsgtype(ref_Num) + "msgtypeval+++++");
+
+			BIPS_SWIFT_MX_MSG bipsSwiftmxMsg = bipsSwiftMxMsgRepo.findmxbySrl(ref_Num);
+
+			System.out.println("clobtext vishnu" + bipsSwiftmxMsg.getMx_message_file());
+
+			md.addAttribute("formmode", "AfterConvList");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("message")) {
+			md.addAttribute("formmode", "message");
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("MT&Mxview")) {
+			md.addAttribute("formmode", "MT&Mxview");
+
+			System.out.println("bae" + ref_Num);
+			md.addAttribute("menu", "MMenupage");
+		}
+
+		return "commonpendingmessage.html";
+	}
 }
