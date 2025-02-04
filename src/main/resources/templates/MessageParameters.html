@@ -290,6 +290,26 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
+
+.table-container {
+    max-height: 675px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+    z-index: 2;
+    border: 1px solid #dee2e6; /* Optional: for better header separation */
+}
+
+/* Adjust for the second header row */
+.table thead tr:nth-child(2) th {
+    top: 35px; /* Adjust this value based on the height of the first header row */
+    z-index: 1;
+}
 </style>
 </head>
 <script type="text/javascript" th:inline="javascript">
@@ -746,7 +766,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 		<div th:if="${formmode}=='list'" class="content">
 			<div class="card">
-
 				<div class="card-header">
 					<div class="float-left">
 						<h6 id="heading" style="color: white;">CONVERSION PARAMETERS
@@ -759,8 +778,8 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							onclick="swiftvalue();">Swift MX</button>
 					</div>
 				</div>
-				<div class="table-container"
-					style="overflow-y: auto; max-height: 675px;">
+
+				<div class="table-container">
 					<table class="table table-striped table-bordered table-hover"
 						id="Finacledetailsvalue">
 						<thead class="thead-light">
@@ -837,6 +856,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						onclick="back();">Back</button>
 				</div>
 			</div>
+
 		</div>
 		<div th:if="${formmode}=='upload'" class="content" id="yes">
 			<form action="#" th:object="${MTMessageform}" method="POST"
