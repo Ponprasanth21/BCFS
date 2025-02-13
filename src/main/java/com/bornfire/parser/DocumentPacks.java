@@ -97,13 +97,13 @@ public class DocumentPacks {
 		}
 	}
 
-	public String getDataPDU008(MT_103 mt103, String block1, String block2,String block3,String userID) throws IOException, ParseException {
+	public String getDataPDU008(MT_103 mt103, String block1, String block2,String block3,String block5,String userID) throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				"<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\""
 						+ "<Body>\r\n");
 		sb.append(getAppHeader008(mt103, block1, block2));
-		sb.append(getPacs_008_001_01Doc(mt103,block3));
+		sb.append(getPacs_008_001_01Doc(mt103,block3,block5));
 		sb.append("</Body>\r\n" + "</DataPDU>");
 
 		String filename = new SimpleDateFormat("YYYYMMDDhhmmss").format(new Date()) + ".OUT";
@@ -300,7 +300,7 @@ public class DocumentPacks {
 
 	/**** Create Document of Pacs.008.001.08 
 	 * @throws ParseException ****/
-	public String getPacs_008_001_01Doc(MT_103 mt103,String block3) throws ParseException {
+	public String getPacs_008_001_01Doc(MT_103 mt103,String block3,String block5) throws ParseException {
 
 		/// Group Header
 
@@ -329,19 +329,20 @@ public class DocumentPacks {
 		SettlementInstruction71 sttlmInf = new SettlementInstruction71();
 		sttlmInf.setSttlmMtd(SettlementMethod1Code1.INDA);/// Settlement method (CLRG)
 		System.out.println("53B+++"+mt103.getTag53B());
-		if(!mt103.getTag53B().equals("")) {
-			AccountIdentification4Choice1 settlacc = new AccountIdentification4Choice1();
-			GenericAccountIdentification11 othr=new GenericAccountIdentification11();
-			othr.setId(mt103.getTag53B());
-			settlacc.setOthr(othr);
-			
-			
-			CashAccount381 cc = new CashAccount381();
-			cc.setId(settlacc);
-			
-			sttlmInf.setSttlmAcct(cc);
-		}
-		
+		if (mt103.getTag53B() != null && !mt103.getTag53B().isEmpty()) {
+		    AccountIdentification4Choice1 settlacc = new AccountIdentification4Choice1();
+		    GenericAccountIdentification11 othr = new GenericAccountIdentification11();
+		    othr.setId(mt103.getTag53B());
+		    settlacc.setOthr(othr);
+		    
+		    CashAccount381 cc = new CashAccount381();
+		    cc.setId(settlacc);
+		    
+		    sttlmInf.setSttlmAcct(cc);
+		} else {
+		    // If mt103.getTag53B() is empty or null, just skip without any error
+		    // Optionally, you can log or handle this case differently if needed
+		}		
 		
 		grpHdr.setSttlmInf(sttlmInf);
 		
@@ -596,14 +597,17 @@ public class DocumentPacks {
 		PartyIdentification1351 cdtr = new PartyIdentification1351();
 		cdtr.setNm(tag59[1]);
 
-		if (tag59.length > 2) {
-			final List<String> adrLine1 = new ArrayList<String>();
-			adrLine1.add(String.valueOf(tag59[2]) + "\n" + tag59[3]);
-			PostalAddress241 postalAddress241_1 = new PostalAddress241();
-			postalAddress241_1.setAdrLine((List<String>) adrLine1);
-			cdtr.setPstlAdr(postalAddress241_1);
+		if (tag59.length > 3) {
+		    final List<String> adrLine1 = new ArrayList<String>();
+		    adrLine1.add(String.valueOf(tag59[2]) + "\n" + tag59[3]);
+		    PostalAddress241 postalAddress241_1 = new PostalAddress241();
+		    postalAddress241_1.setAdrLine(adrLine1);
+		    cdtr.setPstlAdr(postalAddress241_1);
+		} else {
+		    // Handle the case when tag59 doesn't have enough elements
+		    // You can log the error or take alternative action
 		}
-
+		
 		creditTransferTransaction391.setCdtr(cdtr);
 		/// Creditor Account Number
 		CashAccount381 cdtrAcct = new CashAccount381();

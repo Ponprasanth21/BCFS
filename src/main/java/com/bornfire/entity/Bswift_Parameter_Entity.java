@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "BSWIFT_PARAMETER_TABLE")
 public class Bswift_Parameter_Entity {
 	@Id
+	private String	srl_num;
 	private String	rowno;
 	private String	attribute;
 	private String	form_mt_103_field_name;
@@ -48,6 +49,12 @@ public class Bswift_Parameter_Entity {
 	private String	modify_flg;
 	private String	del_flg;
 	private String	verify_flg;
+	public String getSrl_num() {
+		return srl_num;
+	}
+	public void setSrl_num(String srl_num) {
+		this.srl_num = srl_num;
+	}
 	public String getRowno() {
 		return rowno;
 	}
@@ -180,13 +187,14 @@ public class Bswift_Parameter_Entity {
 	public void setVerify_flg(String verify_flg) {
 		this.verify_flg = verify_flg;
 	}
-	public Bswift_Parameter_Entity(String rowno, String attribute, String form_mt_103_field_name,
+	public Bswift_Parameter_Entity(String srl_num, String rowno, String attribute, String form_mt_103_field_name,
 			String form_mt_103_field, String form_mt_103_value, String form_mt_103_additional_details,
 			String form_pacs_0008_description, String form_pacs_0008_field, String form_pacs_0008_value,
 			String form_pacs_0008_additional_details, String form_pacs_0008_attribute, String entry_user,
 			Date entry_time, String modify_user, Date modify_time, String verify_user, Date verify_time,
 			String entity_flg, String auth_flg, String modify_flg, String del_flg, String verify_flg) {
 		super();
+		this.srl_num = srl_num;
 		this.rowno = rowno;
 		this.attribute = attribute;
 		this.form_mt_103_field_name = form_mt_103_field_name;

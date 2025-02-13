@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +55,9 @@ import com.bornfire.entity.BankAndBranchRepository;
 import com.bornfire.entity.BipsSwiftMsgConversionRepo;
 import com.bornfire.entity.BipsSwiftMtMsgRepo;
 import com.bornfire.entity.BipsSwiftMxMsgRepo;
+import com.bornfire.entity.Bswift_Parameter_Entity;
 import com.bornfire.entity.Bswift_Parameter_Rep;
+import com.bornfire.entity.Bswift_Parameter_value_Entity;
 import com.bornfire.entity.Bswift_Parameter_value_Rep;
 import com.bornfire.entity.BulkTransaction;
 import com.bornfire.entity.BulkTransactionPojo;
@@ -288,10 +291,10 @@ public class MainController {
 
 	@Autowired
 	BipsSwiftMxMsgRepo bipsSwiftMxMsgRepo;
-	
+
 	@Autowired
 	Bswift_Parameter_Rep bswift_Parameter_Rep;
-	
+
 	@Autowired
 	Bswift_Parameter_value_Rep bswift_Parameter_value_Rep;
 
@@ -345,19 +348,18 @@ public class MainController {
 		return "BSWIFTDashboard.html";
 
 	}
-	
+
 	@RequestMapping(value = "/BSWIFTDashboard", method = { RequestMethod.GET, RequestMethod.POST })
 	public String dashboard(Model md, HttpServletRequest req) {
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-		md.addAttribute("Mttomxtot",bipsSwiftMsgConversionRepo.totalMTdata());
-		md.addAttribute("Mttomxsuccess",bipsSwiftMsgConversionRepo.MTtotalsuccess());
-		md.addAttribute("MttomxFail",bipsSwiftMsgConversionRepo.MTtotalfailure());
-		md.addAttribute("Mxtomxsuccess",bipsSwiftMsgConversionRepo.Mxtotalsuccess());
-		md.addAttribute("MxtomxFail",bipsSwiftMsgConversionRepo.Mxtotalfailure());
+		md.addAttribute("Mttomxtot", bipsSwiftMsgConversionRepo.totalMTdata());
+		md.addAttribute("Mttomxsuccess", bipsSwiftMsgConversionRepo.MTtotalsuccess());
+		md.addAttribute("MttomxFail", bipsSwiftMsgConversionRepo.MTtotalfailure());
+		md.addAttribute("Mxtomxsuccess", bipsSwiftMsgConversionRepo.Mxtotalsuccess());
+		md.addAttribute("MxtomxFail", bipsSwiftMsgConversionRepo.Mxtotalfailure());
 
-		
 		md.addAttribute("menu", "Dashboard");
 		return "IPSDashboard";
 	}
@@ -682,7 +684,7 @@ public class MainController {
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
 
 		String msg = userProfileService.changePassword(userProfile, oldpass, newpass, userid);
-		//System.out.println(msg);
+		// System.out.println(msg);
 		return msg;
 
 	}
@@ -2236,7 +2238,7 @@ public class MainController {
 			// md.addAttribute("AccessandRoles", accessandrolesrepository.rulelist());
 			md.addAttribute("AccessandRoles", AccessRoleService.rulelist());
 		} else if (formmode.equals("add")) {
-			md.addAttribute("ref_id",accessandrolesrepository.getref_id());
+			md.addAttribute("ref_id", accessandrolesrepository.getref_id());
 			md.addAttribute("menuname", "Access and Roles - ADD");
 			md.addAttribute("formmode", "add");
 			md.addAttribute("IPSAccessRole", new IPSAccessRole());
@@ -2444,7 +2446,7 @@ public class MainController {
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
 			@ModelAttribute ManualTransaction manualTransaction, Model md, HttpServletRequest req)
 			throws FileNotFoundException, SQLException, IOException, ParseException {
-System.out.println(date+"vishnu");
+		System.out.println(date + "vishnu");
 		String loginuserid = (String) req.getSession().getAttribute("USERID");
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
@@ -3488,8 +3490,8 @@ System.out.println(date+"vishnu");
 					tranType);
 			md.addAttribute("notificationParmsProfile", notificationParmsReg);
 
-		}else if (formmode.equals("delete")) {
-		
+		} else if (formmode.equals("delete")) {
+
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("bankList", bankAgentTableRep.findAllCustom(env.getProperty("ipsx.dbtragt")));
 			NotificationParms notificationParmsReg = notificationParmsServices.getNotificationParmsList(recordSrlNo,
@@ -3497,14 +3499,14 @@ System.out.println(date+"vishnu");
 			md.addAttribute("notificationParmsProfile", notificationParmsReg);
 
 		} else if (formmode.equals("cancel")) {
-		
+
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("bankList", bankAgentTableRep.findAllCustom(env.getProperty("ipsx.dbtragt")));
 			NotificationParms notificationParmsReg = notificationParmsServices.getNotificationParmsList(recordSrlNo,
 					tranType);
 			md.addAttribute("notificationParmsProfile", notificationParmsReg);
 
-		} 
+		}
 		return "NotificationParms";
 	}
 
@@ -3560,7 +3562,7 @@ System.out.println(date+"vishnu");
 		return msg;
 
 	}
-	
+
 	@RequestMapping(value = "cancelNotificationParms", method = RequestMethod.POST)
 	@ResponseBody
 	public String cancel(@RequestParam("formmode") String formmode,
@@ -3577,10 +3579,10 @@ System.out.println(date+"vishnu");
 		return msg;
 
 	}
-	
+
 	@RequestMapping(value = "deleteNotification", method = RequestMethod.POST)
 	@ResponseBody
-		
+
 	public String delete(@RequestParam("formmode") String formmode,
 			@ModelAttribute com.bornfire.entity.NotificationParms notificationParmsReg, Model md, HttpServletRequest rq)
 			throws NoSuchAlgorithmException, InvalidKeySpecException, ParseException, IOException {
@@ -3595,8 +3597,6 @@ System.out.println(date+"vishnu");
 		return msg;
 
 	}
-	
-
 
 	/*************************************
 	 * Admin ---> Branch --->Bank&Branch Starts
@@ -4312,7 +4312,7 @@ System.out.println(date+"vishnu");
 		}
 		return "SwiftFolder";
 	}
-	
+
 //	@RequestParam(required = false) String merchant_acct_no,
 //	@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
 //	@RequestParam(value = "size", required = false) Optional<Integer> size,
@@ -4320,58 +4320,56 @@ System.out.println(date+"vishnu");
 
 //	@ModelAttribute MerchantCategoryCodeEntity bankAgentTable,
 	@RequestMapping(value = "FolderConfiguration")
-	public String FolderConfiguration(
-			@RequestParam(value = "formmode", required = false) String formmode, Model md, HttpServletRequest req)
-			throws FileNotFoundException, SQLException, IOException {
+	public String FolderConfiguration(@RequestParam(value = "formmode", required = false) String formmode, Model md,
+			HttpServletRequest req) throws FileNotFoundException, SQLException, IOException {
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-		String ip ;
-		try(final DatagramSocket socket = new DatagramSocket()){
-			  socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			   ip = socket.getLocalAddress().getHostAddress();
-						  System.out.println(ip);
-			}
-			InetAddress name = InetAddress.getLocalHost();
-			System.out.println(name.getHostName());
-			
-			List<String> datas = new ArrayList<>();
-			datas.add(ip);
-			datas.add(name.getHostName());
-			md.addAttribute("datas", datas);
-			
+		String ip;
+		try (final DatagramSocket socket = new DatagramSocket()) {
+			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			ip = socket.getLocalAddress().getHostAddress();
+			System.out.println(ip);
+		}
+		InetAddress name = InetAddress.getLocalHost();
+		System.out.println(name.getHostName());
+
+		List<String> datas = new ArrayList<>();
+		datas.add(ip);
+		datas.add(name.getHostName());
+		md.addAttribute("datas", datas);
+
 		return "FolderConfiguration";
 	}
-	
+
 	@RequestMapping(value = "FolderConfigurationInquiry")
-	public String FolderConfigurationInquiry(
-			@RequestParam(value = "formmode", required = false) String formmode, Model md, HttpServletRequest req)
-			throws FileNotFoundException, SQLException, IOException {
+	public String FolderConfigurationInquiry(@RequestParam(value = "formmode", required = false) String formmode,
+			Model md, HttpServletRequest req) throws FileNotFoundException, SQLException, IOException {
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-		String ip ;
-		try(final DatagramSocket socket = new DatagramSocket()){
-			  socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-			   ip = socket.getLocalAddress().getHostAddress();
-						  System.out.println(ip);
-			}
-			InetAddress name = InetAddress.getLocalHost();
-			System.out.println(name.getHostName());
-			
-			List<String> datas = new ArrayList<>();
-			datas.add(ip);
-			datas.add(name.getHostName());
-			md.addAttribute("datas", datas);
-			
+		String ip;
+		try (final DatagramSocket socket = new DatagramSocket()) {
+			socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+			ip = socket.getLocalAddress().getHostAddress();
+			System.out.println(ip);
+		}
+		InetAddress name = InetAddress.getLocalHost();
+		System.out.println(name.getHostName());
+
+		List<String> datas = new ArrayList<>();
+		datas.add(ip);
+		datas.add(name.getHostName());
+		md.addAttribute("datas", datas);
+
 		return "FolderConfigurationInquiry.html";
 	}
-	
+
 	@RequestMapping(value = "Massage_Parameters")
 	public String Massage_Parameters(@RequestParam(required = false) String merchant_acct_no,
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
-			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "srl_num", required = false) String srl_num,
 			@RequestParam(value = "formmode", required = false) String formmode,
 			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
 			throws FileNotFoundException, SQLException, IOException {
@@ -4394,12 +4392,57 @@ System.out.println(date+"vishnu");
 		} else if (formmode.equals("SwiftfolderDetails")) {
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("add1")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("add2")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+		} else if (formmode.equals("modify")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findparavalue(srl_num));
+		} else if (formmode.equals("view")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findparavalue(srl_num));
+		} else if (formmode.equals("delete")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findparavalue(srl_num));
+		} else if (formmode.equals("verify")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findparavalue(srl_num));
+		} else if (formmode.equals("modify1")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_value_Rep.findbyvalues(srl_num));
+		} else if (formmode.equals("view1")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_value_Rep.findbyvalues(srl_num));
+		} else if (formmode.equals("delete1")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_value_Rep.findbyvalues(srl_num));
+		} else if (formmode.equals("verify1")) {
+			md.addAttribute("formmode", formmode);
+			md.addAttribute("menu", "MMenupage");
+			System.out.println("The getting srl_num values are " + srl_num);
+			md.addAttribute("parameterdata", bswift_Parameter_value_Rep.findbyvalues(srl_num));
 		}
 
 		return "MessageParameters.html";
 	}
-	
-	
+
 	@RequestMapping(value = "Proccessed_Messagess")
 	public String Proccessed_Messagess(@RequestParam(required = false) String merchant_acct_no,
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
@@ -4449,7 +4492,7 @@ System.out.println(date+"vishnu");
 
 		return "commonprocessingmessage.html";
 	}
-	
+
 	@RequestMapping(value = "Failed_Messages")
 	public String Failed_Messages(@RequestParam(required = false) String merchant_acct_no,
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
@@ -4498,7 +4541,7 @@ System.out.println(date+"vishnu");
 
 		return "commonfailuremessage.html";
 	}
-	
+
 	@RequestMapping(value = "Pending_Messages")
 	public String Pending_Messages(@RequestParam(required = false) String merchant_acct_no,
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
@@ -4546,5 +4589,151 @@ System.out.println(date+"vishnu");
 		}
 
 		return "commonpendingmessage.html";
+	}
+
+	@RequestMapping(value = "/AddScreenfinacle", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddScreenfinacle(@ModelAttribute Bswift_Parameter_Entity bswift_Parameter_Entity) {
+		System.out.println(bswift_Parameter_Entity.getEntity_flg());
+		bswift_Parameter_Entity.setDel_flg("N");
+		bswift_Parameter_Entity.setSrl_num(bswift_Parameter_Rep.getNextSeriesId());
+		bswift_Parameter_Rep.save(bswift_Parameter_Entity);
+		return "Saved Successfully";
+	}
+
+	@RequestMapping(value = "AddScreenswift", method = RequestMethod.POST)
+	@ResponseBody
+	public String AddScreenswift(Model md, HttpServletRequest rq,
+			@ModelAttribute Bswift_Parameter_value_Entity bswift_Parameter_value_Entity) {
+		System.out.println(bswift_Parameter_value_Entity.getEntity_flg());
+		bswift_Parameter_value_Entity.setDel_flg("N");
+		bswift_Parameter_value_Entity.setSrl_num(bswift_Parameter_value_Rep.getNextSeriesId());
+		bswift_Parameter_value_Rep.save(bswift_Parameter_value_Entity);
+		return "Saved Successfully";
+	}
+
+	@RequestMapping(value = "modifyscreens", method = RequestMethod.POST)
+	@ResponseBody
+	public String modifyscreens(@RequestParam(required = false) String srlno,
+			@ModelAttribute Bswift_Parameter_Entity bswift_Parameter_Entity, HttpServletRequest rq) {
+		String msg = "";
+
+		if (srlno == null || srlno.isEmpty()) {
+			return "Serial number is required";
+		}
+
+		Bswift_Parameter_Entity existingRow = bswift_Parameter_Rep.findparavalue(srlno);
+
+		if (existingRow != null) {
+			existingRow.setDel_flg("N");
+			existingRow.setModify_flg("Y");
+			existingRow.setSrl_num(srlno);
+
+			// Updating with values from AJAX form
+			existingRow.setForm_pacs_0008_attribute(bswift_Parameter_Entity.getForm_pacs_0008_attribute());
+
+			bswift_Parameter_Rep.save(existingRow);
+			msg = "Modify Successfully";
+		} else {
+			msg = "Data Not Found";
+		}
+
+		return msg;
+	}
+
+	@RequestMapping(value = "deletescreen", method = RequestMethod.POST)
+	@ResponseBody
+	public String deletescreen(@RequestParam(required = false) String mti) {
+		String msg = null;
+		try {
+			Bswift_Parameter_Entity vv = bswift_Parameter_Rep.findparavalue(mti);
+			vv.setDel_flg("Y");
+			bswift_Parameter_Rep.save(vv);
+			msg = "Deleted Successfully";
+		} catch (Exception e) {
+			msg = "Delete Unsuccessfull";
+		}
+		return msg;
+
+	}
+
+	@RequestMapping(value = "verifyscreen", method = RequestMethod.POST)
+	@ResponseBody
+	public String verifyscreen(@RequestParam(required = false) String mti) {
+		String msg = null;
+		try {
+			Bswift_Parameter_Entity vv = bswift_Parameter_Rep.findparavalue(mti);
+			vv.setEntity_flg("Y");
+			bswift_Parameter_Rep.save(vv);
+			msg = "Verify Successfully";
+		} catch (Exception e) {
+			msg = "Verify Unsuccessfull";
+		}
+		return msg;
+
+	}
+
+	@RequestMapping(value = "modifyscreensdata", method = RequestMethod.POST)
+	@ResponseBody
+	public String modifyscreensdata(@RequestParam(required = false) String srlno,
+			@ModelAttribute Bswift_Parameter_value_Entity bswift_Parameter_value_Entity, HttpServletRequest rq) {
+		String msg = "";
+
+		if (srlno == null || srlno.isEmpty()) {
+			return "Serial number is required";
+		}
+		System.out.println("the gettg values are here " + srlno);
+		Bswift_Parameter_value_Entity existingRow = bswift_Parameter_value_Rep.findbyvalues(srlno);
+
+		if (existingRow != null) {
+			existingRow.setDel_flg("N");
+			existingRow.setModify_flg("Y");
+			existingRow.setSrl_num(srlno);
+			
+			existingRow.setSwift_status_m_o_c(bswift_Parameter_value_Entity.getSwift_status_m_o_c());
+			existingRow.setSwift_field(bswift_Parameter_value_Entity.getSwift_field());
+			existingRow.setSwift_field_name(bswift_Parameter_value_Entity.getSwift_field_name());
+			existingRow.setSwift_content(bswift_Parameter_value_Entity.getSwift_content());
+			existingRow.setSwift_comments(bswift_Parameter_value_Entity.getSwift_comments());
+
+			bswift_Parameter_value_Rep.save(existingRow);
+			msg = "Modify Successfully";
+		} else {
+			msg = "Data Not Found";
+		}
+
+		return msg;
+	}
+
+	@RequestMapping(value = "deletescreendata", method = RequestMethod.POST)
+	@ResponseBody
+	public String deletescreendata(@RequestParam(required = false) String mti) {
+		String msg = null;
+		try {
+			Bswift_Parameter_value_Entity vv = bswift_Parameter_value_Rep.findbyvalues(mti);
+			vv.setDel_flg("Y");
+			bswift_Parameter_value_Rep.save(vv);
+			msg = "Deleted Successfully";
+		} catch (Exception e) {
+			msg = "Delete Unsuccessfull";
+		}
+		return msg;
+
+	}
+
+	@RequestMapping(value = "verifyscreendata", method = RequestMethod.POST)
+	@ResponseBody
+	public String verifyscreendata(@RequestParam(required = false) String mti) {
+		String msg = null;
+		try {
+			Bswift_Parameter_value_Entity vv = bswift_Parameter_value_Rep.findbyvalues(mti);
+			vv.setEntity_flg("Y");
+			bswift_Parameter_value_Rep.save(vv);
+			msg = "Verify Successfully";
+		} catch (Exception e) {
+			msg = "Verify Unsuccessfull";
+		}
+		return msg;
+
 	}
 }

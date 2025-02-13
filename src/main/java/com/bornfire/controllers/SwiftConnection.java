@@ -54,6 +54,8 @@ public class SwiftConnection {
 		final String applicationHeaderBlock = inputMessageReader.getSwiftMsgBlock(2);
 		final String applicationHeaderBlock1 = inputMessageReader.getSwiftMsgBlock(1);
 		final String applicationHeaderBlock3 = inputMessageReader.getSwiftMsgBlock(3);
+		final String applicationHeaderBlock5 = inputMessageReader.getSwiftMsgBlock(5);
+
 		System.out.println("Application Header Block : " + applicationHeaderBlock);
 		final String messageType = getMessageType(applicationHeaderBlock);
 		System.out.println("Message Type : " + messageType);
@@ -67,7 +69,7 @@ public class SwiftConnection {
 		switch (s = messageType) {
 		case "103": {
 			MT_103 mt103 = swiftParser.parseMT103();
-			String data = documentPacks.getDataPDU008(mt103,applicationHeaderBlock1,applicationHeaderBlock,applicationHeaderBlock3, userid);
+			String data = documentPacks.getDataPDU008(mt103,applicationHeaderBlock1,applicationHeaderBlock,applicationHeaderBlock3,applicationHeaderBlock5,userid);
 			// Mt msg here
 			
             message.getDate_of_process();
@@ -81,14 +83,41 @@ public class SwiftConnection {
 			
 			System.out.println(Amt);
 			mtmessagedata.setTotal_transaction_amount(Amt.substring(9, Amt.indexOf(",")));
-			mtmessagedata.setDebitor_account(mt103.getTag50K().substring(0, 13));
+			if (mt103.getTag50K() != null && mt103.getTag50K().length() >= 13) {
+			    mtmessagedata.setDebitor_account(mt103.getTag50K().substring(0, 13));
+			} else {
+			    // Skip setting debitor_account and continue processing
+			    System.out.println("Tag50K is null or too short, skipping...");
+			}
 			mtmessagedata.setCreditor_account(mt103.getTag59().substring(1, 14));
-			mtmessagedata.setRemittance_address(mt103.getTag50K().substring(13));
+			if (mt103.getTag50K() != null && mt103.getTag50K().length() >= 13) {
+			    mtmessagedata.setDebitor_account(mt103.getTag50K().substring(0, 13));
+			    if (mt103.getTag50K().length() > 13) {
+			        mtmessagedata.setRemittance_address(mt103.getTag50K().substring(13));
+			    } else {
+			        mtmessagedata.setRemittance_address(""); // Set empty if no remittance address
+			    }
+			} else {
+			    System.out.println("Tag50K is null or too short, skipping...");
+			}
 			mtmessagedata.setBeneficiary_address(mt103.getTag59().substring(1, 14));
-			String[] lines = mt103.getTag50K().split("\\r?\\n");
-			System.out.println(lines[1] + "crdt");
-			mtmessagedata.setCreditor_name(lines[1]);
-			
+			// Check if Tag50K is null or empty before attempting to split
+			if (mt103.getTag50K() != null && !mt103.getTag50K().isEmpty()) {
+			    String[] linesd = mt103.getTag50K().split("\\r?\\n");
+
+			    // You can now safely use the 'lines' array
+			    // For example, if you need to set a value:
+			    if (linesd.length > 1) {
+			    	mtmessagedata.setCreditor_name(linesd[1]);  // Set creditor name
+			    } else {
+			        // Handle case where there aren't enough lines in Tag50K
+			        System.out.println("Tag50K does not contain enough lines.");
+			    }
+			} else {
+			    // If Tag50K is null or empty, skip processing or handle the situation
+			    System.out.println("Tag50K is null or empty, skipping this entry.");
+			}
+		
 			String[] dbtname = mt103.getTag59().split("\\r?\\n");
 			System.out.println("dbt" + dbtname[1]);
 			mtmessagedata.setDebitor_name(dbtname[1]);
@@ -102,16 +131,50 @@ public class SwiftConnection {
 			mxmessagedata.setBank_operation_code(mt103.getTag23B());
 			mxmessagedata.setCurrency(Amt.substring(6, 9));
 			mxmessagedata.setTotal_transaction_amount(Amt.substring(9, Amt.indexOf(",")));
-			mxmessagedata.setDebitor_account(mt103.getTag50K().substring(0, 13));
+			if (mt103.getTag50K() != null && mt103.getTag50K().length() >= 13) {
+			    mxmessagedata.setDebitor_account(mt103.getTag50K().substring(0, 13));
+			} else {
+			    mxmessagedata.setDebitor_account(""); // Set empty string if value is null or too short
+			    System.out.println("Tag50K is null or too short, skipping...");
+			}
 			mxmessagedata.setCreditor_account(mt103.getTag59().substring(1, 14));
-			mxmessagedata.setRemittance_address(mt103.getTag50K().substring(13));
-			mxmessagedata.setBeneficiary_address(mt103.getTag59().substring(1, 14));
-			String[] linesX = mt103.getTag50K().split("\\r?\\n");
+			if (mt103.getTag50K() != null && mt103.getTag50K().length() > 13) {
+			    mxmessagedata.setRemittance_address(mt103.getTag50K().substring(13));
+			} else {
+			    mxmessagedata.setRemittance_address("");
+			}
+			// Check if Tag59 is valid and has enough length to avoid errors
+			if (mt103.getTag59() != null && mt103.getTag59().length() >= 14) {
+			    mxmessagedata.setBeneficiary_address(mt103.getTag59().substring(1, 14));
+			} else {
+			    // If Tag59 is null or too short, log or skip processing
+			    System.out.println("Tag59 is either null or too short, skipping this entry.");
+			}
 
-			mxmessagedata.setCreditor_name(linesX[1]);
-			String[] dbtnameX = mt103.getTag59().split("\\r?\\n");
+			// Check if Tag50K is valid and non-empty before splitting
+			if (mt103.getTag50K() != null && !mt103.getTag50K().isEmpty()) {
+			    String[] linesX = mt103.getTag50K().split("\\r?\\n");
 
-			mxmessagedata.setDebitor_name(dbtnameX[1]);
+			    // Ensure that linesX has enough data to safely access lines
+			    if (linesX.length > 1) {
+			        mxmessagedata.setCreditor_name(linesX[1]);  // Set creditor name
+			    } else {
+			        // If linesX has insufficient lines, skip processing
+			        System.out.println("Tag50K has insufficient lines, skipping this entry.");
+			    }
+			} else {
+			    // If Tag50K is null or empty, skip processing
+			    System.out.println("Tag50K is null or empty, skipping this entry.");
+			}
+
+			// Check if Tag59 is valid and split it for debitor name
+			if (mt103.getTag59() != null && mt103.getTag59().split("\\r?\\n").length > 1) {
+			    String[] dbtnameX = mt103.getTag59().split("\\r?\\n");
+			    mxmessagedata.setDebitor_name(dbtnameX[1]);  // Set debitor name
+			} else {
+			    // If Tag59 is null or doesn't have enough lines, skip processing
+			    System.out.println("Tag59 doesn't have enough lines, skipping this entry.");
+			}
 			mxmessagedata.setDate_of_process(message.getDate_of_process());
 			String msgX = bipsMsgConversionProcessRec.MxmsgMTtoMX(mxmessagedata, message);
 			System.out.println(msgX);
