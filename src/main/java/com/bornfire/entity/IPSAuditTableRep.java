@@ -19,7 +19,7 @@ public interface IPSAuditTableRep extends JpaRepository<IPSAuditTable, String> {
 	@Query(value = "select * from BIPS_AUDIT_TABLE where trunc(audit_date)=?1  AND audit_table  in ('BIPS_USER PROFILE','BIPS_USER_PROFILE') and modi_details is not null order by entry_time desc", nativeQuery = true)
 	List<IPSAuditTable> getauditListLocal1(String Fromdate);
 
-	@Query(value = "select * from BIPS_AUDIT_TABLE where trunc(audit_date) between ?1 and ?2  AND audit_table  in ('BIPS_USER PROFILE','BIPS_USER_PROFILE', 'BIPS_SWIFT_FILE_MGT_TABLE') and modi_details is not null order by entry_time desc", nativeQuery = true)
+	@Query(value = "select * from BIPS_AUDIT_TABLE where trunc(audit_date) between ?1 and ?2  AND audit_table  in ('BIPS_USER PROFILE','BIPS_USER_PROFILE') and modi_details is not null order by entry_time desc", nativeQuery = true)
 	List<IPSAuditTable> getauditListLocal(Date Fromdate, Date Todate);
 
 	@Query(value = "select * from BIPS_AUDIT_TABLE where trunc(audit_date) between ?1 and ?2  AND audit_table not in ('BIPS_USER_PROFILE_MOD_TABLE','BIPS_USER_PROFILE') order by audit_date desc", nativeQuery = true)
