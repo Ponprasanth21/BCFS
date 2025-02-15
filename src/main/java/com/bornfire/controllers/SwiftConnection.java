@@ -264,10 +264,25 @@ public class SwiftConnection {
 			
 			
 			
-			String CreditorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId()
-					.getBICFI();
-			String DebitorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId()
-					.getBICFI();
+			String CreditorAgent = null;
+			String DebitorAgent = null;
+
+			if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt() != null &&
+			    doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId() != null &&
+			    doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI() != null) {
+			    CreditorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI();
+			}
+
+			if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt() != null &&
+			    doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId() != null &&
+			    doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI() != null) {
+			    DebitorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI();
+			}
+
+			// Process next fields if values are null
+			System.out.println("Creditor Agent: " + (CreditorAgent != null ? CreditorAgent : "Skipped"));
+			System.out.println("Debitor Agent: " + (DebitorAgent != null ? DebitorAgent : "Skipped"));
+
 			//String Currency = doc008.getFIToFICstmrCdtTrf().getGrpHdr().getTtlIntrBkSttlmAmt().getCcy();
 			String Currency = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy();
 			String SenderReference = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId();

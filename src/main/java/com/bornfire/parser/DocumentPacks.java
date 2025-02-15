@@ -100,7 +100,7 @@ public class DocumentPacks {
 	public String getDataPDU008(MT_103 mt103, String block1, String block2,String block3,String block5,String userID) throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
-				"<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\""
+				"<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\">"
 						+ "<Body>\r\n");
 		sb.append(getAppHeader008(mt103, block1, block2));
 		sb.append(getPacs_008_001_01Doc(mt103,block3,block5));
@@ -214,8 +214,6 @@ public class DocumentPacks {
 		String s1 =  new String(b, "windows-1252");
 		
 		outputStream.write(s1.getBytes());
-		
-		
      
 		return s1;
 		}

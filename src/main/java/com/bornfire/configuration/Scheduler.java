@@ -28,7 +28,7 @@ public class Scheduler {
 	@Autowired
 	BipsSwiftMsgConversionRepo bipsSwiftMsgConversionRepo;
 
-	 @Scheduled(fixedRate = 5000)
+	/* @Scheduled(fixedRate = 5000) */
 	public void run() throws IOException, ParseException {
 
 		String usr = "Auto";
@@ -71,46 +71,46 @@ public class Scheduler {
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/////
 		try {
-		    String directoryPathStr = env.getProperty("auto.swift.mx.in.file.path");
-		    System.out.println("Directory Path: " + directoryPathStr);
-		    if (directoryPathStr == null) {
-		        System.err.println("Property 'auto.mus.swift.mt.out.file.path' is not set.");
-		        return; // or handle the error appropriately
-		    }
+			String directoryPathStr = env.getProperty("auto.swift.mx.in.file.path");
+			System.out.println("Directory Path: " + directoryPathStr);
+			if (directoryPathStr == null) {
+				System.err.println("Property 'auto.mus.swift.mt.out.file.path' is not set.");
+				return; // or handle the error appropriately
+			}
 
-		    directoryPath = new File(directoryPathStr);
-		    if (!directoryPath.exists() || !directoryPath.isDirectory()) {
-		        System.err.println("Directory does not exist or is not accessible: " + directoryPath.getAbsolutePath());
-		        return; // or handle the error appropriately
-		    }
+			directoryPath = new File(directoryPathStr);
+			if (!directoryPath.exists() || !directoryPath.isDirectory()) {
+				System.err.println("Directory does not exist or is not accessible: " + directoryPath.getAbsolutePath());
+				return; // or handle the error appropriately
+			}
 
-		    System.out.println("dddd" + directoryPath);
-		    usr = "Auto_MUS";
+			System.out.println("dddd" + directoryPath);
+			usr = "Auto_MUS";
 
-		    File filesListAuto_MUS[] = directoryPath.listFiles();
-		    if (filesListAuto_MUS == null || filesListAuto_MUS.length == 0) {
-		        System.out.println("No Files Present in this source");
-		        return;
-		    }
+			File filesListAuto_MUS[] = directoryPath.listFiles();
+			if (filesListAuto_MUS == null || filesListAuto_MUS.length == 0) {
+				System.out.println("No Files Present in this source");
+				return;
+			}
 
-		    for (File fileAuto_MUS : filesListAuto_MUS) {
-		        System.out.println("File name: " + fileAuto_MUS.getName());
-		        String filename = fileAuto_MUS.getName();
+			for (File fileAuto_MUS : filesListAuto_MUS) {
+				System.out.println("File name: " + fileAuto_MUS.getName());
+				String filename = fileAuto_MUS.getName();
 
-		        String msg = iPSRestController.AutoFilepicker(usr, filename);
-		        System.out.println(msg);
+				String msg = iPSRestController.AutoFilepicker(usr, filename);
+				System.out.println(msg);
 
-		        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
-		        LocalDateTime now = LocalDateTime.now();
-		        String date = dtf.format(now);
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd_MM_yyyy_HH_mm_ss");
+				LocalDateTime now = LocalDateTime.now();
+				String date = dtf.format(now);
 
-		        String filename2 = "Completed_MT" + date + ".IN";
-		        fileAuto_MUS.renameTo(new File(env.getProperty("after.conv.mt.file.output") + filename2));
-		        System.out.println("delete" + date);
-		        System.out.println(" ");
-		    }
+				String filename2 = "Completed_MT" + date + ".IN";
+				fileAuto_MUS.renameTo(new File(env.getProperty("after.conv.mt.file.output") + filename2));
+				System.out.println("delete" + date);
+				System.out.println(" ");
+			}
 		} catch (Exception e) {
-		    e.printStackTrace();
+			e.printStackTrace();
 		}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
@@ -291,8 +291,7 @@ public class Scheduler {
 		}
 
 ////////////////////////////////////////////////////////////////////////////////////// MX to MT//////////////////////////////////////////////////////////////////
-		
-		
+
 		File directoryPath2 = new File(env.getProperty("auto.swift.mx.in.file.path"));
 		usr = "Auto";
 
