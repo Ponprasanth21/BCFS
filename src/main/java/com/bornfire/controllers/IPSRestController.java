@@ -1175,7 +1175,7 @@ public class IPSRestController {
 			    	message.setCountry_code("ZWE");
 			    break;  
 			    case "Auto_MUS": 
-			    	path  = env.getProperty("auto.mus.swift.mx.in.file.path");
+			    	path  = env.getProperty("auto.swift.mx.in.file.path");
 			    	//System.out.println(path+  "    LLLLL");
 			    	message.setCountry_code("MUS");
 			    break;  
@@ -1185,10 +1185,8 @@ public class IPSRestController {
 			    	//System.out.println(path+  "    LLLLL");
 			    	message.setCountry_code("AUTO");
 			    break;  
-			      
-			    
-			   
 			    } 
+			 System.out.println("The getting path value is here "+path);
 			System.out.println(path+filename+"MXtomtPath");
 			message.setFile_name(path+filename);
 			

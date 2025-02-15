@@ -872,7 +872,7 @@ public class DocumentPacks {
 		    	 
 		    break;  
 		    case "Auto_MUS": 
-		    	path  = env.getProperty("auto.mus.swift.mt.in.file.path");
+		    	path  = env.getProperty("auto.swift.mt.in.file.path");
 		    	System.out.println(path+  "    LLLLL");
 		    	 
 		    break;
