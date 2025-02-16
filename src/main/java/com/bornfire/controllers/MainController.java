@@ -4370,22 +4370,33 @@ public class MainController {
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
 			@RequestParam(value = "srl_num", required = false) String srl_num,
+			@RequestParam(value = "fromform", required = false) String fromform,
 			@RequestParam(value = "formmode", required = false) String formmode,
 			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
 			throws FileNotFoundException, SQLException, IOException {
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+		
+		System.out.println(fromform+" fromformmmmmmmmmmmmmmmmmmmmmmm");
 
 		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
-		if (formmode == null || formmode.equals("list")) {
-
+		if (formmode == null || formmode.equals("messageParamList")) { 
 			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
+			md.addAttribute("parameterfromform", bswift_Parameter_Rep.findfromform());
+			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
+			md.addAttribute("formmode", "messageParamList");
+			md.addAttribute("menu", "MMenupage");
+
+		}else if (formmode.equals("list")) {
+			System.out.println(fromform+" fromforsssssssssssssssssssssssssss");
+			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
+			md.addAttribute("FromToData", bswift_Parameter_Rep.findFromToData(fromform));
+			System.out.println(bswift_Parameter_Rep.findFromToData(fromform));
 			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
 			md.addAttribute("formmode", "list");
 			md.addAttribute("menu", "MMenupage");
-
-		} else if (formmode.equals("Finaclefoldervalue")) {
+		}  else if (formmode.equals("Finaclefoldervalue")) {
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("menu", "MMenupage");
 

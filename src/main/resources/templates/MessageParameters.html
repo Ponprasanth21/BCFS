@@ -907,6 +907,12 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		location.href = "Massage_Parameters?formmode=delete1&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
+	
+	function fromformview(element) {
+		var attrValue = $(element).attr("data-attr");
+		alert(attrValue);
+		location.href = "Massage_Parameters?formmode=list&srl_num="+ encodeURIComponent(attrValue);
+	}
 
 	function modifysubmit(a) {
 		var srlno = $(a).attr("data-attr"); // Use 'a' instead of 'element'
@@ -1022,6 +1028,77 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 	};
 </script>
+<script>
+	function syncDropdowns() {
+	    const formSelection = document.getElementById("formSelection").value;
+	    const [, pacsValue] = formSelection.split("-");
+	    document.getElementById("pacsFormHeader").value = formSelection;
+	}
+
+function syncDropdownsReverse() {
+    const pacsSelection = document.getElementById("pacsFormHeader").value;
+    const [mtValue] = pacsSelection.split("-");
+    document.getElementById("formSelection").value = pacsSelection;
+}
+</script>
+<script type="text/javascript">
+function fromtovalue() {
+    var selectedValue = document.getElementById("formSelection").value;
+    var fromform = selectedValue.split("-")[0]; // Extract MT value before the '-'
+    
+    console.log("Selected fromform:", fromform);
+    //alert(fromform); 
+    $.ajax({
+        type: 'POST',
+        url: './Massage_Parameters?formmode=list&fromform=' + fromform,
+        success: function(response) { 
+             
+        },
+       error: function(xhr, status, error) {
+            console.error("AJAX Error: ", error);
+        } 
+    });
+ 
+}
+
+</script>
+<script type="text/javascript">
+function addFinacleRow() {
+    var table = document.getElementById("Finacledetailsvalue").getElementsByTagName('tbody')[0];
+    var rowCount = table.rows.length + 1; // Increment row count for new row numbering
+
+    var row = table.insertRow(); // Insert a new row at the end of the table
+
+    // Define the input structure for each column
+    row.innerHTML = `
+        <td><input type="text" name="rowno" value="${rowCount}"></td>
+        <td><input type="text" name="attribute" value=""></td>
+        <td><input type="text" name="form_mt_103_field_name" value=""></td>
+        <td><input type="text" name="form_mt_103_field" value=""></td>
+        <td><input type="text" name="form_mt_103_value" value=""></td>
+        <td><input type="text" name="form_mt_103_additional_details" value=""></td>
+        <td></td>
+        <td><input type="text" name="form_pacs_0008_description" value=""></td>
+        <td><input type="text" name="form_pacs_0008_field" value=""></td>
+        <td><input type="text" name="form_pacs_0008_value" value=""></td>
+        <td><input type="text" name="form_pacs_0008_additional_details" value=""></td>
+        <td><input type="text" name="form_pacs_0008_attribute" value=""></td>
+        <td><input type="text" name="entity_flg" value=""></td>
+    `;
+}
+
+function deleteFinacleRow() {
+    var table = document.getElementById("Finacledetailsvalue").getElementsByTagName('tbody')[0];
+    var rowCount = table.rows.length;
+
+    if (rowCount > 1) { // Ensure at least one row remains
+        table.deleteRow(rowCount - 1); // Remove the last row
+    } else {
+        alert("At least one row must remain.");
+    }
+}
+
+</script>
 <body>
 
 	<div th:insert="MMenupage :: header"></div>
@@ -1031,6 +1108,69 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		<div id="overlay">
 			<div class="cv-spinner">
 				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='messageParamList'" class="content">
+			<div class="card">
+				<div class="card-header">
+					<div class="float-left">
+						<h6 id="heading" style="color: white;">CONVERSION PARAMETERS
+							- LIST</h6>
+					</div>
+					<!-- <div class="float-right">
+						<button type="button" class="btn btn-sm btn-primary"
+							id="addfunctiondata" onclick="Addfunction();"
+							style="display: none;">Add</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							id="addfunctiondata1" onclick="Addfunctionvalue();"
+							style="display: none;">Add</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							id="finaclemt" onclick="finacleval();">Finacle MT</button>
+						<button type="button" class="btn btn-sm btn-primary" id="swiftmx"
+							onclick="swiftvalue();">Swift MX</button>
+					</div> -->
+				</div>
+
+				<div class="table-container">
+					<table class="table table-striped table-bordered table-hover"
+						id="Finacledetailsvalue">
+						<thead class="thead-light">
+							<tr>
+								<th>Srl.Num</th>
+								<th>From Form</th>
+								<th>To Form</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="chartacc : ${parameterfromform}">
+								<td th:text="${chartacc?.srl_num}" style="color: blue;"
+									onclick="fromformview(this)"
+									th:attr="data-attr=${chartacc?.srl_num}"></td>
+								<td th:text="${chartacc?.from_form}"></td>
+								<td th:text="${chartacc?.to_form}"></td>
+								<td th:text="${chartacc?.status}"
+									th:style="${chartacc?.status == 'Completed' ? 'color: green;' : (chartacc?.status == 'Pending' ? 'color: red;' : '')}">
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						id="btnsubmitfunction" onclick="submitfunction();"
+						style="display: none;">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						id="btnsubmitfunctiondata" onclick="submitfunctionvalues();"
+						style="display: none;">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
 			</div>
 		</div>
 
@@ -1060,17 +1200,44 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 						id="Finacledetailsvalue">
 						<thead class="thead-light">
 							<tr>
+								<th colspan="2">Srl No</th>
+								<th></th>
+
+								<!-- Dropdown for MT values -->
+								<th colspan="3">FORM: <select id="formSelection"
+									onchange="syncDropdowns(); " onclick="fromtovalue();"
+									style="border: 1px solid #ccc; width: 30%">
+										<option value="MT103-pacs.008">MT103</option>
+										<option value="MT202-pacs.009">MT202</option>
+										<option value="MT202CV-pacs.009">MT202CV</option>
+										<option value="MT300-pacs.008">MT300</option>
+										<option value="MT320-camt.025">MT320</option>
+										<option value="MT900-camt.054">MT900</option>
+										<option value="MT910-camt.054">MT910</option>
+										<option value="MT102-pacs.008">MT102</option>
+								</select></th>
+
 								<th></th>
 								<th></th>
-								<th colspan="3">FORM: MT 103</th>
-								<th></th>
-								<th></th>
-								<th colspan="3">FORM: PACS.0008</th>
-								<th></th>
-								<th></th>
+
+								<!-- Dropdown for PACS/CAMT values -->
+								<th colspan="3">FORM: <select id="pacsFormHeader"
+									onchange="syncDropdownsReverse()"
+									style="border: 1px solid #ccc; width: 50%">
+										<option value="MT103-pacs.008">pacs.008</option>
+										<option value="MT202-pacs.009">pacs.009</option>
+										<option value="MT202CV-pacs.009">pacs.009</option>
+										<option value="MT300-pacs.008">pacs.008</option>
+										<option value="MT320-camt.025">camt.025</option>
+										<option value="MT900-camt.054">camt.054</option>
+										<option value="MT910-camt.054">camt.054</option>
+										<option value="MT102-pacs.008">pacs.008</option>
+								</select></th>
+
 								<th></th>
 								<th></th>
 							</tr>
+
 							<tr>
 								<th>ROWNO</th>
 								<th>ATTRIBUTE</th>
@@ -1085,11 +1252,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 								<th>Additional Details</th>
 								<th>ATTRIBUTE</th>
 								<th>Status</th>
-								<th>Action</th>
+								<!-- <th>Action</th> -->
 							</tr>
 						</thead>
-						<tbody>
-							<tr th:each="chartacc : ${parameterdata}">
+						<tbody id="FromToBodyValue">
+							<tr th:each="chartacc : ${FromToData}">
 								<td th:text="${chartacc?.rowno}"></td>
 								<td th:text="${chartacc?.attribute}"></td>
 								<td th:text="${chartacc?.form_mt_103_field_name}"></td>
@@ -1105,40 +1272,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 								<td
 									th:text="${chartacc?.entity_flg == 'Y' ? 'Verified' : 'Unverified'}"
 									th:classappend="${chartacc?.entity_flg == 'Y' ? 'text-success' : 'text-danger'}"></td>
-
-								<td>
-									<div class="dropdown">
-										<button class="btn btn-xs btn-info btns" type="button"
-											id="dropdownMenuButton" data-toggle="dropdown"
-											aria-haspopup="true" aria-expanded="false">Action</button>
-										<div class="dropdown-menu"
-											aria-labelledby="dropdownMenuButton">
-											<button type="button" class="dropdown-item" id="btnmodify"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="modifyuser(this);">Modify</button>
-
-											<div class="dropdown-divider"></div>
-
-											<th:block th:if="${chartacc?.entity_flg == 'N'}">
-												<button type="button" class="dropdown-item" id="btnmodify"
-													th:attr="data-attr=${chartacc?.srl_num}"
-													onclick="verifyuser(this);">Verify</button>
-
-												<div class="dropdown-divider"></div>
-
-												<button type="button" class="dropdown-item" id="btndelete"
-													th:attr="data-attr=${chartacc?.srl_num}"
-													onclick="deleteuser(this);">Delete</button>
-
-												<div class="dropdown-divider"></div>
-											</th:block>
-
-											<button type="button" class="dropdown-item" id="btnEnquiry"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="enquiryuser(this);">View</button>
-										</div>
-									</div>
-								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -1215,124 +1348,305 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 			<form id="stp" th:action="@{/AddScreenfinacle}" th:object="${stp}"
 				method="post">
 				<div class="card">
-					<div class="card-header">
+					<div class="card-header"
+						style="display: flex; justify-content: space-between; align-items: center;">
+						<h4 style="color: white; margin: 0;">Finale MT - ADD</h4>
+
 						<div>
-							<h4 style="color: white;">Finale MT - ADD</h4>
+							<img th:src="@{/images/add.png}" aria-hidden="true"
+								style="font-size: 23px; cursor: pointer; width: 20px; height: 20px; margin-right: 10px;"
+								onclick="addFinacleRow()" alt="Add"> <img
+								th:src="@{/images/MinusIcon.png}" aria-hidden="true"
+								style="font-size: 23px; cursor: pointer; width: 20px; height: 20px;"
+								onclick="deleteFinacleRow(this)" alt="Remove">
 						</div>
 					</div>
-					<div class="card-body">
 
-						<div style="font-famlily: bold;">
-							<h4>FORM : MT103</h4>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>ROWNO</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="rowno" name="rowno" />
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-2">
-								<label>ATTRIBUTE</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="attribute" name="attribute" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label> Field Name</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_mt_103_field_name"
-									name="form_mt_103_field_name" />
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-2">
-								<label>Field</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_mt_103_field"
-									name="form_mt_103_field" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>Value</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_mt_103_value"
-									name="form_mt_103_value" />
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-2">
-								<label>Additional Details</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_mt_103_additional_details"
-									name="form_mt_103_additional_details" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<br>
-						<div style="font-famlily: bold;">
-							<h4>FORM : PACS0008</h4>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>Description</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_pacs_0008_description"
-									name="form_pacs_0008_description" />
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-2">
-								<label>Field</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_pacs_0008_field"
-									name="form_pacs_0008_field" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>Value</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_pacs_0008_value"
-									name="form_pacs_0008_value" />
-							</div>
-							<div class="col-sm-1"></div>
-							<div class="col-sm-2">
-								<label> Additional Details</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_pacs_0008_additional_details"
-									name="form_pacs_0008_additional_details" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>ATTRIBUTE</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="form_pacs_0008_attribute"
-									name="form_pacs_0008_attribute" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
+					<div style="width: 100%; overflow-x: auto;">
+						<table class="table table-striped table-bordered table-hover"
+							id="Finacledetailsvalue">
+							<thead class="thead-light">
+								<tr>
+									<th colspan="2">Srl No</th>
+									<th></th>
+
+									<!-- Dropdown for MT values -->
+									<th colspan="3">FORM: <select id="formSelection"
+										onchange="syncDropdowns(); " onclick="fromtovalue();"
+										style="border: 1px solid #ccc; width: 50%">
+											<option value="MT103-pacs.008">MT103</option>
+											<option value="MT202-pacs.009">MT202</option>
+											<option value="MT202CV-pacs.009">MT202CV</option>
+											<option value="MT300-pacs.008">MT300</option>
+											<option value="MT320-camt.025">MT320</option>
+											<option value="MT900-camt.054">MT900</option>
+											<option value="MT910-camt.054">MT910</option>
+											<option value="MT102-pacs.008">MT102</option>
+									</select></th>
+
+									<th></th>
+									<th></th>
+
+									<!-- Dropdown for PACS/CAMT values -->
+									<th colspan="3">FORM: <select id="pacsFormHeader"
+										onchange="syncDropdownsReverse()"
+										style="border: 1px solid #ccc; width: 50%">
+											<option value="MT103-pacs.008">pacs.008</option>
+											<option value="MT202-pacs.009">pacs.009</option>
+											<option value="MT202CV-pacs.009">pacs.009</option>
+											<option value="MT300-pacs.008">pacs.008</option>
+											<option value="MT320-camt.025">camt.025</option>
+											<option value="MT900-camt.054">camt.054</option>
+											<option value="MT910-camt.054">camt.054</option>
+											<option value="MT102-pacs.008">pacs.008</option>
+									</select></th>
+
+									<th></th>
+									<th></th>
+								</tr>
+
+								<tr>
+									<th>ROWNO</th>
+									<th>ATTRIBUTE</th>
+									<th>Field Name</th>
+									<th>Field</th>
+									<th>Value</th>
+									<th>Additional Details</th>
+									<th></th>
+									<th>Description</th>
+									<th>Field</th>
+									<th>Value</th>
+									<th>Additional Details</th>
+									<th>ATTRIBUTE</th>
+									<th>Status</th>
+									<!-- <th>Action</th> -->
+								</tr>
+							</thead>
+							<tbody id="FromToBodyValue">
+								<tr>
+									<td><input type="text" name="rowno" value="1"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="2"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="3"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="4"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="5"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="6"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="7"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="8"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="9"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+								<tr>
+									<td><input type="text" name="rowno" value="10"></td>
+									<td><input type="text" name="attribute" value=""></td>
+									<td><input type="text" name="form_mt_103_field_name"
+										value=""></td>
+									<td><input type="text" name="form_mt_103_field" value=""></td>
+									<td><input type="text" name="form_mt_103_value" value=""></td>
+									<td><input type="text"
+										name="form_mt_103_additional_details" value=""></td>
+									<td></td>
+									<td><input type="text" name="form_pacs_0008_description"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_field"
+										value=""></td>
+									<td><input type="text" name="form_pacs_0008_value"
+										value=""></td>
+									<td><input type="text"
+										name="form_pacs_0008_additional_details" value=""></td>
+									<td><input type="text" name="form_pacs_0008_attribute"
+										value=""></td>
+									<td><input type="text" name="entity_flg" value=""></td>
+								</tr>
+							</tbody>
+
+						</table>
+
 					</div>
 
 					<div class="card-footer text-center">

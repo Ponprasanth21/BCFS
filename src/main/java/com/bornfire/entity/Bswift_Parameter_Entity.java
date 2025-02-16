@@ -49,6 +49,29 @@ public class Bswift_Parameter_Entity {
 	private String	modify_flg;
 	private String	del_flg;
 	private String	verify_flg;
+	private String	from_form;
+	private String	to_form;
+	private String	status;
+	
+	
+	public String getFrom_form() {
+		return from_form;
+	}
+	public void setFrom_form(String from_form) {
+		this.from_form = from_form;
+	}
+	public String getTo_form() {
+		return to_form;
+	}
+	public void setTo_form(String to_form) {
+		this.to_form = to_form;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getSrl_num() {
 		return srl_num;
 	}
@@ -187,12 +210,14 @@ public class Bswift_Parameter_Entity {
 	public void setVerify_flg(String verify_flg) {
 		this.verify_flg = verify_flg;
 	}
+	 
 	public Bswift_Parameter_Entity(String srl_num, String rowno, String attribute, String form_mt_103_field_name,
 			String form_mt_103_field, String form_mt_103_value, String form_mt_103_additional_details,
 			String form_pacs_0008_description, String form_pacs_0008_field, String form_pacs_0008_value,
 			String form_pacs_0008_additional_details, String form_pacs_0008_attribute, String entry_user,
 			Date entry_time, String modify_user, Date modify_time, String verify_user, Date verify_time,
-			String entity_flg, String auth_flg, String modify_flg, String del_flg, String verify_flg) {
+			String entity_flg, String auth_flg, String modify_flg, String del_flg, String verify_flg, String from_form,
+			String to_form, String status) {
 		super();
 		this.srl_num = srl_num;
 		this.rowno = rowno;
@@ -217,6 +242,9 @@ public class Bswift_Parameter_Entity {
 		this.modify_flg = modify_flg;
 		this.del_flg = del_flg;
 		this.verify_flg = verify_flg;
+		this.from_form = from_form;
+		this.to_form = to_form;
+		this.status = status;
 	}
 	public Bswift_Parameter_Entity() {
 		super();

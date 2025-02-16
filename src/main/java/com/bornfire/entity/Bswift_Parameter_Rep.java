@@ -15,4 +15,18 @@ public interface Bswift_Parameter_Rep extends JpaRepository<Bswift_Parameter_Ent
 	
 	@Query(value = "SELECT parameter_seq.nextval FROM dual", nativeQuery = true)
 	String getNextSeriesId();
+	
+	@Query(value = "SELECT SRL_NUM, FROM_FORM, TO_FORM, STATUS\r\n"
+			+ "FROM (\r\n"
+			+ "    SELECT SRL_NUM, FROM_FORM, TO_FORM, STATUS, \r\n"
+			+ "           ROW_NUMBER() OVER (PARTITION BY FROM_FORM ORDER BY SRL_NUM) AS rn\r\n"
+			+ "    FROM BSWIFT_PARAMETER_TABLE\r\n"
+			+ "    WHERE DEL_FLG = 'N'\r\n"
+			+ ") \r\n"
+			+ "WHERE rn = 1", nativeQuery = true)
+	List<Bswift_Parameter_Entity> findfromform();
+	
+	@Query(value = "SELECT * FROM BSWIFT_PARAMETER_TABLE WHERE DEL_FLG = 'N' AND from_form = ?1", nativeQuery = true)
+	List<Bswift_Parameter_Entity> findFromToData(String fromForm);
+
 }

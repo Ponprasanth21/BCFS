@@ -22,7 +22,7 @@ public class Scheduler {
     @Autowired
     BipsSwiftMsgConversionRepo bipsSwiftMsgConversionRepo;
 
-    @Scheduled(fixedRate = 5000)
+    //@Scheduled(fixedRate = 5000)
     public void run() throws IOException, ParseException {
         processMTOutDirectory();
         processMXInDirectory();
