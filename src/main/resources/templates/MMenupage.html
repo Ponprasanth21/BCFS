@@ -81,8 +81,11 @@
 	height: 100%;
 }
 
-#FolderManagmt {
-    margin-left: 25px;
+    #UserProfile, #AccessandRoles, #NotificationParms, #Massage_Parameters,
+	#userActivities, #File_Management, #Swift_MX_Menu_inquiries,
+	#Swift_MT_Menu_inquiries, #Proccessed_Messagess, #Failed_Messages,
+	#Pending_Messages, #OperationLog,#FolderConfiguration,#FolderManagmt {
+	margin-left: 25px;
 }
 
 #menu>ul>li>a {
@@ -592,8 +595,8 @@ jQuery(function($){
 		style="box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color: white; height: 70px; border-color: red; padding: 10px;">
 
 		<div class="col-sm-12" style="border-color: red">
-			<img th:src=@{/images/maa_bank_image.png} style="width: 224px;height:70px;"
-				id="showmenu" alt="Bornfire">
+			<img th:src=@{/images/maa_bank_image.png}
+				style="width: 224px; height: 70px;" id="showmenu" alt="Bornfire">
 			<div id="headerdiv">
 				<img th:src=@{/images/Bornfire.png} id="bfirelogo"
 					style="margin-left: 18px; height: 50px; margin-top: -14px;"
@@ -787,7 +790,7 @@ jQuery(function($){
 
 				<div id="Operations" class="collapse submenu1 ">
 					<ul class="nav flex-column" aria-expanded="false">
-					
+
 
 						<li class="nav-item"><a class="nav-link" id="FolderManagmt"
 							href="javascript: void(0);" onclick="contentLoad(this)">
@@ -810,7 +813,7 @@ jQuery(function($){
 						<li class="nav-item"><a class="nav-link" id="File_Management"
 							href="javascript: void(0);" onclick="contentLoad(this)">Folder
 								Management</a></li>
-					<!-- 	<li class="nav-item"><a class="nav-link"
+						<!-- 	<li class="nav-item"><a class="nav-link"
 							id="FolderConfigurationInquiry" href="javascript: void(0);"
 							onclick="contentLoad(this)">Folder Configuration</a></li> -->
 						<li class="nav-item"><a class="nav-link"
