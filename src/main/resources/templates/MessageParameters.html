@@ -1256,7 +1256,7 @@ function deleteFinacleRow() {
 							</tr>
 						</thead>
 						<tbody id="FromToBodyValue">
-							<tr th:each="chartacc : ${FromToData}">
+							<tr th:each="chartacc : ${parameterdata}">
 								<td th:text="${chartacc?.rowno}"></td>
 								<td th:text="${chartacc?.attribute}"></td>
 								<td th:text="${chartacc?.form_mt_103_field_name}"></td>

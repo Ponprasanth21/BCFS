@@ -1,0 +1,1750 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=folder" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&icon_names=folder" />
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
+
+
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+
+<style>
+.modal-backdrop.show {
+	opacity: -1.5;
+}
+
+@media screen and (min-width: 768px) {
+	#fullHeightModalRight {
+		top: 66px;
+		left: auto;
+		bottom: auto;
+		overflow: visible;
+	}
+}
+
+/* .modal-backdrop {
+	display: none;
+} */
+body {
+	background-color: lightgrey;
+}
+
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
+
+.tag-btn {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+	z-index: 5;
+	position: relative;
+	padding: 10px;
+	margin: 0;
+	line-height: 5px;
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	-o-transition: all 0.2s ease-in-out;
+	-ms-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+	background-color: #F08080;
+	border: none;
+	color: #fff;
+	box-shadow: none;
+}
+
+.pagebut {
+	margin-top: 1%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
+
+select {
+	width: 150px;
+	margin: 10px;
+}
+
+td {
+	background-color: #f8f7ff;
+}
+
+table.dataTable thead th, table.dataTable tfoot th {
+	font-weight: normal;
+}
+
+table.table .thead-light th {
+	font-size: 13px;
+	border-color: #d4d7da;
+}
+
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
+
+#hidden_div {
+	display: none;
+}
+
+table th {
+	color: white;
+	background-color: #2e455deb;
+	font-size: small;
+}
+
+table td {
+	font-size: small;
+}
+
+.underline {
+	text-decoration: underline;
+	color: #08a6f1;
+	cursor: pointer;
+}
+
+.imageround {
+	vertical-align: middle;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border-color: red;
+}
+
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 18.3%;
+	margin-top: 80px;
+}
+
+/* input[type="text"] {
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
+ */
+.dataTables_empty {
+	color: #be3232;
+}
+
+.dataTables_wrapper .dataTables_filter {
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+.dataTables_filter input {
+	color: black;
+	background-color: white;
+}
+
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
+
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
+
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spinner {
+	/* width: 40px;
+	height: 40px;
+	border: 4px #00343d solid;
+	border-top: 4px #181818 solid;
+	border-radius: 50%;
+	animation: sp-anime 0.8s infinite linear; */
+	
+}
+
+.autocomplete {
+	/*the container must be positioned relative:*/
+	position: relative;
+	display: inline-block;
+}
+
+.autocomplete-items {
+	position: absolute;
+	border: 1px solid #d4d4d4;
+	border-bottom: none;
+	border-top: none;
+	z-index: 99;
+	/*position the autocomplete items to be the same width as the container:*/
+	top: 100%;
+	left: 0;
+	right: 0;
+}
+
+.autocomplete-items div {
+	padding: 10px;
+	cursor: pointer;
+	background-color: #fff;
+	border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+	/*when hovering an item:*/
+	background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+	/*when navigating through the items using the arrow keys:*/
+	background-color: DodgerBlue !important;
+	color: #ffffff;
+}
+
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
+
+}
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
+<style>
+.flex-container {
+	display: flex;
+	flex-wrap: nowrap;
+	background-color: #126b81;
+}
+
+.flex-container .box {
+	background-color: #f1f1f1;
+	width: 50%;
+	margin: 6px;
+	text-align: center;
+	line-height: 75px;
+	font-size: 30px;
+}
+</style>
+</head>
+
+
+
+
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+
+	$(function() {
+		$("#disableDate").datepicker(
+				{
+					maxDate : 0,
+					changeMonth : true,
+					changeYear : true,
+					dateFormat : "dd-MM-yy",
+					onSelect : function(selected) {
+						var dt = $(this).datepicker('getDate');
+						dt.setDate(dt.getDate());
+
+						$("#loader1").modal("toggle");
+
+						location.href = "BulkCredit?tranDate="
+								+ $("#disableDate").val();
+
+					}
+				});
+	});
+
+	////Add Multiple Rows when Button Click
+	var initialLineNum = 2;
+	function addRow(tableID, lineNum, Rem_name, Remit_account_no) {
+		var validate = true;
+		$('#valiTab').find('tr input[type=text]').each(function() {
+
+			if ($(this).val() == "") {
+				validate = false;
+			}
+		});
+
+		if (validate) {
+			var table = document.getElementById(tableID);
+			var line = document.getElementById(lineNum);
+			var remName = document.getElementById(Rem_name);
+			var remAcctNumber = document.getElementById(Remit_account_no);
+			var rowCount = table.rows.length;
+			var rowinc = rowCount + 1;
+			if (rowCount < 100) {
+				var row = table.insertRow(rowCount);
+
+				//alert(table.rows[0].cells[0].childNodes[0].value);
+				var colCount = table.rows[0].cells.length;
+				row.id = 'row_' + rowCount;
+
+				for (var i = 0; i < colCount; i++) {
+
+					var newcell = row.insertCell(i);
+					newcell.outerHTML = table.rows[0].cells[i].outerHTML;
+
+					if (i == 3) {
+						remAcctNumber.setAttribute("value",
+								table.rows[0].cells[4].childNodes[0].value);
+					}
+					if (i == 2) {
+						remName.setAttribute("value",
+								table.rows[0].cells[3].childNodes[0].value);
+					}
+
+				}
+				//var listitems = row.getElementsByTagName("input");
+
+				table.rows[rowCount].cells[1].innerHTML = "<input type='text' name='doc_sub_id' value="+rowinc+" id='tdLineNum' readonly class='form-control'>";
+
+				var listitems = row.getElementsByTagName("input");
+
+				/* for (i = 0; i < listitems.length; i++) {
+					
+					line.setAttribute("value", initialLineNum);
+					
+				} */
+
+			} else {
+
+				$("#errormsg").text("Maximum 100 Transaction Only Allowed");
+				$('#error').modal("toggle");
+
+			}
+			++initialLineNum;
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+		}
+
+	}
+
+	////Delete Rows when button click
+	function deleteRow(tableID) {
+		var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		if (rowCount <= 1) {
+			$("#errormsg").text("Cannot Remove all the transaction");
+			$('#error').modal("toggle");
+		} else {
+			table.deleteRow(rowCount - 1);
+		}
+	}
+
+	//////Dashboard
+	function home() {
+		location.href = '/BSWIFT/BSWIFTDashboard'
+	}
+
+	////Back to previous Screen
+	function back() {
+		window.history.back();
+	}
+
+	////Add Button Click Event
+	function alert_add(a) {
+		var formmode = a.getAttribute("frmode");
+		location.href = "BulkCredit?formmode=" + formmode;
+		$("#subaddbtn").hide();
+		$("#subbtn").hide();
+	}
+
+	////Upload Button Click Event
+	function upload_add(a) {
+		var formmode = a.getAttribute("frmode");
+		location.href = "Swift_MT_Menu?formmode=" + formmode;
+	}
+
+	////List Button Click Event
+	function listBC(a) {
+		var formmode = a.getAttribute("formmode");
+		location.href = "Swift_MT_Menu?formmode=" + formmode;
+	}
+
+	/*]]>*/
+</script>
+
+<script>
+	$(document).ready(function() {
+		$(window).keydown(function(event) {
+			//alert($('#alert').hasClass('show'));
+			if (event.keyCode == 13) {
+				event.preventDefault();
+				return false;
+			}
+		});
+	});
+</script>
+
+
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+
+	//	var userID=/*[[${userID}]]*/;
+	/* $(document).ready(function() {
+		$('#my_table').DataTable({
+
+			"destroy" : false,
+			"scrollY" : 400,
+			"scrollCollapse" : true,
+			"paging" : false,
+			"autoWidth" : false,
+			"ordering" : true,
+			"searching" : false,
+			"scrollX" : true,
+			"pageLength" : 100,
+			   "bInfo": false,
+		
+
+		});
+	}); */
+
+	$(function() {
+		var fileupload = $("#FileUpload1");
+		var filePath = $("#spnFilePath");
+		var button = $("#btnFileUpload");
+		button.click(function() {
+			fileupload.click();
+		});
+
+		fileupload
+				.change(function() {
+
+					var fileName = $(this).val().split('\\')[$(this).val()
+							.split('\\').length - 1];
+					filePath.html("<b>Selected File: </b>" + fileName);
+
+				});
+	});
+
+	////Upload Icon Click event
+	function fileup() {
+		$("#fileupload").modal("toggle");
+		$("#fileupload123").hide();
+	}
+
+	////Open Upload Modal box
+	function openUploadModal() {
+		$("#fileupload123").modal("toggle");
+		$("#btnadddocupl").hide();
+		$("#btnadddocuplrem").hide();
+		$("#list").hide();
+	}
+
+	////Upload Document
+	function fire_ajax_submit() {
+		$('#fileupload').hide();
+		//$("#loader1").modal("toggle");
+
+		var form = $('#fileUploadForm')[0];
+		var data = new FormData(form);
+		var trHTML = '';
+		$('#my_tabletr').empty();
+
+		$
+				.ajax({
+					type : "POST",
+					enctype : 'multipart/form-data',
+					url : "ws/fileUploadMX",
+					data : data,
+					processData : false, //prevent jQuery from automatically transforming the data into a query string
+					contentType : false,
+					cache : false,
+					timeout : 600000,
+					success : function(list) {
+
+						$
+								.each(
+										list,
+										function(KEY, data) {
+
+											var datee = data.date_of_process;
+											//alert(datee);
+
+											var date1 = new Date(datee);
+											var month = date1.getMonth() + 1;
+
+											//s	var dout = Date.parse(datee);
+											//	var date=dout.toString('d-M-yy');
+											var date = date1.getDate()
+													+ "-"
+													+ (month.toString().length > 1 ? month
+															: "0" + month)
+													+ "-" + date1.getFullYear();
+											//	alert(date);
+
+											//var date=new Date(data.date_of_process).toLocaleDateString('sv-SE')
+											//var date="11-01-2022";
+											//alert(date);
+
+											trHTML += "<tr id='trBody'>"
+													+ '<td><input type="text" name="date_of_process" id="date_of_process"' + date + '" class="form-control" value="' + date + '" readonly/></td>'
+													+ '<td><input type="text" name="srl_no" id="srl_no' + data.srl_no  + '" class="form-control" value="' + data.srl_no + '" readonly/></td>'
+													+ '<td style=" width: 318px;"><input type="text" name="file_name" id="file_name' + data.file_name  + '" class="form-control" value="' + data.file_name + '" readonly/></td>'
+													+ '<td><input type="text" name="swift_msg_type" id="swift_msg_type'   + data.swift_msg_type  + '" class="form-control" value="' + data.swift_msg_type + '" required readonly/></td>'
+													+ '<td><input type="text" name="swift_mrg_type_conv" id="swift_mrg_type_conv'   + data.swift_mrg_type_conv  + '" class="form-control" value="' + data.swift_mrg_type_conv + '"  required readonly/></td>'
+													+ '<td><input type="text" name="status" id="status'   + data.status  + '" class="form-control" value="' + data.status + '"  required readonly/></td>'
+
+													+ '</tr>';
+
+										});
+
+						$('#my_table').append(trHTML);
+						// $("#loader1").hide();
+
+						return data;
+					},
+					error : function(e) {
+						$("#loader1").hide();
+						$("#invalidfilemsg").text(e.responseText);
+						$("#invalidfile").modal("toggle");
+
+					}
+				});
+	}
+	////Execute Button Click event
+	$(function() {
+		$("#exe").click(function() {
+			$("#alert").modal("hide");
+			//$("#exebtn").show();
+			//$("#subbtn").hide();
+			//$("#subaddbtn").hide();
+
+			location.href = 'BulkCredit';
+		});
+	});
+
+	////Bulk Transaction submission 
+	function submitform(a) {
+
+		var validate = true;
+		$('#my_table').find('tr input[type=text]').each(function() {
+			if ($(this).val() == "") {
+				validate = false;
+			}
+		});
+
+		if (validate) {
+			if ($("#BulkTransaction").valid()) {
+				$("#loader1").modal("toggle");
+				var formmode = a.getAttribute("data-formmode");
+				var url = "IPSBulkTransactionAdd?formmode=" + formmode
+						+ "&userID=" + userID;
+
+				$("#BulkTransaction").attr('action', url);
+
+				var options = {
+					success : showResponse
+				};
+
+				$("#BulkTransaction").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					$("#loader1").modal("hide");
+					if (responseText.tranID == "0") {
+						$("#errormsg").text(responseText.status);
+						$('#error').modal("toggle");
+					} else {
+						$("#alertmsg").text(responseText.status);
+						document.getElementById("doc_ref_id_hide").value = responseText.tranID
+						$('#alert').modal("toggle");
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+
+	};
+
+	////Submit form manually
+	function submitaddform(a) {
+
+		var validate = true;
+		$('#valiTab').find('tr input[type=text]').each(function() {
+			if ($(this).val() == "") {
+				validate = false;
+			}
+		});
+		if (validate) {
+			if ($("#AddBulk").valid()) {
+
+				$("#loader1").modal("toggle");
+				var formmode = a.getAttribute("data-formmode");
+				var url = "IPSBulkTransactionAdd?formmode=" + formmode
+						+ "&userID=" + userID;
+
+				$("#AddBulk").attr('action', url);
+
+				var options = {
+					success : showResponse
+				// post-submit callback 
+				};
+
+				$("#AddBulk").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+
+					if (responseText.tranID == "0") {
+						$("#loader1").modal("hide");
+						$("#errormsg").text(responseText.status);
+						$('#error').modal("toggle");
+					} else {
+						$("#loader1").modal("hide");
+						$("#alertmsg").text(responseText.status);
+						document.getElementById("doc_ref_id_hide").value = responseText.tranID
+						$('#alert').modal("toggle");
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+
+	};
+
+	////Call to IPSX Connection to create transaction
+	function submitExecute(a) {
+		/*<![CDATA[*/
+		var doc_ref_id = a.getAttribute("data-docrefid");
+		var entryUser = a.getAttribute("data-entryuser");
+		//var doc_ref_id = $("#doc_ref_id_hide").val();
+
+		if (userID == entryUser) {
+			$("#alertmsg").text("Same User Cannot Execute Transaction");
+			$('#alert').modal("toggle");
+		} else {
+			$.ajax({
+				type : 'post',
+				content_type : 'application/json',
+				url : '/IPSAdmin/IPSBulkCreditTranExe/' + doc_ref_id
+						+ '?userID=' + userID,
+
+				success : function(response) {
+					if (response == "0") {
+						$("#alertmsg").text("Transaction Failed");
+						$('#alert').modal("toggle");
+					} else {
+
+						location.href = 'IPSBulkExe/' + response;
+					}
+				}
+			});
+
+		}
+
+		/*]]>*/
+	};
+
+	/*]]>*/
+</script>
+<script>
+	function submitform11(a) {
+
+		//alert("inside");
+		var validate = true;
+		$('#my_table').find('tr input[type=text]').each(function() {
+
+			if ($(this).val() == "") {
+				//alert("inside");
+				validate = false;
+			}
+		});
+		if (validate) {
+			if ($("#MXMessageform").valid()) {
+				//alert("fff");
+				//$("#loader1").modal("toggle");
+				//var formmode = a.getAttribute("data-formmode");
+				var url = "BIPSMXMessageform?formmode=upload";
+
+				$("#MXMessageform").attr('action', url);
+
+				var options = {
+					success : showResponse
+				};
+
+				$("#MXMessageform").ajaxSubmit(options);
+
+				function showResponse(responseText, statusText, xhr, $form) {
+					$("#loader1").modal("hide");
+					if (responseText.status == "SUCCESS") {
+						/* $("#errormsg").text(responseText.status);
+						$('#error').modal("toggle"); */
+
+						alert("success");
+						location.href = "Swift_MT_Menu?formmode=AfterConvList";
+					} else {
+						/* $("#alertmsg").text(responseText.status);
+						
+						$('#alert').modal("toggle"); */
+						alert(responseText.data);
+					}
+
+				}
+				;
+			}
+
+		} else {
+			$('#addCredit').modal("toggle");
+			return false;
+
+		}
+	}
+	function finuserMT(a) {
+		var refNo = a.getAttribute("data-mand_ref_no");
+
+		$.ajax({
+
+			type : 'get',
+			url : "./getMTClobImage/" + refNo,
+			success : function(response) {
+
+				$('#imageshow').modal('show');
+				$('#myText').val(response);
+
+			}
+
+		});
+	}
+	function finuser(a) {
+		var refNo = a.getAttribute("data-mand_ref_no");
+
+		$.ajax({
+
+			type : 'get',
+			url : "./getClobImage/" + refNo,
+			success : function(response) {
+
+				$('#imageshow1').modal('show');
+				$('#myText1').val(response);
+
+			}
+
+		});
+	}
+	function finuser2(a) {
+
+		var refNo = a.getAttribute("data-mand_ref_no");
+
+		location.href = "File_Management?formmode=AfterConvList&refNo=" + refNo;
+
+	}
+	
+	
+	$(document).ready(function() {
+		$('#my_table11').DataTable({
+			"destroy" : true,
+			"scrollY" : 600,
+			"scrollCollapse" : true,
+			"paging" : true,
+			"autoWidth" : false,
+			"ordering" : true,
+			"oLanguage": { "sSearch": "",
+				 "sSearchPlaceholder": "Search Here"}, 
+			"searching" : true,
+			"pageLength" : 250,
+			"lengthChange" : false,
+		});
+	});
+</script>
+<script>
+	function Messageviewfun() {
+		Alert("Got It");
+	}
+</script>
+<body>
+
+	<div th:insert="MMenupage :: header"></div>
+
+	<div class="container-manager">
+
+		<div id="overlay">
+			<div class="cv-spinner">
+				<span class="spinner"></span>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='list'" class="content">
+			<div class="card">
+
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">FOLDER MANAGEMENT DATAS - LIST</h6>
+					</div>
+
+					<div class="btn-group nav-buttons float-right">
+
+						<!-- <label style="color: white; padding-right: 20px;">Date</label>
+						<div style="padding-right: 50px;">
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div> -->
+						<div class="btn-group nav-buttons float-right">
+							<!-- <button type="button" class="btn btn-xs btn-primary btns"
+									id="btnAdd" onclick="adduser();" th:if="${IPSRoleMenu.work_class}=='C' OR ${IPSRoleMenu.permissions}=='W'">Create User</button> -->
+							<!-- <button type="button" class="btn btn-xs btn-primary btns active"
+									id="btnInq" onclick="list()">List</button> -->
+						</div>
+
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover table-sm"
+						id="my_table11">
+						<thead class="thead-light">
+							<tr>
+								<th>CBS-MT-OUT</th>
+								<th>CBS-MT-IN</th>
+								<th>SWIFT-MX-OUT</th>
+								<th>SWIFT-MX-IN</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								th:each="i : ${#numbers.sequence(0, fileListCBS_MT_OUT.size() - 1)}">
+								<td th:text="${fileListCBS_MT_OUT[i].name}"></td>
+								<td th:text="${fileListCBS_MT_IN[i].name}"></td>
+								<td th:text="${fileListSWIFT_MX_OUT[i].name}"></td>
+								<td th:text="${fileListSWIFT_MX_IN[i].name}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+			</div>
+		</div>
+
+		<div th:if="${formmode}=='MT&Mxview'" class="content">
+			<div class="card">
+
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">SWIFT MX MESSAGE List</h6>
+					</div>
+
+					<div class="btn-group nav-buttons float-right">
+
+						<!-- <label style="color: white; padding-right: 20px;">Date</label>
+						<div style="padding-right: 50px;">
+							<input type="text" readonly th:value="${tranDate}"
+								id="disableDate" value="" class="form-control form-control-sm"
+								autocomplete="off" required />
+						</div> -->
+
+
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table table-bordered  table-hover table-sm"
+						id="my_table11">
+						<thead class="thead-light">
+							<tr>
+								<th>Srl No</th>
+								<th>Sender's Reference</th>
+								<th>Bank Operation Code</th>
+								<th>Message Type</th>
+
+								<th>Status</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="alert: ${Mtlist}">
+
+
+
+								<td th:text="${alert.srl_no}"></td>
+								<td th:text="${alert.sender_reference}"></td>
+								<td th:text="${alert.bank_operation_code}"></td>
+								<td>MX</td>
+								<td>Completed</td>
+								<td><button onclick="finuser(this);" id="openModal"
+										th:attr="data-mand_ref_no=${alert.srl_no}">View</button></td>
+
+							</tr>
+
+							<!-- <tr th:each="tranBulk : ${bulkCreditList}" class="userlist">
+
+								<td th:text="${#dates.format(tranBulk.tran_date,'dd-MM-yyyy')}"></td>
+
+								<th:block th:switch="${tranBulk.entity_flg}" id="status">
+									<td th:case="'N'"><a th:text="${tranBulk.doc_ref_id}"
+										th:href="@{'/BulkCredit?docRefId='+${tranBulk.doc_ref_id}+'&formmode=a'}"></a></td>
+
+									<td th:case="'Y'"><a th:text="${tranBulk.doc_ref_id}"
+										th:href="@{'/IPSBulkExe/'+${tranBulk.ips_ref_no}+'?form=list&tranDate='+${#dates.format(tranBulk.tran_date,'dd-MMM-yyyy')}}"></a></td>
+
+								</th:block>
+
+								<td th:text="${tranBulk.rem_name}"></td>
+								<td th:text="${tranBulk.remit_account_no}"></td>
+								<td th:text="${tranBulk.tran_amt}" style="text-align: right;"></td>
+								<td th:text="${tranBulk.ips_ref_no}"></td>
+								<th:block th:switch="${tranBulk.entity_flg}" id="status">
+									<td th:case="'N'" style="color: red;">Waiting For Approval</td>
+									<td th:case="'Y'" style="color: green;">Created</td>
+								</th:block>
+
+								<td th:text="${tranBulk.entry_user}"></td>
+								<td th:text="${tranBulk.verify_user}"></td>
+							</tr> -->
+
+						</tbody>
+					</table>
+				</div>
+
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<div th:if="${formmode}=='AfterConvList'" class="content">
+				<div th:if="${MsgType}=='MT'">
+					<div class="card">
+
+						<div class="card-header">
+							<div class="float-left">
+								<h6 style="color: white;">MESSAGE MASTER</h6>
+							</div>
+							<div class="flex-container"
+								style="MARGIN-TOP: 40PX; ALIGN-CONTENT: center; HEIGHT: 800PX;">
+								<div class="box">
+									<div style="background-color: #156f85;">
+										<label style="color: #e9e9e9; font-size: 17px;">SWIFT
+											MT MESSAGE</label>
+									</div>
+									<div class="row">
+										<div class="col"
+											style="color: black; font-size: 17px; float: left;">
+											<label style="font-size: 20px;">Message Reference
+												Number</label>
+										</div>
+
+										<div class="col">
+											<input style="height: 37px; width: fit-content;"
+												th:value="${Mtlist?.file_mgt_ref_no}" readonly>
+										</div>
+										<div class="row">
+
+											<textarea id='myText1'
+												style="width: 794px; height: 580px; line-height: 2; margin-left: 46px; font-size: 20px;"
+												th:text="${Mtlist?.mt_message_file}" readonly></textarea>
+										</div>
+
+									</div>
+
+								</div>
+								<div class="box">
+									<div style="background-color: #156f85;">
+										<label style="color: #e9e9e9; font-size: 17px;">SWIFT
+											MX MESSAGE</label>
+									</div>
+									<div class="row">
+										<div class="col"
+											style="color: black; font-size: 17px; float: left;">
+											<label style="font-size: 20px;">Message Reference
+												Number</label>
+										</div>
+
+										<div class="col">
+											<input style="height: 37px; width: fit-content;"
+												th:value="${Mxlist?.file_mgt_ref_no}" readonly>
+										</div>
+
+										<div class="row">
+
+											<textarea id='myText1'
+												style="width: 794px; height: 580px; line-height: 2; margin-left: 46px; font-size: 20px;"
+												th:text="${Mxlist?.mx_message_file}" readonly></textarea>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="card-footer text-center">
+
+								<button type="button" class="btn btn-sm btn-primary"
+									id="btnHome" onclick="home();">Home</button>
+								<button type="button" class="btn btn-sm btn-primary"
+									id="btnBack" onclick="back();">Back</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<div th:if="${MsgType}=='MX'">
+
+				<div class="card">
+
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;">MESSAGE MASTER</h6>
+						</div>
+						<div class="flex-container"
+							style="MARGIN-TOP: 40PX; ALIGN-CONTENT: center; HEIGHT: 800PX;">
+
+							<div class="box">
+								<div style="background-color: #156f85;">
+									<label style="color: #e9e9e9; font-size: 17px;">SWIFT
+										MX MESSAGE</label>
+								</div>
+								<div class="row">
+									<div class="col"
+										style="color: black; font-size: 17px; float: left;">
+										<label style="font-size: 20px;">Message Reference
+											Number</label>
+									</div>
+
+									<div class="col">
+										<input style="height: 37px; width: fit-content;"
+											th:value="${Mxlist?.file_mgt_ref_no}" readonly>
+									</div>
+
+									<div class="row">
+
+										<textarea id='myText1'
+											style="width: 794px; height: 580px; line-height: 2; margin-left: 46px; font-size: 20px;"
+											th:text="${Mxlist?.mx_message_file}" readonly></textarea>
+									</div>
+
+								</div>
+							</div>
+							<div class="box">
+								<div style="background-color: #156f85;">
+									<label style="color: #e9e9e9; font-size: 17px;">SWIFT
+										MT MESSAGE</label>
+								</div>
+								<div class="row">
+									<div class="col"
+										style="color: black; font-size: 17px; float: left;">
+										<label style="font-size: 20px;">Message Reference
+											Number</label>
+									</div>
+
+									<div class="col">
+										<input style="height: 37px; width: fit-content;"
+											th:value="${Mtlist?.file_mgt_ref_no}" readonly>
+									</div>
+									<div class="row">
+
+										<textarea id='myText1'
+											style="width: 794px; height: 580px; line-height: 2; margin-left: 46px; font-size: 20px;"
+											th:text="${Mtlist?.mt_message_file}" readonly></textarea>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="card-footer text-center">
+
+							<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+								onclick="home();">Home</button>
+							<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+								onclick="back();">Back</button>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="imageshow1" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content" style="width: 1042px;">
+					<div class="modal-body" style="text-align: center">
+						<div class="card-header">
+							<div class="float-left">
+								<h6 style="color: white;">SWIFT MX MESSAGE</h6>
+							</div>
+							<button type="button" class="btn btn-sm btn-primary " id="x"
+								data-dismiss="modal">X</button>
+						</div>
+
+						<textarea id='myText1'
+							style="width: 700px; height: 500px; padding: 10px; line-height: 2"
+							readonly></textarea>
+
+					</div>
+					<div class="card-footer text-center"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="imageshow" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content" style="width: 1042px;">
+					<div class="modal-body" style="text-align: center">
+						<div class="card-header">
+							<div class="float-left">
+								<h6 style="color: white;">SWIFT MT MESSAGE</h6>
+							</div>
+							<button type="button" class="btn btn-sm btn-primary " id="x"
+								data-dismiss="modal">X</button>
+						</div>
+
+						<textarea id='myText'
+							style="width: 700px; height: 500px; padding: 10px; line-height: 2"
+							readonly></textarea>
+
+					</div>
+					<div class="card-footer text-center"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div th:if="${formmode}=='a'" class="content">
+			<div class="card">
+
+				<div class="card-header">
+					<div class="float-left">
+						<h6 style="color: white;">Bulk Credit Transaction-Verify</h6>
+					</div>
+				</div>
+
+				<!-- <div class="table-responsive">
+					<table class="table table-bordered  table-hover table-sm"
+						id="my_table11">
+						<thead class="thead-light">
+							<tr>
+								<th>Doc Ref ID</th>
+								<th>Doc Sub ID</th>
+								<th>Ref ID</th>
+								<th>Remitter Name</th>
+								<th>Remitter Account No</th>
+								<th>Beneficiary Name</th>
+								<th>Beneficiary Account No</th>
+								<th>Beneficiary Bank Code</th>
+								<th>Currency</th>
+								<th>Amount</th>
+								<th>Remarks</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr th:each="tranBulk : ${authList}" class="userlist">
+
+								<td th:text="${tranBulk.doc_ref_id}"></td>
+								<td th:text="${tranBulk.doc_sub_id}"></td>
+								<td th:text="${tranBulk.tran_ref_id}"></td>
+								<td th:text="${tranBulk.rem_name}"></td>
+								<td th:text="${tranBulk.remit_account_no}"></td>
+								<td th:text="${tranBulk.ben_acct_name}"></td>
+								<td th:text="${tranBulk.ben_acct_no}"></td>
+								<td th:text="${tranBulk.ben_bank_code}"></td>
+								<td th:text="${tranBulk.tran_crncy_code}"></td>
+								<td th:text="${tranBulk.tran_amt}" style="text-align: right;"></td>
+								<td th:text="${tranBulk.tran_particular}"></td>
+
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+ -->
+				<!-- 
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button th:if="${entityFlg}=='N' AND ${IPSRoleMenu.work_class}=='C'" type="button" class="btn btn-sm btn-primary"
+						th:attr="data-docrefid=${docRefID},data-entryuser=${entryUser}"
+						onclick="submitExecute(this);" form="BulkTransaction" id="exebtn" >Execute</button>
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div> -->
+			</div>
+		</div>
+
+
+		<div th:if="${formmode}=='upload'" class="content" id="yes">
+			<form action="#" th:object="${MXMessageform}" method="POST"
+				autocomplete="off" id="MXMessageform">
+
+				<div class="card">
+
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;" th:text="${menuname}"></h6>
+						</div>
+
+						<input class="form-control" style="display: none;"
+							id="doc_ref_id_hide" />
+
+						<div class="float-right">
+							<button type="button" class="btn btn-sm btn-primary "
+								onclick='fileup()' th:attr="frmode=upload" id="upload">
+								<i class="fa fa-upload" th:attr="frmode=upload"
+									onclick="fileup()"> Browse</i>
+							</button>
+
+							<button type="button" class="btn btn-sm btn-primary "
+								onclick='listBC(this)' id="list" th:attr="formmode=list">List</button>
+						</div>
+
+					</div>
+
+					<div class="table-responsive">
+						<table class="table table-bordered  table-hover table-sm"
+							id="my_table">
+							<thead class="thead-light">
+
+								<th>Date</th>
+								<th>Reference Number</th>
+								<th>File Path</th>
+								<th>Message Type</th>
+								<th>Message Convert To</th>
+								<th>Status</th>
+
+							</thead>
+							<tbody id="my_tabletr">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div>
+					<span id="spnFilePath"></span> <input type="file" id="FileUpload"
+						style="display: none" />
+				</div>
+
+				<div class="card-footer text-center">
+
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						onclick="submitform11(this);" form="MXMessageform" id="subbtn"
+						th:attr="data-formmode=submit">Submit</button>
+
+					<button type="button" class="btn btn-sm btn-primary"
+						style="display: none;" onclick="submitExecute(this);"
+						form="BulkTransaction" id="exebtn">Execute</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+			</form>
+		</div>
+
+
+		<div th:if="${formmode}=='add'" class="content" id="yes">
+
+			<form action="#" th:object="${AddBulk}" method="POST"
+				autocomplete="off" id="AddBulk">
+
+				<div class="card">
+
+					<div class="card-header">
+						<div class="float-left">
+							<h6 style="color: white;" th:text="${menuname}"></h6>
+						</div>
+
+						<input class="form-control" style="display: none;"
+							id="doc_ref_id_hide" />
+
+						<div class="float-right">
+							<button type="button" class="btn btn-sm btn-primary " id="addrow"
+								onClick="addRow('dataTable', 'tdLineNum','Rem_name','Remit_account_no')"
+								title="AddRow">AddRow</button>
+
+
+							<button type="button" class="btn btn-sm btn-primary"
+								onClick="deleteRow('dataTable')" title="Delete"
+								style="border: 1px solid #000;">
+								<i class="fa fa-minus"></i>
+							</button>
+
+							<button type="button" class="btn btn-sm btn-primary "
+								onclick='listBC(this)' id="list" th:attr="formmode=list">List</button>
+						</div>
+					</div>
+
+					<div class="table-responsive">
+						<table class="table table-bordered  table-hover table-sm"
+							id="valiTab">
+							<thead class="thead-light">
+
+								<th>Doc Ref ID</th>
+								<th>Doc Sub ID</th>
+								<th>Ref ID</th>
+								<th>Remitter Name</th>
+								<th>Remitter Account No</th>
+								<th>Beneficiary Name</th>
+								<th>Beneficiary Account No</th>
+								<th>Beneficiary Bank Code</th>
+								<th>Currency</th>
+								<th>Amount</th>
+								<th>Remarks</th>
+
+							</thead>
+
+
+							<tbody id="dataTable" class="form">
+								<tr id='row_0'>
+									<td><input type="text" id="Ref_ID" th:value="${DOCID}"
+										name="doc_ref_id" readonly class='form-control' /></td>
+									<td><input type="text" name="doc_sub_id" value="1"
+										id="tdLineNum" readonly class='form-control' /></td>
+									<td><input type="text" name="tran_ref_id"
+										class='form-control' id="tran_Ref_id" /></td>
+									<td><input type="text" name="rem_name"
+										class='form-control' id="Rem_name" required /></td>
+									<td><input type="text" name="remit_account_no"
+										class='form-control' id="Remit_account_no" required /></td>
+									<td><input type="text" name="ben_acct_name"
+										class='form-control' id="Ben_acct_name" required /></td>
+									<td><input type="text" name="ben_acct_no"
+										class='form-control' id="Ben_Acct_no" required /></td>
+
+									<td><select class="select form-control"
+										name="ben_bank_code">
+											<option th:each="operator : ${bankList}"
+												th:value="${operator.bank_code}"
+												th:text="${operator.bank_name}"></option>
+									</select></td>
+
+									<!-- <td><input type="text" name="ben_bank_code"
+										class='form-control' /></td> -->
+									<td><input type="text" value="MUR" name="tran_crncy_code"
+										readonly class='form-control' /></td>
+
+									<td><input type="number" name="master_ref_no" id="AMT"
+										step="0.01" style="text-align: right;" class='form-control'
+										required /></td>
+									<td><input type="text" name="tran_particular"
+										class='form-control' id="tran_particular" required /></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<span id="spnFilePath"></span> <input type="file" id="FileUpload"
+						style="display: none" />
+				</div>
+				<div class="card-footer text-center">
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+
+					<button type="button" class="btn btn-sm btn-primary"
+						onclick="submitaddform(this);" form="AddBulk" id="subaddbtn"
+						th:attr="data-formmode=addsubmit">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						style="display: none;" onclick="submitExecute(this);"
+						form="BulkTransaction" id="exebtn">Execute</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
+				</div>
+			</form>
+		</div>
+
+
+		<!--------------------------------------------------------------- Modal for alert messages-------------------------------->
+		<div class="modal fade" id="alert" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="alertmsg"></p>
+						<button type="button" class="btn btn-primary" id="exe">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="error" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="errormsg"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="wait">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body" style="text-align: center">
+						<div id="wait">
+							<img src='demo_wait.gif' width="64" height="64" /><br>Loading..
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="verifybox" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body" style="text-align: center">
+						<p id="verifyboxmsg"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--------------------------------------------File Upload Modal Starts----------------------------------------------------------->
+		<div class="modal fade" id="fileupload" data-keyboard="false"
+			data-backdrop="static">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+
+
+				<div class="modal-content">
+
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<h1>Upload only .xml(SWIFT MX) files</h1>
+						<br /> <br />
+						<form action="#" th:object="${fileUploadForm}" method="POST"
+							autocomplete="off" id="fileUploadForm"
+							enctype="multipart/form-data">
+							<div></div>
+							<input id="file" type="file" name="file" accept=".xml" /><br />
+							<br /> <input type="hidden" id="bulkServices"
+								name="bulkServices" value="bulkServices">
+							<button type="button" th:attr="data-formmode=submitupload"
+								class="btn btn-xs btn-primary" data-dismiss="modal"
+								onclick="fire_ajax_submit();" form="fileUploadForm"
+								id="btn_Upload_Submit">Submit</button>
+
+							<button type="button" class="btn btn-xs btn-primary"
+								data-dismiss="modal">Close</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--------------------------------------------File Upload Modal Ends----------------------------------------------------------->
+		<script>
+				$(document).ready(function() {
+					$("#close").click(function() {
+						location.reload(true);
+					});
+				});
+				function back(a) {
+
+					window.history.back(-2);
+
+				}
+			</script>
+
+		<!--------------------------------------------File Upload Modal Starts----------------------------------------------------------->
+		<div class="modal fade" id="fileupload123" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body" style="text-align: center">
+						<h1>Select Transaction Type</h1>
+						<div>
+							<select id="value" style="width: 50%; height: 50px;">
+								<option value="">Select</option>
+								<option value="C">Bulk Credit</option>
+								<option value="D">Bulk Debit</option>
+							</select> <i class="fa fa-upload" onclick="fileup()"></i>
+						</div>
+						<div>
+							<button type="button" class="btn btn-primary"
+								style="margin-top: 19px;" data-dismiss="modal">Close</button>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!--------------------------------------------File Upload Modal Starts----------------------------------------------------------->
+		<div class="modal fade" id="table1">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="modal-body" style="text-align: center">
+						<div class="table-responsive">
+
+
+							<table class="table table-bordered  table-hover table-sm"
+								id="table">
+
+								<thead class="thead-light">
+
+									<tr>
+										<th>Tran Ref Id</th>
+										<th>Part Tran Id</th>
+										<th>Remitter Account Number</th>
+										<th>Remitter Account Name</th>
+										<th>Remitter Phone</th>
+										<th>Remitter National Id</th>
+										<th>Beneficiary Bank</th>
+										<th>Beneficiary Account Number</th>
+										<th>Beneficiary Name</th>
+										<th>Currency</th>
+										<th>Tran Amount</th>
+										<th>Mast Ref</th>
+
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="wait" style="display: none;">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content" style="width: 248px;">
+					<div class="modal-body" style="text-align: center">
+
+						<div>
+							<!-- <div class="spinner-border text-primary" role="status">
+								<span class="sr-only"></span>Loading...
+							</div> -->
+							<span class="spinner-border spinner-border-sm" role="status"
+								aria-hidden="true"></span> Loading...
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="addCredit" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p>Please fill the required fields</p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="invalidfile" data-backdrop="static"
+			data-keyboard="false">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+				<div class="modal-content">
+					<div class="menu-title-header">
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
+					</div>
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
+						<p id="invalidfilemsg"></p>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content" style="background: transparent;">
+				<div class="modal-body" style="text-align: center">
+					<div>
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+$(document).ready(function () {
+    // Handle modal show event
+    $('.launch-modal-btn').on('click', function () {
+        const folderInputId = $(this).data('folder-id'); // Get the ID of the input field
+        const folderPath = $(`#${folderInputId}`).val(); // Get the value of the corresponding input field
+
+        // Show modal event
+        $('#exampleModalCenter').off('show.bs.modal').on('show.bs.modal', function () {
+            const fileTable = $('#my_table11 tbody');
+            fileTable.html('<tr><td colspan="4">Loading...</td></tr>'); // Show loading
+
+            // Fetch files from the backend using folderPath
+            $.ajax({
+                url: './get-files',
+                type: 'GET',
+                data: { folderPath: folderPath },
+                dataType: 'json',
+                success: function (data) {
+                    fileTable.empty(); // Clear table
+
+                    if (data.files && data.files.length > 0) {
+                        data.files.forEach(file => {
+                            fileTable.append(`
+                                <tr>
+                                    <td>${file.cbs_mt_out || '-'}</td>
+                                    <td>${file.cbs_mt_in || '-'}</td>
+                                    <td>${file.swift_mx_out || '-'}</td>
+                                    <td>${file.swift_mx_in || '-'}</td>
+                                </tr>
+                            `);
+                        });
+                    } else {
+                        fileTable.append('<tr><td colspan="4">No files found.</td></tr>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error:', error);
+                    fileTable.html('<tr><td colspan="4">Error loading files.</td></tr>');
+                }
+            });
+        });
+
+        // Show modal
+        $('#exampleModalCenter').modal('show');
+    });
+});
+</script>
+
+</body>
+</html>
