@@ -779,7 +779,7 @@ function fincalefoldercall(){
 
 				<div class="card-header">
 					<div class="float-left">
-						<h6 style="color: white;">PROCESSED SWIFT MESSAGES</h6>
+						<h6 style="color: white;">PROCESSED SWIFT MESSAGES - LIST</h6>
 					</div>
 
 					<div class="btn-group nav-buttons float-right">
@@ -804,7 +804,8 @@ function fincalefoldercall(){
 							<tr>
 								<th>Date</th>
 								<th>Reference Number</th>
-								<th>Folder Name</th>
+								<th>CBS FOLDER</th>
+								<th>SWIFT FOLDER</th>
 								<th>File Path</th>
 								<th>Converted File Path</th>
 								<th>Message Type</th>
@@ -819,6 +820,7 @@ function fincalefoldercall(){
 								<td
 									th:text="${#dates.format(alert.date_of_process, 'dd-MM-yyyy')}"></td>
 								<td th:text="${alert.srl_no}"></td>
+								<td></td>
 								<td>
 								    <a href="#" 
 								       th:attr="data-mand_ref_no=${alert.srl_no}, 

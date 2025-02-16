@@ -81,6 +81,10 @@
 	height: 100%;
 }
 
+#FolderManagmt {
+    margin-left: 25px;
+}
+
 #menu>ul>li>a {
 	display: block;
 	background-color: rgba(45, 67, 90, 0.38);
@@ -783,18 +787,11 @@ jQuery(function($){
 
 				<div id="Operations" class="collapse submenu1 ">
 					<ul class="nav flex-column" aria-expanded="false">
-						<!-- <li class="nav-item"><a class="nav-link" id="Outward_Swift_Messages"
-							href="javascript: void(0);" onclick="contentLoad(this)">Outward Swift Messages </a></li>
-						<li class="nav-item"><a class="nav-link" id="Inward_Swift_Messages"
-							href="javascript: void(0);" onclick="contentLoad(this)">Inward Swift Messages </a></li>
-							<li class="nav-item"><a class="nav-link" id="Swift_MX_Menu "
-							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MX Menu </a></li>
-							<li class="nav-item"><a class="nav-link" id="Swift_MT_Menu"
-							href="javascript: void(0);" onclick="contentLoad(this)"> Swift MT Menu </a></li> -->
+					
 
 						<li class="nav-item"><a class="nav-link" id="FolderManagmt"
 							href="javascript: void(0);" onclick="contentLoad(this)">
-								Message Conversion</a></li>
+								Conversion Process</a></li>
 
 					</ul>
 				</div></li>
@@ -808,11 +805,14 @@ jQuery(function($){
 				<div id="inquiry" class="collapse submenu1 ">
 					<ul class="nav flex-column" aria-expanded="false">
 						<li class="nav-item"><a class="nav-link" id="File_Management"
-							href="javascript: void(0);" onclick="contentLoad(this)">File
+							href="javascript: void(0);" onclick="contentLoad(this)">Convertion
 								Management</a></li>
-						<li class="nav-item"><a class="nav-link"
+						<li class="nav-item"><a class="nav-link" id="File_Management"
+							href="javascript: void(0);" onclick="contentLoad(this)">Folder
+								Management</a></li>
+					<!-- 	<li class="nav-item"><a class="nav-link"
 							id="FolderConfigurationInquiry" href="javascript: void(0);"
-							onclick="contentLoad(this)">Folder Configuration</a></li>
+							onclick="contentLoad(this)">Folder Configuration</a></li> -->
 						<li class="nav-item"><a class="nav-link"
 							id="Swift_MX_Menu_inquiries" href="javascript: void(0);"
 							onclick="contentLoad(this)"> Swift MX Messages </a></li>
