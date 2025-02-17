@@ -18,6 +18,8 @@
 	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
 <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
 <link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
 <script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
 	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
@@ -39,6 +41,7 @@
 <script
 	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
 	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+
 
 
 <script src="js/bootstrap411.js"></script>
@@ -811,14 +814,14 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 	});
 
 	function Addfunction() {
-		location.href = "Massage_Parameters?formmode=add1";
+		location.href = "Message_Parameters?formmode=add1";
 	}
 
 	function Addfunctionvalue() {
-		location.href = "Massage_Parameters?formmode=add2";
+		location.href = "Message_Parameters?formmode=add2";
 	}
 
-	function addsubmitdata() {
+	function submitfunctionvalues() {
 		if ($("#stp").valid()) {
 
 			var url = "./AddScreenfinacle";
@@ -840,9 +843,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		}
 	};
 
-	function addsubmitvaluedata() {
+	function addsubmitvaluedataval() {
 		if ($("#stp1").valid()) {
-			var url = "./AddScreenswift";
+			var url = "./Addformdatas";
 			$("#stp1").attr('action', url);
 
 			var options = {
@@ -860,32 +863,32 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 	function modifyuser(element) {
 		var attrValue = $(element).attr("data-attr");
-		location.href = "Massage_Parameters?formmode=modify&srl_num="
+		location.href = "Message_Parameters?formmode=modify&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
 	function verifyuser(element) {
 		var attrValue = $(element).attr("data-attr");
-		location.href = "Massage_Parameters?formmode=verify&srl_num="
+		location.href = "Message_Parameters?formmode=verify&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
 	function enquiryuser(element) {
 		var attrValue = $(element).attr("data-attr");
-		location.href = "Massage_Parameters?formmode=view&srl_num="
+		location.href = "Message_Parameters?formmode=view&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
 	function deleteuser(element) {
 		var attrValue = $(element).attr("data-attr");
 		alert(attrValue);
-		location.href = "Massage_Parameters?formmode=delete&srl_num="
+		location.href = "Message_Parameters?formmode=delete&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
 	function modifyuserdata(element) {
 		var attrValue = $(element).attr("data-attr");
-		location.href = "Massage_Parameters?formmode=modify1&srl_num="
+		location.href = "Message_Parameters?formmode=modify1&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
@@ -897,21 +900,25 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
 	function enquiryuserdata(element) {
 		var attrValue = $(element).attr("data-attr");
-		location.href = "Massage_Parameters?formmode=view1&srl_num="
+		location.href = "Message_Parameters?formmode=view1&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 
 	function deleteuserdata(element) {
 		var attrValue = $(element).attr("data-attr");
 		alert(attrValue);
-		location.href = "Massage_Parameters?formmode=delete1&srl_num="
+		location.href = "Message_Parameters?formmode=delete1&srl_num="
 				+ encodeURIComponent(attrValue);
 	}
 	
 	function fromformview(element) {
-		var attrValue = $(element).attr("data-attr");
-		alert(attrValue);
-		location.href = "Massage_Parameters?formmode=list&srl_num="+ encodeURIComponent(attrValue);
+	    var srlNum = $(element).attr("data-attr");
+	    var fromForm = $(element).attr("data-attr1");
+
+	    alert("Srl Num: " + srlNum + "\nFrom Form: " + fromForm);
+
+	    location.href = "Message_Parameters?formmode=list&fromform=" + 
+	                     encodeURIComponent(fromForm);
 	}
 
 	function modifysubmit(a) {
@@ -1050,7 +1057,7 @@ function fromtovalue() {
     //alert(fromform); 
     $.ajax({
         type: 'POST',
-        url: './Massage_Parameters?formmode=list&fromform=' + fromform,
+        url: './Message_Parameters?formmode=list&fromform=' + fromform,
         success: function(response) { 
              
         },
@@ -1099,6 +1106,48 @@ function deleteFinacleRow() {
 }
 
 </script>
+<script>
+function Addfunctiondata() {
+    let tbody = document.getElementById("FromToBodyValue");
+    let rowCount = tbody.rows.length + 1; // Get the new row index
+
+    let newRow = `<tr class="new-row">
+        <td>${rowCount}</td>
+        <td><input type="text" class="form-control" name="attribute"></td>
+        <td><input type="text" class="form-control" name="form_mt_103_field_name"></td>
+        <td><input type="text" class="form-control" name="form_mt_103_field"></td>
+        <td><input type="text" class="form-control" name="form_mt_103_value"></td>
+        <td></td>
+        <td><input type="text" class="form-control" name="form_pacs_0008_additional_details"></td>
+        <td><input type="text" class="form-control" name="form_pacs_0008_description"></td>
+        <td><input type="text" class="form-control" name="form_pacs_0008_field"></td>
+        <td><input type="text" class="form-control" name="form_pacs_0008_value"></td>
+        <td class="text-danger">Unverified</td>
+    </tr>`;
+
+    tbody.insertAdjacentHTML("beforeend", newRow);
+    
+    // Show the delete footer button after adding a new row
+    document.getElementById("deletefooterbtn").style.display = "inline-block";
+}
+
+function deleteRow() {
+    let tbody = document.getElementById("FromToBodyValue");
+    
+    // Select all rows with the class 'new-row' (newly added rows)
+    let newRows = tbody.querySelectorAll('.new-row');
+    
+    // If there are any newly added rows, remove the last one
+    if (newRows.length > 0) {
+        newRows[newRows.length - 1].remove(); // Remove the last added new row
+    }
+
+    // Hide the delete button if no new rows are left
+    if (newRows.length <= 1) {
+        document.getElementById("deletefooterbtn").style.display = "none"; // Hide delete button if no new rows are left
+    }
+}
+</script>
 <body>
 
 	<div th:insert="MMenupage :: header"></div>
@@ -1118,7 +1167,11 @@ function deleteFinacleRow() {
 						<h6 id="heading" style="color: white;">CONVERSION PARAMETERS
 							- LIST</h6>
 					</div>
-					<!-- <div class="float-right">
+					<div class="float-right">
+						<button type="button" class="btn btn-sm btn-primary"
+							id="addfunctiondata1" onclick="Addfunctionvalue();">Add</button>
+					</div>
+					<!-- <div class="float-right">style="display: none;"
 						<button type="button" class="btn btn-sm btn-primary"
 							id="addfunctiondata" onclick="Addfunction();"
 							style="display: none;">Add</button>
@@ -1144,16 +1197,16 @@ function deleteFinacleRow() {
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="chartacc : ${parameterfromform}">
-								<td th:text="${chartacc?.srl_num}" style="color: blue;"
+							<tr th:each="chartacc, iterStat : ${parameterfromform}">
+								<td th:text="${iterStat.index + 1}" style="color: blue;"
 									onclick="fromformview(this)"
-									th:attr="data-attr=${chartacc?.srl_num}"></td>
+									th:attr="data-attr=${iterStat.index + 1},data-attr1=${chartacc?.from_form}">
+								</td>
 								<td th:text="${chartacc?.from_form}"></td>
 								<td th:text="${chartacc?.to_form}"></td>
-								<td th:text="${chartacc?.status}"
+								<td th:text="${chartacc?.Status}"
 									th:style="${chartacc?.status == 'Completed' ? 'color: green;' : (chartacc?.status == 'Pending' ? 'color: red;' : '')}">
 								</td>
-
 							</tr>
 						</tbody>
 					</table>
@@ -1162,12 +1215,6 @@ function deleteFinacleRow() {
 				<div class="card-footer text-center">
 					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
 						onclick="home();">Home</button>
-					<button type="button" class="btn btn-sm btn-primary"
-						id="btnsubmitfunction" onclick="submitfunction();"
-						style="display: none;">Submit</button>
-					<button type="button" class="btn btn-sm btn-primary"
-						id="btnsubmitfunctiondata" onclick="submitfunctionvalues();"
-						style="display: none;">Submit</button>
 					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
 						onclick="back();">Back</button>
 				</div>
@@ -1175,173 +1222,115 @@ function deleteFinacleRow() {
 		</div>
 
 		<div th:if="${formmode}=='list'" class="content">
-			<div class="card">
-				<div class="card-header">
-					<div class="float-left">
-						<h6 id="heading" style="color: white;">CONVERSION PARAMETERS
-							- Finacle MT</h6>
-					</div>
-					<div class="float-right">
-						<button type="button" class="btn btn-sm btn-primary"
-							id="addfunctiondata" onclick="Addfunction();"
-							style="display: none;">Add</button>
-						<button type="button" class="btn btn-sm btn-primary"
-							id="addfunctiondata1" onclick="Addfunctionvalue();"
-							style="display: none;">Add</button>
-						<button type="button" class="btn btn-sm btn-primary"
+			<form id="stp" th:action="@{/AddScreenfinacle}" th:object="${stp}"
+				method="post">
+				<div class="card">
+					<div class="card-header">
+						<div class="float-left">
+							<h6 id="heading" style="color: white;">CONVERSION PARAMETERS
+								- LIST</h6>
+						</div>
+						<div class="float-right">
+							<!-- <button type="button" class="btn btn-sm btn-primary"
 							id="finaclemt" onclick="finacleval();">Finacle MT</button>
 						<button type="button" class="btn btn-sm btn-primary" id="swiftmx"
-							onclick="swiftvalue();">Swift MX</button>
+							onclick="swiftvalue();">Swift MX</button> -->
+						</div>
+					</div>
+
+					<div class="table-container">
+						<table class="table table-striped table-bordered table-hover"
+							id="Finacledetailsvalue">
+							<thead class="thead-light">
+								<tr>
+									<th>Srl No</th>
+									<th></th>
+									<!-- Dropdown for MT values -->
+									<th colspan="3">FORM: <select id="formSelection"
+										onchange="syncDropdowns(); " onclick="fromtovalue();"
+										style="border: 1px solid #ccc; width: 30%">
+											<option value="MT103-pacs.008">MT103</option>
+											<option value="MT202-pacs.009">MT202</option>
+											<option value="MT202CV-pacs.009">MT202CV</option>
+											<option value="MT300-pacs.008">MT300</option>
+											<option value="MT320-camt.025">MT320</option>
+											<option value="MT900-camt.054">MT900</option>
+											<option value="MT910-camt.054">MT910</option>
+											<option value="MT102-pacs.008">MT102</option>
+									</select></th>
+									<th></th>
+									<th></th>
+									<!-- Dropdown for PACS/CAMT values -->
+									<th colspan="3">FORM: <select id="pacsFormHeader"
+										onchange="syncDropdownsReverse()"
+										style="border: 1px solid #ccc; width: 50%">
+											<option value="MT103-pacs.008">pacs.008</option>
+											<option value="MT202-pacs.009">pacs.009</option>
+											<option value="MT202CV-pacs.009">pacs.009</option>
+											<option value="MT300-pacs.008">pacs.008</option>
+											<option value="MT320-camt.025">camt.025</option>
+											<option value="MT900-camt.054">camt.054</option>
+											<option value="MT910-camt.054">camt.054</option>
+											<option value="MT102-pacs.008">pacs.008</option>
+									</select></th>
+									<th></th>
+									<th id="deletebuttons" style="display: none;"></th>
+								</tr>
+
+								<tr>
+									<th>ROWNO</th>
+									<th>ATTRIBUTE</th>
+									<th>Field Name</th>
+									<th>Field</th>
+									<th>Value</th>
+									<th></th>
+									<th>ATTRIBUTE</th>
+									<th>Field Name</th>
+									<th>Field</th>
+									<th>Value</th>
+									<th>Status</th>
+									<th id="deletebuttons" style="display: none;"></th>
+									<!-- <th>Action</th> -->
+								</tr>
+							</thead>
+							<tbody id="FromToBodyValue">
+								<tr th:each="chartacc, iterStat : ${FromToData}">
+									<td th:text="${iterStat.index + 1}"></td>
+									<td th:text="${chartacc?.attribute}"></td>
+									<td th:text="${chartacc?.form_mt_103_field_name}"></td>
+									<td th:text="${chartacc?.form_mt_103_field}"></td>
+									<td th:text="${chartacc?.form_mt_103_value}"></td>
+									<td></td>
+									<td th:text="${chartacc?.form_pacs_0008_additional_details}"></td>
+									<td th:text="${chartacc?.form_pacs_0008_description}"></td>
+									<td th:text="${chartacc?.form_pacs_0008_field}"></td>
+									<td th:text="${chartacc?.form_pacs_0008_value}"></td>
+									<td
+										th:text="${chartacc?.entity_flg == 'Y' ? 'Verified' : 'Unverified'}"
+										th:classappend="${chartacc?.entity_flg == 'Y' ? 'text-success' : 'text-danger'}">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-footer text-center">
+						<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+							onclick="home();">Home</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							id="addfunctiondata" onclick="Addfunctiondata();">Add
+							Row</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							id="btnsubmitfunctiondata" onclick="submitfunctionvalues();">Submit</button>
+						<button type="button" class="btn btn-sm btn-primary"
+							id="deletefooterbtn" onclick="deleteRow()" style="display: none;">Delete
+							Row</button>
+						f
+						<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+							onclick="back();">Back</button>
 					</div>
 				</div>
-
-				<div class="table-container">
-					<table class="table table-striped table-bordered table-hover"
-						id="Finacledetailsvalue">
-						<thead class="thead-light">
-							<tr>
-								<th colspan="2">Srl No</th>
-								<th></th>
-
-								<!-- Dropdown for MT values -->
-								<th colspan="3">FORM: <select id="formSelection"
-									onchange="syncDropdowns(); " onclick="fromtovalue();"
-									style="border: 1px solid #ccc; width: 30%">
-										<option value="MT103-pacs.008">MT103</option>
-										<option value="MT202-pacs.009">MT202</option>
-										<option value="MT202CV-pacs.009">MT202CV</option>
-										<option value="MT300-pacs.008">MT300</option>
-										<option value="MT320-camt.025">MT320</option>
-										<option value="MT900-camt.054">MT900</option>
-										<option value="MT910-camt.054">MT910</option>
-										<option value="MT102-pacs.008">MT102</option>
-								</select></th>
-
-								<th></th>
-								<th></th>
-
-								<!-- Dropdown for PACS/CAMT values -->
-								<th colspan="3">FORM: <select id="pacsFormHeader"
-									onchange="syncDropdownsReverse()"
-									style="border: 1px solid #ccc; width: 50%">
-										<option value="MT103-pacs.008">pacs.008</option>
-										<option value="MT202-pacs.009">pacs.009</option>
-										<option value="MT202CV-pacs.009">pacs.009</option>
-										<option value="MT300-pacs.008">pacs.008</option>
-										<option value="MT320-camt.025">camt.025</option>
-										<option value="MT900-camt.054">camt.054</option>
-										<option value="MT910-camt.054">camt.054</option>
-										<option value="MT102-pacs.008">pacs.008</option>
-								</select></th>
-
-								<th></th>
-								<th></th>
-							</tr>
-
-							<tr>
-								<th>ROWNO</th>
-								<th>ATTRIBUTE</th>
-								<th>Field Name</th>
-								<th>Field</th>
-								<th>Value</th>
-								<th>Additional Details</th>
-								<th></th>
-								<th>Description</th>
-								<th>Field</th>
-								<th>Value</th>
-								<th>Additional Details</th>
-								<th>ATTRIBUTE</th>
-								<th>Status</th>
-								<!-- <th>Action</th> -->
-							</tr>
-						</thead>
-						<tbody id="FromToBodyValue">
-							<tr th:each="chartacc : ${parameterdata}">
-								<td th:text="${chartacc?.rowno}"></td>
-								<td th:text="${chartacc?.attribute}"></td>
-								<td th:text="${chartacc?.form_mt_103_field_name}"></td>
-								<td th:text="${chartacc?.form_mt_103_field}"></td>
-								<td th:text="${chartacc?.form_mt_103_value}"></td>
-								<td th:text="${chartacc?.form_mt_103_additional_details}"></td>
-								<td></td>
-								<td th:text="${chartacc?.form_pacs_0008_description}"></td>
-								<td th:text="${chartacc?.form_pacs_0008_field}"></td>
-								<td th:text="${chartacc?.form_pacs_0008_value}"></td>
-								<td th:text="${chartacc?.form_pacs_0008_additional_details}"></td>
-								<td th:text="${chartacc?.form_pacs_0008_attribute}"></td>
-								<td
-									th:text="${chartacc?.entity_flg == 'Y' ? 'Verified' : 'Unverified'}"
-									th:classappend="${chartacc?.entity_flg == 'Y' ? 'text-success' : 'text-danger'}"></td>
-							</tr>
-						</tbody>
-					</table>
-
-					<table class="table table-striped table-bordered table-hover"
-						id="Swiftdetailsvalue" style="display: none;">
-						<thead class="thead-light">
-							<tr>
-								<th>Status M/O/C</th>
-								<th>Field</th>
-								<th>Field Name</th>
-								<th>Content</th>
-								<th>Comments</th>
-								<th>Status</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="chartacc : ${parameterdatavalue}">
-								<td th:text="${chartacc?.swift_status_m_o_c}"></td>
-								<td th:text="${chartacc?.swift_field}"></td>
-								<td th:text="${chartacc?.swift_field_name}"></td>
-								<td th:text="${chartacc?.swift_content}"></td>
-								<td th:text="${chartacc?.swift_comments}"></td>
-								<td
-									th:text="${chartacc?.entity_flg == 'Y' ? 'Verified' : 'Unverified'}"
-									th:classappend="${chartacc?.entity_flg == 'Y' ? 'text-success' : 'text-danger'}"></td>
-								<td>
-									<div class="dropdown">
-										<button class="btn btn-xs btn-info btns" type="button"
-											id="dropdownMenuButton" data-toggle="dropdown"
-											aria-haspopup="true" aria-expanded="false">Action</button>
-										<div class="dropdown-menu"
-											aria-labelledby="dropdownMenuButton">
-											<button type="button" class="dropdown-item" id="btnmodify"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="modifyuserdata(this);">Modify</button>
-											<div class="dropdown-divider"></div>
-											<button type="button" class="dropdown-item" id="btnmodify"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="verifyuserdata(this);">Verify</button>
-											<div class="dropdown-divider"></div>
-											<button type="button" class="dropdown-item" id="btndelete"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="deleteuserdata(this);">Delete</button>
-											<div class="dropdown-divider"></div>
-											<button type="button" class="dropdown-item" id="btnEnquiry"
-												th:attr="data-attr=${chartacc?.srl_num}"
-												onclick="enquiryuserdata(this);">View</button>
-										</div>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="card-footer text-center">
-					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
-						onclick="home();">Home</button>
-					<button type="button" class="btn btn-sm btn-primary"
-						id="btnsubmitfunction" onclick="submitfunction();"
-						style="display: none;">Submit</button>
-					<button type="button" class="btn btn-sm btn-primary"
-						id="btnsubmitfunctiondata" onclick="submitfunctionvalues();"
-						style="display: none;">Submit</button>
-					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
-						onclick="back();">Back</button>
-				</div>
-			</div>
+			</form>
 		</div>
 
 		<div th:if="${formmode}=='add1'" class="content">
@@ -1662,18 +1651,18 @@ function deleteFinacleRow() {
 		</div>
 
 		<div th:if="${formmode}=='add2'" class="content">
-			<form id="stp1" th:action="@{/AddScreenswift}" th:object="${stp1}"
+			<form id="stp1" th:action="@{/Addformdatas}" th:object="${stp1}"
 				method="post">
 				<div class="card">
 					<div class="card-header">
 						<div>
-							<h4 style="color: white;">Swift MT - ADD</h4>
+							<h4 style="color: white;">CONVERSION PARAMETERS FORM - ADD</h4>
 						</div>
 					</div>
 					<div class="card-body">
 						<div class="row formline">
 							<div class="col-sm-2">
-								<label>Status M/O/C </label>
+								<label>Srl No</label>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" id="swift_status_m_o_c"
@@ -1681,7 +1670,7 @@ function deleteFinacleRow() {
 							</div>
 							<div class="col-sm-1"></div>
 							<div class="col-sm-2">
-								<label>Field</label>
+								<label>From Form</label>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" id="swift_field" name="swift_field" />
@@ -1691,37 +1680,26 @@ function deleteFinacleRow() {
 						<br>
 						<div class="row formline">
 							<div class="col-sm-2">
-								<label> Field Name</label>
+								<label>To Form</label>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" id="swift_field_name" name="swift_field_name" />
 							</div>
 							<div class="col-sm-1"></div>
 							<div class="col-sm-2">
-								<label>Content</label>
+								<label>Status</label>
 							</div>
 							<div class="col-sm-3">
 								<input type="text" id="swift_content" name="swift_content" />
 							</div>
 							<div class="col-sm-1"></div>
 						</div>
-						<br>
-						<div class="row formline">
-							<div class="col-sm-2">
-								<label>Comments</label>
-							</div>
-							<div class="col-sm-3">
-								<input type="text" id="swift_comments" name="swift_comments" />
-							</div>
-							<div class="col-sm-1"></div>
-						</div>
-
 					</div>
 					<div class="card-footer text-center">
 						<button type="button" class="btn btn-sm btn-primary" id="btnHome"
 							onclick="home();">Home</button>
 						<button type="button" class="btn btn-sm btn-primary"
-							id="btnsubmit" onclick="addsubmitvaluedata(this);">Submit</button>
+							id="btnsubmit" onclick="addsubmitvaluedataval(this);">Submit</button>
 						<button type="button" class="btn btn-sm btn-primary" id="btnBack"
 							onclick="back();">Back</button>
 					</div>

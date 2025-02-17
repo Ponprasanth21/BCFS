@@ -68,6 +68,8 @@ import com.bornfire.entity.BusinessHours;
 import com.bornfire.entity.BusinessHoursRep;
 import com.bornfire.entity.ConsentOutwardAccessRep;
 import com.bornfire.entity.ConsentOutwardInquiryRep;
+import com.bornfire.entity.FORM_TRANSFER_ENTITY;
+import com.bornfire.entity.FORM_TRANSFER_REP;
 import com.bornfire.entity.IPSAccessRole;
 import com.bornfire.entity.IPSAuditTableRep;
 import com.bornfire.entity.IPSChargesAndFees;
@@ -299,6 +301,9 @@ public class MainController {
 
 	@Autowired
 	Bswift_Parameter_value_Rep bswift_Parameter_value_Rep;
+	
+	@Autowired
+	FORM_TRANSFER_REP fORM_TRANSFER_REP;
 
 	private String pagesize;
 
@@ -4367,8 +4372,8 @@ public class MainController {
 		return "FolderConfigurationInquiry.html";
 	}
 
-	@RequestMapping(value = "Massage_Parameters")
-	public String Massage_Parameters(@RequestParam(required = false) String merchant_acct_no,
+	@RequestMapping(value = "Message_Parameters")
+	public String Message_Parameters(@RequestParam(required = false) String merchant_acct_no,
 			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
 			@RequestParam(value = "srl_num", required = false) String srl_num,
@@ -4385,23 +4390,19 @@ public class MainController {
 		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
 		if (formmode == null || formmode.equals("messageParamList")) { 
 			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
-			md.addAttribute("parameterfromform", bswift_Parameter_Rep.findfromform());
+			md.addAttribute("parameterfromform", fORM_TRANSFER_REP.findAllCustom());
 			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
 			md.addAttribute("formmode", "messageParamList");
 			md.addAttribute("menu", "MMenupage");
 
 		}else if (formmode.equals("list")) {
-			System.out.println(fromform+" fromforsssssssssssssssssssssssssss");
-			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
+			System.out.println("The etting Parameter Value is "+fromform);
 			md.addAttribute("FromToData", bswift_Parameter_Rep.findFromToData(fromform));
-			System.out.println(bswift_Parameter_Rep.findFromToData(fromform));
-			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
 			md.addAttribute("formmode", "list");
 			md.addAttribute("menu", "MMenupage");
 		}  else if (formmode.equals("Finaclefoldervalue")) {
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("menu", "MMenupage");
-
 		} else if (formmode.equals("SwiftfolderDetails")) {
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("menu", "MMenupage");
@@ -4846,6 +4847,17 @@ public class MainController {
 	    }
 
 	    return "Folder_Management_Datas.html";
+	}
+	
+	@RequestMapping(value = "Addformdatas", method = RequestMethod.POST)
+	@ResponseBody
+	public String Addformdatas(Model md, HttpServletRequest rq,
+			@ModelAttribute FORM_TRANSFER_ENTITY fORM_TRANSFER_ENTITY) {
+		System.out.println(fORM_TRANSFER_ENTITY.getEntity_flg());
+		fORM_TRANSFER_ENTITY.setDel_flg("N");
+		fORM_TRANSFER_ENTITY.setSrl_num(bswift_Parameter_value_Rep.getNextSeriesId());
+		fORM_TRANSFER_REP.save(fORM_TRANSFER_ENTITY);
+		return "Saved Successfully";
 	}
 
 }

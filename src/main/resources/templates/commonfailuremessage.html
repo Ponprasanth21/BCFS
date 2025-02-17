@@ -871,6 +871,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 								<th>Converted File Name</th>
 								<th>Message Type</th>
 								<th>Converted Message Type</th>
+								<th>Remarks</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -884,9 +885,9 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 								<td th:text="${alert.converted_file_name}"></td>
 								<td th:text="${alert.swift_msg_type}"></td>
 								<td th:text="${alert.swift_mrg_type_conv}"></td>
+								<td th:text="${alert.remarks}"></td>
 								<td><button onclick="finuser(this);" id="openModal"
 										th:attr="data-mand_ref_no=${alert.srl_no}">View</button></td>
-
 							</tr>
 
 							<!-- <tr th:each="tranBulk : ${bulkCreditList}" class="userlist">

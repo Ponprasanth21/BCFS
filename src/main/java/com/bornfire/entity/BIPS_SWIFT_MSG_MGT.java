@@ -36,6 +36,7 @@ public class BIPS_SWIFT_MSG_MGT implements Serializable{
 	private String mt_reference_no;
 	private String time_of_conv;
 	private String country_code;
+	private String remarks;
 	
 	@Lob
 	private String mx_file;
@@ -125,6 +126,12 @@ public class BIPS_SWIFT_MSG_MGT implements Serializable{
 	public void setCountry_code(String country_code) {
 		this.country_code = country_code;
 	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	public String getMx_file() {
 		return mx_file;
 	}
@@ -143,7 +150,7 @@ public class BIPS_SWIFT_MSG_MGT implements Serializable{
 	public BIPS_SWIFT_MSG_MGT(String srl_no, Date date_of_process, String file_name, String swift_msg_type,
 			String is_convert, String file_name_conv, String swift_mrg_type_conv, String status, Date entry_time,
 			String converted_file_name, String mx_reference_no, String mt_reference_no, String time_of_conv,
-			String country_code, String mx_file, String mt_file) {
+			String country_code, String remarks, String mx_file, String mt_file) {
 		super();
 		this.srl_no = srl_no;
 		this.date_of_process = date_of_process;
@@ -159,6 +166,7 @@ public class BIPS_SWIFT_MSG_MGT implements Serializable{
 		this.mt_reference_no = mt_reference_no;
 		this.time_of_conv = time_of_conv;
 		this.country_code = country_code;
+		this.remarks = remarks;
 		this.mx_file = mx_file;
 		this.mt_file = mt_file;
 	}

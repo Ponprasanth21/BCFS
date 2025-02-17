@@ -183,6 +183,23 @@ public class BipsMsgConversionProcessRec {
 
 	}
 	
+	public String FinacleMessageProcessSubmitfailure(BIPS_SWIFT_MSG_MGT message) {
+		Session hs = sessionFactory.getCurrentSession();
+		String res = "";
+		
+			String srl_no = FileUploaderController.Serial();
+			
+
+			BIPS_SWIFT_MSG_MGT up = message;
+
+			hs.save(up);
+
+			res = "Failed Message Successfully";
+
+		return res;
+
+	}
+	
 	public String SwiftMessageProcessSubmit(BIPS_SWIFT_MSG_MGT message, String formmode) {
 		Session hs = sessionFactory.getCurrentSession();
 		String res = "";
@@ -198,6 +215,20 @@ public class BipsMsgConversionProcessRec {
 			res = "Added Successfully";
 
 		}
+		return res;
+
+	}
+	
+	public String SwiftMessageProcessSubmitfailure(BIPS_SWIFT_MSG_MGT message) {
+		Session hs = sessionFactory.getCurrentSession();
+		String res = "";
+		
+			BIPS_SWIFT_MSG_MGT up = message;
+
+			hs.save(up);
+
+			res = "Failure Message Added Successfully";
+			
 		return res;
 
 	}

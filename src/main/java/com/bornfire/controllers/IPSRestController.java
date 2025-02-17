@@ -21,6 +21,8 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.core.env.Environment;
@@ -156,21 +158,24 @@ public class IPSRestController {
 
 	@Autowired
 	BipsMsgConversionProcessRec bipsMsgConversionProcessRec;
-	
+
 	@Autowired
 	BipsSwiftMsgConversionRepo bipsSwiftMsgConversionRepo;
-	
+
 	@Autowired
 	UserProfileRep userProfileRep;
-	
+
 	@Autowired
 	SequenceGenerator sequence;
-	
+
 	@Autowired
 	UserProfileService userProfileService;
-	
+
 	@Autowired
 	IPSUserProfileModRep iPSUserProfileModRep;
+
+	@Autowired
+	SessionFactory sessionFactory;
 
 	@RequestMapping(value = "/getTransaction/{acct_num}", method = RequestMethod.GET)
 	public List<TransactionAdmin> refcode13(@PathVariable("acct_num") String acct_num, Model md) {
@@ -558,18 +563,18 @@ public class IPSRestController {
 	public String BlobImageUser(@PathVariable("userID") String userID, Model md) {
 		System.out.println("userID" + userID);
 		int usercount = iPSUserProfileModRep.getnum(userID);
-		System.out.println(usercount+"fgfg");
-		if(usercount == 0 ) {
+		System.out.println(usercount + "fgfg");
+		if (usercount == 0) {
 			UserProfile userProfile = mandateServices.UserBlobImage1(userID);
 			System.out.println(userProfile.getPhoto());
 			return Base64.getEncoder().encodeToString(userProfile.getPhoto());
-		}else {
+		} else {
 			IPSUserPreofileMod userProfile = mandateServices.UserBlobImage(userID);
 			System.out.println(userProfile.getPhoto());
 			return Base64.getEncoder().encodeToString(userProfile.getPhoto());
 		}
-		//IPSUserPreofileMod userProfile = mandateServices.UserBlobImage(userID);
-		
+		// IPSUserPreofileMod userProfile = mandateServices.UserBlobImage(userID);
+
 	}
 
 	@RequestMapping(value = "getQRImage/{QrMsg}", method = RequestMethod.GET)
@@ -818,7 +823,7 @@ public class IPSRestController {
 		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, null);
 
 		formmode = "update";
-		
+
 		message.setConverted_file_name(DocumentPacks.MtMessgaePath());
 
 		String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
@@ -847,119 +852,141 @@ public class IPSRestController {
 		String res = bipsMsgConversionProcessRec.MessageProcessSubmit(message, formmode);
 		System.out.println(res);
 		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, null);
-		
-		
-		
 
 		formmode = "update";
 		message.setConverted_file_name(DocumentPacks.MxMessagePath());
-		
+
 		String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
 		System.out.println(statusupt);
 
 		return status;
 	}
-	
+
 	@RequestMapping(value = "BIPSFinacleMTMessageform", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public List<BIPS_SWIFT_MSG_MGT> BIPSFnacleMTMessageform(@RequestParam(required = false) String formmode,@RequestParam(required = false) String filename,
-			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+	public List<BIPS_SWIFT_MSG_MGT> BIPSFnacleMTMessageform(@RequestParam(required = false) String formmode,
+			@RequestParam(required = false) String filename, @RequestParam(required = false) String userid,
+			@RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
 			@RequestParam(value = "userID", required = false) String userID, @ModelAttribute BIPS_SWIFT_MSG_MGT message,
-			BIPS_SWIFT_MT_MSG reference, BIPS_SWIFT_MX_MSG mxmessage, Model md, HttpServletRequest req)
-			throws IOException, ParseException {
-		System.out.println("inside fincale");
-		System.out.println("inside rest");
-		System.out.println("response" + message.toString());
-		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
-		/// Insert BIPS_SWIFT_MSG_MGT
-		 // message.setFile_name("SWIFTfxe9EyI1e.MSG");
-		
-		message.setSrl_no(Srl);
-		message.setDate_of_process(new  Date());
-		message.setSwift_msg_type("MT");
-		message.setSwift_mrg_type_conv("MX");
-		 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		   LocalDateTime now = LocalDateTime.now();
-		   message.setTime_of_conv(dtf.format(now));
-        String userid1 = (String) req.getSession().getAttribute("USERID");
-		String username = userProfileRep.findNameById(userid1);
-		String Country_code  = userProfileRep.getCountrycode(userid1);
-		System.out.println("Contrycodeeee"+Country_code);
-		String path = "";
-		
-		 switch(Country_code){  
-		    //Case statements 
-		  case "BWA": 
-		    	path  = env.getProperty("bwa.swift.mt.out.file.path");
-		    	 message.setCountry_code("BWA");
-		    break; 
-		  case "MOZ": 
-		    	path  = env.getProperty("moz.swift.mt.out.file.path");
-		    	 message.setCountry_code("MOZ");
-		    break; 
-		  case "MWI": 
-		    	path  = env.getProperty("mwi.swift.mt.out.file.path");
-		    	 message.setCountry_code("MWI");
-		    break; 
-		  case "ZMB": 
-		    	path  = env.getProperty("zmb.swift.mt.out.file.path");
-		    	 message.setCountry_code("ZMB"); 
-		    break; 
-		    case "ZWE": 
-		    	path  = env.getProperty("zwe.swift.mt.out.file.path");
-		    	 message.setCountry_code("ZWE");
-		    break;  
-		    case "MUS": 
-		    	path  = env.getProperty("mus.swift.mt.out.file.path");
-		    	//System.out.println(path+"   KKKKKK");
-		    	 message.setCountry_code("MUS");
-		    break;  
-		      
-		    
-		   
-		    }  
-		 System.out.println(path+filename+"Mt to Mxpath ");
-		message.setFile_name(path+filename);
-		//System.out.println("mtToMxfile" + oi);
-		String srl = message.getSrl_no();
-		System.out.println("reed" + srl);
-		formmode = "add";
-		String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
-		System.out.println(res);
-		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
-		
-		
-		
+			Model md, HttpServletRequest req) throws IOException, ParseException {
 
-		formmode = "update";
-		//IPSAuditTable audit = new IPSAuditTable();
-		//String audit_ref_no=sequence.generateRequestUUId();
-		String audit = userProfileService.uploadAuditsubmitMttomx(userid1, username);
-		System.out.println("Audit_res"+audit);
-		message.setConverted_file_name(DocumentPacks.MxMessagePath());
-		
-		String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
-		message.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
-		
-		System.out.println(statusupt);
-		List<BIPS_SWIFT_MSG_MGT> dataList=new ArrayList<>();
-		BIPS_SWIFT_MSG_MGT result =new BIPS_SWIFT_MSG_MGT();
-		result.setFile_name(DocumentPacks.Mxmsgname());
-		result.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
-		
-		result.setSrl_no(srl);
-		dataList.add(result);
-		
-		
+		System.out.println("Inside finacle");
+		System.out.println("Inside rest");
+		System.out.println("Response: " + message.toString());
+
+		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
+		System.out.println("The getting file name is " + filename);
+
+		List<BIPS_SWIFT_MSG_MGT> dataList = new ArrayList<>();
+
+		if (filename != null) {
+			message.setSrl_no(Srl);
+			message.setDate_of_process(new Date());
+			message.setSwift_msg_type("MT");
+			message.setSwift_mrg_type_conv("MX");
+
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			message.setTime_of_conv(dtf.format(now));
+
+			String userid1 = (String) req.getSession().getAttribute("USERID");
+			String username = userProfileRep.findNameById(userid1);
+			String Country_code = userProfileRep.getCountrycode(userid1);
+			System.out.println("Country Code: " + Country_code);
+
+			String path = "";
+			switch (Country_code) {
+			case "BWA":
+				path = env.getProperty("bwa.swift.mt.out.file.path");
+				message.setCountry_code("BWA");
+				break;
+			case "MOZ":
+				path = env.getProperty("moz.swift.mt.out.file.path");
+				message.setCountry_code("MOZ");
+				break;
+			case "MWI":
+				path = env.getProperty("mwi.swift.mt.out.file.path");
+				message.setCountry_code("MWI");
+				break;
+			case "ZMB":
+				path = env.getProperty("zmb.swift.mt.out.file.path");
+				message.setCountry_code("ZMB");
+				break;
+			case "ZWE":
+				path = env.getProperty("zwe.swift.mt.out.file.path");
+				message.setCountry_code("ZWE");
+				break;
+			case "MUS":
+				path = env.getProperty("mus.swift.mt.out.file.path");
+				message.setCountry_code("MUS");
+				break;
+			}
+
+			message.setFile_name(path + filename);
+			System.out.println(path + filename + " Mt to Mx path");
+
+			if (filename.endsWith(".txt") || filename.endsWith(".out")) {
+				System.out.println(".Txt and .Out files present");
+
+				formmode = "add";
+				String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
+				System.out.println(res);
+
+				MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
+
+				formmode = "update";
+				String audit = userProfileService.uploadAuditsubmitMttomx(userid1, username);
+				System.out.println("Audit result: " + audit);
+
+				message.setConverted_file_name(DocumentPacks.MxMessagePath());
+
+				String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
+				message.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
+
+				System.out.println(statusupt);
+
+				BIPS_SWIFT_MSG_MGT result = new BIPS_SWIFT_MSG_MGT();
+				result.setFile_name(DocumentPacks.Mxmsgname());
+				result.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
+				result.setSrl_no(Srl);
+
+				dataList.add(result);
+			} else if (filename.endsWith(".outt") || filename.endsWith(".inn")) {
+			    System.out.println(".outt and .inn files detected, saving record only");
+			    message.setStatus("Inprogress");
+			    message.setRemarks("File Format Mismatched (.outt & .inn))");
+
+			    String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmitfailure(message);
+			    System.out.println(res);
+
+			    // Return an error response
+			    BIPS_SWIFT_MSG_MGT errorResponse = new BIPS_SWIFT_MSG_MGT();
+			    errorResponse.setFile_name("Conversion Failed");
+			    errorResponse.setMx_reference_no("Error");
+			    errorResponse.setSrl_no(Srl);
+
+			    dataList.add(errorResponse);
+			} else {
+			    // Handle unsupported file formats
+			    System.out.println("Unsupported file format detected");
+			    BIPS_SWIFT_MSG_MGT errorResponse = new BIPS_SWIFT_MSG_MGT();
+			    errorResponse.setFile_name("Unsupported File");
+			    errorResponse.setMx_reference_no("Error");
+			    errorResponse.setSrl_no(Srl);
+
+			    dataList.add(errorResponse);
+			}
+		}
+
 		return dataList;
 	}
-	
-	
+
 	@RequestMapping(value = "BIPSSwiftMxFileSubmit", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public List<BIPS_SWIFT_MSG_MGT> BIPSSwiftMxFileSubmit(@RequestParam(required = false) String formmode,@RequestParam(required = false) String filename,
-			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+	public List<BIPS_SWIFT_MSG_MGT> BIPSSwiftMxFileSubmit(@RequestParam(required = false) String formmode,
+			@RequestParam(required = false) String filename, @RequestParam(required = false) String userid,
+			@RequestParam(required = false) Optional<Integer> page,
 			@RequestParam(value = "size", required = false) Optional<Integer> size,
 			@RequestParam(value = "userID", required = false) String userID, @ModelAttribute BIPS_SWIFT_MSG_MGT message,
 			BIPS_SWIFT_MT_MSG reference, BIPS_SWIFT_MX_MSG mxmessage, Model md, HttpServletRequest req)
@@ -969,244 +996,264 @@ public class IPSRestController {
 		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
 		message.setSrl_no(Srl);
 		message.setSrl_no(Srl);
-		message.setDate_of_process(new  Date());
+		message.setDate_of_process(new Date());
 		message.setSwift_msg_type("MX");
 		message.setSwift_mrg_type_conv("MT");
-		 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-		   LocalDateTime now = LocalDateTime.now();
-		   message.setTime_of_conv(dtf.format(now));
-		   System.out.println(dtf.format(now));
-		  String userid1 = (String) req.getSession().getAttribute("USERID");
-          String Country_code  = userProfileRep.getCountrycode(userid1);
-		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		message.setTime_of_conv(dtf.format(now));
+		System.out.println(dtf.format(now));
+		String userid1 = (String) req.getSession().getAttribute("USERID");
+		String Country_code = userProfileRep.getCountrycode(userid1);
+
 		String path = "";
-		
-	
+
 		env.getProperty("bwa.swift.mx.in.file.path");
-		 switch(Country_code){  
-		    //Case statements 
-		  case "BWA": 
-		    	path  = env.getProperty("bwa.swift.mx.in.file.path");
-		    	message.setCountry_code("BWA");
-		    break; 
-		  case "MOZ": 
-		    	path  = env.getProperty("moz.swift.mx.in.file.path");
-		    	message.setCountry_code("MOZ");
-		    break; 
-		  case "MWI": 
-		    	path  = env.getProperty("mwi.swift.mx.in.file.path");
-		    	message.setCountry_code("MWI");
-		    break; 
-		  case "ZMB": 
-		    	path  = env.getProperty("zmb.swift.mx.in.file.path");
-		    	message.setCountry_code("ZMB");
-		    break; 
-		    case "ZWE": 
-		    	path  = env.getProperty("zwe.swift.mx.in.file.path");
-		    	message.setCountry_code("ZWE");
-		    break;  
-		    case "MUS": 
-		    	path  = env.getProperty("mus.swift.mx.in.file.path");
-		    	//System.out.println(path+  "    LLLLL");
-		    	message.setCountry_code("MUS");
-		    break;  
-		      
+		switch (Country_code) {
+		// Case statements
+		case "BWA":
+			path = env.getProperty("bwa.swift.mx.in.file.path");
+			message.setCountry_code("BWA");
+			break;
+		case "MOZ":
+			path = env.getProperty("moz.swift.mx.in.file.path");
+			message.setCountry_code("MOZ");
+			break;
+		case "MWI":
+			path = env.getProperty("mwi.swift.mx.in.file.path");
+			message.setCountry_code("MWI");
+			break;
+		case "ZMB":
+			path = env.getProperty("zmb.swift.mx.in.file.path");
+			message.setCountry_code("ZMB");
+			break;
+		case "ZWE":
+			path = env.getProperty("zwe.swift.mx.in.file.path");
+			message.setCountry_code("ZWE");
+			break;
+		case "MUS":
+			path = env.getProperty("mus.swift.mx.in.file.path");
+			// System.out.println(path+ " LLLLL");
+			message.setCountry_code("MUS");
+			break;
+
+		}
+		System.out.println(path + filename + "MXtomtPath");
+		message.setFile_name(path + filename);
+
+		List<BIPS_SWIFT_MSG_MGT> dataList = new ArrayList<>();
+		/// Insert BIPS_SWIFT_MSG_MGT
+
+		if (filename.endsWith(".txt") || filename.endsWith(".IN")) {
+			System.out.println(".Txt and .Out files present");
+
+			formmode = "add";
+			String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
+			System.out.println(res);
+
+			MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1);
+
+			String username = userProfileRep.findNameById(userid1);
+			String audit = userProfileService.uploadAuditsubmitMxtomt(userid1, username);
+			System.out.println("audit+mxtomt" + audit);
+			formmode = "update";
+
+			message.setConverted_file_name(DocumentPacks.MtMessgaePath());
+
+			String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
+			System.out.println(statusupt);
+
+			BIPS_SWIFT_MSG_MGT result = new BIPS_SWIFT_MSG_MGT();
+			result.setFile_name(DocumentPacks.MTmsgname());
+			result.setMt_reference_no(bipsMsgConversionProcessRec.mtref());
+			result.setSrl_no(Srl);
+			dataList.add(result);
+		} else if (filename.endsWith(".xmll") || filename.endsWith(".INN")) {
+		    System.out.println(".outt and .inn files detected, saving record only");
+		    message.setStatus("Inprogress");
+		    message.setRemarks("File Format Mismatched (.xmll & .INN))");
 		    
-		   
-		    } 
-		System.out.println(path+filename+"MXtomtPath");
-		message.setFile_name(path+filename);
+		    String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmitfailure(message);
+		    System.out.println(res);
+
+		    // Return an error response
+		    BIPS_SWIFT_MSG_MGT errorResponse = new BIPS_SWIFT_MSG_MGT();
+		    errorResponse.setFile_name("Conversion Failed");
+		    errorResponse.setMx_reference_no("Error");
+		    errorResponse.setSrl_no(Srl);
+
+		    dataList.add(errorResponse);
+		} else {
+		    // Handle unsupported file formats
+		    System.out.println("Unsupported file format detected");
+		    BIPS_SWIFT_MSG_MGT errorResponse = new BIPS_SWIFT_MSG_MGT();
+		    errorResponse.setFile_name("Unsupported File");
+		    errorResponse.setMx_reference_no("Error");
+		    errorResponse.setSrl_no(Srl);
+
+		    dataList.add(errorResponse);
+		}
 		
+		return dataList;
+	}
+
+	public String AutoFilepicker(String usr, String filename) throws IOException, ParseException {
+		BIPS_SWIFT_MSG_MGT message = new BIPS_SWIFT_MSG_MGT();
+		String formmode = "";
+		System.out.println("inside fincale");
+		System.out.println("inside rest");
+		// System.out.println("response" + message.toString());
+		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
+		/// Insert BIPS_SWIFT_MSG_MGT
+		// message.setFile_name("SWIFTfxe9EyI1e.MSG");
+
+		message.setSrl_no(Srl);
+		message.setDate_of_process(new Date());
+		message.setSwift_msg_type("MT");
+		message.setSwift_mrg_type_conv("MX");
+		message.setStatus("Inprogress");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		message.setTime_of_conv(dtf.format(now));
+		String userid1 = usr;
+
+		String Country_code = usr;
+		System.out.println("Contrycodeeee" + Country_code);
+		String path = "";
+
+		switch (Country_code) {
+		// Case statements
+		case "Auto_BWA":
+			path = env.getProperty("auto.bwa.swift.mt.out.file.path");
+			message.setCountry_code("BWA");
+			break;
+		case "Auto_MOZ":
+			path = env.getProperty("auto.moz.swift.mt.out.file.path");
+			message.setCountry_code("MOZ");
+			break;
+		case "Auto_MWI":
+			path = env.getProperty("auto.mwi.swift.mt.out.file.path");
+			message.setCountry_code("MWI");
+			break;
+		case "Auto_ZMB":
+			path = env.getProperty("auto.zmb.swift.mt.out.file.path");
+			message.setCountry_code("ZMB");
+			break;
+		case "Auto_ZWE":
+			path = env.getProperty("auto.zwe.swift.mt.out.file.path");
+			message.setCountry_code("ZWE");
+			break;
+		case "Auto_MUS":
+			path = env.getProperty("auto.mus.swift.mt.out.file.path");
+			// System.out.println(path+" KKKKKK");
+			message.setCountry_code("MUS");
+			break;
+		case "Auto":
+			path = env.getProperty("auto.swift.mt.out.file.path");
+			// System.out.println(path+" KKKKKK");
+			message.setCountry_code("AUTO");
+			break;
+
+		}
+		System.out.println(path + filename + "Mt to Mxpath ");
+		message.setFile_name(path + filename);
+		// System.out.println("mtToMxfile" + oi);
+		String srl = message.getSrl_no();
+		System.out.println("reed" + srl);
+		formmode = "add";
+		String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
+		System.out.println(res);
+		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
+
+		formmode = "update";
+		message.setConverted_file_name(DocumentPacks.MxMessagePath());
+
+		String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
+		message.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
+
+		System.out.println(statusupt);
+
+		String msg = "success";
+		return msg;
+
+	}
+
+	public String AutoFilepicker2(String usr, String filename) throws IOException, ParseException {
+		String formmode = "";
+		BIPS_SWIFT_MSG_MGT message = new BIPS_SWIFT_MSG_MGT();
+		System.out.println("inside rest");
+		System.out.println("response" + message.toString());
+		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
+		message.setSrl_no(Srl);
+		message.setSrl_no(Srl);
+		message.setDate_of_process(new Date());
+		message.setSwift_msg_type("MX");
+		message.setSwift_mrg_type_conv("MT");
+		message.setStatus("Inprogress");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		message.setTime_of_conv(dtf.format(now));
+		String userid1 = usr;
+		String Country_code = usr;
+
+		String path = "";
+
+		env.getProperty("bwa.swift.mx.in.file.path");
+		switch (Country_code) {
+		// Case statements
+		case "Auto_BWA":
+			path = env.getProperty("auto.bwa.swift.mx.in.file.path");
+			message.setCountry_code("BWA");
+			break;
+		case "Auto_MOZ":
+			path = env.getProperty("auto.moz.swift.mx.in.file.path");
+			message.setCountry_code("MOZ");
+			break;
+		case "Auto_MWI":
+			path = env.getProperty("auto.mwi.swift.mx.in.file.path");
+			message.setCountry_code("MWI");
+			break;
+		case "Auto_ZMB":
+			path = env.getProperty("auto.zmb.swift.mx.in.file.path");
+			message.setCountry_code("ZMB");
+			break;
+		case "Auto_ZWE":
+			path = env.getProperty("auto.zwe.swift.mx.in.file.path");
+			message.setCountry_code("ZWE");
+			break;
+		case "Auto_MUS":
+			path = env.getProperty("auto.swift.mx.in.file.path");
+			// System.out.println(path+ " LLLLL");
+			message.setCountry_code("MUS");
+			break;
+
+		case "Auto":
+			path = env.getProperty("auto.swift.mx.in.file.path");
+			// System.out.println(path+ " LLLLL");
+			message.setCountry_code("AUTO");
+			break;
+		}
+		System.out.println("The getting path value is here " + path);
+		System.out.println(path + filename + "MXtomtPath");
+		message.setFile_name(path + filename);
+
 		/// Insert BIPS_SWIFT_MSG_MGT
 
 		formmode = "add";
 		String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
 		System.out.println(res);
 
-		MTtoMXresponse status = swiftConnection.mxToMtConverter(message,userid1);
-		
-		String username = userProfileRep.findNameById(userid1);
-		String audit = userProfileService.uploadAuditsubmitMxtomt(userid1, username);
-		System.out.println("audit+mxtomt"+ audit);
+		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1);
+
 		formmode = "update";
-		
+
 		message.setConverted_file_name(DocumentPacks.MtMessgaePath());
 
 		String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
 		System.out.println(statusupt);
+		String msg = "success2";
+		return msg;
 
-		List<BIPS_SWIFT_MSG_MGT> dataList=new ArrayList<>();
-		BIPS_SWIFT_MSG_MGT result =new BIPS_SWIFT_MSG_MGT();
-		result.setFile_name(DocumentPacks.MTmsgname());
-		result.setMt_reference_no(bipsMsgConversionProcessRec.mtref());
-		result.setSrl_no(Srl);
-		dataList.add(result);
-		
-		
-		return dataList;
 	}
-	 public String AutoFilepicker( String usr, String filename) throws IOException, ParseException{
-		  BIPS_SWIFT_MSG_MGT message = new BIPS_SWIFT_MSG_MGT();
-		 String formmode = "";
-		 System.out.println("inside fincale");
-			System.out.println("inside rest");
-			//System.out.println("response" + message.toString());
-			String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
-			/// Insert BIPS_SWIFT_MSG_MGT
-			 // message.setFile_name("SWIFTfxe9EyI1e.MSG");
-			
-			message.setSrl_no(Srl);
-			message.setDate_of_process(new  Date());
-			message.setSwift_msg_type("MT");
-			message.setSwift_mrg_type_conv("MX");
-			message.setStatus("Inprogress");
-			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-			   LocalDateTime now = LocalDateTime.now();
-			   message.setTime_of_conv(dtf.format(now));
-	        String userid1 = usr;
-			
-			String Country_code  = usr;
-			System.out.println("Contrycodeeee"+Country_code);
-			String path = "";
-			
-			 switch(Country_code){  
-			    //Case statements 
-			  case "Auto_BWA": 
-			    	path  = env.getProperty("auto.bwa.swift.mt.out.file.path");
-			    	 message.setCountry_code("BWA");
-			    break; 
-			  case "Auto_MOZ": 
-			    	path  = env.getProperty("auto.moz.swift.mt.out.file.path");
-			    	 message.setCountry_code("MOZ");
-			    break; 
-			  case "Auto_MWI": 
-			    	path  = env.getProperty("auto.mwi.swift.mt.out.file.path");
-			    	 message.setCountry_code("MWI");
-			    break; 
-			  case "Auto_ZMB": 
-			    	path  = env.getProperty("auto.zmb.swift.mt.out.file.path");
-			    	 message.setCountry_code("ZMB");
-			    break; 
-			    case "Auto_ZWE": 
-			    	path  = env.getProperty("auto.zwe.swift.mt.out.file.path");
-			    	 message.setCountry_code("ZWE");
-			    break;  
-			    case "Auto_MUS": 
-			    	path  = env.getProperty("auto.mus.swift.mt.out.file.path");
-			    	//System.out.println(path+"   KKKKKK");
-			    	 message.setCountry_code("MUS");
-			    break;  
-			    case "Auto": 
-			    	path  = env.getProperty("auto.swift.mt.out.file.path");
-			    	//System.out.println(path+"   KKKKKK");
-			    	message.setCountry_code("AUTO");
-			    break;  
-			    
-			   
-			    }  
-			 System.out.println(path+filename+"Mt to Mxpath ");
-			message.setFile_name(path+filename);
-			//System.out.println("mtToMxfile" + oi);
-			String srl = message.getSrl_no();
-			System.out.println("reed" + srl);
-			formmode = "add";
-			String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
-			System.out.println(res);
-			MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
-			
-			
-			
-
-			formmode = "update";
-			message.setConverted_file_name(DocumentPacks.MxMessagePath());
-			
-			String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
-			message.setMx_reference_no(BipsMsgConversionProcessRec.mxref());
-			
-			System.out.println(statusupt);
-			
-		 String msg = "success";
-		return msg;
-		 
-	 }
-	 
-	 public String AutoFilepicker2(String usr, String filename) throws IOException, ParseException{
-		 String formmode="";
-		 BIPS_SWIFT_MSG_MGT message = new BIPS_SWIFT_MSG_MGT();
-		 System.out.println("inside rest");
-			System.out.println("response" + message.toString());
-			String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
-			message.setSrl_no(Srl);
-			message.setSrl_no(Srl);
-			message.setDate_of_process(new  Date());
-			message.setSwift_msg_type("MX");
-			message.setSwift_mrg_type_conv("MT");
-			message.setStatus("Inprogress");
-			 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-			   LocalDateTime now = LocalDateTime.now();
-			   message.setTime_of_conv(dtf.format(now));
-			  String userid1 = usr;
-	          String Country_code  = usr;
-			
-			String path = "";
-			
-		
-			env.getProperty("bwa.swift.mx.in.file.path");
-			 switch(Country_code){  
-			    //Case statements 
-			  case "Auto_BWA": 
-			    	path  = env.getProperty("auto.bwa.swift.mx.in.file.path");
-			    	message.setCountry_code("BWA");
-			    break; 
-			  case "Auto_MOZ": 
-			    	path  = env.getProperty("auto.moz.swift.mx.in.file.path");
-			    	message.setCountry_code("MOZ");
-			    break; 
-			  case "Auto_MWI": 
-			    	path  = env.getProperty("auto.mwi.swift.mx.in.file.path");
-			    	message.setCountry_code("MWI");
-			    break; 
-			  case "Auto_ZMB": 
-			    	path  = env.getProperty("auto.zmb.swift.mx.in.file.path");
-			    	message.setCountry_code("ZMB");
-			    break; 
-			    case "Auto_ZWE": 
-			    	path  = env.getProperty("auto.zwe.swift.mx.in.file.path");
-			    	message.setCountry_code("ZWE");
-			    break;  
-			    case "Auto_MUS": 
-			    	path  = env.getProperty("auto.swift.mx.in.file.path");
-			    	//System.out.println(path+  "    LLLLL");
-			    	message.setCountry_code("MUS");
-			    break;  
-			    
-			    case "Auto": 
-			    	path  = env.getProperty("auto.swift.mx.in.file.path");
-			    	//System.out.println(path+  "    LLLLL");
-			    	message.setCountry_code("AUTO");
-			    break;  
-			    } 
-			 System.out.println("The getting path value is here "+path);
-			System.out.println(path+filename+"MXtomtPath");
-			message.setFile_name(path+filename);
-			
-			/// Insert BIPS_SWIFT_MSG_MGT
-
-			formmode = "add";
-			String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
-			System.out.println(res);
-
-			MTtoMXresponse status = swiftConnection.mxToMtConverter(message,userid1);
-
-			formmode = "update";
-			
-			message.setConverted_file_name(DocumentPacks.MtMessgaePath());
-
-			String statusupt = bipsMsgConversionProcessRec.MessageStatusUpdate(message, formmode);
-			System.out.println(statusupt);
-		 String msg = "success2";
-		return msg;
-		 
-	 }
 
 }
