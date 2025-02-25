@@ -653,26 +653,33 @@ public class AppHeader {
 								
 
 					
-			strBuilder.append(":70:");
+					strBuilder.append(":70:");
 
-			
-			StringBuilder remitterData=new StringBuilder();
-			
-			if(!purp.equals("")) {
-				remitterData.append("/PURP/"+purp+"//");
-			}
-			remitterData.append("/ROC/"+creditTransferTran.getPmtId().getEndToEndId());
-			if(!ustrid.equals("")) {
-				remitterData.append("///URI/"+ustrid);
-			}
-			
-			 String[] array2=remitterData.toString().split("(?<=\\G.{35})");
-			  
-			  for(int i=0;i<array2.length;i++) {
-				  if(i<2) {
-					  strBuilder.append(array2[i] + CRLF);
-				  }
-			  }
+					// Prepare remitter data
+					StringBuilder remitterData = new StringBuilder();
+
+					if (!purp.isEmpty()) {
+					    remitterData.append("/PURP/").append(purp).append("//");
+					}
+					remitterData.append("/ROC/").append(creditTransferTran.getPmtId().getEndToEndId());
+
+					if (!ustrid.isEmpty()) {
+					    remitterData.append("//URI/").append(ustrid); // Fixed triple slash issue
+					}
+
+					// Split into 35-character chunks
+					String[] array2 = remitterData.toString().split("(?<=\\G.{35})");
+
+					// Append only non-empty lines
+					for (int i = 0; i < array2.length && i < 2; i++) {
+					    if (!array2[i].trim().isEmpty()) { // Prevent empty lines
+					        strBuilder.append(array2[i]);
+					        if (i < array2.length - 1) { // Avoid trailing CRLF
+					            strBuilder.append(CRLF);
+					        }
+					    }
+					}
+
 
 			
 			
