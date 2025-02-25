@@ -81,10 +81,11 @@
 	height: 100%;
 }
 
-    #UserProfile, #AccessandRoles, #NotificationParms, #Message_Parameters,
+#UserProfile, #AccessandRoles, #NotificationParms, #Message_Parameters,
 	#userActivities, #File_Management, #Swift_MX_Menu_inquiries,
 	#Swift_MT_Menu_inquiries, #Proccessed_Messagess, #Failed_Messages,
-	#Pending_Messages, #OperationLog,#FolderConfiguration,#FolderManagmt,#File_Management_datas {
+	#Pending_Messages, #OperationLog, #FolderConfiguration, #FolderManagmt,
+	#File_Management_datas {
 	margin-left: 45px;
 }
 
@@ -592,17 +593,18 @@ jQuery(function($){
 <body>
 
 	<nav class="navbar fixed-top navbar-expand-md navbar-dark  mb-3"
-		style="box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color: white; height: 70px; border-color: red; padding: 10px;">
+		style="box-shadow: 6px 6px 12px #bd702f9c; z-index: 1031; background-color: white; height: 70px; border-color: red;">
 
 		<div class="col-sm-12" style="border-color: red">
 			<img th:src=@{/images/maa_bank_image.png}
-				style="width: 224px; height: 70px;" id="showmenu" alt="Bornfire">
-			<div id="headerdiv">
-				<img th:src=@{/images/Bornfire.png} id="bfirelogo"
-					style="margin-left: 18px; height: 50px; margin-top: -14px;"
-					alt="Bornfire">
-			</div>
+				style="width: 167px; height: 70px; margin-left: -28px;" id="showmenu" alt="Bornfire">
+			<img th:src=@{/images/Bornfire.png} id="bfirelogo"
+				style="height: 70px; width: 167px;"
+				alt="Bornfire">
 
+			<div id="headerdiv">
+				<h3 style="font-size:18px;">BORNFIRE MESSAGE CONVERTION - MT-MX-MT</h3>
+			</div>
 
 			<div class="btn float-right" id="userdtl" title="Profile"
 				style="margin-top: 5px;">
@@ -810,9 +812,9 @@ jQuery(function($){
 						<li class="nav-item"><a class="nav-link" id="File_Management"
 							href="javascript: void(0);" onclick="contentLoad(this)">Convertion
 								Management</a></li>
-						<li class="nav-item"><a class="nav-link" id="File_Management_datas"
-							href="javascript: void(0);" onclick="contentLoad(this)">Folder
-								Management</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="File_Management_datas" href="javascript: void(0);"
+							onclick="contentLoad(this)">Folder Management</a></li>
 						<!-- 	<li class="nav-item"><a class="nav-link"
 							id="FolderConfigurationInquiry" href="javascript: void(0);"
 							onclick="contentLoad(this)">Folder Configuration</a></li> -->

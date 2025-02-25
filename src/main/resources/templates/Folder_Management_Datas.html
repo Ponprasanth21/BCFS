@@ -880,15 +880,31 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 							</tr>
 						</thead>
 						<tbody>
-						    <tr th:each="i : ${#numbers.sequence(0, T(java.lang.Math).max(T(java.lang.Math).max(fileListCBS_MT_OUT.size(), fileListCBS_MT_IN.size()), T(java.lang.Math).max(fileListSWIFT_MX_OUT.size(), fileListSWIFT_MX_IN.size())) - 1)}">
-						        <td th:text="${i < fileListCBS_MT_OUT.size() ? fileListCBS_MT_OUT[i].name : ''}"></td>
-						        <td th:text="${i < fileListCBS_MT_IN.size() ? fileListCBS_MT_IN[i].name : ''}"></td>
-						        <td th:text="${i < fileListSWIFT_MX_OUT.size() ? fileListSWIFT_MX_OUT[i].name : ''}"></td>
-						        <td th:text="${i < fileListSWIFT_MX_IN.size() ? fileListSWIFT_MX_IN[i].name : ''}"></td>
-						    </tr>
-						</tbody>
+							<!-- Show "No Data Found" if all lists are empty -->
+							<tr th:if="${!hasData}">
+								<td colspan="4" class="text-center">No Data Found</td>
+							</tr>
 
+							<!-- Show table data if files exist -->
+							<tr
+								th:each="i : ${#numbers.sequence(0, 
+            T(java.lang.Math).max(
+                T(java.lang.Math).max(fileListCBS_MT_OUT.size(), fileListCBS_MT_IN.size()), 
+                T(java.lang.Math).max(fileListSWIFT_MX_OUT.size(), fileListSWIFT_MX_IN.size())
+            ) - 1)}"
+								th:if="${hasData}">
+								<td
+									th:text="${i < fileListCBS_MT_OUT.size() ? fileListCBS_MT_OUT[i].name : ''}"></td>
+								<td
+									th:text="${i < fileListCBS_MT_IN.size() ? fileListCBS_MT_IN[i].name : ''}"></td>
+								<td
+									th:text="${i < fileListSWIFT_MX_OUT.size() ? fileListSWIFT_MX_OUT[i].name : ''}"></td>
+								<td
+									th:text="${i < fileListSWIFT_MX_IN.size() ? fileListSWIFT_MX_IN[i].name : ''}"></td>
+							</tr>
+						</tbody>
 					</table>
+
 				</div>
 
 				<div class="card-footer text-center">

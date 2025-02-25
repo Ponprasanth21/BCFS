@@ -367,28 +367,49 @@ public class SwiftConnection {
 	}
 
 	private MTtoMXresponse singleProcessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,
-			boolean isMultiple) throws IOException, ParseException {
+	        boolean isMultiple) throws IOException, ParseException {
 
-		MtMessageReader inputMessageReader = new MtMessageReader(msgInpt);
-		String applicationHeaderBlock1 = inputMessageReader.getSwiftMsgBlock(1);
-		String applicationHeaderBlock2 = inputMessageReader.getSwiftMsgBlock(2);
-		String applicationHeaderBlock3 = inputMessageReader.getSwiftMsgBlock(3);
-		String inputMessageDataBlock4 = inputMessageReader.getSwiftMsgBlock(4);
+	    MtMessageReader inputMessageReader = new MtMessageReader(msgInpt);
+	    String applicationHeaderBlock1 = inputMessageReader.getSwiftMsgBlock(1);
+	    String applicationHeaderBlock2 = inputMessageReader.getSwiftMsgBlock(2);
+	    String applicationHeaderBlock3 = inputMessageReader.getSwiftMsgBlock(3);
+	    String inputMessageDataBlock4 = inputMessageReader.getSwiftMsgBlock(4);
 
-		String messageType = getMessageType(applicationHeaderBlock2);
-		SwiftParser swiftParser = new SwiftParser(inputMessageDataBlock4);
+	    System.out.println("The Header Value Block1 is " + applicationHeaderBlock1);
+	    System.out.println("The Header Value Block2 is " + applicationHeaderBlock2);
+	    System.out.println("The Header Value Block3 is " + applicationHeaderBlock3);
+	    System.out.println("The Header Value Block4 is " + inputMessageDataBlock4);
 
-		switch (messageType) {
-		case "103":
-			return singleProcessMT103(swiftParser, applicationHeaderBlock1, applicationHeaderBlock2, applicationHeaderBlock3, message, userID);
-		case "202":
-			System.out.println("Unsupported message type: " + messageType);
-			break;
-		default:
-			System.out.println("Unsupported message type: " + messageType);
-			break;
-		}
-		return null;
+	    String headerBlock2 = applicationHeaderBlock2.replace("{2:", "").replace("}", "").trim();
+	    System.out.println("The Header block value headerBlock2 is " + headerBlock2);
+
+	    // Declare messageType with a default value
+	    String messageType = "Unknown";
+
+	    // Ensure the header starts with 'O' (Output) and has enough length
+	    if (headerBlock2.startsWith("O") && headerBlock2.length() >= 28) {
+	        messageType = headerBlock2.substring(1, 4);  // Extracts "103"
+	        String senderTime = headerBlock2.substring(4, 14);  // Extracts "1137250207"
+	        String senderBIC = headerBlock2.substring(14, 26); // Extracts "STCBMUMUAXXX"
+
+	        System.out.println("Extracted Message Type: " + messageType);
+	        System.out.println("Extracted Sender Time: " + senderTime);
+	        System.out.println("Extracted Sender BIC: " + senderBIC);
+	    }
+
+	    SwiftParser swiftParser = new SwiftParser(inputMessageDataBlock4);
+
+	    switch (messageType) {
+	        case "103":
+	            return singleProcessMT103(swiftParser, applicationHeaderBlock1, applicationHeaderBlock2, applicationHeaderBlock3, message, userID);
+	        case "202":
+	            System.out.println("Unsupported message type: " + messageType);
+	            break;
+	        default:
+	            System.out.println("Unsupported message type: " + messageType);
+	            break;
+	    }
+	    return null;
 	}
 
 	private MTtoMXresponse MultipleprocessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,

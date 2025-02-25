@@ -4763,84 +4763,27 @@ public class MainController {
 	        @ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
 	        throws FileNotFoundException, SQLException, IOException {
 
-		String folderPath = "D:\\BCON\\AUTO\\CBS\\MT OUT";
-		
-		String folderPath1 = "D:\\BCON\\AUTO\\CBS\\MT IN";
-		
-		String folderPath2 = "D:\\BCON\\AUTO\\SWIFT\\MX OUT";
-		
-		String folderPath3 = "D:\\BCON\\AUTO\\SWIFT\\MX IN";
+	    String folderPath = "D:\\BCON\\AUTO\\CBS\\MT OUT";
+	    String folderPath1 = "D:\\BCON\\AUTO\\CBS\\MT IN";
+	    String folderPath2 = "D:\\BCON\\AUTO\\SWIFT\\MX OUT";
+	    String folderPath3 = "D:\\BCON\\AUTO\\SWIFT\\MX IN";
+
 	    String roleId = (String) req.getSession().getAttribute("ROLEID");
-	    
 	    md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-	    System.out.println(folderPath);
+
 	    if (formmode == null || formmode.equals("list")) {
-	    	System.out.println(folderPath);
-	        md.addAttribute("FilelistdataMt", bipsSwiftMsgConversionRepo.findAll());
-	        
-
-	        List<Map<String, String>> fileListCBS_MT_OUT = new ArrayList<>();
-	        List<Map<String, String>> fileListCBS_MT_IN = new ArrayList<>();
-	        List<Map<String, String>> fileListSWIFT_MX_OUT = new ArrayList<>();
-	        List<Map<String, String>> fileListSWIFT_MX_IN = new ArrayList<>();
-
-	        // Fetch files for CBS-MT-OUT
-	        File folder = new File(folderPath);
-	        if (folder.exists() && folder.isDirectory()) {
-	            File[] files = folder.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    Map<String, String> fileData = new HashMap<>();
-	                    fileData.put("name", file.getName());
-	                    fileListCBS_MT_OUT.add(fileData);
-	                }
-	            }
-	        }
-
-	        // Fetch files for CBS-MT-IN
-	        File folder1 = new File(folderPath1);
-	        if (folder1.exists() && folder1.isDirectory()) {
-	            File[] files = folder1.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    Map<String, String> fileData = new HashMap<>();
-	                    fileData.put("name", file.getName());
-	                    fileListCBS_MT_IN.add(fileData);
-	                }
-	            }
-	        }
-
-	        // Fetch files for SWIFT-MX-OUT
-	        File folder2 = new File(folderPath2);
-	        if (folder2.exists() && folder2.isDirectory()) {
-	            File[] files = folder2.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    Map<String, String> fileData = new HashMap<>();
-	                    fileData.put("name", file.getName());
-	                    fileListSWIFT_MX_OUT.add(fileData);
-	                }
-	            }
-	        }
-
-	        // Fetch files for SWIFT-MX-IN
-	        File folder3 = new File(folderPath3);
-	        if (folder3.exists() && folder3.isDirectory()) {
-	            File[] files = folder3.listFiles();
-	            if (files != null) {
-	                for (File file : files) {
-	                    Map<String, String> fileData = new HashMap<>();
-	                    fileData.put("name", file.getName());
-	                    fileListSWIFT_MX_IN.add(fileData);
-	                }
-	            }
-	        }
+	        List<Map<String, String>> fileListCBS_MT_OUT = getFileList(folderPath);
+	        List<Map<String, String>> fileListCBS_MT_IN = getFileList(folderPath1);
+	        List<Map<String, String>> fileListSWIFT_MX_OUT = getFileList(folderPath2);
+	        List<Map<String, String>> fileListSWIFT_MX_IN = getFileList(folderPath3);
 
 	        md.addAttribute("fileListCBS_MT_OUT", fileListCBS_MT_OUT);
 	        md.addAttribute("fileListCBS_MT_IN", fileListCBS_MT_IN);
 	        md.addAttribute("fileListSWIFT_MX_OUT", fileListSWIFT_MX_OUT);
 	        md.addAttribute("fileListSWIFT_MX_IN", fileListSWIFT_MX_IN);
 
+	        md.addAttribute("hasData", !(fileListCBS_MT_OUT.isEmpty() && fileListCBS_MT_IN.isEmpty() && 
+	                                     fileListSWIFT_MX_OUT.isEmpty() && fileListSWIFT_MX_IN.isEmpty()));
 
 	        md.addAttribute("formmode", "list");
 	        md.addAttribute("menu", "MMenupage");
@@ -4848,6 +4791,23 @@ public class MainController {
 
 	    return "Folder_Management_Datas.html";
 	}
+
+	private List<Map<String, String>> getFileList(String folderPath) {
+	    List<Map<String, String>> fileList = new ArrayList<>();
+	    File folder = new File(folderPath);
+	    if (folder.exists() && folder.isDirectory()) {
+	        File[] files = folder.listFiles();
+	        if (files != null) {
+	            for (File file : files) {
+	                Map<String, String> fileData = new HashMap<>();
+	                fileData.put("name", file.getName());
+	                fileList.add(fileData);
+	            }
+	        }
+	    }
+	    return fileList;
+	}
+
 	
 	@RequestMapping(value = "Addformdatas", method = RequestMethod.POST)
 	@ResponseBody
