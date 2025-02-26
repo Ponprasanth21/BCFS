@@ -488,6 +488,36 @@ public class DocumentPacks {
 				creditTransferTransaction391.setRmtInf(rmtInf);
 			}
 		}
+		
+		String tag71A = mt103.getTag71A();
+
+		if (tag71A != null) {
+		    tag71A = tag71A.trim().toUpperCase(); // Normalize case and trim spaces
+		    System.out.println(tag71A + " value of 71A");
+		} else {
+		    tag71A = ""; // Avoid null issues
+		}
+
+		ChargeBearerType1Code chrgbr1;
+
+		switch (tag71A) {
+		    case "OUR":
+		        chrgbr1 = ChargeBearerType1Code.OUR;
+		        break;
+		    case "BEN":
+		        chrgbr1 = ChargeBearerType1Code.BEN;
+		        break;
+		    case "SHA":
+		        chrgbr1 = ChargeBearerType1Code.SHAR;
+		        break;
+		    default:
+		        chrgbr1 = ChargeBearerType1Code.SLEV; // Default to SLEV if unknown or empty
+		}
+
+		// Now, you can use chrgbr1 where needed
+
+		creditTransferTransaction391.setChrgBr(chrgbr1);
+
 		cdtTrfTxInf.add(creditTransferTransaction391);
 		/// Financial Customer Credit Transfer
 		FIToFICustomerCreditTransferV08 fiToFICstmrCdtTrf = new FIToFICustomerCreditTransferV08();
@@ -518,30 +548,22 @@ public class DocumentPacks {
 	}
 
 	public Document getPacs_008_001_01UnMarshalDoc(String block4) {
-		final int start = block4.indexOf("<Document");
-		final int end = block4.indexOf("</Document>");
-
-		InputStream stream = null;
-		JAXBContext jaxBContext;
-		JAXBElement<Document> jaxbElement = null;
-		try {
-			stream = new ByteArrayInputStream(block4.substring(start, end + 11).getBytes("UTF-8"));
-			jaxBContext = JAXBContext.newInstance(Document.class);
-			Unmarshaller unMarshaller = jaxBContext.createUnmarshaller();
-			XMLInputFactory factory = XMLInputFactory.newInstance();
-			XMLEventReader xmlEventReader = factory.createXMLEventReader(stream);
-			jaxbElement = unMarshaller.unmarshal(xmlEventReader, Document.class);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
-		}
-		Document document = jaxbElement.getValue();
-
-		return document;
-
+	    final int start = block4.indexOf("<Document");
+	    final int end = block4.indexOf("</Document>");
+	    InputStream stream = null;
+	    JAXBContext jaxBContext;
+	    JAXBElement<Document> jaxbElement = null;
+	    try {
+	        stream = new ByteArrayInputStream(block4.substring(start, end + 11).getBytes("UTF-8"));
+	        jaxBContext = JAXBContext.newInstance(Document.class);
+	        Unmarshaller unMarshaller = jaxBContext.createUnmarshaller();
+	        XMLInputFactory factory = XMLInputFactory.newInstance();
+	        XMLEventReader xmlEventReader = factory.createXMLEventReader(stream);
+	        jaxbElement = unMarshaller.unmarshal(xmlEventReader, Document.class);
+	    } catch (JAXBException | UnsupportedEncodingException | XMLStreamException e) {
+	        e.printStackTrace();
+	    }
+	    return jaxbElement.getValue();
 	}
 
 	public BusinessApplicationHeaderV01 getPacs_008_001_01UnMarshalAppHeader(String block4) {
@@ -612,17 +634,18 @@ public class DocumentPacks {
 
 	}
 
-	public String getMT_100(Document doc008, BusinessApplicationHeaderV01 appHeader008, Header hedareData, String userID) throws IOException {
+	public String getMT_100(Document doc008, BusinessApplicationHeaderV01 appHeader008, String userID,String filename) throws IOException {
 
 		// Create MT Application Header
-		String headerParam = appHeader.createApplicationHeader(doc008, appHeader008, hedareData);
-		String dataParam = appHeader.createApplicationData(doc008, appHeader008, hedareData);
+		String headerParam = appHeader.createApplicationHeader(doc008, appHeader008);
+		String dataParam = appHeader.createApplicationData(doc008, appHeader008);
 
 		StringBuilder strBuilder = new StringBuilder();
 		strBuilder.append(headerParam);
 		strBuilder.append(dataParam);
 
-		String filename = "MT103" + new SimpleDateFormat("YYYYMMDDhhmmss").format(new Date()) + ".IN";
+		filename = filename.replace(".OUT", "").replace(".IN", "") + ".IN";
+
 		String userid1 = userID;
 		String Country_code = "";
 		if (userID.equals("Auto")) {
@@ -767,7 +790,7 @@ public class DocumentPacks {
 	// New Logics
 
 	@SuppressWarnings("resource")
-	public String singleGetDataPDU008(MT_103 mt103, String block1, String block2, String block3, String userID)
+	public String singleGetDataPDU008(MT_103 mt103, String block1, String block2, String block3, String userID,String filename)
 			throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" "
@@ -777,7 +800,8 @@ public class DocumentPacks {
 		sb.append(getPacs_008_001_01Doc(mt103, block3));
 		sb.append("</Body>\r\n</DataPDU>");
 
-		String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".OUT";
+		filename = filename.replace(".txt", ".OUT");
+
 		String Country_code = "";
 		String path = "";
 
@@ -853,7 +877,7 @@ public class DocumentPacks {
 	}
 
 	public String multipleGetDataPDU008(MT_103 mt103, List<MT_103> mt103List, String block1, String block2, String block3,
-			String userID, boolean isMultiple) throws IOException, ParseException {
+			String userID,String filename, boolean isMultiple) throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" "
 				+ "xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" "
@@ -867,7 +891,7 @@ public class DocumentPacks {
 		} 
 		sb.append("</Body>\r\n</DataPDU>");
 
-		String filename = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + ".OUT";
+		filename = filename.replace(".txt", ".OUT");
 		String Country_code = "";
 		String userid1 = userID;
 		if (userid1 != null) {

@@ -820,7 +820,7 @@ public class IPSRestController {
 		String res = bipsMsgConversionProcessRec.MessageProcessSubmit(message, formmode);
 		System.out.println(res);
 
-		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, null);
+		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, null, res);
 
 		formmode = "update";
 
@@ -851,7 +851,7 @@ public class IPSRestController {
 		formmode = "add";
 		String res = bipsMsgConversionProcessRec.MessageProcessSubmit(message, formmode);
 		System.out.println(res);
-		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, null);
+		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, null, res);
 
 		formmode = "update";
 		message.setConverted_file_name(DocumentPacks.MxMessagePath());
@@ -874,6 +874,8 @@ public class IPSRestController {
 		System.out.println("Inside finacle");
 		System.out.println("Inside rest");
 		System.out.println("Response: " + message.toString());
+		
+		System.out.println("The converted filename is "+message.getConverted_file_name());
 
 		String Srl = bipsSwiftMsgConversionRepo.getNextSeriesId();
 		System.out.println("The getting file name is " + filename);
@@ -928,12 +930,16 @@ public class IPSRestController {
 
 			if (filename.endsWith(".txt") || filename.endsWith(".out")) {
 				System.out.println(".Txt and .Out files present");
+				
+				System.out.println("Processing SWIFT file: " + filename);
+				System.out.println("File Path: " + message.getFile_name());
+				System.out.println("Converted File Name: " + message.getConverted_file_name());
 
 				formmode = "add";
 				String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
 				System.out.println(res);
 
-				MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
+				MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1,filename);
 
 				formmode = "update";
 				String audit = userProfileService.uploadAuditsubmitMttomx(userid1, username);
@@ -1044,14 +1050,14 @@ public class IPSRestController {
 		List<BIPS_SWIFT_MSG_MGT> dataList = new ArrayList<>();
 		/// Insert BIPS_SWIFT_MSG_MGT
 
-		if (filename.endsWith(".txt") || filename.endsWith(".IN")) {
+		if (filename.endsWith(".txt") || filename.endsWith(".IN") || filename.endsWith(".OUT")) {
 			System.out.println(".Txt and .Out files present");
 
 			formmode = "add";
 			String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
 			System.out.println(res);
 
-			MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1);
+			MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1,filename);
 
 			String username = userProfileRep.findNameById(userid1);
 			String audit = userProfileService.uploadAuditsubmitMxtomt(userid1, username);
@@ -1163,7 +1169,7 @@ public class IPSRestController {
 		formmode = "add";
 		String res = bipsMsgConversionProcessRec.FinacleMessageProcessSubmit(message, formmode);
 		System.out.println(res);
-		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1);
+		MTtoMXresponse status = swiftConnection.mtToMxConverter(message, userid1, filename);
 
 		formmode = "update";
 		message.setConverted_file_name(DocumentPacks.MxMessagePath());
@@ -1243,7 +1249,7 @@ public class IPSRestController {
 		String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
 		System.out.println(res);
 
-		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1);
+		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1, filename);
 
 		formmode = "update";
 

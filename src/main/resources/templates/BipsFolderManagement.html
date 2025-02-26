@@ -1,308 +1,312 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" th:fragment="summary">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
-		th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
-	<link rel="stylesheet" type="text/css" href="/webjars/font-awesome/5.9.0/css/all.min.css"
-		th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
-	<link rel="stylesheet" type="text/css" href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
-		th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
-	<link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
-		th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
-	<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
-	<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/font-awesome/5.9.0/css/all.min.css"
+	th:href="@{/webjars/font-awesome/5.9.0/css/all.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/jquery-ui/1.12.1/jquery-ui.min.css"
+	th:href="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/datatables/1.10.19/css/jquery.dataTables.min.css"
+	th:href="@{/webjars/datatables/1.10.19/css/jquery.dataTables.min.css}">
+<link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon">
+<link rel="icon" th:href="@{/favicon.ico}" type="image/x-icon">
 
-	<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
-		th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
-	<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
-		th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
-	<script src="/webjars/jquery/3.4.1/jquery.min.js" th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-	<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
-		th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"
+	th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script src="/webjars/popper.js/1.14.7/umd/popper.min.js"
+	th:src="@{/webjars/popper.js/1.14.7/umd/popper.min.js}"></script>
+<script src="/webjars/jquery/3.4.1/jquery.min.js"
+	th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="/webjars/jquery-ui/1.12.1/jquery-ui.min.js"
+	th:src="@{/webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script>
 
-	<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
-		th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
+<script src="/webjars/jquery-form/4.2.2/jquery.form.min.js"
+	th:src="@{/webjars/jquery-form/4.2.2/jquery.form.min.js}"></script>
 
-	<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
-		th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
+<script src="/webjars/jquery-validation/1.19.0/jquery.validate.min.js"
+	th:src="@{/webjars/jquery-validation/1.19.0/jquery.validate.min.js}"></script>
 
-	<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
-		th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
-	<script src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
-		th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
+<script src="/webjars/datatables/1.10.19/js/jquery.dataTables.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/jquery.dataTables.min.js}"></script>
+<script
+	src="/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js"
+	th:src="@{/webjars/datatables/1.10.19/js/dataTables.bootstrap4.min.js}"></script>
 
 
-	<script src="js/bootstrap411.js"></script>
-	<link rel="stylesheet" href="css/spur.css">
-	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=folder" />
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&icon_names=folder" />
-	<style>
-		.modal-backdrop.show {
-			opacity: -1.5;
-		}
+<script src="js/bootstrap411.js"></script>
+<link rel="stylesheet" href="css/spur.css">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=folder" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&icon_names=folder" />
+<style>
+.modal-backdrop.show {
+	opacity: -1.5;
+}
 
-		@media screen and (min-width: 768px) {
-			#fullHeightModalRight {
-				top: 66px;
-				left: auto;
-				bottom: auto;
-				overflow: visible;
-			}
-		}
+@media screen and (min-width: 768px) {
+	#fullHeightModalRight {
+		top: 66px;
+		left: auto;
+		bottom: auto;
+		overflow: visible;
+	}
+}
 
-		/* .modal-backdrop {
+/* .modal-backdrop {
 	display: none;
 } */
-		.modal {
-			pointer-events: none;
-		}
+.modal {
+	pointer-events: none;
+}
 
-		body {
-			position: relative
-		}
+body {
+	position: relative
+}
 
-		.overlay,
-		.sideMenu {
-			position: fixed;
-			bottom: 0
-		}
+.overlay, .sideMenu {
+	position: fixed;
+	bottom: 0
+}
 
-		a:hover {
-			background-color: rgb(214, 214, 214);
-		}
+a:hover {
+	background-color: rgb(214, 214, 214);
+}
 
-		.overlay {
-			top: 0;
-			left: -100%;
-			right: 100%;
-			margin: auto;
-			background-color: White;
-			z-index: 998;
-			transition: all ease 0.2s
-		}
+.overlay {
+	top: 0;
+	left: -100%;
+	right: 100%;
+	margin: auto;
+	background-color: White;
+	z-index: 998;
+	transition: all ease 0.2s
+}
 
-		.menu-title-header {
-			padding: 0.45rem 0.45rem;
-			background: #377486;
-			color: #fff;
-			font-family: "Nunito", calibry;
-		}
+.menu-title-header {
+	padding: 0.45rem 0.45rem;
+	background: #377486;
+	color: #fff;
+	font-family: "Nunito", calibry;
+}
 
-		table.table .thead-light th {
-			font-size: 13px;
-			height: 50px;
-			border-color: #d4d7da;
-		}
+table.table .thead-light th {
+	font-size: 13px;
+	height: 50px;
+	border-color: #d4d7da;
+}
 
-		.modal-title {
-			text-align: center;
-			font-size: 14px;
-			font-weight: 900;
-			color: #332d2d;
-			font-family: calibry
-		}
+.modal-title {
+	text-align: center;
+	font-size: 14px;
+	font-weight: 900;
+	color: #332d2d;
+	font-family: calibry
+}
 
-		.overlay.open {
-			left: 0;
-			right: 0
-		}
+.overlay.open {
+	left: 0;
+	right: 0
+}
 
-		.sidebarNavigation {
-			margin-bottom: 0;
-			z-index: 999;
-			justify-content: flex-start
-		}
+.sidebarNavigation {
+	margin-bottom: 0;
+	z-index: 999;
+	justify-content: flex-start
+}
 
-		.sidebarNavigation .leftNavbarToggler {
-			margin-right: 10px;
-			order: -1
-		}
+.sidebarNavigation .leftNavbarToggler {
+	margin-right: 10px;
+	order: -1
+}
 
-		.sideMenu {
-			left: -100%;
-			top: 52px;
-			transition: all ease 0.5s;
-			overflow: hidden;
-			width: 100%;
-			z-index: 999;
-			max-width: 80%;
-			margin-bottom: 0;
-			padding: 1rem
-		}
+.sideMenu {
+	left: -100%;
+	top: 52px;
+	transition: all ease 0.5s;
+	overflow: hidden;
+	width: 100%;
+	z-index: 999;
+	max-width: 80%;
+	margin-bottom: 0;
+	padding: 1rem
+}
 
-		.sideMenu.open {
-			left: 0;
-			display: block;
-			overflow-y: auto
-		}
+.sideMenu.open {
+	left: 0;
+	display: block;
+	overflow-y: auto
+}
 
-		.sideMenu ul {
-			margin: 0;
-			padding: 0 15px
-		}
+.sideMenu ul {
+	margin: 0;
+	padding: 0 15px
+}
 
-		a:link {
-			color: blue;
-			background-color: transparent;
-			text-decoration: none;
-			font-color: Blue;
-		}
+a:link {
+	color: blue;
+	background-color: transparent;
+	text-decoration: none;
+	font-color: Blue;
+}
 
-		#x {
-			position: relative;
-			float: right;
-			background: red;
-			color: white;
-			top: -10px;
-			right: -10px;
-		}
-	</style>
-	<style type="text/css">
-		#nav-loginsec:hover+#loginsec {
-			opacity: 1;
-			visibility: visible;
-		}
+#x {
+	position: relative;
+	float: right;
+	background: red;
+	color: white;
+	top: -10px;
+	right: -10px;
+}
+</style>
+<style type="text/css">
+#nav-loginsec:hover+#loginsec {
+	opacity: 1;
+	visibility: visible;
+}
 
-		.dataTables_empty {
-			color: #be3232;
-		}
+.dataTables_empty {
+	color: #be3232;
+}
 
-		input[type=button] {
-			background-color: #055e99bd;
-			border: none;
-			color: white;
-			padding: 16px 32px;
-			text-decoration: none;
-			margin: 4px 2px;
-			cursor: pointer;
-		}
-	</style>
-	<style>
-		body {
-			background-color: lightgrey;
-			line-height: 1.8;
-		}
+input[type=button] {
+	background-color: #055e99bd;
+	border: none;
+	color: white;
+	padding: 16px 32px;
+	text-decoration: none;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+</style>
+<style>
+body {
+	background-color: lightgrey;
+	line-height: 1.8;
+}
 
-		.h2,
-		h2 {
-			font-size: 2rem;
-			background-color: #555;
-			color: white;
-		}
+.h2, h2 {
+	font-size: 2rem;
+	background-color: #555;
+	color: white;
+}
 
-		.pagebut {
-			margin-top: 0.5%;
-			/*  width: 58%;  */
-			padding: 1% 1%;
-			background-color: #2e455d;
-			color: white;
-		}
+.pagebut {
+	margin-top: 0.5%;
+	/*  width: 58%;  */
+	padding: 1% 1%;
+	background-color: #2e455d;
+	color: white;
+}
 
-		.container-manager {
-			width: 82.5%;
-			padding-right: 43px;
-			padding-left: 15px;
-			margin-right: auto;
-			margin-left: 19.3%;
-			margin-top: 80px;
-		}
+.container-manager {
+	width: 82.5%;
+	padding-right: 43px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: 19.3%;
+	margin-top: 80px;
+}
 
-		select {
-			width: 150px;
-			margin: 10px;
-		}
+select {
+	width: 150px;
+	margin: 10px;
+}
 
-		td {
-			background-color: #f8f7ff;
-		}
+td {
+	background-color: #f8f7ff;
+}
 
-		select:focus {
-			min-width: 150px;
-			width: auto;
-		}
+select:focus {
+	min-width: 150px;
+	width: auto;
+}
 
-		#hidden_div {
-			display: none;
-		}
+#hidden_div {
+	display: none;
+}
 
-		table th {
-			color: white;
-			background-color: #2e455deb;
-		}
+table th {
+	color: white;
+	background-color: #2e455deb;
+}
 
-		th {
-			color: white;
-			background-color: #2e455deb;
-		}
+th {
+	color: white;
+	background-color: #2e455deb;
+}
 
-		table td {
-			font-size: small;
-		}
+table td {
+	font-size: small;
+}
 
-		select {
-			width: 50px;
-			line-height: 15px;
-			font-size: x-small;
-			height: 25px;
-		}
+select {
+	width: 50px;
+	line-height: 15px;
+	font-size: x-small;
+	height: 25px;
+}
 
-		#overlay {
-			position: fixed;
-			top: 0;
-			z-index: 100;
-			width: 100%;
-			height: 100%;
-			display: none;
-			background: rgba(0, 0, 0, 0.6);
-		}
+#overlay {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0, 0, 0, 0.6);
+}
 
-		.cv-spinner {
-			height: 100%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
+.cv-spinner {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
-		.spinner {
-			/* width: 40px;
+.spinner {
+	/* width: 40px;
 	height: 40px;
 	border: 4px #00343d solid;
 	border-top: 4px #181818 solid;
 	border-radius: 50%;
 	animation: sp-anime 0.8s infinite linear; */
+	
+}
 
-		}
+#fileTable td {
+	white-space: nowrap;
+}
 
-		#fileTable td {
-			white-space: nowrap;
-		}
+#fileTable th {
+	white-space: nowrap;
+}
 
-		#fileTable th {
-			white-space: nowrap;
-		}
+@
+keyframes sp-anime { 100% {
+	transform: rotate(360deg);
+}
 
+}
 
-		@ keyframes sp-anime {
-			100% {
-				transform: rotate(360deg);
-			}
-
-		}
-
-		/* Chrome, Safari, Edge, Opera */
-		input::-webkit-outer-spin-button,
-		input::-webkit-inner-spin-button {
-			-webkit-appearance: none;
-			margin: 0;
-		}
-	</style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+</style>
 </head>
 
 
@@ -792,13 +796,15 @@
 								autocomplete="off" required />
 						</div> -->
 
-						<button type="button" class="btn btn-sm btn-primary " onclick='upload_folder(this)'
-							th:attr="frmode=uploadSource" id="openSource">Message Browser</button>
+						<button type="button" class="btn btn-sm btn-primary "
+							onclick='upload_folder(this)' th:attr="frmode=uploadSource"
+							id="openSource">Message Browser</button>
 					</div>
 				</div>
 
 				<div class="table-responsive">
-					<table class="table table-bordered  table-hover table-sm" id="my_table11">
+					<table class="table table-bordered  table-hover table-sm"
+						id="my_table11">
 						<thead class="thead-light">
 							<tr>
 								<th>Date</th>
@@ -815,32 +821,32 @@
 						<tbody>
 							<tr th:each="alert: ${FilelistdataMt}">
 
-
-								<td th:text="${#dates.format(alert.date_of_process, 'dd-MM-yyyy')}"></td>
+								<td
+									th:text="${#dates.format(alert.date_of_process, 'dd-MM-yyyy')}"></td>
 								<td th:text="${alert.srl_no}"></td>
 
-								<td>
-									<span
-										th:attr="data-mand_ref_no=${alert.srl_no}, data-folder-path=${alert.file_name.substring(0, alert.file_name.lastIndexOf('//') + 2)}"
-										th:text="${
-								              (alert.file_name.contains('//AUTO')) ? 
-								              #strings.arraySplit(alert.file_name, '//')[3] + ' - ' + #strings.arraySplit(alert.file_name, '//')[4] : 
-								              #strings.arraySplit(alert.file_name, '//')[2] + ' - ' + #strings.arraySplit(alert.file_name, '//')[3]
-								          }">
-									</span>
-								</td>
-								<td> <span
-										th:attr="data-mand_ref_no=${alert.srl_no}, data-folder-path=${alert.converted_file_name.substring(0, alert.converted_file_name.lastIndexOf('//') + 2)}"
-										th:text="${
-								              (alert.converted_file_name.contains('//AUTO')) ? 
-								              #strings.arraySplit(alert.converted_file_name, '//')[3] + ' - ' + #strings.arraySplit(alert.converted_file_name, '//')[4] : 
-								              #strings.arraySplit(alert.converted_file_name, '//')[2] + ' - ' + #strings.arraySplit(alert.converted_file_name, '//')[3]
-								          }">
-									</span></td>
+								<td><span
+									th:attr="data-mand_ref_no=${alert.srl_no}, 
+                      data-folder-path=${(alert.file_name != null and alert.file_name.contains('/')) ? alert.file_name.substring(0, alert.file_name.lastIndexOf('/') + 1) : ''}"
+									th:text="${(alert.file_name != null and alert.file_name.contains('//AUTO')) ? 
+                         #strings.arraySplit(alert.file_name, '//').length > 4 ? #strings.arraySplit(alert.file_name, '//')[3] + ' - ' + #strings.arraySplit(alert.file_name, '//')[4] : alert.file_name : 
+                         #strings.arraySplit(alert.file_name, '//').length > 3 ? #strings.arraySplit(alert.file_name, '//')[2] + ' - ' + #strings.arraySplit(alert.file_name, '//')[3] : alert.file_name}">
+								</span></td>
+
+								<td><span
+									th:attr="data-mand_ref_no=${alert.srl_no}, 
+                      data-folder-path=${(alert.converted_file_name != null and alert.converted_file_name.contains('/')) ? alert.converted_file_name.substring(0, alert.converted_file_name.lastIndexOf('/') + 1) : ''}"
+									th:text="${(alert.converted_file_name != null and alert.converted_file_name.contains('//AUTO')) ? 
+                         #strings.arraySplit(alert.converted_file_name, '//').length > 4 ? #strings.arraySplit(alert.converted_file_name, '//')[3] + ' - ' + #strings.arraySplit(alert.converted_file_name, '//')[4] : alert.converted_file_name : 
+                         #strings.arraySplit(alert.converted_file_name, '//').length > 3 ? #strings.arraySplit(alert.converted_file_name, '//')[2] + ' - ' + #strings.arraySplit(alert.converted_file_name, '//')[3] : alert.converted_file_name}">
+								</span></td>
+
 								<td><a onclick="finuser2(this);" id="openModal"
-										th:attr="data-mand_ref_no=${alert.srl_no}" th:text="${alert.file_name}"
-										href="#"></a></td>
+									th:attr="data-mand_ref_no=${alert.srl_no}"
+									th:text="${alert.file_name}" href="#"></a></td>
+
 								<td><a th:text="${alert.converted_file_name}"></a></td>
+
 								<td th:text="${alert.swift_msg_type}"></td>
 								<td th:text="${alert.swift_mrg_type_conv}"></td>
 								<td th:text="${alert.status}"></td>
@@ -853,13 +859,16 @@
 
 				<div class="card-footer text-center">
 
-					<button type="button" class="btn btn-sm btn-primary" id="btnHome" onclick="home();">Home</button>
-					<button type="button" class="btn btn-sm btn-primary" id="btnBack" onclick="back();">Back</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
 				</div>
 			</div>
 		</div>
 		<div th:if="${formmode}=='upload'" class="content" id="yes">
-			<form action="#" th:object="${MTMessageform}" method="POST" autocomplete="off" id="MTMessageform">
+			<form action="#" th:object="${MTMessageform}" method="POST"
+				autocomplete="off" id="MTMessageform">
 
 				<div class="card">
 
@@ -868,7 +877,8 @@
 							<h6 style="color: white;" th:text="${menuname}"></h6>
 						</div>
 
-						<input class="form-control" style="display: none;" id="doc_ref_id_hide" />
+						<input class="form-control" style="display: none;"
+							id="doc_ref_id_hide" />
 
 						<div class="float-right">
 							<!-- <button type="button" class="btn btn-sm btn-primary "
@@ -877,14 +887,16 @@
 									onclick="fileup()"> Browse</i>
 							</button> -->
 
-							<button type="button" class="btn btn-sm btn-primary " onclick='listBC(this)' id="list"
+							<button type="button" class="btn btn-sm btn-primary "
+								onclick='listBC(this)' id="list"
 								th:attr="formmode=AfterConvList">List</button>
 						</div>
 
 					</div>
 
 					<div class="table-responsive">
-						<table class="table table-bordered  table-hover table-sm" id="my_table111">
+						<table class="table table-bordered  table-hover table-sm"
+							id="my_table111">
 							<thead class="thead-light">
 
 								<th>Date</th>
@@ -901,18 +913,23 @@
 				</div>
 
 				<div>
-					<span id="spnFilePath"></span> <input type="file" id="FileUpload" style="display: none" />
+					<span id="spnFilePath"></span> <input type="file" id="FileUpload"
+						style="display: none" />
 				</div>
 
 				<div class="card-footer text-center">
 
-					<button type="button" class="btn btn-sm btn-primary" id="btnHome" onclick="home();">Home</button>
-					<button type="button" class="btn btn-sm btn-primary" onclick="submitform11(this);"
-						form="MTMessageform" id="subbtn" th:attr="data-formmode=submit">Submit</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+						onclick="home();">Home</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						onclick="submitform11(this);" form="MTMessageform" id="subbtn"
+						th:attr="data-formmode=submit">Submit</button>
 
-					<button type="button" class="btn btn-sm btn-primary" style="display: none;"
-						onclick="submitExecute(this);" form="BulkTransaction" id="exebtn">Execute</button>
-					<button type="button" class="btn btn-sm btn-primary" id="btnBack" onclick="back();">Back</button>
+					<button type="button" class="btn btn-sm btn-primary"
+						style="display: none;" onclick="submitExecute(this);"
+						form="BulkTransaction" id="exebtn">Execute</button>
+					<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+						onclick="back();">Back</button>
 				</div>
 			</form>
 		</div>
@@ -920,7 +937,8 @@
 		<div th:if="${formmode}=='Finaclefoldervalue'" class="content">
 			<div class="card">
 
-				<form action="#" th:object="${MTMessageform}" method="POST" autocomplete="off" id="MTMessageform">
+				<form action="#" th:object="${MTMessageform}" method="POST"
+					autocomplete="off" id="MTMessageform">
 
 					<div class="card-header">
 						<div class="float-left">
@@ -942,7 +960,8 @@
 					</div>
 
 					<div class="table-responsive">
-						<table class="table table-bordered  table-hover table-sm" id="my_table">
+						<table class="table table-bordered  table-hover table-sm"
+							id="my_table">
 							<thead class="thead-light">
 
 								<th>Sl No</th>
@@ -1024,8 +1043,10 @@
 			</div>
 			<div class="card-footer text-center">
 
-				<button type="button" class="btn btn-sm btn-primary" id="btnHome" onclick="home();">Home</button>
-				<button type="button" class="btn btn-sm btn-primary" id="btnBack" onclick="back();">Back</button>
+				<button type="button" class="btn btn-sm btn-primary" id="btnHome"
+					onclick="home();">Home</button>
+				<button type="button" class="btn btn-sm btn-primary" id="btnBack"
+					onclick="back();">Back</button>
 			</div>
 		</div>
 	</div>
@@ -1033,37 +1054,37 @@
 
 
 
-	<div class="modal fade" id="Sourcefoldershow" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal fade" id="Sourcefoldershow" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
-				<form action="#" th:object="${foldersource}" method="POST" autocomplete="off" id="foldersource">
+				<form action="#" th:object="${foldersource}" method="POST"
+					autocomplete="off" id="foldersource">
 
 					<div class="menu-title-header">
-						<div class="modal-title" id="exampleModalLabel" style="text-align: center; color: white;">MAU
-							BANK</div>
+						<div class="modal-title" id="exampleModalLabel"
+							style="text-align: center; color: white;">MAU BANK</div>
 					</div>
-					<div class="modal-body" style="text-align: center; background-color: #c6ccd2">
+					<div class="modal-body"
+						style="text-align: center; background-color: #c6ccd2">
 						<!-- <button type="button" class="close" data-dismiss="modal">×</button> -->
 						<label style="font-size: 20px;">Choose Source folder</label> <label></label>
 
 
-						<label class="container" style="font-size: 17px;"><input type="button" value="Finacle MT Folder"
-								onclick="fincalefoldercall()">
-
-
-							<input type="button" value="Swift Mx Folder" onclick="Swiftfoldercall()"
-								style="  margin-left: 54px;">
-						</label>
-
-
-						<label></label>
+						<label class="container" style="font-size: 17px;"><input
+							type="button" value="Finacle MT Folder"
+							onclick="fincalefoldercall()"> <input type="button"
+							value="Swift Mx Folder" onclick="Swiftfoldercall()"
+							style="margin-left: 54px;"> </label> <label></label>
 
 						<!-- <button type="button" th:attr="data-formmode=submitupload"
 								class="btn btn-xs btn-primary"
 								 onclick="folderSbmit();"
 								form="foldersource" id="btn_Upload_Submit">Submit</button> -->
 
-						<button type="button" class="btn btn-xs btn-primary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-xs btn-primary"
+							data-dismiss="modal">Close</button>
 					</div>
 
 				</form>
@@ -1071,13 +1092,16 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal fade" id="" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content" style="width: 1042px;">
 				<div class="menu-title-header">
-					<div class="modal-title" id="exampleModalLabel" style="text-align: center; color: white;">CIM
-						FINANCE</div>
-					<button type="button" class="btn btn-sm btn-primary " id="x" data-dismiss="modal">x</button>
+					<div class="modal-title" id="exampleModalLabel"
+						style="text-align: center; color: white;">CIM FINANCE</div>
+					<button type="button" class="btn btn-sm btn-primary " id="x"
+						data-dismiss="modal">x</button>
 				</div>
 				<div class="modal-body" style="text-align: center"></div>
 				<div class="card-footer text-center"></div>
@@ -1098,7 +1122,8 @@
 
 
 	<div class="modal fade" id="wait">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-body" style="text-align: center">
 					<div id="wait">
@@ -1108,8 +1133,10 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="verifybox" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal fade" id="verifybox" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-body" style="text-align: center">
 					<p id="verifyboxmsg"></p>
@@ -1139,26 +1166,31 @@
 
 
 
-	<div class="modal fade" id="loader1" data-backdrop="static" data-keyboard="false">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	<div class="modal fade" id="loader1" data-backdrop="static"
+		data-keyboard="false">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content" style="background: transparent;">
 				<div class="modal-body" style="text-align: center">
 					<div>
-						<img th:src=@{/images/loader.gif} id="bfirelogo" style="width: 153px; margin-left: 18px;"
-							alt="Bornfire">
+						<img th:src=@{/images/loader.gif} id="bfirelogo"
+							style="width: 153px; margin-left: 18px;" alt="Bornfire">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" style="max-width: 40%; width: auto;">
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalCenterTitle"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered"
+			style="max-width: 40%; width: auto;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">File Details</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -1179,7 +1211,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>

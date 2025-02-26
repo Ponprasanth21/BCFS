@@ -301,7 +301,7 @@ public class MainController {
 
 	@Autowired
 	Bswift_Parameter_value_Rep bswift_Parameter_value_Rep;
-	
+
 	@Autowired
 	FORM_TRANSFER_REP fORM_TRANSFER_REP;
 
@@ -4170,7 +4170,8 @@ public class MainController {
 			md.addAttribute("Mxlist", bipsSwiftMxMsgRepo.findmxbySrl(ref_Num));
 			md.addAttribute("MsgType", bipsSwiftMsgConversionRepo.findmsgtype(ref_Num));
 			System.out.println(bipsSwiftMsgConversionRepo.findmsgtype(ref_Num) + "msgtypeval+++++");
-
+			System.out.println("The getting reference number is " + ref_Num);
+			
 			BIPS_SWIFT_MX_MSG bipsSwiftmxMsg = bipsSwiftMxMsgRepo.findmxbySrl(ref_Num);
 
 			System.out.println("clobtext vishnu" + bipsSwiftmxMsg.getMx_message_file());
@@ -4384,23 +4385,23 @@ public class MainController {
 
 		String roleId = (String) req.getSession().getAttribute("ROLEID");
 		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
-		
-		System.out.println(fromform+" fromformmmmmmmmmmmmmmmmmmmmmmm");
+
+		System.out.println(fromform + " fromformmmmmmmmmmmmmmmmmmmmmmm");
 
 		// md.addAttribute("merchantcategory", merchantCategoryRep.findAllCustom());
-		if (formmode == null || formmode.equals("messageParamList")) { 
+		if (formmode == null || formmode.equals("messageParamList")) {
 			md.addAttribute("parameterdata", bswift_Parameter_Rep.findAllCustom());
 			md.addAttribute("parameterfromform", fORM_TRANSFER_REP.findAllCustom());
 			md.addAttribute("parameterdatavalue", bswift_Parameter_value_Rep.findAllCustomvalue());
 			md.addAttribute("formmode", "messageParamList");
 			md.addAttribute("menu", "MMenupage");
 
-		}else if (formmode.equals("list")) {
-			System.out.println("The etting Parameter Value is "+fromform);
+		} else if (formmode.equals("list")) {
+			System.out.println("The etting Parameter Value is " + fromform);
 			md.addAttribute("FromToData", bswift_Parameter_Rep.findFromToData(fromform));
 			md.addAttribute("formmode", "list");
 			md.addAttribute("menu", "MMenupage");
-		}  else if (formmode.equals("Finaclefoldervalue")) {
+		} else if (formmode.equals("Finaclefoldervalue")) {
 			md.addAttribute("formmode", formmode);
 			md.addAttribute("menu", "MMenupage");
 		} else if (formmode.equals("SwiftfolderDetails")) {
@@ -4703,7 +4704,7 @@ public class MainController {
 			existingRow.setDel_flg("N");
 			existingRow.setModify_flg("Y");
 			existingRow.setSrl_num(srlno);
-			
+
 			existingRow.setSwift_status_m_o_c(bswift_Parameter_value_Entity.getSwift_status_m_o_c());
 			existingRow.setSwift_field(bswift_Parameter_value_Entity.getSwift_field());
 			existingRow.setSwift_field_name(bswift_Parameter_value_Entity.getSwift_field_name());
@@ -4750,65 +4751,61 @@ public class MainController {
 		return msg;
 
 	}
-	
-	
+
 	@RequestMapping(value = "File_Management_datas")
-	public String File_Management_datas(
-	        @RequestParam(required = false) String merchant_acct_no,
-	        @RequestParam(required = false) String userid,
-	        @RequestParam(required = false) Optional<Integer> page,
-	        @RequestParam(value = "size", required = false) Optional<Integer> size,
-	        @RequestParam(value = "refNo", required = false) String ref_Num,
-	        @RequestParam(value = "formmode", required = false) String formmode,
-	        @ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
-	        throws FileNotFoundException, SQLException, IOException {
+	public String File_Management_datas(@RequestParam(required = false) String merchant_acct_no,
+			@RequestParam(required = false) String userid, @RequestParam(required = false) Optional<Integer> page,
+			@RequestParam(value = "size", required = false) Optional<Integer> size,
+			@RequestParam(value = "refNo", required = false) String ref_Num,
+			@RequestParam(value = "formmode", required = false) String formmode,
+			@ModelAttribute MerchantCategoryCodeEntity bankAgentTable, Model md, HttpServletRequest req)
+			throws FileNotFoundException, SQLException, IOException {
 
-	    String folderPath = "D:\\BCON\\AUTO\\CBS\\MT OUT";
-	    String folderPath1 = "D:\\BCON\\AUTO\\CBS\\MT IN";
-	    String folderPath2 = "D:\\BCON\\AUTO\\SWIFT\\MX OUT";
-	    String folderPath3 = "D:\\BCON\\AUTO\\SWIFT\\MX IN";
+		String folderPath = "D:\\BCON\\AUTO\\CBS\\MT OUT";
+		String folderPath1 = "D:\\BCON\\AUTO\\CBS\\MT IN";
+		String folderPath2 = "D:\\BCON\\AUTO\\SWIFT\\MX OUT";
+		String folderPath3 = "D:\\BCON\\AUTO\\SWIFT\\MX IN";
 
-	    String roleId = (String) req.getSession().getAttribute("ROLEID");
-	    md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
+		String roleId = (String) req.getSession().getAttribute("ROLEID");
+		md.addAttribute("IPSRoleMenu", AccessRoleService.getRoleMenu(roleId));
 
-	    if (formmode == null || formmode.equals("list")) {
-	        List<Map<String, String>> fileListCBS_MT_OUT = getFileList(folderPath);
-	        List<Map<String, String>> fileListCBS_MT_IN = getFileList(folderPath1);
-	        List<Map<String, String>> fileListSWIFT_MX_OUT = getFileList(folderPath2);
-	        List<Map<String, String>> fileListSWIFT_MX_IN = getFileList(folderPath3);
+		if (formmode == null || formmode.equals("list")) {
+			List<Map<String, String>> fileListCBS_MT_OUT = getFileList(folderPath);
+			List<Map<String, String>> fileListCBS_MT_IN = getFileList(folderPath1);
+			List<Map<String, String>> fileListSWIFT_MX_OUT = getFileList(folderPath2);
+			List<Map<String, String>> fileListSWIFT_MX_IN = getFileList(folderPath3);
 
-	        md.addAttribute("fileListCBS_MT_OUT", fileListCBS_MT_OUT);
-	        md.addAttribute("fileListCBS_MT_IN", fileListCBS_MT_IN);
-	        md.addAttribute("fileListSWIFT_MX_OUT", fileListSWIFT_MX_OUT);
-	        md.addAttribute("fileListSWIFT_MX_IN", fileListSWIFT_MX_IN);
+			md.addAttribute("fileListCBS_MT_OUT", fileListCBS_MT_OUT);
+			md.addAttribute("fileListCBS_MT_IN", fileListCBS_MT_IN);
+			md.addAttribute("fileListSWIFT_MX_OUT", fileListSWIFT_MX_OUT);
+			md.addAttribute("fileListSWIFT_MX_IN", fileListSWIFT_MX_IN);
 
-	        md.addAttribute("hasData", !(fileListCBS_MT_OUT.isEmpty() && fileListCBS_MT_IN.isEmpty() && 
-	                                     fileListSWIFT_MX_OUT.isEmpty() && fileListSWIFT_MX_IN.isEmpty()));
+			md.addAttribute("hasData", !(fileListCBS_MT_OUT.isEmpty() && fileListCBS_MT_IN.isEmpty()
+					&& fileListSWIFT_MX_OUT.isEmpty() && fileListSWIFT_MX_IN.isEmpty()));
 
-	        md.addAttribute("formmode", "list");
-	        md.addAttribute("menu", "MMenupage");
-	    }
+			md.addAttribute("formmode", "list");
+			md.addAttribute("menu", "MMenupage");
+		}
 
-	    return "Folder_Management_Datas.html";
+		return "Folder_Management_Datas.html";
 	}
 
 	private List<Map<String, String>> getFileList(String folderPath) {
-	    List<Map<String, String>> fileList = new ArrayList<>();
-	    File folder = new File(folderPath);
-	    if (folder.exists() && folder.isDirectory()) {
-	        File[] files = folder.listFiles();
-	        if (files != null) {
-	            for (File file : files) {
-	                Map<String, String> fileData = new HashMap<>();
-	                fileData.put("name", file.getName());
-	                fileList.add(fileData);
-	            }
-	        }
-	    }
-	    return fileList;
+		List<Map<String, String>> fileList = new ArrayList<>();
+		File folder = new File(folderPath);
+		if (folder.exists() && folder.isDirectory()) {
+			File[] files = folder.listFiles();
+			if (files != null) {
+				for (File file : files) {
+					Map<String, String> fileData = new HashMap<>();
+					fileData.put("name", file.getName());
+					fileList.add(fileData);
+				}
+			}
+		}
+		return fileList;
 	}
 
-	
 	@RequestMapping(value = "Addformdatas", method = RequestMethod.POST)
 	@ResponseBody
 	public String Addformdatas(Model md, HttpServletRequest rq,

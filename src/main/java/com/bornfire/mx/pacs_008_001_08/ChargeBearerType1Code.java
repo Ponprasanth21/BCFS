@@ -56,7 +56,7 @@ public enum ChargeBearerType1Code {
      * Charges are to be applied following the rules agreed in the service level and/or scheme.
      * 
      */
-    SLEV;
+    SLEV, BEN, OUR;
 
     public String value() {
         return name();

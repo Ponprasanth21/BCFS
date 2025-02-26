@@ -45,7 +45,7 @@ public class SwiftConnection {
 	@Autowired
 	AppHeader appheader;
 
-	public MTtoMXresponse mtToMxConverterxx(BIPS_SWIFT_MSG_MGT message, String userID) throws IOException, ParseException {
+	public MTtoMXresponse mtToMxConverterxx(BIPS_SWIFT_MSG_MGT message, String userID,String filename) throws IOException, ParseException {
 
 		// String content = new String(file.getBytes(), StandardCharsets.UTF_8);
 		String request = readFile(message.getFile_name());
@@ -67,7 +67,7 @@ public class SwiftConnection {
 		switch (messageType) {
 		case "103": {
 			MT_103 mt103 = swiftParser.parseMT103();
-			String data = documentPacks.singleGetDataPDU008(mt103, applicationHeaderBlock1, applicationHeaderBlock, applicationHeaderBlock3, userid);
+			String data = documentPacks.singleGetDataPDU008(mt103, applicationHeaderBlock1, applicationHeaderBlock, applicationHeaderBlock3, userid,filename);
 			// Mt msg here
 
 			message.getDate_of_process();
@@ -210,133 +210,100 @@ public class SwiftConnection {
 		return messageBlock.substring(1, 4);
 	}
 
-	public MTtoMXresponse mxToMtConverter(BIPS_SWIFT_MSG_MGT message, String userID) throws IOException {
+	public MTtoMXresponse mxToMtConverter(BIPS_SWIFT_MSG_MGT message, String userID,String filename) throws IOException {
+	    String request = readFile(message.getFile_name());
+	    BusinessApplicationHeaderV01 header008 = documentPacks.getPacs_008_001_01UnMarshalAppHeader(request);
+	    System.out.println("message type" + header008.toString());
+	    String messageType = header008.getMsgDefIdr();
+	    String data = "";
+	    MTtoMXresponse response = null;
 
-		// String request = new String(message.getFile_name().getBytes(),
-		// StandardCharsets.UTF_8);
+	    switch (messageType) {
+	        case "pacs.008.001.08":
+	            Document doc008 = documentPacks.getPacs_008_001_01UnMarshalDoc(request);
+				/*
+				 * Header headerDataPDU008 =
+				 * documentPacks.getPacs_008_001_01UnMarshalDataPDUHeader(request);
+				 */
+				/* System.out.println("headerPart" + headerDataPDU008); */
 
-		String request = readFile(message.getFile_name());
+	            String MsgId = doc008.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
+	            String DebtorName = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr().getNm();
+	            String DebitorAcc = Optional.ofNullable(doc008).map(Document::getFIToFICstmrCdtTrf).map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
+	                .filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
+	                .map(CreditTransferTransaction391::getDbtrAcct).map(CashAccount381::getId).map(AccountIdentification4Choice1::getOthr)
+	                .map(GenericAccountIdentification11::getId).orElse("");
+	            String CreditorName = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr().getNm();
+	            String CreditorAcc = Optional.ofNullable(doc008).map(Document::getFIToFICstmrCdtTrf).map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
+	                .filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
+	                .map(CreditTransferTransaction391::getCdtrAcct).map(CashAccount381::getId).map(AccountIdentification4Choice1::getOthr)
+	                .map(GenericAccountIdentification11::getId).orElse("");
+	            
+	            String CreditorAgent = null, DebitorAgent = null;
+	            if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt() != null &&
+	                doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId() != null &&
+	                doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI() != null) {
+	                CreditorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI();
+	            }
+	            if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt() != null &&
+	                doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId() != null &&
+	                doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI() != null) {
+	                DebitorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI();
+	            }
+	            System.out.println("Creditor Agent: " + (CreditorAgent != null ? CreditorAgent : "Skipped"));
+	            System.out.println("Debitor Agent: " + (DebitorAgent != null ? DebitorAgent : "Skipped"));
 
-		BusinessApplicationHeaderV01 header008 = documentPacks.getPacs_008_001_01UnMarshalAppHeader(request);
+	            String Currency = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy();
+	            String SenderReference = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId();
+	            BigDecimal TotaltansAmount = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue();
+	            String BankoperatioCode = "CRED";
+	            String bigdecicvt = TotaltansAmount.toString();
+	            data = documentPacks.getMT_100(doc008, header008, userID,filename);
 
-		// GroupHeader931 groupHeader931 = doc008.getFIToFICstmrCdtTrf().getGrpHdr();
-		System.out.println("message type" + header008.toString());
-		String messageType = header008.getMsgDefIdr();
-		String data = "";
-		MTtoMXresponse response = null;
+	            BIPS_SWIFT_MX_MSG mxmessgedata = new BIPS_SWIFT_MX_MSG();
+	            mxmessgedata.setDebitor_name(DebtorName);
+	            mxmessgedata.setDebitor_agent(DebitorAgent);
+	            mxmessgedata.setCreditor_name(CreditorName);
+	            mxmessgedata.setCreditor_agent(CreditorAgent);
+	            mxmessgedata.setCurrency(Currency);
+	            mxmessgedata.setSender_reference(SenderReference);
+	            mxmessgedata.setCreditor_account(CreditorAcc);
+	            mxmessgedata.setDebitor_account(DebitorAcc);
+	            mxmessgedata.setMsg_id(MsgId);
+	            mxmessgedata.setTotal_transaction_amount(bigdecicvt);
+	            mxmessgedata.setBank_operation_code(BankoperatioCode);
+	            mxmessgedata.setDate_of_process(message.getDate_of_process());
 
-		// List<CreditTransferTransaction391>
-		// creditTransLst=doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf();
+	            String Msg = bipsMsgConversionProcessRec.savingMxMsgDetail(mxmessgedata, message);
+	            System.out.println(Msg);
 
-		switch (messageType) {
-		case "pacs.008.001.08":
-			Document doc008 = documentPacks.getPacs_008_001_01UnMarshalDoc(request);
+	            BIPS_SWIFT_MT_MSG mtmessagedata = new BIPS_SWIFT_MT_MSG();
+	            mtmessagedata.setDebitor_name(DebtorName);
+	            mtmessagedata.setDebitor_agent(DebitorAgent);
+	            mtmessagedata.setCreditor_name(CreditorName);
+	            mtmessagedata.setCreditor_agent(CreditorAgent);
+	            mtmessagedata.setCurrency(Currency);
+	            mtmessagedata.setSender_reference(SenderReference);
+	            mtmessagedata.setCreditor_account(CreditorAcc);
+	            mtmessagedata.setDebitor_account(DebitorAcc);
+	            mtmessagedata.setMsg_id(MsgId);
+	            mtmessagedata.setTotal_transaction_amount(bigdecicvt);
+	            mtmessagedata.setBank_operation_code(BankoperatioCode);
+	            mtmessagedata.setDate_of_process(message.getDate_of_process());
 
-			Header headerDataPDU008 = documentPacks.getPacs_008_001_01UnMarshalDataPDUHeader(request);
+	            String mtsubmsg = bipsMsgConversionProcessRec.savingMtmsgdetail(mtmessagedata, message);
+	            System.out.println(mtsubmsg);
 
-			System.out.println("headerPart" + headerDataPDU008);
-			/// Sender Reference
-			String MsgId = doc008.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
-			String DebtorName = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr().getNm();
-//			String DebitorAcc = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAcct().getId().getOthr()
-//					.getId();
-
-			String DebitorAcc = Optional.ofNullable(doc008).map(Document::getFIToFICstmrCdtTrf).map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
-					.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
-					.map(CreditTransferTransaction391::getDbtrAcct).map(CashAccount381::getId).map(AccountIdentification4Choice1::getOthr)
-					.map(GenericAccountIdentification11::getId).orElse("");
-
-			String CreditorName = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr().getNm();
-//			String CreditorAcc = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAcct().getId().getOthr()
-//					.getId();
-
-			String CreditorAcc = Optional.ofNullable(doc008).map(Document::getFIToFICstmrCdtTrf).map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
-					.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
-					.map(CreditTransferTransaction391::getCdtrAcct).map(CashAccount381::getId).map(AccountIdentification4Choice1::getOthr)
-					.map(GenericAccountIdentification11::getId).orElse("");
-
-			String CreditorAgent = null;
-			String DebitorAgent = null;
-
-			if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt() != null
-					&& doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId() != null
-					&& doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI() != null) {
-				CreditorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt().getFinInstnId().getBICFI();
-			}
-
-			if (doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt() != null
-					&& doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId() != null
-					&& doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI() != null) {
-				DebitorAgent = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt().getFinInstnId().getBICFI();
-			}
-
-			// Process next fields if values are null
-			System.out.println("Creditor Agent: " + (CreditorAgent != null ? CreditorAgent : "Skipped"));
-			System.out.println("Debitor Agent: " + (DebitorAgent != null ? DebitorAgent : "Skipped"));
-
-			// String Currency =
-			// doc008.getFIToFICstmrCdtTrf().getGrpHdr().getTtlIntrBkSttlmAmt().getCcy();
-			String Currency = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy();
-			String SenderReference = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId();
-			// BigDecimal TotaltansAmount =
-			// doc008.getFIToFICstmrCdtTrf().getGrpHdr().getTtlIntrBkSttlmAmt().getValue();
-			BigDecimal TotaltansAmount = doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue();
-
-			// String BankoperatioCode =
-			// doc008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtTpInf().getLclInstrm().getPrtry();
-			String BankoperatioCode = "CRED";
-
-			String bigdecicvt = TotaltansAmount.toString();
-			data = documentPacks.getMT_100(doc008, header008, headerDataPDU008, userID);
-
-			BIPS_SWIFT_MX_MSG mxmessgedata = new BIPS_SWIFT_MX_MSG();
-			mxmessgedata.setDebitor_name(DebtorName);
-			mxmessgedata.setDebitor_agent(DebitorAgent);
-			mxmessgedata.setCreditor_name(CreditorName);
-			mxmessgedata.setCreditor_agent(CreditorAgent);
-			mxmessgedata.setCurrency(Currency);
-			mxmessgedata.setSender_reference(SenderReference);
-			mxmessgedata.setCreditor_account(CreditorAcc);
-			mxmessgedata.setDebitor_account(DebitorAcc);
-			mxmessgedata.setMsg_id(MsgId);
-			mxmessgedata.setTotal_transaction_amount(bigdecicvt);
-			mxmessgedata.setBank_operation_code(BankoperatioCode);
-			mxmessgedata.setDate_of_process(message.getDate_of_process());
-
-			String Msg = bipsMsgConversionProcessRec.savingMxMsgDetail(mxmessgedata, message);
-			System.out.println(Msg);
-
-			// System.out.println("Something" + data);
-			/// Mt table submit
-			BIPS_SWIFT_MT_MSG mtmessagedata = new BIPS_SWIFT_MT_MSG();
-			mtmessagedata.setDebitor_name(DebtorName);
-			mtmessagedata.setDebitor_agent(DebitorAgent);
-			mtmessagedata.setCreditor_name(CreditorName);
-			mtmessagedata.setCreditor_agent(CreditorAgent);
-			mtmessagedata.setCurrency(Currency);
-			mtmessagedata.setSender_reference(SenderReference);
-			mtmessagedata.setCreditor_account(CreditorAcc);
-			mtmessagedata.setDebitor_account(DebitorAcc);
-			mtmessagedata.setMsg_id(MsgId);
-			mtmessagedata.setTotal_transaction_amount(bigdecicvt);
-			mtmessagedata.setBank_operation_code(BankoperatioCode);
-			mtmessagedata.setDate_of_process(message.getDate_of_process());
-
-			String mtsubmsg = bipsMsgConversionProcessRec.savingMtmsgdetail(mtmessagedata, message);
-			System.out.println(mtsubmsg);
-
-			response = new MTtoMXresponse();
-			response.setStatus("SUCCESS");
-			response.setData(data);
-			System.out.println("down" + data);
-			break;
-
-		}
-
-		return response;
+	            response = new MTtoMXresponse();
+	            response.setStatus("SUCCESS");
+	            response.setData(data);
+	            System.out.println("down" + data);
+	            break;
+	    }
+	    return response;
 	}
 
-	public MTtoMXresponse mtToMxConverter(BIPS_SWIFT_MSG_MGT message, String userID) throws IOException, ParseException {
+	public MTtoMXresponse mtToMxConverter(BIPS_SWIFT_MSG_MGT message, String userID,String filename) throws IOException, ParseException {
 		// Step 1: Read the SWIFT MT message file
 		String request = readFile(message.getFile_name());
 		MTtoMXresponse response = null;
@@ -357,16 +324,16 @@ public class SwiftConnection {
 					mt103List.add(mt103);
 				}
 			}
-			response = MultipleprocessTransaction(messages[1].trim(), mt103List, message, userID, isMultiple);
+			response = MultipleprocessTransaction(messages[1].trim(), mt103List, message, userID,filename, isMultiple);
 		} else {
 			for (String msgInpt : messages) {
-				response = singleProcessTransaction(msgInpt.trim(), null, message, userID, isMultiple);
+				response = singleProcessTransaction(msgInpt.trim(), null, message, userID,filename, isMultiple);
 			}
 		}
 		return response;
 	}
 
-	private MTtoMXresponse singleProcessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,
+	private MTtoMXresponse singleProcessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,String filename,
 	        boolean isMultiple) throws IOException, ParseException {
 
 	    MtMessageReader inputMessageReader = new MtMessageReader(msgInpt);
@@ -384,7 +351,7 @@ public class SwiftConnection {
 	    System.out.println("The Header block value headerBlock2 is " + headerBlock2);
 
 	    // Declare messageType with a default value
-	    String messageType = "Unknown";
+	    String messageType = getMessageType(applicationHeaderBlock2);
 
 	    // Ensure the header starts with 'O' (Output) and has enough length
 	    if (headerBlock2.startsWith("O") && headerBlock2.length() >= 28) {
@@ -401,7 +368,7 @@ public class SwiftConnection {
 
 	    switch (messageType) {
 	        case "103":
-	            return singleProcessMT103(swiftParser, applicationHeaderBlock1, applicationHeaderBlock2, applicationHeaderBlock3, message, userID);
+	            return singleProcessMT103(swiftParser, applicationHeaderBlock1, applicationHeaderBlock2, applicationHeaderBlock3, message,filename, userID);
 	        case "202":
 	            System.out.println("Unsupported message type: " + messageType);
 	            break;
@@ -412,7 +379,7 @@ public class SwiftConnection {
 	    return null;
 	}
 
-	private MTtoMXresponse MultipleprocessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,
+	private MTtoMXresponse MultipleprocessTransaction(String msgInpt, List<MT_103> mt103List, BIPS_SWIFT_MSG_MGT message, String userID,String filename,
 			boolean isMultiple) throws IOException, ParseException {
 
 		MtMessageReader inputMessageReader = new MtMessageReader(msgInpt);
@@ -427,7 +394,7 @@ public class SwiftConnection {
 		switch (messageType) {
 		case "103":
 			return processMT103Multiple(swiftParser, mt103List, applicationHeaderBlock1, applicationHeaderBlock2, applicationHeaderBlock3, message,
-					userID, isMultiple);
+					userID,filename, isMultiple);
 		case "202":
 			System.out.println("Unsupported message type: " + messageType);
 			break;
@@ -439,10 +406,10 @@ public class SwiftConnection {
 	}
 
 	private MTtoMXresponse singleProcessMT103(SwiftParser swiftParser, String appBlock1, String appBlock2, String appBlock3,
-			BIPS_SWIFT_MSG_MGT message, String userID) throws IOException, ParseException {
+			BIPS_SWIFT_MSG_MGT message,String filename, String userID) throws IOException, ParseException {
 		// Step 6: Parse the MT103 message
 		MT_103 mt103 = swiftParser.parseMT103();
-		String data = documentPacks.singleGetDataPDU008(mt103, appBlock1, appBlock2, appBlock3, userID);
+		String data = documentPacks.singleGetDataPDU008(mt103, appBlock1, appBlock2, appBlock3, userID,filename);
 
 		// Step 7: Populate MT message data
 		BIPS_SWIFT_MT_MSG mtMessageData = new BIPS_SWIFT_MT_MSG();
@@ -487,11 +454,11 @@ public class SwiftConnection {
 	}
 
 	private MTtoMXresponse processMT103Multiple(SwiftParser swiftParser, List<MT_103> mt103List, String appBlock1, String appBlock2, String appBlock3,
-			BIPS_SWIFT_MSG_MGT message, String userID, boolean isMultiple) throws IOException, ParseException {
+			BIPS_SWIFT_MSG_MGT message, String userID,String filename, boolean isMultiple) throws IOException, ParseException {
 
 		// Step 6: Parse the MT103 message
 		MT_103 mt103 = swiftParser.parseMT103();
-		String data = documentPacks.multipleGetDataPDU008(mt103, mt103List, appBlock1, appBlock2, appBlock3, userID, isMultiple);
+		String data = documentPacks.multipleGetDataPDU008(mt103, mt103List, appBlock1, appBlock2, appBlock3, userID,filename, isMultiple);
 
 		// Step 7: Populate MT message data
 		BIPS_SWIFT_MT_MSG mtMessageData = new BIPS_SWIFT_MT_MSG();
