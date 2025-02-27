@@ -1011,6 +1011,8 @@ public class IPSRestController {
 		System.out.println(dtf.format(now));
 		String userid1 = (String) req.getSession().getAttribute("USERID");
 		String Country_code = userProfileRep.getCountrycode(userid1);
+		
+		System.out.println("THE GETTING FILENAME IS HRE "+filename);
 
 		String path = "";
 
