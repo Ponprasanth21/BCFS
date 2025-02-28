@@ -820,7 +820,16 @@ public class IPSRestController {
 		String res = bipsMsgConversionProcessRec.MessageProcessSubmit(message, formmode);
 		System.out.println(res);
 
-		MTtoMXresponse status = swiftConnection.mxToMtConverter(message, null, res);
+		MTtoMXresponse status = null;
+		try {
+			status = swiftConnection.mxToMtConverter(message, null, res);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		formmode = "update";
 
@@ -1059,7 +1068,15 @@ public class IPSRestController {
 			String res = bipsMsgConversionProcessRec.SwiftMessageProcessSubmit(message, formmode);
 			System.out.println(res);
 
-			MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1,filename);
+			try {
+				MTtoMXresponse status = swiftConnection.mxToMtConverter(message, userid1,filename);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			String username = userProfileRep.findNameById(userid1);
 			String audit = userProfileService.uploadAuditsubmitMxtomt(userid1, username);

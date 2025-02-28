@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -561,6 +562,30 @@ public class DocumentPacks {
 		}
 		return jaxbElement.getValue();
 	}
+	
+	public List<Document> getPacs_008_001_01UnMarshalDocs1(String block4) {
+	    List<Document> documents = new ArrayList<>();
+	    Pattern pattern = Pattern.compile("<Document[\\s\\S]*?</Document>"); // Regex to find multiple <Document>...</Document> blocks
+	    Matcher matcher = pattern.matcher(block4);
+
+	    try {
+	        JAXBContext jaxBContext = JAXBContext.newInstance(Document.class);
+	        Unmarshaller unMarshaller = jaxBContext.createUnmarshaller();
+
+	        while (matcher.find()) { // Iterate through all matches
+	            String documentXml = matcher.group();
+	            InputStream stream = new ByteArrayInputStream(documentXml.getBytes(StandardCharsets.UTF_8));
+	            XMLInputFactory factory = XMLInputFactory.newInstance();
+	            XMLEventReader xmlEventReader = factory.createXMLEventReader(stream);
+	            JAXBElement<Document> jaxbElement = unMarshaller.unmarshal(xmlEventReader, Document.class);
+	            documents.add(jaxbElement.getValue()); // Add each unmarshalled Document to the list
+	        }
+	    } catch (JAXBException | XMLStreamException e) {
+	        e.printStackTrace();
+	    }
+	    return documents;
+	}
+
 
 	public BusinessApplicationHeaderV01 getPacs_008_001_01UnMarshalAppHeader(String block4) {
 		final int start = block4.indexOf("<AppHdr");
@@ -738,6 +763,110 @@ public class DocumentPacks {
 		outputStream.write(strBuilder.toString().getBytes());
 
 		return strBuilder.toString();
+	}
+	
+	public String getMT_1001(List<Document> doc008, BusinessApplicationHeaderV01 appHeader008, String userID, String filename)
+	        throws IOException {
+
+	    // Initialize StringBuilder
+	    StringBuilder strBuilder = new StringBuilder();
+
+	    // Create MT Application Header
+	    for (Document doc : doc008) {
+	        String headerParam = appHeader.createApplicationHeader1(Collections.singletonList(doc), appHeader008);
+	        String dataParam = appHeader.createApplicationData1(Collections.singletonList(doc), appHeader008);
+	        strBuilder.append("$").append("\n").append(headerParam);
+	        strBuilder.append(dataParam).append("\n");
+	    }
+
+	    filename = filename.replace(".OUT", "").replace(".IN", "") + ".IN";
+
+	    String Country_code;
+	    if (userID.startsWith("Auto")) {
+	        Country_code = userID;
+	    } else {
+	        Country_code = userProfileRep.getCountrycode(userID);
+	    }
+
+	    String path = "";
+
+		env.getProperty("bwa.swift.mx.in.file.path");
+		switch (Country_code) {
+		// Case statements
+		case "BWA":
+			path = env.getProperty("bwa.swift.mt.in.file.path");
+
+			break;
+		case "MOZ":
+			path = env.getProperty("moz.swift.mt.in.file.path");
+
+			break;
+		case "MWI":
+			path = env.getProperty("mwi.swift.mt.in.file.path");
+
+			break;
+		case "ZMB":
+			path = env.getProperty("zmb.swift.mt.in.file.path");
+
+			break;
+		case "ZWE":
+			path = env.getProperty("zwe.swift.mt.in.file.path");
+
+			break;
+		case "MUS":
+			path = env.getProperty("mus.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto":
+			path = env.getProperty("auto.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_MUS":
+			path = env.getProperty("auto.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_BWA":
+			path = env.getProperty("auto.bwa.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_MOZ":
+			path = env.getProperty("auto.moz.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_MWI":
+			path = env.getProperty("auto.mwi.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_ZMB":
+			path = env.getProperty("auto.zmb.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+		case "Auto_ZWE":
+			path = env.getProperty("auto.zwe.swift.mt.in.file.path");
+			System.out.println(path + "    LLLLL");
+
+			break;
+
+		}
+
+	    if (path.isEmpty()) {
+	        throw new IOException("Invalid country code or path not found for: " + Country_code);
+	    }
+
+	    try (OutputStream outputStream = new FileOutputStream(path + filename)) {
+	        MtMsgPAth = path + filename;
+	        MTmsgname = filename;
+	        outputStream.write(strBuilder.toString().getBytes());
+	    }
+
+	    return strBuilder.toString();
 	}
 
 	public static String MtMessgaePath() {

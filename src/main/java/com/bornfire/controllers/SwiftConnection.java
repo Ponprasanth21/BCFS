@@ -9,6 +9,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,9 @@ import com.bornfire.modal.MTtoMXresponse;
 import com.bornfire.mt.MT_103;
 import com.bornfire.mx.datapduHeader.Header;
 import com.bornfire.mx.head_001_001_01.BusinessApplicationHeaderV01;
+import com.bornfire.mx.head_001_001_01.FinancialInstitutionIdentification81;
 import com.bornfire.mx.pacs_008_001_08.AccountIdentification4Choice1;
+import com.bornfire.mx.pacs_008_001_08.BranchAndFinancialInstitutionIdentification61;
 import com.bornfire.mx.pacs_008_001_08.CashAccount381;
 import com.bornfire.mx.pacs_008_001_08.CreditTransferTransaction391;
 import com.bornfire.mx.pacs_008_001_08.Document;
@@ -70,7 +74,7 @@ public class SwiftConnection {
 		case "103": {
 			MT_103 mt103 = swiftParser.parseMT103();
 			String data = documentPacks.singleGetDataPDU008(mt103, applicationHeaderBlock1, applicationHeaderBlock,
-					applicationHeaderBlock3,applicationHeaderBlock5, userid, filename);
+					applicationHeaderBlock3, applicationHeaderBlock5, userid, filename);
 			// Mt msg here
 
 			message.getDate_of_process();
@@ -214,14 +218,56 @@ public class SwiftConnection {
 	}
 
 	public MTtoMXresponse mxToMtConverter(BIPS_SWIFT_MSG_MGT message, String userID, String filename)
-			throws IOException {
+	        throws IOException, ParseException {
+
+	    // Step 1: Read the SWIFT MT message file
+	    String request = readFile(message.getFile_name());
+	    MTtoMXresponse response = null;
+
+	    // Step 2: Extract all <Document>...</Document> blocks correctly
+	    List<String> messages = new ArrayList<>();
+	    Matcher matcher = Pattern.compile("(?s)<Document[^>]*>.*?</Document>").matcher(request);
+
+	    while (matcher.find()) {
+	        messages.add(matcher.group());
+	    }
+
+	    boolean isMultiple = messages.size() > 1;
+	    List<MT_103> mt103List = new ArrayList<>();
+
+	    System.out.println("Total Documents Found: " + messages.size());
+
+	    for (int i = 0; i < messages.size(); i++) {
+	        String msgInpt = messages.get(i).trim();
+	        System.out.println("Split Document " + (i + 1) + ": \n" + msgInpt + "\n"); // Log each split document
+
+	        MtMessageReader inputMessageReader = new MtMessageReader(msgInpt);
+	        String inputMessageDataBlock4 = inputMessageReader.getSwiftMsgBlock(4);
+	        SwiftParser swiftParser = new SwiftParser(inputMessageDataBlock4);
+	        MT_103 mt103 = swiftParser.parseMT103();
+	        mt103List.add(mt103);
+	    }
+
+	    if (isMultiple) {
+	        response = MultipleprocessTransactiondata(messages.get(0).trim(), mt103List, message, userID, filename, isMultiple);
+	        System.out.println("MULTIPLE TRANSACTIONS PROCESSED SUCCESSFULLY");
+	    } else {
+	        response = singleProcessTransactiondata(request.trim(), null, message, userID, filename, isMultiple);
+	        System.out.println("SINGLE TRANSACTION PROCESSED SUCCESSFULLY");
+	    }
+	    return response;
+	}
+
+	private MTtoMXresponse singleProcessTransactiondata(String msgInpt, List<MT_103> mt103List,
+			BIPS_SWIFT_MSG_MGT message, String userID, String filename, boolean isMultiple)
+			throws IOException, ParseException {
 		String request = readFile(message.getFile_name());
 		BusinessApplicationHeaderV01 header008 = documentPacks.getPacs_008_001_01UnMarshalAppHeader(request);
 		System.out.println("message type" + header008.toString());
 		String messageType = header008.getMsgDefIdr();
 		String data = "";
 		MTtoMXresponse response = null;
-
+		System.out.println("SINGLE TRANSACTION WORKED " + request);
 		switch (messageType) {
 		case "pacs.008.001.08":
 			Document doc008 = documentPacks.getPacs_008_001_01UnMarshalDoc(request);
@@ -314,6 +360,75 @@ public class SwiftConnection {
 		return response;
 	}
 
+	private MTtoMXresponse MultipleprocessTransactiondata(String msgInpt, List<MT_103> mt103List,
+	        BIPS_SWIFT_MSG_MGT message, String userID, String filename, boolean isMultiple)
+	        throws IOException, ParseException {
+	    
+	    String request = readFile(message.getFile_name());
+	    BusinessApplicationHeaderV01 header008 = documentPacks.getPacs_008_001_01UnMarshalAppHeader(request);
+	    System.out.println("Message Type: " + header008.toString());
+	    String messageType = header008.getMsgDefIdr();
+	    String data = "";
+	    MTtoMXresponse response = null;
+	    
+	    System.out.println("MULTIPLE TRANSACTION WORKED: " + request);
+	    
+	    if ("pacs.008.001.08".equals(messageType)) {
+	        List<Document> doc008 = documentPacks.getPacs_008_001_01UnMarshalDocs1(request);
+	        data = documentPacks.getMT_1001(doc008, header008, userID, filename);
+
+	        BIPS_SWIFT_MX_MSG mxmessgedata = new BIPS_SWIFT_MX_MSG();
+	        mxmessgedata.setDebitor_name(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr().getNm());
+			/*
+			 * mxmessgedata.setDebitor_agent(doc008.get(0).getFIToFICstmrCdtTrf().
+			 * getCdtTrfTxInf().get(0).getDbtrAgt());
+			 */
+	        mxmessgedata.setCreditor_name(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr().getNm());
+			/* mxmessgedata.setCreditor_agent(CreditorAgent); */
+	        mxmessgedata.setCurrency(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
+	        mxmessgedata.setSender_reference(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
+			/*
+			 * mxmessgedata.setCreditor_account(CreditorAcc);
+			 * mxmessgedata.setDebitor_account(DebitorAcc);
+			 */
+	        String BankoperatioCode = "CRED";
+	        mxmessgedata.setMsg_id(doc008.get(0).getFIToFICstmrCdtTrf().getGrpHdr().getMsgId());
+	        mxmessgedata.setTotal_transaction_amount(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt()
+  	                .getValue().toString());
+	        mxmessgedata.setBank_operation_code(BankoperatioCode);
+	        mxmessgedata.setDate_of_process(message.getDate_of_process());
+
+	        String Msg = bipsMsgConversionProcessRec.savingMxMsgDetail(mxmessgedata, message);
+	        System.out.println(Msg);
+
+	        BIPS_SWIFT_MT_MSG mtmessagedata = new BIPS_SWIFT_MT_MSG();
+	        mtmessagedata.setDebitor_name(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr().getNm());
+			/* mtmessagedata.setDebitor_agent(DebitorAgent); */
+	        mtmessagedata.setCreditor_name(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr().getNm());
+			/* mtmessagedata.setCreditor_agent(CreditorAgent); */
+	        mtmessagedata.setCurrency(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
+	        mtmessagedata.setSender_reference(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
+			/*
+			 * mtmessagedata.setCreditor_account(CreditorAcc);
+			 * mtmessagedata.setDebitor_account(DebitorAcc);
+			 */
+	        mtmessagedata.setMsg_id(doc008.get(0).getFIToFICstmrCdtTrf().getGrpHdr().getMsgId());
+	        mtmessagedata.setTotal_transaction_amount(doc008.get(0).getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt()
+  	                .getValue().toString());
+	        mtmessagedata.setBank_operation_code(BankoperatioCode);
+	        mtmessagedata.setDate_of_process(message.getDate_of_process());
+
+	        String mtsubmsg = bipsMsgConversionProcessRec.savingMtmsgdetail(mtmessagedata, message);
+	        System.out.println(mtsubmsg);
+
+	        response = new MTtoMXresponse();
+	        response.setStatus("SUCCESS");
+	        response.setData(data);
+	        System.out.println("Down: " + data);
+	    }
+	    return response;
+	}
+
 	public MTtoMXresponse mtToMxConverter(BIPS_SWIFT_MSG_MGT message, String userID, String filename)
 			throws IOException, ParseException {
 		// Step 1: Read the SWIFT MT message file
@@ -354,7 +469,7 @@ public class SwiftConnection {
 		String applicationHeaderBlock3 = inputMessageReader.getSwiftMsgBlock(3);
 		String inputMessageDataBlock4 = inputMessageReader.getSwiftMsgBlock(4);
 		String applicationHeaderBlock5 = inputMessageReader.getSwiftMsgBlock(5);
-		
+
 		System.out.println("THE HEADER BLOCK1 VALUE IS " + applicationHeaderBlock1);
 		System.out.println("THE HEADER BLOCK2 VALUE IS " + applicationHeaderBlock2);
 		System.out.println("THE HEADER BLOCK3 VALUE IS " + applicationHeaderBlock3);
@@ -383,7 +498,7 @@ public class SwiftConnection {
 		switch (messageType) {
 		case "103":
 			return singleProcessMT103(swiftParser, applicationHeaderBlock1, applicationHeaderBlock2,
-					applicationHeaderBlock3,applicationHeaderBlock5, message, filename, userID);
+					applicationHeaderBlock3, applicationHeaderBlock5, message, filename, userID);
 		case "202":
 			System.out.println("Unsupported message type: " + messageType);
 			break;
@@ -417,7 +532,7 @@ public class SwiftConnection {
 		switch (messageType) {
 		case "103":
 			return processMT103Multiple(swiftParser, mt103List, applicationHeaderBlock1, applicationHeaderBlock2,
-					applicationHeaderBlock3,applicationHeaderBlock5, message, userID, filename, isMultiple);
+					applicationHeaderBlock3, applicationHeaderBlock5, message, userID, filename, isMultiple);
 		case "202":
 			System.out.println("Unsupported message type: " + messageType);
 			break;
@@ -429,11 +544,12 @@ public class SwiftConnection {
 	}
 
 	private MTtoMXresponse singleProcessMT103(SwiftParser swiftParser, String appBlock1, String appBlock2,
-			String appBlock3,String appBlock5, BIPS_SWIFT_MSG_MGT message, String filename, String userID)
+			String appBlock3, String appBlock5, BIPS_SWIFT_MSG_MGT message, String filename, String userID)
 			throws IOException, ParseException {
 		// Step 6: Parse the MT103 message
 		MT_103 mt103 = swiftParser.parseMT103();
-		String data = documentPacks.singleGetDataPDU008(mt103, appBlock1, appBlock2, appBlock3,appBlock5, userID, filename);
+		String data = documentPacks.singleGetDataPDU008(mt103, appBlock1, appBlock2, appBlock3, appBlock5, userID,
+				filename);
 
 		// Step 7: Populate MT message data
 		BIPS_SWIFT_MT_MSG mtMessageData = new BIPS_SWIFT_MT_MSG();
@@ -478,13 +594,13 @@ public class SwiftConnection {
 	}
 
 	private MTtoMXresponse processMT103Multiple(SwiftParser swiftParser, List<MT_103> mt103List, String appBlock1,
-			String appBlock2, String appBlock3,String appBlock5, BIPS_SWIFT_MSG_MGT message, String userID, String filename,
-			boolean isMultiple) throws IOException, ParseException {
+			String appBlock2, String appBlock3, String appBlock5, BIPS_SWIFT_MSG_MGT message, String userID,
+			String filename, boolean isMultiple) throws IOException, ParseException {
 
 		// Step 6: Parse the MT103 message
 		MT_103 mt103 = swiftParser.parseMT103();
-		String data = documentPacks.multipleGetDataPDU008(mt103, mt103List, appBlock1, appBlock2, appBlock3,appBlock5, userID,
-				filename, isMultiple);
+		String data = documentPacks.multipleGetDataPDU008(mt103, mt103List, appBlock1, appBlock2, appBlock3, appBlock5,
+				userID, filename, isMultiple);
 
 		// Step 7: Populate MT message data
 		BIPS_SWIFT_MT_MSG mtMessageData = new BIPS_SWIFT_MT_MSG();
