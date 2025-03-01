@@ -36,7 +36,7 @@ public class Scheduler {
             File[] filesList = directoryPath.listFiles();
 
             if (filesList != null) {
-                boolean hasValidFiles = false;
+                boolean hasValidFiles = true;
 
                 for (File file : filesList) {
                     if (!file.getName().endsWith(".DONE")) {

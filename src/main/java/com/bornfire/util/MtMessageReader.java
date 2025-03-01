@@ -22,7 +22,26 @@ public class MtMessageReader {
 		switch (blockNumber) {
 		case 1:
 			startIndex = inputMessage.indexOf("{1:");
-			endIndex = inputMessage.indexOf("{4:") != -1 ? inputMessage.indexOf("{4:") : inputMessage.indexOf("{2:");
+			if (startIndex != -1) {
+				int endIndex1 = inputMessage.indexOf("{4:", startIndex);
+				int endIndex2 = inputMessage.indexOf("{2:", startIndex);
+
+				if (endIndex1 != -1 && endIndex2 != -1) {
+					endIndex = Math.min(endIndex1, endIndex2);
+				} else if (endIndex1 != -1) {
+					endIndex = endIndex1;
+				} else if (endIndex2 != -1) {
+					endIndex = endIndex2;
+				}
+
+				if (endIndex != -1) {
+					String extracted = inputMessage.substring(startIndex + 3, endIndex).trim();
+					if (extracted.endsWith("}")) {
+						extracted = extracted.substring(0, extracted.length() - 1);
+					}
+					return extracted;
+				}
+			}
 			break;
 		case 2:
 			startIndex = inputMessage.indexOf("{2:");
@@ -57,11 +76,13 @@ public class MtMessageReader {
 			return "Invalid Message Block Number Provided";
 		}
 		// Check for valid indices before calling substring
-		if (startIndex != -1 && endIndex != -1 && startIndex < endIndex) {
+		if (startIndex >= 0 && endIndex > startIndex) {
 			mtMsgBlock = this.getSwiftMessage(startIndex, endIndex);
 		} else {
-			mtMsgBlock = "Invalid indices for block " + blockNumber;
+			mtMsgBlock = "Invalid indices for block " + blockNumber + ": StartIndex=" + startIndex + ", EndIndex="
+					+ endIndex;
 		}
+
 		return mtMsgBlock;
 	}
 

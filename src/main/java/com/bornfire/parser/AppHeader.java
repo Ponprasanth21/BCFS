@@ -109,7 +109,7 @@ public class AppHeader {
 
 		return strBuilder.toString();
 	}
-	
+
 	public String createApplicationHeader1(List<Document> doc008, BusinessApplicationHeaderV01 appHeader008) {
 
 		StringBuilder strBuilder = new StringBuilder();
@@ -423,21 +423,28 @@ public class AppHeader {
 				.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0)).orElse("");
 
 		strBuilder.append(":70:");
-		strBuilder.append(creditTransferTran.getPmtId().getEndToEndId()+ CRLF);
-		
+		strBuilder.append(creditTransferTran.getRmtInf().getUstrd().toString().replaceAll("[\\[\\]]", "") // Remove
+																											// square
+																											// brackets
+				.replaceAll("\\R", " ") // Remove newlines
+				.trim() // Remove leading/trailing spaces
+				+ CRLF);
+
 		strBuilder.append(":71A:");
-		strBuilder.append(creditTransferTran.getChrgBr()+ CRLF);
-		
+		strBuilder.append(creditTransferTran.getPmtId().getEndToEndId() + CRLF);
+
 		/// End Block tag
 		strBuilder.append("-}");
-		
-		if (appHeader008.getPrty() != null && !appHeader008.getPrty().isEmpty()) {
-		    strBuilder.append("{5:").append(appHeader008.getPrty()).append("}");
+
+		String prtyValue = appHeader008.getPrty();
+		System.out.println("THE GETTING prtyValue VALUE IS HERE " + prtyValue);
+		if (prtyValue != null && prtyValue.contains("CHK")) {
+			strBuilder.append("{5:").append(prtyValue).append("}");
 		}
-		
+
 		return strBuilder.toString();
 	}
-	
+
 	public String createApplicationData1(List<Document> doc008, BusinessApplicationHeaderV01 appHeader008) {
 		StringBuilder strBuilder = new StringBuilder();
 
@@ -501,39 +508,31 @@ public class AppHeader {
 		}
 
 		List<String> debitorAccounts = doc008.stream()
-			    .map(doc -> Optional.ofNullable(doc)
-			        .map(Document::getFIToFICstmrCdtTrf)
-			        .map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
-			        .filter(indAliasList -> !indAliasList.isEmpty())
-			        .map(indAliasList -> indAliasList.get(0))
-			        .map(CreditTransferTransaction391::getDbtrAcct)
-			        .map(CashAccount381::getId)
-			        .map(AccountIdentification4Choice1::getOthr)
-			        .map(GenericAccountIdentification11::getId)
-			        .orElse(""))
-			    .collect(Collectors.toList());
+				.map(doc -> Optional.ofNullable(doc).map(Document::getFIToFICstmrCdtTrf)
+						.map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
+						.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
+						.map(CreditTransferTransaction391::getDbtrAcct).map(CashAccount381::getId)
+						.map(AccountIdentification4Choice1::getOthr).map(GenericAccountIdentification11::getId)
+						.orElse(""))
+				.collect(Collectors.toList());
 
-			List<String> creditorAccounts = doc008.stream()
-			    .map(doc -> Optional.ofNullable(doc)
-			        .map(Document::getFIToFICstmrCdtTrf)
-			        .map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
-			        .filter(indAliasList -> !indAliasList.isEmpty())
-			        .map(indAliasList -> indAliasList.get(0))
-			        .map(CreditTransferTransaction391::getCdtrAcct)
-			        .map(CashAccount381::getId)
-			        .map(AccountIdentification4Choice1::getOthr)
-			        .map(GenericAccountIdentification11::getId)
-			        .orElse(""))
-			    .collect(Collectors.toList());
+		List<String> creditorAccounts = doc008.stream()
+				.map(doc -> Optional.ofNullable(doc).map(Document::getFIToFICstmrCdtTrf)
+						.map(FIToFICustomerCreditTransferV08::getCdtTrfTxInf)
+						.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0))
+						.map(CreditTransferTransaction391::getCdtrAcct).map(CashAccount381::getId)
+						.map(AccountIdentification4Choice1::getOthr).map(GenericAccountIdentification11::getId)
+						.orElse(""))
+				.collect(Collectors.toList());
 
 		/// Ordering Customer
 		strBuilder.append(":50K:");
 
 		for (String debitorAcc : debitorAccounts) {
-		    if (!debitorAcc.isEmpty()) {
-		        strBuilder.append("/");
-		        strBuilder.append(debitorAcc).append(CRLF);
-		    }
+			if (!debitorAcc.isEmpty()) {
+				strBuilder.append("/");
+				strBuilder.append(debitorAcc).append(CRLF);
+			}
 		}
 
 		String[] array = creditTransferTran.getDbtr().getNm().split("(?<=\\G.{35})");
@@ -552,17 +551,17 @@ public class AppHeader {
 				}
 			}
 		}
-		
+
 		StringBuilder orderingCustomerBuilder = new StringBuilder();
 
 		for (String debitorAcc : debitorAccounts) {
-		    if (!debitorAcc.isEmpty()) {
-		        orderingCustomerBuilder.append("/").append(debitorAcc).append(CRLF);
-		    }
+			if (!debitorAcc.isEmpty()) {
+				orderingCustomerBuilder.append("/").append(debitorAcc).append(CRLF);
+			}
 		}
-		
+
 		if (creditTransferTran.getDbtr() != null && creditTransferTran.getDbtr().getNm() != null) {
-		    orderingCustomerBuilder.append(creditTransferTran.getDbtr().getNm()).append(CRLF);
+			orderingCustomerBuilder.append(creditTransferTran.getDbtr().getNm()).append(CRLF);
 		}
 		System.out.println("orderingcustomer" + orderingcustomer);
 
@@ -646,9 +645,9 @@ public class AppHeader {
 		strBuilder.append("/");
 
 		for (String creditorAcc : creditorAccounts) {
-		    if (!creditorAcc.isEmpty()) {
-		        strBuilder.append("/").append(creditorAcc).append(CRLF);
-		    }
+			if (!creditorAcc.isEmpty()) {
+				strBuilder.append("/").append(creditorAcc).append(CRLF);
+			}
 		}
 
 		// strBuilder.append(creditTransferTran.getCdtrAcct().getId().getOthr().getId()
@@ -678,14 +677,14 @@ public class AppHeader {
 		StringBuilder beneficiaryCustomerBuilder = new StringBuilder();
 
 		for (String creditorAcc : creditorAccounts) {
-		    if (!creditorAcc.isEmpty()) {
-		        beneficiaryCustomerBuilder.append("/").append(creditorAcc).append(CRLF);
-		    }
+			if (!creditorAcc.isEmpty()) {
+				beneficiaryCustomerBuilder.append("/").append(creditorAcc).append(CRLF);
+			}
 		}
 
 		// Append creditor name if available
 		if (creditTransferTran.getCdtr() != null && creditTransferTran.getCdtr().getNm() != null) {
-		    beneficiaryCustomerBuilder.append(creditTransferTran.getCdtr().getNm()).append(CRLF);
+			beneficiaryCustomerBuilder.append(creditTransferTran.getCdtr().getNm()).append(CRLF);
 		}
 
 		// Convert StringBuilder to String
@@ -737,18 +736,27 @@ public class AppHeader {
 				.filter(indAliasList -> !indAliasList.isEmpty()).map(indAliasList -> indAliasList.get(0)).orElse("");
 
 		strBuilder.append(":70:");
-		strBuilder.append(creditTransferTran.getPmtId().getEndToEndId()+ CRLF);
-		
+		strBuilder.append(creditTransferTran.getRmtInf().getUstrd().toString().replaceAll("[\\[\\]]", "") // Remove
+																											// square
+																											// brackets
+				.replaceAll("\\R", " ") // Remove newlines
+				.trim() // Remove leading/trailing spaces
+				+ CRLF);
+
 		strBuilder.append(":71A:");
-		strBuilder.append(creditTransferTran.getChrgBr()+ CRLF);
-		
+		strBuilder.append(creditTransferTran.getPmtId().getEndToEndId() + CRLF);
+
 		/// End Block tag
 		strBuilder.append("-}");
-		
-		if (appHeader008.getPrty() != null && !appHeader008.getPrty().isEmpty()) {
-		    strBuilder.append("{5:").append(appHeader008.getPrty()).append("}");
+
+		String prtyValue = appHeader008.getPrty();
+
+		System.out.println("THE GETTING prtyValue VALUE IS HERE " + prtyValue);
+
+		if (prtyValue != null && prtyValue.contains("CHK")) {
+			strBuilder.append("{5:").append(prtyValue).append("}");
 		}
-		
+
 		return strBuilder.toString();
 	}
 

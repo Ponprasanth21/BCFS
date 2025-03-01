@@ -98,13 +98,13 @@ public class DocumentPacks {
 		}
 	}
 
-	public String getDataPDU008Old(MT_103 mt103, String block1, String block2, String block3, String block5, String userID)
-			throws IOException, ParseException {
+	public String getDataPDU008Old(MT_103 mt103, String block1, String block2, String block3, String block5,
+			String userID) throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				"<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\">"
 						+ "<Body>\r\n");
-		sb.append(getAppHeader008(mt103, block1, block2,block5));
+		sb.append(getAppHeader008(mt103, block1, block2, block5));
 		sb.append(getPacs_008_001_01Doc(mt103, block3));
 		sb.append("</Body>\r\n" + "</DataPDU>");
 
@@ -217,7 +217,7 @@ public class DocumentPacks {
 		return Country_code;
 	}
 
-	private String getAppHeader008(MT_103 mt103, String black1, String black2,String black5) {
+	private String getAppHeader008(MT_103 mt103, String black1, String black2, String black5) {
 		BusinessApplicationHeaderV01 appHeader = new BusinessApplicationHeaderV01();
 
 		com.bornfire.mx.head_001_001_01.FinancialInstitutionIdentification81 finInstnId = new com.bornfire.mx.head_001_001_01.FinancialInstitutionIdentification81();
@@ -257,7 +257,11 @@ public class DocumentPacks {
 			e.printStackTrace();
 		}
 
-		appHeader.setPrty(black5);
+		if (black5 != null && black5.contains("CHK:")) {
+			String prtyValue = black5.substring(black5.indexOf("CHK:") + 4).split("}")[0];
+			appHeader.setPrty(prtyValue);
+		}
+
 		appHeader.setCreDt(xgc);
 
 		JAXBContext jaxbContext;
@@ -329,14 +333,11 @@ public class DocumentPacks {
 		/// Payment Identification
 		PaymentIdentification71 pmtId = new PaymentIdentification71();
 		pmtId.setInstrId(mt103.getTag20().trim());/// Instruction ID
-		if ((!mt103.getTag70().equals(""))) {
-			String str = mt103.getTag70().replace(System.getProperty("line.separator"), "");
-
-			pmtId.setEndToEndId(str);/// End to End ID
-		}
+		
 		pmtId.setTxId(mt103.getTag20());
-		if (block3.contains("121:")) {
-		    pmtId.setUETR(block3.replace("{121:", "{121:").trim()); ///// Corrected replacement
+		if (block3.contains("{121:")) {
+			String uetr = block3.replaceAll(".*\\{121:([a-fA-F0-9\\-]+)\\}.*", "$1");
+			pmtId.setUETR(uetr);
 		}
 
 		creditTransferTransaction391.setPmtId(pmtId);
@@ -383,6 +384,7 @@ public class DocumentPacks {
 			// TODO: handle exception
 		}
 		creditTransferTransaction391.setChrgBr(chrgbr);
+
 		System.out.println(mt103.getTag23B().trim() + "55655");
 		InterBkSttlmAmt = mt103.getTag32A();
 		//// Settlement Amount
@@ -484,36 +486,29 @@ public class DocumentPacks {
 			}
 		}
 
+		ChargeBearerType1Code chrgbr1 = null;
 		String tag71A = mt103.getTag71A();
 
 		if (tag71A != null) {
-			tag71A = tag71A.trim().toUpperCase(); // Normalize case and trim spaces
-			System.out.println(tag71A + " value of 71A");
-		} else {
-			tag71A = ""; // Avoid null issues
+		    switch (tag71A) {
+		        case "BEN":
+		            chrgbr1 = ChargeBearerType1Code.BEN;
+		            break;
+		        case "OUR":
+		            chrgbr1 = ChargeBearerType1Code.OUR;
+		            break;
+		        case "SHA":
+		            chrgbr1 = ChargeBearerType1Code.SHA;
+		            break;
+		    }
 		}
 
-		ChargeBearerType1Code chrgbr1;
-
-		switch (tag71A) {
-		case "OUR":
-			chrgbr1 = ChargeBearerType1Code.OUR;
-			break;
-		case "BEN":
-			chrgbr1 = ChargeBearerType1Code.BEN;
-			break;
-		case "SHA":
-			chrgbr1 = ChargeBearerType1Code.SHA;
-			break;
-		default:
-			chrgbr1 = ChargeBearerType1Code.SLEV; // Default to SLEV if unknown or empty
+		if (tag71A != null) {
+		    tag71A = tag71A.replace("-}", "").trim();
+		    if (!tag71A.isEmpty()) {
+		        pmtId.setEndToEndId(tag71A);
+		    }
 		}
-
-		System.out.println("The getting chrgbr1 value is " + chrgbr1);
-
-		// Now, you can use chrgbr1 where needed
-
-		creditTransferTransaction391.setChrgBr(chrgbr1);
 
 		cdtTrfTxInf.add(creditTransferTransaction391);
 		/// Financial Customer Credit Transfer
@@ -562,30 +557,30 @@ public class DocumentPacks {
 		}
 		return jaxbElement.getValue();
 	}
-	
+
 	public List<Document> getPacs_008_001_01UnMarshalDocs1(String block4) {
-	    List<Document> documents = new ArrayList<>();
-	    Pattern pattern = Pattern.compile("<Document[\\s\\S]*?</Document>"); // Regex to find multiple <Document>...</Document> blocks
-	    Matcher matcher = pattern.matcher(block4);
+		List<Document> documents = new ArrayList<>();
+		Pattern pattern = Pattern.compile("<Document[\\s\\S]*?</Document>"); // Regex to find multiple
+																				// <Document>...</Document> blocks
+		Matcher matcher = pattern.matcher(block4);
 
-	    try {
-	        JAXBContext jaxBContext = JAXBContext.newInstance(Document.class);
-	        Unmarshaller unMarshaller = jaxBContext.createUnmarshaller();
+		try {
+			JAXBContext jaxBContext = JAXBContext.newInstance(Document.class);
+			Unmarshaller unMarshaller = jaxBContext.createUnmarshaller();
 
-	        while (matcher.find()) { // Iterate through all matches
-	            String documentXml = matcher.group();
-	            InputStream stream = new ByteArrayInputStream(documentXml.getBytes(StandardCharsets.UTF_8));
-	            XMLInputFactory factory = XMLInputFactory.newInstance();
-	            XMLEventReader xmlEventReader = factory.createXMLEventReader(stream);
-	            JAXBElement<Document> jaxbElement = unMarshaller.unmarshal(xmlEventReader, Document.class);
-	            documents.add(jaxbElement.getValue()); // Add each unmarshalled Document to the list
-	        }
-	    } catch (JAXBException | XMLStreamException e) {
-	        e.printStackTrace();
-	    }
-	    return documents;
+			while (matcher.find()) { // Iterate through all matches
+				String documentXml = matcher.group();
+				InputStream stream = new ByteArrayInputStream(documentXml.getBytes(StandardCharsets.UTF_8));
+				XMLInputFactory factory = XMLInputFactory.newInstance();
+				XMLEventReader xmlEventReader = factory.createXMLEventReader(stream);
+				JAXBElement<Document> jaxbElement = unMarshaller.unmarshal(xmlEventReader, Document.class);
+				documents.add(jaxbElement.getValue()); // Add each unmarshalled Document to the list
+			}
+		} catch (JAXBException | XMLStreamException e) {
+			e.printStackTrace();
+		}
+		return documents;
 	}
-
 
 	public BusinessApplicationHeaderV01 getPacs_008_001_01UnMarshalAppHeader(String block4) {
 		final int start = block4.indexOf("<AppHdr");
@@ -764,31 +759,31 @@ public class DocumentPacks {
 
 		return strBuilder.toString();
 	}
-	
-	public String getMT_1001(List<Document> doc008, BusinessApplicationHeaderV01 appHeader008, String userID, String filename)
-	        throws IOException {
 
-	    // Initialize StringBuilder
-	    StringBuilder strBuilder = new StringBuilder();
+	public String getMT_1001(List<Document> doc008, BusinessApplicationHeaderV01 appHeader008, String userID,
+			String filename) throws IOException {
 
-	    // Create MT Application Header
-	    for (Document doc : doc008) {
-	        String headerParam = appHeader.createApplicationHeader1(Collections.singletonList(doc), appHeader008);
-	        String dataParam = appHeader.createApplicationData1(Collections.singletonList(doc), appHeader008);
-	        strBuilder.append("$").append("\n").append(headerParam);
-	        strBuilder.append(dataParam).append("\n");
-	    }
+		// Initialize StringBuilder
+		StringBuilder strBuilder = new StringBuilder();
 
-	    filename = filename.replace(".OUT", "").replace(".IN", "") + ".IN";
+		// Create MT Application Header
+		for (Document doc : doc008) {
+			String headerParam = appHeader.createApplicationHeader1(Collections.singletonList(doc), appHeader008);
+			String dataParam = appHeader.createApplicationData1(Collections.singletonList(doc), appHeader008);
+			strBuilder.append("$").append("\n").append(headerParam);
+			strBuilder.append(dataParam).append("\n");
+		}
 
-	    String Country_code;
-	    if (userID.startsWith("Auto")) {
-	        Country_code = userID;
-	    } else {
-	        Country_code = userProfileRep.getCountrycode(userID);
-	    }
+		filename = filename.replace(".OUT", "").replace(".IN", "") + ".IN";
 
-	    String path = "";
+		String Country_code;
+		if (userID.startsWith("Auto")) {
+			Country_code = userID;
+		} else {
+			Country_code = userProfileRep.getCountrycode(userID);
+		}
+
+		String path = "";
 
 		env.getProperty("bwa.swift.mx.in.file.path");
 		switch (Country_code) {
@@ -856,17 +851,17 @@ public class DocumentPacks {
 
 		}
 
-	    if (path.isEmpty()) {
-	        throw new IOException("Invalid country code or path not found for: " + Country_code);
-	    }
+		if (path.isEmpty()) {
+			throw new IOException("Invalid country code or path not found for: " + Country_code);
+		}
 
-	    try (OutputStream outputStream = new FileOutputStream(path + filename)) {
-	        MtMsgPAth = path + filename;
-	        MTmsgname = filename;
-	        outputStream.write(strBuilder.toString().getBytes());
-	    }
+		try (OutputStream outputStream = new FileOutputStream(path + filename)) {
+			MtMsgPAth = path + filename;
+			MTmsgname = filename;
+			outputStream.write(strBuilder.toString().getBytes());
+		}
 
-	    return strBuilder.toString();
+		return strBuilder.toString();
 	}
 
 	public static String MtMessgaePath() {
@@ -917,13 +912,13 @@ public class DocumentPacks {
 	// New Logics
 
 	@SuppressWarnings("resource")
-	public String singleGetDataPDU008(MT_103 mt103, String block1, String block2, String block3,String block5, String userID,
-			String filename) throws IOException, ParseException {
+	public String singleGetDataPDU008(MT_103 mt103, String block1, String block2, String block3, String block5,
+			String userID, String filename) throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" "
 				+ "xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" "
 				+ "xmlns:SwSec=\"urn:swift:snl:ns.SwSec\"><Body>\r\n");
-		sb.append(getAppHeader008(mt103, block1, block2,block5));
+		sb.append(getAppHeader008(mt103, block1, block2, block5));
 		sb.append(getPacs_008_001_01Doc(mt103, block3));
 		sb.append("</Body>\r\n</DataPDU>");
 
@@ -1004,13 +999,14 @@ public class DocumentPacks {
 	}
 
 	public String multipleGetDataPDU008(MT_103 mt103, List<MT_103> mt103List, String block1, String block2,
-			String block3,String block5, String userID, String filename, boolean isMultiple) throws IOException, ParseException {
+			String block3, String block5, String userID, String filename, boolean isMultiple)
+			throws IOException, ParseException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<DataPDU xmlns:Saa=\"urn:swift:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" "
 				+ "xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" "
 				+ "xmlns:SwSec=\"urn:swift:snl:ns.SwSec\"><Body>\r\n");
 
-		sb.append(getAppHeader008(mt103, block1, block2,block5));
+		sb.append(getAppHeader008(mt103, block1, block2, block5));
 		if (isMultiple) {
 			for (MT_103 txn : mt103List) {
 				sb.append(MultiplegetPacs_008_001_01Doc(txn, block3));
@@ -1147,8 +1143,9 @@ public class DocumentPacks {
 			}
 		}
 		pmtId.setTxId(mt103.getTag20());
-		if (block3.contains("121:")) {
-			pmtId.setUETR(block3.replace("{121:", "")); ///// Check here
+		if (block3.contains("{121:")) {
+			String uetr = block3.replaceAll(".*\\{121:([a-fA-F0-9\\-]+)\\}.*", "$1");
+			pmtId.setUETR(uetr);
 		}
 		creditTransferTransaction391.setPmtId(pmtId);
 		System.out.println("crettxn" + mt103.getTag20());
@@ -1294,6 +1291,31 @@ public class DocumentPacks {
 				creditTransferTransaction391.setRmtInf(rmtInf);
 			}
 		}
+
+		ChargeBearerType1Code chrgbr1 = null;
+		String tag71A = mt103.getTag71A();
+
+		if (tag71A != null) {
+		    switch (tag71A) {
+		        case "BEN":
+		            chrgbr1 = ChargeBearerType1Code.BEN;
+		            break;
+		        case "OUR":
+		            chrgbr1 = ChargeBearerType1Code.OUR;
+		            break;
+		        case "SHA":
+		            chrgbr1 = ChargeBearerType1Code.SHA;
+		            break;
+		    }
+		}
+
+		if (tag71A != null) {
+		    tag71A = tag71A.replace("-}", "").trim();
+		    if (!tag71A.isEmpty()) {
+		        pmtId.setEndToEndId(tag71A);
+		    }
+		}
+		
 		cdtTrfTxInf.add(creditTransferTransaction391);
 		/// Financial Customer Credit Transfer
 		FIToFICustomerCreditTransferV08 fiToFICstmrCdtTrf = new FIToFICustomerCreditTransferV08();
